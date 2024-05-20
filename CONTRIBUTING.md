@@ -57,7 +57,7 @@ forward.
   resources and should avoid breaking changes across prior verions of this 
   specification. When breaking changes are required they should be clearly tied to
   the guiding principles here and follow the guidelines for 
-  (schema evolution)[SCHEMA-EVOLUTION].
+  (schema evolution)[#SCHEMA-EVOLUTION.md].
 
 - **Favor no change**
 
