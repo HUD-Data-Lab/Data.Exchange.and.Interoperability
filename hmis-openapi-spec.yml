@@ -18,9 +18,1456 @@ tags:
     description: Users are used to represent the individuals who have access to the system. Each user has a unique userID.
   - name: Organizations
     description: Organizations are used to represent the entities that manage projects and users. Each organization has a unique organizationId.
+  - name: Funders
+    description: Data related to funding sources.
+  - name: ProjectCoCs
+    description: Data related to Continum of Care codes.
+  - name: Inventories
+    description: Data related to Inventories.
+  - name: Affiliations
+    description: Data related to Affiliations.
+  - name: HMISParticipations
+    description: Data related to HMIS Participations.
+  - name: CEParticipations
+    description: Data related to CE Participations.
+  - name: Exit
+    description: Data related to Exits.
+  - name: IncomeBenefits
+    description: Data related to Income Benefits.
+  - name: HealthAndDV
+    description: Data related to Health and DV.
+  - name: EmploymentEducation
+    description: Data related to Employment and Education.
 servers:
   - url: 'https://example.com/hmis'
 paths:
+  /youtheducationstatus:
+    post:
+      summary: Create a new YouthEducationStatus record
+      tags:
+        - YouthEducationStatus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/YouthEducationStatus'
+      responses:
+        '201':
+          description: YouthEducationStatus successfully created
+        '400':
+          description: Invalid input provided
+
+  /youtheducationstatus/{youthEducationStatusId}:
+    get:
+      tags:
+        - YouthEducationStatus
+      summary: Get YouthEducationStatus data by YouthEducationStatus ID
+      parameters:
+        - name: youthEducationStatusId
+          in: path
+          required: true
+          description: Unique identifier for a YouthEducationStatus record
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with YouthEducationStatus data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/YouthEducationStatus'
+        '404':
+          description: YouthEducationStatus not found
+
+    put:
+      tags:
+        - YouthEducationStatus
+      summary: Update an existing YouthEducationStatus record
+      parameters:
+        - name: youthEducationStatusId
+          in: path
+          required: true
+          description: Unique identifier for the YouthEducationStatus to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/YouthEducationStatus'
+      responses:
+        '200':
+          description: YouthEducationStatus successfully updated
+        '404':
+          description: YouthEducationStatus not found
+        '400':
+          description: Invalid input provided
+
+    delete:
+      tags:
+        - YouthEducationStatus
+      summary: Delete a YouthEducationStatus record
+      parameters:
+        - name: youthEducationStatusId
+          in: path
+          required: true
+          description: Unique identifier for the YouthEducationStatus to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: YouthEducationStatus successfully deleted
+        '404':
+          description: YouthEducationStatus not found
+
+  /events:
+    post:
+      summary: Create a new Event record
+      tags:
+        - Events
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        '201':
+          description: Event successfully created
+        '400':
+          description: Invalid input provided
+
+  /events/{eventId}:
+    get:
+      tags:
+        - Events
+      summary: Get Event data by Event ID
+      parameters:
+        - name: eventId
+          in: path
+          required: true
+          description: Unique identifier for an Event record
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with Event data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '404':
+          description: Event not found
+
+    put:
+      tags:
+        - Events
+      summary: Update an existing Event record
+      parameters:
+        - name: eventId
+          in: path
+          required: true
+          description: Unique identifier for the Event to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        '200':
+          description: Event successfully updated
+        '404':
+          description: Event not found
+        '400':
+          description: Invalid input provided
+
+    delete:
+      tags:
+        - Events
+      summary: Delete an Event record
+      parameters:
+        - name: eventId
+          in: path
+          required: true
+          description: Unique identifier for the Event to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: Event successfully deleted
+        '404':
+          description: Event not found
+  /assessmentquestions:
+    post:
+      summary: Create a new AssessmentQuestion record
+      tags:
+        - AssessmentQuestions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssessmentQuestions'
+      responses:
+        '201':
+          description: AssessmentQuestion successfully created
+        '400':
+          description: Invalid input provided
+
+  /assessmentquestions/{assessmentQuestionId}:
+    get:
+      tags:
+        - AssessmentQuestions
+      summary: Get AssessmentQuestion data by AssessmentQuestion ID
+      parameters:
+        - name: assessmentQuestionId
+          in: path
+          required: true
+          description: Unique identifier for an AssessmentQuestion record
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with AssessmentQuestion data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessmentQuestions'
+        '404':
+          description: AssessmentQuestion not found
+
+    put:
+      tags:
+        - AssessmentQuestions
+      summary: Update an existing AssessmentQuestion record
+      parameters:
+        - name: assessmentQuestionId
+          in: path
+          required: true
+          description: Unique identifier for the AssessmentQuestion to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssessmentQuestions'
+      responses:
+        '200':
+          description: AssessmentQuestion successfully updated
+        '404':
+          description: AssessmentQuestion not found
+        '400':
+          description: Invalid input provided
+
+    delete:
+      tags:
+        - AssessmentQuestions
+      summary: Delete an AssessmentQuestion record
+      parameters:
+        - name: assessmentQuestionId
+          in: path
+          required: true
+          description: Unique identifier for the AssessmentQuestion to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: AssessmentQuestion successfully deleted
+        '404':
+          description: AssessmentQuestion not found
+
+  /assessments:
+    post:
+      summary: Create a new Assessment record
+      tags:
+        - Assessments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Assessments'
+      responses:
+        '201':
+          description: Assessment successfully created
+        '400':
+          description: Invalid input provided
+
+  /assessments/{assessmentId}:
+    get:
+      tags:
+        - Assessments
+      summary: Get Assessment data by Assessment ID
+      parameters:
+        - name: assessmentId
+          in: path
+          required: true
+          description: Unique identifier for an Assessment record
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with Assessment data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assessments'
+        '404':
+          description: Assessment not found
+
+    put:
+      tags:
+        - Assessments
+      summary: Update an existing Assessment record
+      parameters:
+        - name: assessmentId
+          in: path
+          required: true
+          description: Unique identifier for the Assessment to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Assessments'
+      responses:
+        '200':
+          description: Assessment successfully updated
+        '404':
+          description: Assessment not found
+        '400':
+          description: Invalid input provided
+
+    delete:
+      tags:
+        - Assessments
+      summary: Delete an Assessment record
+      parameters:
+        - name: assessmentId
+          in: path
+          required: true
+          description: Unique identifier for the Assessment to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: Assessment successfully deleted
+        '404':
+          description: Assessment not found
+
+  /currentlivingsituation:
+    post:
+      summary: Create a new CurrentLivingSituation record
+      tags:
+        - CurrentLivingSituation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CurrentLivingSituation'
+      responses:
+        '201':
+          description: CurrentLivingSituation successfully created
+        '400':
+          description: Invalid input provided
+
+  /currentlivingsituation/{currentLivingSitId}:
+    get:
+      tags:
+        - CurrentLivingSituation
+      summary: Get CurrentLivingSituation data by CurrentLivingSitID
+      parameters:
+        - name: currentLivingSitId
+          in: path
+          required: true
+          description: Unique identifier for a CurrentLivingSituation record
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with CurrentLivingSituation data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentLivingSituation'
+        '404':
+          description: CurrentLivingSituation not found
+
+    put:
+      tags:
+        - CurrentLivingSituation
+      summary: Update an existing CurrentLivingSituation record
+      parameters:
+        - name: currentLivingSitId
+          in: path
+          required: true
+          description: Unique identifier for the CurrentLivingSituation to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CurrentLivingSituation'
+      responses:
+        '200':
+          description: CurrentLivingSituation successfully updated
+        '404':
+          description: CurrentLivingSituation not found
+        '400':
+          description: Invalid input provided
+
+    delete:
+      tags:
+        - CurrentLivingSituation
+      summary: Delete a CurrentLivingSituation record
+      parameters:
+        - name: currentLivingSitId
+          in: path
+          required: true
+          description: Unique identifier for the CurrentLivingSituation to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: CurrentLivingSituation successfully deleted
+        '404':
+          description: CurrentLivingSituation not found
+
+  /services:
+    post:
+      summary: Create a new Services record
+      tags:
+        - Services
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Services'
+      responses:
+        '201':
+          description: Services successfully created
+        '400':
+          description: Invalid input provided
+
+  /services/{servicesId}:
+    get:
+      tags:
+        - Services
+      summary: Get Services data by Services ID
+      parameters:
+        - name: servicesId
+          in: path
+          required: true
+          description: Unique identifier for a Services record
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with Services data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Services'
+        '404':
+          description: Services not found
+
+    put:
+      tags:
+        - Services
+      summary: Update an existing Services record
+      parameters:
+        - name: servicesId
+          in: path
+          required: true
+          description: Unique identifier for the Services to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Services'
+      responses:
+        '200':
+          description: Services successfully updated
+        '404':
+          description: Services not found
+        '400':
+          description: Invalid input provided
+
+    delete:
+      tags:
+        - Services
+      summary: Delete a Services record
+      parameters:
+        - name: servicesId
+          in: path
+          required: true
+          description: Unique identifier for the Services to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: Services successfully deleted
+        '404':
+          description: Services not found
+
+  /disabilities:
+    post:
+      summary: Create a new Disabilities record
+      tags:
+        - Disabilities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Disabilities'
+      responses:
+        '201':
+          description: Disabilities successfully created
+        '400':
+          description: Invalid input provided
+
+  /disabilities/{disabilitiesId}:
+    get:
+      tags:
+        - Disabilities
+      summary: Get Disabilities data by Disabilities ID
+      parameters:
+        - name: disabilitiesId
+          in: path
+          required: true
+          description: Unique identifier for a Disabilities record
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with Disabilities data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Disabilities'
+        '404':
+          description: Disabilities not found
+
+    put:
+      tags:
+        - Disabilities
+      summary: Update an existing Disabilities record
+      parameters:
+        - name: disabilitiesId
+          in: path
+          required: true
+          description: Unique identifier for the Disabilities to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Disabilities'
+      responses:
+        '200':
+          description: Disabilities successfully updated
+        '404':
+          description: Disabilities not found
+        '400':
+          description: Invalid input provided
+
+    delete:
+      tags:
+        - Disabilities
+      summary: Delete a Disabilities record
+      parameters:
+        - name: disabilitiesId
+          in: path
+          required: true
+          description: Unique identifier for the Disabilities to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: Disabilities successfully deleted
+        '404':
+          description: Disabilities not found
+
+  /employmenteducation:
+    post:
+      summary: Create a new EmploymentEducation record
+      tags:
+        - EmploymentEducation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmploymentEducation'
+      responses:
+        '201':
+          description: EmploymentEducation successfully created
+        '400':
+          description: Invalid input provided
+
+  /employmenteducation/{employmentEducationId}:
+    get:
+      tags:
+        - EmploymentEducation
+      summary: Get EmploymentEducation data by EmploymentEducation ID
+      parameters:
+        - name: employmentEducationId
+          in: path
+          required: true
+          description: Unique identifier for an EmploymentEducation record
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with EmploymentEducation data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmploymentEducation'
+        '404':
+          description: EmploymentEducation not found
+
+    put:
+      tags:
+        - EmploymentEducation
+      summary: Update an existing EmploymentEducation record
+      parameters:
+        - name: employmentEducationId
+          in: path
+          required: true
+          description: Unique identifier for the EmploymentEducation to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmploymentEducation'
+      responses:
+        '200':
+          description: EmploymentEducation successfully updated
+        '404':
+          description: EmploymentEducation not found
+        '400':
+          description: Invalid input provided
+
+    delete:
+      tags:
+        - EmploymentEducation
+      summary: Delete an EmploymentEducation record
+      parameters:
+        - name: employmentEducationId
+          in: path
+          required: true
+          description: Unique identifier for the EmploymentEducation to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: EmploymentEducation successfully deleted
+        '404':
+          description: EmploymentEducation not found
+
+  /healthanddv:
+    post:
+      summary: Create a new HealthAndDV record
+      tags:
+        - HealthAndDV
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HealthAndDV'
+      responses:
+        '201':
+          description: HealthAndDV successfully created
+        '400':
+          description: Invalid input provided
+
+  /healthanddv/{healthAndDVId}:
+    get:
+      tags:
+        - HealthAndDV
+      summary: Get HealthAndDV data by HealthAndDV ID
+      parameters:
+        - name: healthAndDVId
+          in: path
+          required: true
+          description: Unique identifier for a HealthAndDV record
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with HealthAndDV data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthAndDV'
+        '404':
+          description: HealthAndDV not found
+
+    put:
+      tags:
+        - HealthAndDV
+      summary: Update an existing HealthAndDV record
+      parameters:
+        - name: healthAndDVId
+          in: path
+          required: true
+          description: Unique identifier for the HealthAndDV to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HealthAndDV'
+      responses:
+        '200':
+          description: HealthAndDV successfully updated
+        '404':
+          description: HealthAndDV not found
+        '400':
+          description: Invalid input provided
+
+    delete:
+      tags:
+        - HealthAndDV
+      summary: Delete a HealthAndDV record
+      parameters:
+        - name: healthAndDVId
+          in: path
+          required: true
+          description: Unique identifier for the HealthAndDV to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: HealthAndDV successfully deleted
+        '404':
+          description: HealthAndDV not found
+
+  /incomebenefits:
+    post:
+      summary: Create a new IncomeBenefits record
+      tags:
+        - IncomeBenefits
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncomeBenefits'
+      responses:
+        '201':
+          description: IncomeBenefits successfully created
+        '400':
+          description: Invalid input provided
+
+  /incomebenefits/{incomeBenefitsId}:
+    get:
+      tags:
+        - IncomeBenefits
+      summary: Get IncomeBenefits data by IncomeBenefits ID
+      parameters:
+        - name: incomeBenefitsId
+          in: path
+          required: true
+          description: Unique identifier for an IncomeBenefits
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with IncomeBenefits data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncomeBenefits'
+        '404':
+          description: IncomeBenefits not found
+
+    put:
+      tags:
+        - IncomeBenefits
+      summary: Update an existing IncomeBenefits record
+      parameters:
+        - name: incomeBenefitsId
+          in: path
+          required: true
+          description: Unique identifier for the IncomeBenefits to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncomeBenefits'
+      responses:
+        '200':
+          description: IncomeBenefits successfully updated
+        '404':
+          description: IncomeBenefits not found
+        '400':
+          description: Invalid input provided
+
+    delete:
+      tags:
+        - IncomeBenefits
+      summary: Delete an IncomeBenefits record
+      parameters:
+        - name: incomeBenefitsId
+          in: path
+          required: true
+          description: Unique identifier for the IncomeBenefits to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: IncomeBenefits successfully deleted
+        '404':
+          description: IncomeBenefits not found
+
+  /exits:
+    post:
+      summary: Create a new Exit record
+      tags:
+        - Exits
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exit'
+      responses:
+        '201':
+          description: Exit successfully created
+        '400':
+          description: Invalid input provided
+
+  /exits/{exitId}:
+    get:
+      tags:
+        - Exits
+      summary: Get Exit data by Exit ID
+      parameters:
+        - name: exitId
+          in: path
+          required: true
+          description: Unique identifier for an Exit
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with Exit data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exit'
+        '404':
+          description: Exit not found
+
+    put:
+      tags:
+        - Exits
+      summary: Update an existing Exit record
+      parameters:
+        - name: exitId
+          in: path
+          required: true
+          description: Unique identifier for the Exit to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exit'
+      responses:
+        '200':
+          description: Exit successfully updated
+        '404':
+          description: Exit not found
+        '400':
+          description: Invalid input provided
+
+    delete:
+      tags:
+        - Exits
+      summary: Delete an Exit record
+      parameters:
+        - name: exitId
+          in: path
+          required: true
+          description: Unique identifier for the Exit to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: Exit successfully deleted
+        '404':
+          description: Exit not found
+
+  /ceparticipations:
+    post:
+      summary: Create a new CEParticipation record
+      tags:
+        - CEParticipations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CEParticipation'
+      responses:
+        '201':
+          description: CEParticipation successfully created
+        '400':
+          description: Invalid input provided
+
+  /ceparticipations/{ceParticipationId}:
+    get:
+      tags:
+        - CEParticipations
+      summary: Get CEParticipation data by CEParticipation ID
+      parameters:
+        - name: ceParticipationId
+          in: path
+          required: true
+          description: Unique identifier for a CEParticipation
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with CEParticipation data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CEParticipation'
+        '404':
+          description: CEParticipation not found
+
+    put:
+      tags:
+        - CEParticipations
+      summary: Update an existing CEParticipation record
+      parameters:
+        - name: ceParticipationId
+          in: path
+          required: true
+          description: Unique identifier for the CEParticipation to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CEParticipation'
+      responses:
+        '200':
+          description: CEParticipation successfully updated
+        '404':
+          description: CEParticipation not found
+        '400':
+          description: Invalid input provided
+
+    delete:
+      tags:
+        - CEParticipations
+      summary: Delete a CEParticipation record
+      parameters:
+        - name: ceParticipationId
+          in: path
+          required: true
+          description: Unique identifier for the CEParticipation to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: CEParticipation successfully deleted
+        '404':
+          description: CEParticipation not found
+
+  /hmisparticipations:
+    post:
+      summary: Create a new HMISParticipation record
+      tags:
+        - HMISParticipations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HMISParticipation'
+      responses:
+        '201':
+          description: HMISParticipation successfully created
+        '400':
+          description: Invalid input provided
+
+  /hmisparticipations/{hmisParticipationId}:
+    get:
+      tags:
+        - HMISParticipations
+      summary: Get HMISParticipation data by HMISParticipation ID
+      parameters:
+        - name: hmisParticipationId
+          in: path
+          required: true
+          description: Unique identifier for an HMISParticipation
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with HMISParticipation data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HMISParticipation'
+        '404':
+          description: HMISParticipation not found
+
+    put:
+      tags:
+        - HMISParticipations
+      summary: Update an existing HMISParticipation record
+      parameters:
+        - name: hmisParticipationId
+          in: path
+          required: true
+          description: Unique identifier for the HMISParticipation to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HMISParticipation'
+      responses:
+        '200':
+          description: HMISParticipation successfully updated
+        '404':
+          description: HMISParticipation not found
+        '400':
+          description: Invalid input provided
+
+    delete:
+      tags:
+        - HMISParticipations
+      summary: Delete an HMISParticipation record
+      parameters:
+        - name: hmisParticipationId
+          in: path
+          required: true
+          description: Unique identifier for the HMISParticipation to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: HMISParticipation successfully deleted
+        '404':
+          description: HMISParticipation not found
+
+  /affiliations:
+    post:
+      summary: Create a new Affiliation record
+      tags:
+        - Affiliations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Affiliation'
+      responses:
+        '201':
+          description: Affiliation successfully created
+        '400':
+          description: Invalid input provided
+
+  /affiliations/{affiliationId}:
+    get:
+      tags:
+        - Affiliations
+      summary: Get Affiliation data by Affiliation ID
+      parameters:
+        - name: affiliationId
+          in: path
+          required: true
+          description: Unique identifier for an Affiliation
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with Affiliation data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Affiliation'
+        '404':
+          description: Affiliation not found
+
+    put:
+      tags:
+        - Affiliations
+      summary: Update an existing Affiliation record
+      parameters:
+        - name: affiliationId
+          in: path
+          required: true
+          description: Unique identifier for the Affiliation to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Affiliation'
+      responses:
+        '200':
+          description: Affiliation successfully updated
+        '404':
+          description: Affiliation not found
+        '400':
+          description: Invalid input provided
+
+    delete:
+      tags:
+        - Affiliations
+      summary: Delete an Affiliation record
+      parameters:
+        - name: affiliationId
+          in: path
+          required: true
+          description: Unique identifier for the Affiliation to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: Affiliation successfully deleted
+        '404':
+          description: Affiliation not found
+
+  /inventories:
+    post:
+      summary: Create a new Inventory record
+      tags:
+        - Inventories
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Inventory'
+      responses:
+        '201':
+          description: Inventory successfully created
+        '400':
+          description: Invalid input provided
+
+  /inventories/{inventoryId}:
+    get:
+      tags:
+        - Inventories
+      summary: Get Inventory data by Inventory ID
+      parameters:
+        - name: inventoryId
+          in: path
+          required: true
+          description: Unique identifier for an Inventory
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with Inventory data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Inventory'
+        '404':
+          description: Inventory not found
+
+    put:
+      tags:
+        - Inventories
+      summary: Update an existing Inventory record
+      parameters:
+        - name: inventoryId
+          in: path
+          required: true
+          description: Unique identifier for the Inventory to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Inventory'
+      responses:
+        '200':
+          description: Inventory successfully updated
+        '404':
+          description: Inventory not found
+        '400':
+          description: Invalid input provided
+
+    delete:
+      tags:
+        - Inventories
+      summary: Delete an Inventory record
+      parameters:
+        - name: inventoryId
+          in: path
+          required: true
+          description: Unique identifier for the Inventory to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: Inventory successfully deleted
+        '404':
+          description: Inventory not found
+
+    /funders:
+    post:
+      summary: Create a new funder record
+      tags:
+        - Funders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Funder'
+      responses:
+        '201':
+          description: Funder successfully created
+        '400':
+          description: Invalid input provided
+
+  /funders/{funderId}:
+    get:
+      tags:
+        - Funders
+      summary: Get funder data by Funder ID
+      parameters:
+        - name: funderId
+          in: path
+          required: true
+          description: Unique identifier for a funder
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with funder data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Funder'
+        '404':
+          description: Funder not found
+
+    put:
+      tags:
+        - Funders
+      summary: Update an existing funder record
+      parameters:
+        - name: funderId
+          in: path
+          required: true
+          description: Unique identifier for the funder to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Funder'
+      responses:
+        '200':
+          description: Funder successfully updated
+        '404':
+          description: Funder not found
+        '400':
+          description: Invalid input provided
+
+    delete:
+      tags:
+        - Funders
+      summary: Delete a funder record
+      parameters:
+        - name: funderId
+          in: path
+          required: true
+          description: Unique identifier for the funder to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: Funder successfully deleted
+        '404':
+          description: Funder not found
+  
+  /projectcocs:
+    post:
+      summary: Create a new ProjectCoC record
+      tags:
+        - ProjectCoCs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCoC'
+      responses:
+        '201':
+          description: ProjectCoC successfully created
+        '400':
+          description: Invalid input provided
+
+  /projectcocs/{projectCoCId}:
+    get:
+      tags:
+        - ProjectCoCs
+      summary: Get ProjectCoC data by ProjectCoC ID
+      parameters:
+        - name: projectCoCId
+          in: path
+          required: true
+          description: Unique identifier for a ProjectCoC
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with ProjectCoC data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectCoC'
+        '404':
+          description: ProjectCoC not found
+
+    put:
+      tags:
+        - ProjectCoCs
+      summary: Update an existing ProjectCoC record
+      parameters:
+        - name: projectCoCId
+          in: path
+          required: true
+          description: Unique identifier for the ProjectCoC to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCoC'
+      responses:
+        '200':
+          description: ProjectCoC successfully updated
+        '404':
+          description: ProjectCoC not found
+        '400':
+          description: Invalid input provided
+
+    delete:
+      tags:
+        - ProjectCoCs
+      summary: Delete a ProjectCoC record
+      parameters:
+        - name: projectCoCId
+          in: path
+          required: true
+          description: Unique identifier for the ProjectCoC to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: ProjectCoC successfully deleted
+        '404':
+          description: ProjectCoC not found
+
   /enrollments:
     post:
       summary: Create a new enrollment record
@@ -3752,3 +5199,1551 @@ components:
           nullable: true
       required:
         - EnrollmentID
+    Funder:
+      type: object
+      properties:
+        funderId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        projectId:
+          type: string
+          maxLength: 32
+          description: Must match a record in Project
+        fundingSource:
+          type: integer
+          description: Funding source identifier
+          oneOf:
+            $ref: '#/components/schemas/FundingSource'
+        otherFunder:
+          type: string
+          maxLength: 100
+          description: Required if FundingSource = 46
+        grantId:
+          type: string
+          maxLength: 100
+          description: Grant identifier
+        startDate:
+          type: string
+          format: date
+          description: Start date
+        endDate:
+          type: string
+          format: date
+          description: End date
+        dateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        dateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        userId:
+          type: string
+          maxLength: 32
+          description: User ID
+        dateDeleted:
+          type: string
+          format: date-time
+          description: Date deleted
+    ProjectCoC:
+      type: object
+      properties:
+        projectCoCId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        projectId:
+          type: string
+          maxLength: 32
+          description: Must match a ProjectId in Project
+        coCCode:
+          type: string
+          maxLength: 6
+          pattern: '^[a-zA-Z]{2}-[0-9]{3}$'
+          description: Two letters, a dash, and 3 numbers
+        geocode3:
+          type: string
+          maxLength: 6
+          nullable: true
+          pattern: '^[0-9]{6}$'
+          description: Limited to six digits
+        address1:
+          type: string
+          maxLength: 100
+          nullable: true
+        address2:
+          type: string
+          maxLength: 100
+          nullable: true
+        city:
+          type: string
+          maxLength: 50
+          nullable: true
+        state:
+          type: string
+          maxLength: 2
+          nullable: true
+          pattern: '^[a-zA-Z]{2}$'
+          description: Limited to USPS-defined two-letter abbreviations
+        zip:
+          type: string
+          maxLength: 5
+          nullable: true
+          pattern: '^[0-9]{5}$'
+          description: Limited to five digits
+        geographyType:
+          type: integer
+          oneOf:
+            $ref: '#/components/schemas/GeographyType'
+          nullable: true
+        dateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        dateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        userId:
+          type: string
+          maxLength: 32
+          description: User Id
+        dateDeleted:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date deleted
+    Inventory:
+      type: object
+      properties:
+        inventoryId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        projectId:
+          type: string
+          maxLength: 32
+          description: Must match a ProjectId in ProjectCoC.csv
+        coCCode:
+          type: string
+          maxLength: 6
+          nullable: true
+          description: Must match a CoCCode in ProjectCoC.csv for the same ProjectID
+        householdType:
+          type: integer
+          description: Household type
+          oneOf:
+            $ref: '#/components/schemas/HouseholdType'
+        availability:
+          type: integer
+          nullable: true
+          description: Availability status
+          oneOf:
+            $ref: '#/components/schemas/Availability'
+        unitInventory:
+          type: integer
+          description: Unit inventory
+        bedInventory:
+          type: integer
+          description: Bed inventory
+        cHVetBedInventory:
+          type: integer
+          nullable: true
+          description: Chronic homeless veteran bed inventory
+        youthVetBedInventory:
+          type: integer
+          nullable: true
+          description: Youth veteran bed inventory
+        vetBedInventory:
+          type: integer
+          nullable: true
+          description: Veteran bed inventory
+        cHYouthBedInventory:
+          type: integer
+          nullable: true
+          description: Chronic homeless youth bed inventory
+        youthBedInventory:
+          type: integer
+          nullable: true
+          description: Youth bed inventory
+        cHBedInventory:
+          type: integer
+          nullable: true
+          description: Chronic homeless bed inventory
+        otherBedInventory:
+          type: integer
+          nullable: true
+          description: Other bed inventory
+        eSBedType:
+          type: integer
+          nullable: true
+          description: Emergency shelter bed type
+          oneOf:
+            $ref: '#/components/schemas/BedType'
+        inventoryStartDate:
+          type: string
+          format: date
+          description: Inventory start date
+        inventoryEndDate:
+          type: string
+          format: date
+          nullable: true
+          description: Inventory end date
+        dateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        dateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        userId:
+          type: string
+          maxLength: 32
+          description: User ID
+        dateDeleted:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date deleted
+    Affiliation:
+      type: object
+      properties:
+        affiliationId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        projectId:
+          type: string
+          maxLength: 32
+          description: Must match a projectId in Project where (ProjectType = 6) or (ProjectType = 13 and RRHSubType = 1)
+        resProjectId:
+          type: string
+          maxLength: 32
+          description: Must match a record in Project where ProjectType = 0, 1, 2, 3, 8, 9, 10, or 13. If ProjectType = 13, RRHSubType must be 2.
+        dateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        dateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        userId:
+          type: string
+          maxLength: 32
+          description: User Id
+        dateDeleted:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date deleted
+    HMISParticipation:
+      type: object
+      properties:
+        hmisParticipationId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        projectId:
+          type: string
+          maxLength: 32
+          description: Must match a projectId in Projects
+        hmisParticipationType:
+          type: integer
+          description: HMISParticipationType
+          oneOf:
+            $ref: '#/components/schemas/HMISParticipationType'
+        hmisParticipationStatusStartDate:
+          type: string
+          format: date
+          description: HMISParticipation status start date
+        hmisParticipationStatusEndDate:
+          type: string
+          format: date
+          nullable: true
+          description: HMISParticipation status end date
+        dateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        dateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        userId:
+          type: string
+          maxLength: 32
+          description: User Id
+        dateDeleted:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date deleted
+    CEParticipation:
+      type: object
+      properties:
+        ceParticipationId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        projectId:
+          type: string
+          maxLength: 32
+          description: Must match a projectId in Projects
+        accessPoint:
+          type: integer
+          description: Access point
+          oneOf:
+            $ref: '#/components/schemas/NoYes'
+        preventionAssessment:
+          type: integer
+          nullable: true
+          description: Prevention assessment
+          oneOf:
+            $ref: '#/components/schemas/NoYes'
+        crisisAssessment:
+          type: integer
+          nullable: true
+          description: Crisis assessment
+          oneOf:
+            $ref: '#/components/schemas/NoYes'
+        housingAssessment:
+          type: integer
+          nullable: true
+          description: Housing assessment
+          oneOf:
+            $ref: '#/components/schemas/NoYes'
+        directServices:
+          type: integer
+          nullable: true
+          description: Direct services
+          oneOf:
+            $ref: '#/components/schemas/NoYes'
+        receivesReferrals:
+          type: integer
+          description: Receives referrals
+          oneOf:
+            $ref: '#/components/schemas/NoYes'
+        ceParticipationStatusStartDate:
+          type: string
+          format: date
+          description: CEParticipation status start date
+        ceParticipationStatusEndDate:
+          type: string
+          format: date
+          nullable: true
+          description: CEParticipation status end date
+        dateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        dateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        userId:
+          type: string
+          maxLength: 32
+          description: User ID
+        dateDeleted:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date deleted
+    Exit:
+      type: object
+      properties:
+        exitId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        enrollmentId:
+          type: string
+          maxLength: 32
+          description: Enrollment Id
+        personalId:
+          type: string
+          maxLength: 32
+          description: Personal Id
+        exitDate:
+          type: string
+          format: date
+          description: Exit date
+        destination:
+          type: integer
+          description: Destination
+          $ref: '#/components/schemas/LivingSituation'
+        destinationSubsidyType:
+          type: integer
+          nullable: true
+          description: Destination subsidy type
+          $ref: '#/components/schemas/RentalSubsidyType'
+        otherDestination:
+          type: string
+          maxLength: 50
+          nullable: true
+          description: Other destination
+        housingAssessment:
+          type: integer
+          description: Housing assessment at exit
+          $ref: '#/components/schemas/HousingAssesmentAtExit'
+        subsidyInformation:
+          type: integer
+          nullable: true
+          description: Includes data for W5.A and W5.B.
+          $ref: '#/components/schemas/SubsidyInformation'
+        projectCompletionStatus:
+          type: integer
+          description: Project completion status
+          $ref: '#/components/schemas/ProjectCompletionStatus'
+        earlyExitReason:
+          type: integer
+          nullable: true
+          description: Expelled reason
+          $ref: '#/components/schemas/ExpelledReason'
+        exchangeForSex:
+          type: integer
+          description: Exchange for sex
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        exchangeForSexPastThreeMonths:
+          type: integer
+          nullable: true
+          description: Exchange for sex past three months
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        countOfExchangeForSex:
+          type: integer
+          nullable: true
+          description: Count of exchange for sex
+          $ref: '#/components/schemas/CountExchangeForSex'
+        askedOrForcedToExchangeForSex:
+          type: integer
+          nullable: true
+          description: Asked or forced to exchange for sex
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        askedOrForcedToExchangeForSexPastThreeMonths:
+          type: integer
+          nullable: true
+          description: Asked or forced to exchange for sex past three months
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        workplaceViolenceThreats:
+          type: integer
+          description: Workplace violence threats
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        workplacePromiseDifference:
+          type: integer
+          description: Workplace promise difference
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        coercedToContinueWork:
+          type: integer
+          nullable: true
+          description: Coerced to continue work
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        laborExploitPastThreeMonths:
+          type: integer
+          nullable: true
+          description: Labor exploit past three months
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        counselingReceived:
+          type: integer
+          description: Counseling received
+          $ref: '#/components/schemas/NoYesMissing'
+        individualCounseling:
+          type: integer
+          nullable: true
+          description: Individual counseling
+          $ref: '#/components/schemas/NoYesMissing'
+        familyCounseling:
+          type: integer
+          nullable: true
+          description: Family counseling
+          $ref: '#/components/schemas/NoYesMissing'
+        groupCounseling:
+          type: integer
+          nullable: true
+          description: Group counseling
+          $ref: '#/components/schemas/NoYesMissing'
+        sessionCountAtExit:
+          type: integer
+          nullable: true
+          description: Session count at exit
+        postExitCounselingPlan:
+          type: integer
+          description: Post exit counseling plan
+          $ref: '#/components/schemas/NoYesMissing'
+        sessionsInPlan:
+          type: integer
+          nullable: true
+          description: Sessions in plan
+        destinationSafeClient:
+          type: integer
+          description: Destination safe for client
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        destinationSafeWorker:
+          type: integer
+          description: Destination safe for worker
+          $ref: '#/components/schemas/WorkerResponse'
+        posAdultConnections:
+          type: integer
+          description: Positive adult connections
+          $ref: '#/components/schemas/WorkerResponse'
+        posPeerConnections:
+          type: integer
+          description: Positive peer connections
+          $ref: '#/components/schemas/WorkerResponse'
+        posCommunityConnections:
+          type: integer
+          description: Positive community connections
+          $ref: '#/components/schemas/WorkerResponse'
+        aftercareDate:
+          type: string
+          format: date
+          nullable: true
+          description: Aftercare date
+        aftercareProvided:
+          type: integer
+          nullable: true
+          description: Aftercare provided
+          $ref: '#/components/schemas/AftercareProvided'
+        emailSocialMedia:
+          type: integer
+          nullable: true
+          description: Email or social media contact
+          $ref: '#/components/schemas/NoYesMissing'
+        telephone:
+          type: integer
+          nullable: true
+          description: Telephone contact
+          $ref: '#/components/schemas/NoYesMissing'
+        inPersonIndividual:
+          type: integer
+          nullable: true
+          description: In-person individual contact
+          $ref: '#/components/schemas/NoYesMissing'
+        inPersonGroup:
+          type: integer
+          nullable: true
+          description: In-person group contact
+          $ref: '#/components/schemas/NoYesMissing'
+        cmExitReason:
+          type: integer
+          nullable: true
+          description: Case management exit reason
+          $ref: '#/components/schemas/CMExitReason'
+        dateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        dateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        userId:
+          type: string
+          maxLength: 32
+          description: User ID
+        dateDeleted:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date deleted
+    IncomeBenefits:
+      type: object
+      properties:
+        incomeBenefitsId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        enrollmentId:
+          type: string
+          maxLength: 32
+          description: Enrollment ID
+        personalId:
+          type: string
+          maxLength: 32
+          description: Personal ID
+        informationDate:
+          type: string
+          format: date
+          description: Information date
+        incomeFromAnySource:
+          type: integer
+          description: Income from any source
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        totalMonthlyIncome:
+          type: number
+          format: double
+          nullable: true
+          description: Total monthly income
+        earned:
+          type: integer
+          nullable: true
+          description: Earned
+          $ref: '#/components/schemas/NoYesMissing'
+        earnedAmount:
+          type: number
+          format: double
+          nullable: true
+          description: Earned amount
+        unemployment:
+          type: integer
+          nullable: true
+          description: Unemployment
+          $ref: '#/components/schemas/NoYesMissing'
+        unemploymentAmount:
+          type: number
+          format: double
+          nullable: true
+          description: Unemployment amount
+        ssi:
+          type: integer
+          nullable: true
+          description: SSI
+          $ref: '#/components/schemas/NoYesMissing'
+        ssiAmount:
+          type: number
+          format: double
+          nullable: true
+          description: SSI amount
+        ssdi:
+          type: integer
+          nullable: true
+          description: SSDI
+          $ref: '#/components/schemas/NoYesMissing'
+        ssdiAmount:
+          type: number
+          format: double
+          nullable: true
+          description: SSDI amount
+        vaDisabilityService:
+          type: integer
+          nullable: true
+          description: VA Disability Service
+          $ref: '#/components/schemas/NoYesMissing'
+        vaDisabilityServiceAmount:
+          type: number
+          format: double
+          nullable: true
+          description: VA Disability Service amount
+        vaDisabilityNonService:
+          type: integer
+          nullable: true
+          description: VA Disability Non-Service
+          $ref: '#/components/schemas/NoYesMissing'
+        vaDisabilityNonServiceAmount:
+          type: number
+          format: double
+          nullable: true
+          description: VA Disability Non-Service amount
+        privateDisability:
+          type: integer
+          nullable: true
+          description: Private Disability
+          $ref: '#/components/schemas/NoYesMissing'
+        privateDisabilityAmount:
+          type: number
+          format: double
+          nullable: true
+          description: Private Disability amount
+        workersComp:
+          type: integer
+          nullable: true
+          description: Workers Compensation
+          $ref: '#/components/schemas/NoYesMissing'
+        workersCompAmount:
+          type: number
+          format: double
+          nullable: true
+          description: Workers Compensation amount
+        tanf:
+          type: integer
+          nullable: true
+          description: TANF
+          $ref: '#/components/schemas/NoYesMissing'
+        tanfAmount:
+          type: number
+          format: double
+          nullable: true
+          description: TANF amount
+        ga:
+          type: integer
+          nullable: true
+          description: General Assistance (GA)
+          $ref: '#/components/schemas/NoYesMissing'
+        gaAmount:
+          type: number
+          format: double
+          nullable: true
+          description: General Assistance amount
+        socSecRetirement:
+          type: integer
+          nullable: true
+          description: Social Security Retirement
+          $ref: '#/components/schemas/NoYesMissing'
+        socSecRetirementAmount:
+          type: number
+          format: double
+          nullable: true
+          description: Social Security Retirement amount
+        pension:
+          type: integer
+          nullable: true
+          description: Pension
+          $ref: '#/components/schemas/NoYesMissing'
+        pensionAmount:
+          type: number
+          format: double
+          nullable: true
+          description: Pension amount
+        childSupport:
+          type: integer
+          nullable: true
+          description: Child Support
+          $ref: '#/components/schemas/NoYesMissing'
+        childSupportAmount:
+          type: number
+          format: double
+          nullable: true
+          description: Child Support amount
+        alimony:
+          type: integer
+          nullable: true
+          description: Alimony
+          $ref: '#/components/schemas/NoYesMissing'
+        alimonyAmount:
+          type: number
+          format: double
+          nullable: true
+          description: Alimony amount
+        otherIncomeSource:
+          type: integer
+          nullable: true
+          description: Other Income Source
+          $ref: '#/components/schemas/NoYesMissing'
+        otherIncomeAmount:
+          type: number
+          format: double
+          nullable: true
+          description: Other Income amount
+        otherIncomeSourceIdentify:
+          type: string
+          maxLength: 50
+          nullable: true
+          description: Identify other income source (if OtherIncomeSource = 1)
+        benefitsFromAnySource:
+          type: integer
+          description: Benefits from any source
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        snap:
+          type: integer
+          nullable: true
+          description: SNAP
+          $ref: '#/components/schemas/NoYesMissing'
+        wic:
+          type: integer
+          nullable: true
+          description: WIC
+          $ref: '#/components/schemas/NoYesMissing'
+        tanfChildCare:
+          type: integer
+          nullable: true
+          description: TANF Child Care
+          $ref: '#/components/schemas/NoYesMissing'
+        tanfTransportation:
+          type: integer
+          nullable: true
+          description: TANF Transportation
+          $ref: '#/components/schemas/NoYesMissing'
+        otherTANF:
+          type: integer
+          nullable: true
+          description: Other TANF
+          $ref: '#/components/schemas/NoYesMissing'
+        otherBenefitsSource:
+          type: integer
+          nullable: true
+          description: Other Benefits Source
+          $ref: '#/components/schemas/NoYesMissing'
+        otherBenefitsSourceIdentify:
+          type: string
+          maxLength: 50
+          nullable: true
+          description: Identify other benefits source (if OtherBenefitsSource = 1)
+        insuranceFromAnySource:
+          type: integer
+          description: Insurance from any source
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        medicaid:
+          type: integer
+          nullable: true
+          description: Medicaid
+          $ref: '#/components/schemas/NoYesMissing'
+        noMedicaidReason:
+          type: integer
+          nullable: true
+          description: Reason for no Medicaid (if Medicaid = 0)
+          $ref: '#/components/schemas/ReasonNotInsured'
+        medicare:
+          type: integer
+          nullable: true
+          description: Medicare
+        noMedicareReason:
+          type: integer
+          nullable: true
+          description: Reason for no Medicare (if Medicare = 0)
+          $ref: '#/components/schemas/ReasonNotInsured'
+        schip:
+          type: integer
+          nullable: true
+          description: SCHIP
+          $ref: '#/components/schemas/NoYesMissing'
+        noSchipReason:
+          type: integer
+          nullable: true
+          description: Reason for no SCHIP (if SCHIP = 0)
+          $ref: '#/components/schemas/ReasonNotInsured'
+        vhaServices:
+          type: integer
+          nullable: true
+          description: VHA Services
+          $ref: '#/components/schemas/NoYesMissing'
+        noVhaReason:
+          type: integer
+          nullable: true
+          description: Reason for no VHA Services (if VHAServices = 0)
+          $ref: '#/components/schemas/ReasonNotInsured'
+        employerProvided:
+          type: integer
+          nullable: true
+          description: Employer Provided Insurance
+          $ref: '#/components/schemas/NoYesMissing'
+        noEmployerProvidedReason:
+          type: integer
+          nullable: true
+          description: Reason for no Employer Provided Insurance (if EmployerProvided = 0)
+          $ref: '#/components/schemas/ReasonNotInsured'
+        cobra:
+          type: integer
+          nullable: true
+          description: COBRA
+          $ref: '#/components/schemas/NoYesMissing'
+        noCobraReason:
+          type: integer
+          nullable: true
+          description: Reason for no COBRA (if COBRA = 0)
+          $ref: '#/components/schemas/ReasonNotInsured'
+        privatePay:
+          type: integer
+          nullable: true
+          description: Private Pay Insurance
+          $ref: '#/components/schemas/NoYesMissing'
+        noPrivatePayReason:
+          type: integer
+          nullable: true
+          description: Reason for no Private Pay Insurance (if PrivatePay = 0)
+          $ref: '#/components/schemas/ReasonNotInsured'
+        stateHealthIns:
+          type: integer
+          nullable: true
+          description: State Health Insurance
+          $ref: '#/components/schemas/NoYesMissing'
+        noStateHealthInsReason:
+          type: integer
+          nullable: true
+          description: Reason for no State Health Insurance (if StateHealthIns = 0)
+          $ref: '#/components/schemas/ReasonNotInsured'
+        indianHealthServices:
+          type: integer
+          nullable: true
+          description: Indian Health Services
+          $ref: '#/components/schemas/NoYesMissing'
+        noIndianHealthServicesReason:
+          type: integer
+          nullable: true
+          description: Reason for no Indian Health Services (if IndianHealthServices = 0)
+          $ref: '#/components/schemas/ReasonNotInsured'
+        otherInsurance:
+          type: integer
+          nullable: true
+          description: Other Insurance
+          $ref: '#/components/schemas/NoYesMissing'
+        otherInsuranceIdentify:
+          type: string
+          maxLength: 50
+          nullable: true
+          description: Identify other insurance (if OtherInsurance = 1)
+        adap:
+          type: integer
+          nullable: true
+          description: ADAP
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        noAdapReason:
+          type: integer
+          nullable: true
+          description: Reason for no ADAP (if ADAP = 0)
+          $ref: '#/components/schemas/NoAssistanceReason'
+        ryanWhiteMedDent:
+          type: integer
+          nullable: true
+          description: Ryan White Medical/Dental
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        noRyanWhiteReason:
+          type: integer
+          nullable: true
+          description: Reason for no Ryan White Medical/Dental (if RyanWhiteMedDent = 0)
+          $ref: '#/components/schemas/NoAssistanceReason'
+        connectionWithSOAR:
+          type: integer
+          description: Connection with SOAR
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        dataCollectionStage:
+          type: integer
+          description: Data Collection Stage
+          $ref: '#/components/schemas/DataCollectionStage'
+        dateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        dateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        userId:
+          type: string
+          maxLength: 32
+          description: User Id
+        dateDeleted:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date deleted
+    HealthAndDV:
+      type: object
+      properties:
+        healthAndDVId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        enrollmentId:
+          type: string
+          maxLength: 32
+          description: Enrollment ID
+        personalId:
+          type: string
+          maxLength: 32
+          description: Personal ID
+        informationDate:
+          type: string
+          format: date
+          description: Information date
+        domesticViolenceSurvivor:
+          type: integer
+          description: Domestic violence survivor
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        whenOccurred:
+          type: integer
+          nullable: true
+          description: When domestic violence occurred (if DomesticViolenceSurvivor = 1)
+          $ref: '#/components/schemas/WhenDVOccurred'
+        currentlyFleeing:
+          type: integer
+          nullable: true
+          description: Currently fleeing (if DomesticViolenceSurvivor = 1)
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        generalHealthStatus:
+          type: integer
+          nullable: true
+          description: General health status
+          $ref: '#/components/schemas/HealthStatus'
+        dentalHealthStatus:
+          type: integer
+          nullable: true
+          description: Dental health status
+          $ref: '#/components/schemas/HealthStatus'
+        mentalHealthStatus:
+          type: integer
+          nullable: true
+          description: Mental health status
+          $ref: '#/components/schemas/HealthStatus'
+        pregnancyStatus:
+          type: integer
+          description: Pregnancy status
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        dueDate:
+          type: string
+          format: date
+          nullable: true
+          description: Due date (if PregnancyStatus = 1)
+        dataCollectionStage:
+          type: integer
+          description: Data collection stage
+          $ref: '#/components/schemas/DataCollectionStage'
+        dateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        dateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        userId:
+          type: string
+          maxLength: 32
+          description: User ID
+        dateDeleted:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date deleted
+    EmploymentEducation:
+      type: object
+      properties:
+        employmentEducationId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        enrollmentId:
+          type: string
+          maxLength: 32
+          description: Enrollment Id
+        personalId:
+          type: string
+          maxLength: 32
+          description: Personal Id
+        informationDate:
+          type: string
+          format: date
+          description: Information date
+        lastGradeCompleted:
+          type: integer
+          nullable: true
+          description: Last grade completed
+          $ref: '#/components/schemas/LastGradeCompleted'
+        schoolStatus:
+          type: integer
+          nullable: true
+          description: School status
+          $ref: '#/components/schemas/SchoolStatus'
+        employed:
+          type: integer
+          description: Employed
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        employmentType:
+          type: integer
+          nullable: true
+          description: Employment type (if Employed = 1)
+          $ref: '#/components/schemas/EmploymentType'
+        notEmployedReason:
+          type: integer
+          nullable: true
+          description: Reason for not being employed (if Employed = 0)
+          $ref: '#/components/schemas/NotEmployedReason'
+        dataCollectionStage:
+          type: integer
+          description: Data collection stage
+          $ref: '#/components/schemas/DataCollectionStage'
+        dateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        dateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        userId:
+          type: string
+          maxLength: 32
+          description: User ID
+        dateDeleted:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date deleted
+    Disabilities:
+      type: object
+      properties:
+        disabilitiesId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        enrollmentId:
+          type: string
+          maxLength: 32
+          description: Enrollment ID
+        personalId:
+          type: string
+          maxLength: 32
+          description: Personal ID
+        informationDate:
+          type: string
+          format: date
+          description: Information date
+        disabilityType:
+          type: integer
+          description: Disability type
+          $ref: '#/components/schemas/DisabilityType'
+        disabilityResponse:
+          type: integer
+          description: Disability response
+        indefiniteAndImpairs:
+          type: integer
+          nullable: true
+          description: Indefinite and impairs
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        tCellCountAvailable:
+          type: integer
+          nullable: true
+          description: T-cell count available (if DisabilityType = 8 AND DisabilityResponse = 1)
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        tCellCount:
+          type: integer
+          nullable: true
+          description: T-cell count (if TCellCountAvailable = 1)
+        tCellSource:
+          type: integer
+          nullable: true
+          description: T-cell source (if TCellCount is not null)
+          $ref: '#/components/schemas/TCellSourceViralLoad'
+        viralLoadAvailable:
+          type: integer
+          nullable: true
+          description: Viral load available (if DisabilityType = 8 AND DisabilityResponse = 1)
+          $ref: '#/components/schemas/ViralLoadAvailable'
+        viralLoad:
+          type: integer
+          nullable: true
+          description: Viral load (if ViralLoadAvailable = 1)
+        viralLoadSource:
+          type: integer
+          nullable: true
+          description: Viral load source (if ViralLoad is not null)
+          $ref: '#/components/schemas/TCellSourceViralLoad'
+        antiRetroviral:
+          type: integer
+          nullable: true
+          description: Anti-retroviral (if DisabilityType = 8 AND DisabilityResponse = 1)
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        dataCollectionStage:
+          type: integer
+          description: Data collection stage
+          $ref: '#/components/schemas/DataCollectionStage'
+        dateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        dateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        userId:
+          type: string
+          maxLength: 32
+          description: User ID
+        dateDeleted:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date deleted
+    Services:
+      type: object
+      properties:
+        servicesId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        enrollmentId:
+          type: string
+          maxLength: 32
+          description: Enrollment ID
+        personalId:
+          type: string
+          maxLength: 32
+          description: Personal ID
+        dateProvided:
+          type: string
+          format: date
+          description: Date provided
+        recordType:
+          type: integer
+          description: Record type
+          $ref: '#/components/schemas/RecordType'
+        typeProvided:
+          type: integer
+          description: Type provided
+          oneOf:
+            - $ref: '#/components/schemas/PATHServices'
+            - $ref: '#/components/schemas/RHYServices'
+            - $ref: '#/components/schemas/HOPWAServices'
+            - $ref: '#/components/schemas/SSVFServices'
+            - $ref: '#/components/schemas/HOPWAFinancialAssistance'
+            - $ref: '#/components/schemas/PATHReferralOutcome'
+            - $ref: '#/components/schemas/PATHReferral'
+            - $ref: '#/components/schemas/BedNight'
+            - $ref: '#/components/schemas/VoucherTracking'
+            - $ref: '#/components/schemas/MovingOnAssistance'
+        otherTypeProvided:
+          type: string
+          maxLength: 50
+          nullable: true
+          description: Other type provided (if RecordType = 144 and TypeProvided = 6 or RecordType = 210 and TypeProvided = 12)
+        movingOnOtherType:
+          type: string
+          maxLength: 50
+          nullable: true
+          description: Moving on other type (if RecordType = 300 and TypeProvided = 5)
+        subTypeProvided:
+          type: integer
+          nullable: true
+          description: Subtype provided (if RecordType = 144 and TypeProvided = 3, 4, or 5)
+          oneOf:
+            - $ref: '#/components/schemas/SSVFSubType3'
+            - $ref: '#/components/schemas/SSVFSubType4'
+            - $ref: '#/components/schemas/SSVFSubType5'
+        faAmount:
+          type: number
+          format: double
+          nullable: true
+          description: Financial assistance amount (if RecordType = 151 or 152)
+        faStartDate:
+          type: string
+          format: date
+          nullable: true
+          description: Financial assistance start date (if RecordType = 151 or 152)
+        faEndDate:
+          type: string
+          format: date
+          nullable: true
+          description: Financial assistance end date (if RecordType = 151 or 152)
+        referralOutcome:
+          type: integer
+          nullable: true
+          description: Referral outcome (if RecordType = 161)
+          $ref: '#/components/schemas/PATHReferralOutcome'
+        dateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        dateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        userId:
+          type: string
+          maxLength: 32
+          description: User ID
+        dateDeleted:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date deleted
+    CurrentLivingSituation:
+      type: object
+      properties:
+        currentLivingSitId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        enrollmentId:
+          type: string
+          maxLength: 32
+          description: Enrollment ID
+        personalId:
+          type: string
+          maxLength: 32
+          description: Personal ID
+        informationDate:
+          type: string
+          format: date
+          description: Information date
+        currentLivingSituation:
+          type: integer
+          description: Current living situation
+          $ref: '#/components/schemas/LivingSituation'
+        clsSubsidyType:
+          type: integer
+          nullable: true
+          description: Current living situation subsidy type (if CurrentLivingSituation = 435)
+          $ref: '#/components/schemas/RentalSubsidyTypes'
+        verifiedBy:
+          type: string
+          maxLength: 100
+          nullable: true
+          description: Verified by (if ProjectType = 14)
+        leaveSituation14Days:
+          type: integer
+          nullable: true
+          description: Leave situation in 14 days (if CurrentLivingSituation in [215, 206, 207, 225, 204, 205, 302, 329, 314, 332, 336, 335, 410, 435, 421, 411])
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        subsequentResidence:
+          type: integer
+          nullable: true
+          description: Subsequent residence (if LeaveSituation14Days = 1)
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        resourcesToObtain:
+          type: integer
+          nullable: true
+          description: Resources to obtain (if LeaveSituation14Days = 1)
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        leaseOwn60Day:
+          type: integer
+          nullable: true
+          description: Lease own in 60 days (if LeaveSituation14Days = 1)
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        movedTwoOrMore:
+          type: integer
+          nullable: true
+          description: Moved two or more times (if LeaveSituation14Days = 1)
+          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        locationDetails:
+          type: string
+          maxLength: 250
+          nullable: true
+          description: Location details
+        dateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        dateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        userId:
+          type: string
+          maxLength: 32
+          description: User ID
+        dateDeleted:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date deleted
+    Assessments:
+      type: object
+      properties:
+        assessmentId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        enrollmentId:
+          type: string
+          maxLength: 32
+          description: Enrollment Id
+        personalId:
+          type: string
+          maxLength: 32
+          description: Personal Id
+        assessmentDate:
+          type: string
+          format: date
+          description: Assessment date
+        assessmentLocation:
+          type: string
+          maxLength: 250
+          nullable: true
+          description: Assessment location
+        assessmentType:
+          type: integer
+          nullable: true
+          description: Assessment type
+          $ref: '#/components/schemas/AssessmentType'
+        assessmentLevel:
+          type: integer
+          nullable: true
+          description: Assessment level
+          $ref: '#/components/schemas/AssessmentLevel'
+        prioritizationStatus:
+          type: integer
+          nullable: true
+          description: Prioritization status
+          $ref: '#/components/schemas/PrioritizationStatus'
+        dateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        dateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        userId:
+          type: string
+          maxLength: 32
+          description: User ID
+        dateDeleted:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date deleted
+    AssessmentQuestions:
+      type: object
+      properties:
+        assessmentQuestionId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        assessmentId:
+          type: string
+          maxLength: 32
+          description: Assessment ID
+        enrollmentId:
+          type: string
+          maxLength: 32
+          description: Enrollment ID
+        personalId:
+          type: string
+          maxLength: 32
+          description: Personal ID
+        assessmentQuestionGroup:
+          type: string
+          maxLength: 250
+          nullable: true
+          description: Assessment question group (locally determined)
+        assessmentQuestionOrder:
+          type: integer
+          nullable: true
+          description: Assessment question order (locally determined)
+        assessmentQuestion:
+          type: string
+          maxLength: 250
+          description: Assessment question (cannot be null if AssessmentQuestions.csv is populated)
+        assessmentAnswer:
+          type: string
+          maxLength: 500
+          nullable: true
+          description: Assessment answer (locally determined)
+        dateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        dateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        userId:
+          type: string
+          maxLength: 32
+          description: User ID
+        dateDeleted:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date deleted
+    Event:
+      type: object
+      properties:
+        eventId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        enrollmentId:
+          type: string
+          maxLength: 32
+          description: Enrollment Id
+        personalId:
+          type: string
+          maxLength: 32
+          description: Personal Id
+        eventDate:
+          type: string
+          format: date
+          description: Event date
+        event:
+          type: integer
+          description: Event type
+          $ref: '#/components/schemas/Event'
+        probSolDivRRResult:
+          type: integer
+          nullable: true
+          description: Problem-solving/diversion/rapid resolution result
+          $ref: '#/components/schemas/NoYesMissing'
+        referralCaseManageAfter:
+          type: integer
+          nullable: true
+          description: Referral for case management after event
+          $ref: '#/components/schemas/NoYesMissing'
+        locationCrisisOrPHHousing:
+          type: string
+          maxLength: 250
+          nullable: true
+          description: Location of crisis or permanent housing
+        referralResult:
+          type: integer
+          nullable: true
+          description: Referral result
+          $ref: '#/components/schemas/ReferralResult'
+        resultDate:
+          type: string
+          format: date
+          nullable: true
+          description: Result date (if ReferralResult is not null)
+        dateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        dateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        userId:
+          type: string
+          maxLength: 32
+          description: User ID
+        dateDeleted:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date deleted
+    YouthEducationStatus:
+      type: object
+      properties:
+        youthEducationStatusId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        enrollmentId:
+          type: string
+          maxLength: 32
+          description: Enrollment ID
+        personalId:
+          type: string
+          maxLength: 32
+          description: Personal ID
+        informationDate:
+          type: string
+          format: date
+          description: Information date
+        currentSchoolAttend:
+          type: integer
+          description: Current school attendance
+          $ref: '#/components/schemas/CurrentSchoolAttend'
+        mostRecentEdStatus:
+          type: integer
+          nullable: true
+          description: Most recent education status (if CurrentSchoolAttend = 0)
+          $ref: '#/components/schemas/MostRecentEdStatus'
+        currentEdStatus:
+          type: integer
+          nullable: true
+          description: Current education status (if CurrentSchoolAttend = 1 or 2)
+          $ref: '#/components/schemas/CurrentEdStatus'
+        dataCollectionStage:
+          type: integer
+          description: Data collection stage
+          $ref: '#/components/schemas/DataCollectionStage'
+        dateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        dateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        userId:
+          type: string
+          maxLength: 32
+          description: User ID
+        dateDeleted:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date deleted
