@@ -86,7 +86,7 @@ paths:
         - YouthEducationStatus
       summary: Update an existing YouthEducationStatus record
       parameters:
-        - name: youthEducationStatusId
+        - name: YouthEducationStatusID
           in: path
           required: true
           description: Unique identifier for the YouthEducationStatus to update
