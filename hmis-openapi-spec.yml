@@ -15,7 +15,7 @@ tags:
   - name: Enrollments
     description: Enrollments are used to represent the relationship between a client and a project. Each enrollment has a unique EnrollmentID.
   - name: Users
-    description: Users are used to represent the individuals who have access to the system. Each user has a unique UserID.
+    description: Users are used to represent the individuals who have access to the system. Each user has a unique UserId.
   - name: Organizations
     description: Organizations are used to represent the entities that manage projects and users. Each organization has a unique OrganizationID.
   - name: Funders
@@ -376,7 +376,7 @@ paths:
         '404':
           description: Assessment not found
 
-  /currentlivingsituation:
+  /currentLivingSituation:
     post:
       summary: Create a new CurrentLivingSituation record
       tags:
@@ -393,7 +393,7 @@ paths:
         '400':
           description: Invalid input provided
 
-  /currentlivingsituation/{currentLivingSitId}:
+  /currentLivingSituation/{currentLivingSitId}:
     get:
       tags:
         - CurrentLivingSituation
@@ -1317,13 +1317,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /funders/{funderId}:
+  /funders/{FunderId}:
     get:
       tags:
         - Funders
       summary: Get funder data by Funder ID
       parameters:
-        - name: FunderID
+        - name: FunderId
           in: path
           required: true
           description: Unique identifier for a funder
@@ -1345,7 +1345,7 @@ paths:
         - Funders
       summary: Update an existing funder record
       parameters:
-        - name: FunderID
+        - name: FunderId
           in: path
           required: true
           description: Unique identifier for the funder to update
@@ -1371,7 +1371,7 @@ paths:
         - Funders
       summary: Delete a funder record
       parameters:
-        - name: FunderID
+        - name: FunderId
           in: path
           required: true
           description: Unique identifier for the funder to delete
@@ -1485,7 +1485,7 @@ paths:
         '400':
           description: Invalid input provided
 
-  /enrollments/{EnrollmentId}:
+  /enrollments/{EnrollmentID}:
     get:
       tags:
         - Enrollments
@@ -1569,7 +1569,7 @@ paths:
         '400':
           description: Invalid input provided
 
-  /projects/{projectId}:
+  /projects/{ProjectID}:
     get:
       tags:
         - Projects
@@ -1653,7 +1653,7 @@ paths:
         '400':
           description: Invalid input provided
 
-  /organizations/{organizationId}:
+  /organizations/{OrganizationID}:
     get:
       tags:
         - Organizations
@@ -1737,13 +1737,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /users/{userId}:
+  /users/{UserId}:
     get:
       tags:
         - Users
-      summary: Get user data by their userId
+      summary: Get user data by their UserId
       parameters:
-        - name: UserID
+        - name: UserId
           in: path
           required: true
           description: Unique identifier for a user
@@ -1765,7 +1765,7 @@ paths:
         - Users
       summary: Update an existing user record
       parameters:
-        - name: UserID
+        - name: UserId
           in: path
           required: true
           description: Unique identifier for the user to update
@@ -1791,7 +1791,7 @@ paths:
         - Users
       summary: Delete a user record
       parameters:
-        - name: UserID
+        - name: UserId
           in: path
           required: true
           description: Unique identifier for the user to delete
@@ -1819,7 +1819,7 @@ paths:
           description: Client successfully created
         '400':
           description: Invalid input provided
-  /clients/{personalId}:
+  /clients/{PersonalID}:
     get:
       tags:
         - Clients
@@ -2830,6 +2830,9 @@ components:
         - title: "ANNUAL_ASSESSMENT"
           const: 5
           description: "Annual assessment"
+        - title: "POST_EXIT"
+          const: 5
+          description: "Post Exit"          
 
     PATHServices:
       type: integer
@@ -3193,7 +3196,7 @@ components:
 
     RHYNumberofYears:
       type: integer
-      description: "Number of years a client has been involved with RHY."
+      description: "Years formerly a ward of Child Welfare or Foster Care Agency."
       oneOf:
         - title: "LESS_THAN_ONE_YEAR"
           const: 1
@@ -3257,7 +3260,7 @@ components:
 
     CountExchangeForSex:
       type: integer
-      description: "Reports the frequency of exchanging sex."
+      description: "How may times ever received anything for sex."
       oneOf:
         - title: "1_TO_3"
           const: 1
@@ -4118,7 +4121,7 @@ components:
 
     IncarceratedAdult:
       type: integer
-      description: "Incarceration history of the adult."
+      description: "Incarcerated as adult (any adult in household)."
       oneOf:
         - title: "NOT_INCARCERATED"
           const: 0
@@ -4539,38 +4542,38 @@ components:
     Client:
       type: object
       properties:
-        personalId:
+        PersonalID:
           type: string
           description: Unique identifier for the client
           maxLength: 32
-        name:
+        Name:
           type: object
           properties:
-            firstName:
+            FirstName:
               type: string
               description: First name of the client
               nullable: true
               maxLength: 50
-            middleName:
+            MiddleName:
               type: string
               description: Middle name of the client
               nullable: true
               maxLength: 50
-            lastName:
+            LastName:
               type: string
               description: Last name of the client
               nullable: true
               maxLength: 50
-            nameSuffix:
+            NameSuffix:
               type: string
               description: Suffix of the client's name
               nullable: true
               maxLength: 50
-            nameDataQuality:
+            NameDataQuality:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NameDataQuality'
-        socialSecurity:
+        SSN:
           type: object
           properties:
             socialSecurityNumber:
@@ -4733,59 +4736,59 @@ components:
               nullable: true
               oneOf:
                 - $ref: '#/components/schemas/DischargeStatus'
-        dateCreated:
+        DateCreated:
           type: string
           format: datetime
-        dateUpdated:
+        DateUpdated:
           type: string
           format: datetime
-        userID:
+        UserId:
           type: string
           maxLength: 32
-        dateDeleted:
+        DateDeleted:
           type: string
           format: datetime
           nullable: true
     User:
       type: object
       properties:
-        userId:
+        UserId:
           type: string
           maxLength: 32
-        userFirstName:
+        UserFirstName:
           type: string
           maxLength: 50
-        userLastName:
+        UserLastName:
           type: string
           maxLength: 50
-        userPhone:
+        UserPhone:
           type: string
           pattern: '^[2-9][0-9]{2}[2-9][0-9]{2}[0-9]{4}$'
           maxLength: 10
-        userExtension:
+        UserExtension:
           type: string
           pattern: '^[0-9]{1,5}$'
           maxLength: 5
-        userEmail:
+        UserEmail:
           type: string
           format: email
           maxLength: 320
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
       required:
-        - userId
+        - UserId
 
     Organization:
       type: object
       properties:
-        organizationId:
+        OrganizationID:
           type: string
           maxLength: 32
         organizationName:
@@ -4800,145 +4803,145 @@ components:
           type: string
           maxLength: 200
           nullable: true
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
-        userId:
+        UserId:
           type: string
           maxLength: 32
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           nullable: true
       required:
-        - organizationId
+        - OrganizationID
 
     Project:
       type: object
       properties:
-        projectId:
+        ProjectID:
           type: string
           maxLength: 32
-        organizationId:
+        OrganizationID:
           type: string
           maxLength: 32
-        projectName:
+        ProjectName:
           type: string
           maxLength: 200
-        projectCommonName:
+        ProjectCommonName:
           type: string
           maxLength: 200
           nullable: true
-        operatingStartDate:
+        OperatingStartDate:
           type: string
           format: date
-        operatingEndDate:
+        OperatingEndDate:
           type: string
           format: date
           nullable: true
-        continuumProject:
+        ContinuumProject:
           type: integer
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        projectType:
+        ProjectType:
           type: integer
           oneOf:
             - ref: '#/components/schemas/ProjectType'
-        housingType:
+        HousingType:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/HousingType'
-        rRHSubType:
+        RRHSubType:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/RRHSubType'
-        residentialAffiliation:
+        RresidentialAffiliation:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        targetPopulation:
+        TargetPopulation:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/TargetPopulation'
-        hOPWAMedAssistedLivingFac:
+        HOPWAMedAssistedLivingFac:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/HOPWAMedAssistedLivingFac'
-        pITCount:
+        PITCount:
           type: integer
           nullable: true
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
-        userId:
+        UserId:
           type: string
           maxLength: 32
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           nullable: true
       required:
-        - projectId
+        - ProjectID
 
     Enrollment:
       type: object
       properties:
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
-        projectId:
+        ProjectID:
           type: string
           maxLength: 32
-        entryDate:
+        EntryDate:
           type: string
           format: date
-        householdID:
+        HouseholdID:
           type: string
           maxLength: 32
-        relationshipToHoH:
+        RelationshipToHoH:
           type: integer
           oneOf:
             - ref: '#/components/schemas/RelationshipToHoH'
-        enrollmentCoC:
+        EnrollmentCoC:
           type: string
           pattern: '^[A-Za-z]{2}-[0-9]{3}$'
           maxLength: 6
-        livingSituation:
+        LivingSituation:
           type: integer
           oneOf:
             - ref: '#/components/schemas/LivingSituation'
-        dateOfEngagement:
+        DateOfEngagement:
           type: string
           format: date
           nullable: true
-        moveInDate:
+        MoveInDate:
           type: string
           format: date
           nullable: true
-        dateOfPATHStatus:
+        DateOfPATHStatus:
           type: string
           format: date
           nullable: true
-        percentAMI:
+        PercentAMI:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/PercentAMI'
-        vAMCStation:
+        VAMCStation:
           type: string
           maxLength: 5
           oneOf:
@@ -4948,36 +4951,36 @@ components:
           nullable: true
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        rentalSubsidyType:
+        RentalSubsidyType:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/RentalSubsidyType'
-        lengthOfStay:
+        LengthOfStay:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/LengthOfStay'
-        lOSUnderThreshold:
+        LOSUnderThreshold:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        previousStreetESSH:
+        PreviousStreetESSH:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        dateToStreetESSH:
+        DateToStreetESSH:
           type: string
           format: date
           nullable: true
-        timesHomelessPastThreeYears:
+        TimesHomelessPastThreeYears:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/TimesHomelessPastThreeYears'
-        monthsHomelessPastThreeYears:
+        MonthsHomelessPastThreeYears:
           type: integer
           nullable: true
           oneOf:
@@ -4987,27 +4990,27 @@ components:
           nullable: true
           oneOf:
             - ref: '#/components/schemas/NoYesReasonsForMissingData'
-        clientEnrolledInPATH:
+        ClientEnrolledInPATH:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        reasonNotEnrolled:
+        ReasonNotEnrolled:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/ReasonNotEnrolled'
-        referralSource:
+        ReferralSource:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/ReferralSource'
-        eligibleForRHY:
+        EligibleForRHY:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        reasonNoServices:
+        ReasonNoServices:
           type: integer
           nullable: true
           oneOf:
@@ -5022,25 +5025,25 @@ components:
           nullable: true
           oneOf:
             - ref: '#/components/schemas/SexualOrientation'
-        formerWardChildWelfare:
+        FormerWardChildWelfare:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/NoYesReasonsForMissingData'
-        childWelfareYears:
+        ChildWelfareYears:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/ChildWelfareYears'
-        childWelfareMonths:
+        ChildWelfareMonths:
           type: integer
           nullable: true
-        formerWardJuvenileJustice:
+        FormerWardJuvenileJustice:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/NoYesReasonsForMissingData'
-        juvenileJusticeYears:
+        JuvenileJusticeYears:
           type: integer
           nullable: true
           oneOf:
@@ -5048,32 +5051,32 @@ components:
         juvenileJusticeMonths:
           type: integer
           nullable: true
-        unemploymentFam:
+        UnemploymentFam:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        mentalHealthDisorderFam:
+        MentalHealthDisorderFam:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        physicalDisabilityFam:
+        PhysicalDisabilityFam:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        alcoholDrugUseDisorderFam:
+        AlcoholDrugUseDisorderFam:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        insufficientIncome:
+        InsufficientIncome:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        incarceratedParent:
+        IncarceratedParent:
           type: integer
           nullable: true
           oneOf:
@@ -5081,17 +5084,17 @@ components:
         sSVF_HP_Targeting_Criteria:
           type: integer
           nullable: true
-        timeToHousingLoss:
+        TimeToHousingLoss:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/TimeToHousingLoss'
-        annualPercentAMI:
+        AnnualPercentAMI:
           type: integer
           nullable: true
           oneOf:
             - ref: '#/components/schemas/AnnualPercentAMI'
-        literalHomelessHistory:
+        LiteralHomelessHistory:
           type: integer
           nullable: true
           oneOf:
@@ -5184,16 +5187,16 @@ components:
           type: string
           maxLength: 100
           nullable: true
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
-        userId:
+        UserId:
           type: string
           maxLength: 32
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           nullable: true
@@ -5202,15 +5205,15 @@ components:
     Funder:
       type: object
       properties:
-        funderId:
+        FunderId:
           type: string
           maxLength: 32
           description: Unique identifier
-        projectId:
+        ProjectID:
           type: string
           maxLength: 32
           description: Must match a record in Project
-        fundingSource:
+        FundingSource:
           type: integer
           description: Funding source identifier
           oneOf:
@@ -5231,19 +5234,19 @@ components:
           type: string
           format: date
           description: End date
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           description: Date deleted
@@ -5254,10 +5257,10 @@ components:
           type: string
           maxLength: 32
           description: Unique identifier
-        projectId:
+        ProjectID:
           type: string
           maxLength: 32
-          description: Must match a ProjectId in Project
+          description: Must match a ProjectID in Project
         coCCode:
           type: string
           maxLength: 6
@@ -5298,19 +5301,19 @@ components:
           oneOf:
             $ref: '#/components/schemas/GeographyType'
           nullable: true
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User Id
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           nullable: true
@@ -5322,10 +5325,10 @@ components:
           type: string
           maxLength: 32
           description: Unique identifier
-        projectId:
+        ProjectID:
           type: string
           maxLength: 32
-          description: Must match a ProjectId in ProjectCoC.csv
+          description: Must match a ProjectID in ProjectCoC.csv
         coCCode:
           type: string
           maxLength: 6
@@ -5391,19 +5394,19 @@ components:
           format: date
           nullable: true
           description: Inventory end date
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           nullable: true
@@ -5415,27 +5418,27 @@ components:
           type: string
           maxLength: 32
           description: Unique identifier
-        projectId:
+        ProjectID:
           type: string
           maxLength: 32
-          description: Must match a projectId in Project where (ProjectType = 6) or (ProjectType = 13 and RRHSubType = 1)
-        resProjectId:
+          description: Must match a ProjectID in Project where (ProjectType = 6) or (ProjectType = 13 and RRHSubType = 1)
+        resProjectID:
           type: string
           maxLength: 32
           description: Must match a record in Project where ProjectType = 0, 1, 2, 3, 8, 9, 10, or 13. If ProjectType = 13, RRHSubType must be 2.
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User Id
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           nullable: true
@@ -5447,10 +5450,10 @@ components:
           type: string
           maxLength: 32
           description: Unique identifier
-        projectId:
+        ProjectID:
           type: string
           maxLength: 32
-          description: Must match a projectId in Projects
+          description: Must match a ProjectID in Projects
         hmisParticipationType:
           type: integer
           description: HMISParticipationType
@@ -5465,19 +5468,19 @@ components:
           format: date
           nullable: true
           description: HMISParticipation status end date
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User Id
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           nullable: true
@@ -5489,10 +5492,10 @@ components:
           type: string
           maxLength: 32
           description: Unique identifier
-        projectId:
+        ProjectID:
           type: string
           maxLength: 32
-          description: Must match a projectId in Projects
+          description: Must match a ProjectID in Projects
         accessPoint:
           type: integer
           description: Access point
@@ -5536,19 +5539,19 @@ components:
           format: date
           nullable: true
           description: CEParticipation status end date
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           nullable: true
@@ -5560,11 +5563,11 @@ components:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment Id
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal Id
@@ -5732,19 +5735,19 @@ components:
           nullable: true
           description: Case management exit reason
           $ref: '#/components/schemas/CMExitReason'
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           nullable: true
@@ -5756,11 +5759,11 @@ components:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment ID
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal ID
@@ -6102,19 +6105,19 @@ components:
           type: integer
           description: Data Collection Stage
           $ref: '#/components/schemas/DataCollectionStage'
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User Id
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           nullable: true
@@ -6126,11 +6129,11 @@ components:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment ID
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal ID
@@ -6180,19 +6183,19 @@ components:
           type: integer
           description: Data collection stage
           $ref: '#/components/schemas/DataCollectionStage'
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           nullable: true
@@ -6204,11 +6207,11 @@ components:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment Id
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal Id
@@ -6244,19 +6247,19 @@ components:
           type: integer
           description: Data collection stage
           $ref: '#/components/schemas/DataCollectionStage'
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           nullable: true
@@ -6268,11 +6271,11 @@ components:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment ID
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal ID
@@ -6329,19 +6332,19 @@ components:
           type: integer
           description: Data collection stage
           $ref: '#/components/schemas/DataCollectionStage'
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           nullable: true
@@ -6353,11 +6356,11 @@ components:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment ID
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal ID
@@ -6421,19 +6424,19 @@ components:
           nullable: true
           description: Referral outcome (if RecordType = 161)
           $ref: '#/components/schemas/PATHReferralOutcome'
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           nullable: true
@@ -6445,11 +6448,11 @@ components:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment ID
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal ID
@@ -6501,19 +6504,19 @@ components:
           maxLength: 250
           nullable: true
           description: Location details
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           nullable: true
@@ -6525,11 +6528,11 @@ components:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment Id
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal Id
@@ -6557,19 +6560,19 @@ components:
           nullable: true
           description: Prioritization status
           $ref: '#/components/schemas/PrioritizationStatus'
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           nullable: true
@@ -6585,11 +6588,11 @@ components:
           type: string
           maxLength: 32
           description: Assessment ID
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment ID
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal ID
@@ -6611,19 +6614,19 @@ components:
           maxLength: 500
           nullable: true
           description: Assessment answer (locally determined)
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           nullable: true
@@ -6635,11 +6638,11 @@ components:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment Id
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal Id
@@ -6676,19 +6679,19 @@ components:
           format: date
           nullable: true
           description: Result date (if ReferralResult is not null)
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           nullable: true
@@ -6700,11 +6703,11 @@ components:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment ID
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal ID
@@ -6730,19 +6733,19 @@ components:
           type: integer
           description: Data collection stage
           $ref: '#/components/schemas/DataCollectionStage'
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           nullable: true
