@@ -2379,17 +2379,17 @@ components:
 
     HMISParticipationType:
       type: integer
-      description: "Level of participation in the HMIS system by the project."
+      description: "Level of participation in the CoC's HMIS or VSP's comparable database by the project."
       oneOf:
         - title: "NOT_PARTICIPATING"
           const: 0
-          description: "Not participating in HMIS"
+          description: "No persons in this project have data collected in the CoC's HMIS or by VSP in a comparable database."
         - title: "HMIS_PARTICIPATING"
           const: 1
-          description: "Participating in HMIS"
+          description: "All persons in this project have data collected in the CoC's HMIS."
         - title: "COMPARABLE_DATABASE_PARTICIPATING"
           const: 2
-          description: "Using a comparable database participating in HMIS"
+          description: "All persons in this project have data collected in a VSP comparable database"
 
     NameDataQuality:
       type: integer
@@ -2677,7 +2677,7 @@ components:
 
     WhenDVOccurred:
       type: integer
-      description: "Specifies when domestic violence occurred relative to the current date."
+      description: "Specifies when domestic violence occurred relative to the Information date."
       oneOf:
         - title: "WITHIN_THREE_MONTHS"
           const: 1
