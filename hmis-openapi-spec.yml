@@ -4650,32 +4650,28 @@ components:
         Name:
           type: object
           properties:
-
             FirstName:
                 - string
                 - 'null'
-              description: First name of the client
+          description: First name of the client
               maxLength: 50
-
             MiddleName:
               type:
                 - string
                 - 'null'
-              description: Middle name of the client
+          description: Middle name of the client
               maxLength: 50
-
             LastName:
               type: 
                 - string
                 - 'null'
-              description: Last name of the client
+          description: Last name of the client
               maxLength: 50
-
             NameSuffix:
               type:
                 - string
                 - 'null'
-              description: Suffix of the client's name
+          description: Suffix of the client's name
               maxLength: 50
             NameDataQuality:
               type: integer
@@ -4688,7 +4684,7 @@ components:
               type:
                 - string
                 - 'null'
-              description: Social Security Number, potentially masked with 'x'
+          description: Social Security Number, potentially masked with 'x'
               pattern: '^[0-9xX]{9}$'
             socialSecurityNumberDataQuality:
               type: integer
@@ -4701,7 +4697,7 @@ components:
               type:
                 - string
                 - 'null'
-              description: Date of birth of the client
+          description: Date of birth of the client
               format: date
             dateOfBirthDataQuality:
               type: integer
