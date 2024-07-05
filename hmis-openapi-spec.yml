@@ -9,15 +9,15 @@ tags:
   - name: Concepts
     description: "# Api Calls\n\nThe HMIS API is a RESTFul API with different endpoints returning JSON data defined by HUD.\n## Base URL\n\nThe base address of the HMIS API will be the same across endpoints and will be provided by your HMIS.\n## Requests\n\nResources are accessed via standard HTTP requests in UTF-8 format to an endpoint. The HMIS API uses the following\nHTTP verbs:\n\n| Method  | Action                                                     |\n|---------|------------------------------------------------------------|\n| GET     | Used for retrieving resources                              |\n| POST    | Used for creating resources                                |\n| PUT     | Used for changing or replacing resources                   |\n| DELETE  | Used for removing resources                                |\n| OPTIONS | Can be issued against any resource to request CORS support |\n## Responses\n\nThe HMIS API will return JSON in the response body.\n### Response status codes\n\n| Status Code | Description                                                                                                                                                                         | Methods               |\n|-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------|\n| 200         | OK - The request has succeeded. The user can read the result of the request in the body and the headers of the response.                                                          | all                   |\n| 201         | Created - The request has been fulfilled and resulted in a new resource being created.                                                                                              | `POST` `PUT`          |\n| 202         | Accepted - The request has been accepted for processing, but the processing has not been completed..                                                                                | `POST` `PUT` `DELETE` |\n| 204         | No content - Request is processed successfully but no response payload is returned.                                                                                                 | `PUT` `DELETE`        |\n| 301         | Moved permanently - This request and all future requests should be directed to the response's given URI.                                                                            | all                   |\n| 303         | See other - Response has a Location header with a URL to which the user should redirect.                                                                                          | `POST` `PUT` `DELETE` |\n| 304         | Not modified - User has requested a resource that has not been modified since the last request.                                                                                   | `POST` `PUT` `DELETE` |\n| 400         | Bad request - Error indicating that the server cannot process the request due to something that is perceived to be a user error (e.g. malformed request syntax, invalid request). | all                   |\n| 401         | Unauthorized - Credentials are not valid for the target resource (user is denied server-authentication).                                                                          | all                   |\n| 403         | Forbidden - Request is successfully understood but the user is not authorized to use or access this resource.                                                                         | all                   |\n| 404         | Not found - Requested resource is not found.                                                                                                                                        | all                   |\n| 405         | Method not allowed - HTTP method is not allowed for the request's URI.                                                                                                              | all                   |\n| 406         | Not acceptable - Request has specified a desired type, format or content-type in its headers but server is not able to provide.                                                     | all                   |\n| 408         | Request timeout - Server times out waiting for the resource.                                                                                                                        | all                   |\n| 409         | Conflict - Request cannot be completed due to conflict of the target resource.                                                                                                      | `POST` `PUT` `DELETE` |\n| 410         | Gone - Requested resource does not exist any longer.                                                                                                                                | all                   |\n| 412         | Precondition failed - Specified client precondition(s), described in request-headers, cannot be met.                                                                                | all                   |\n| 415         | Unsupported media type - Requested content-type is unknown to server.                                                                                                               | all                   |\n| 423         | Locked - Requested resource is currently unavailable.                                                                                                                               | `PUT` `DELETE`        |\n| 428         | Precondition required - User has not specified required precondition(s).                                                                                                          | all                   |\n| 429         | Too many requests - User has exceeded rate limits and sent too many requests.                                                                                                     | all                   |\n| 500         | Internal server error - Unexpected server execution resulting in a failure to respond successfully.                                                                                 | all                   |\n| 501         | Not implemented - User has requested for functionality that the server has specified it's not able to fulfill.                                                                    | all                   |\n| 503         | Service unavailable - Server is currently unable to fulfill request. User is suggested to try again later.                                                                        | all                   |\n### Error response\n\nThe HMIS API uses a single response to describe an error. This error response can be detected by the returned status\ncode (`4XX` or `5XX`) and the `Content-Type` header which will have a value of `application/problem+json`.\n\nThe response itself will be a JSON structure according to [RFC-7807](https://www.rfc-editor.org/rfc/rfc7807). In general\nthis response looks like:\n\n```json\n{\n  \"type\": \"about:blank\",\n  \"status\": 403,\n  \"title\": \"Forbidden\",\n  \"detail\": \"You don't have permission to access this resource.\"\n}\n```\n\n- The `status` property contains the status code from the response.\n- The `title` property contains short a human-readable summary of the occurred problem.\n- The `detail` property contains a detailed human-readable description of the occurred problem and usually provides more\n  insight into the resolution (if any).\n- The `type` property describes the _type_ of problem and can be used as a discriminator for problem variants with\n  additional properties. Type `about:blank` is the default and will only contain the aforementioned properties.\n\n**Example of a non-default problem type**\n\n```json\n{\n  \"type\": \"/problems/violations\",\n  \"status\": 400,\n  \"title\": \"Bad request\",\n  \"detail\": \"The request contains one or more violations. Please resolve all of them and try again.\",\n  \"violations\": [\n    {\n      \"property_path\": \"/customer_id\",\n      \"in\": \"body\",\n      \"detail\": \"This value must be a valid UUID.\"\n    }\n  ]\n}\n```\n\n---\n> \n### Note\n> If a resource endpoint supports one or more of the problem types they will be documented as a possible response.\n---\n## Collection response\n\nIf the response is for a collection of resources its structure will always look like the following.\n\n```json5\n{\n  \"query\": {\n    // applied query\n  },\n  \"result\": [\n    // 0 or more resources\n    {\n      \"name\": \"Resource 1\"\n    },\n    {\n      \"name\": \"Resource 2\"\n    }\n  ],\n  \"total\": 2\n}\n```\n\n- The `query` property will always contain the query parameters that have been applied to get the resulting resources.\n  These include all provided query parameters and those not provided, but with a default.\n- The `result` property will contain a list of zero or more resources matching the executed query.\n- The `total` property will contain the total number of resources matching provided query parameters.\n## Pagination\n\nIf a resource supports the `limit` and `offset` query parameters the collection response will only contain a subset of\nthe total available resources (a single page).\n\n- The `limit` parameter can be used to control the maximum amount of resource returned per page.\n- The `offset` parameter can be used to control the index of the first resource returned. E.g. `?offset=0&limit=25`\n  gives the first page of 25 resources. `?offset=25&limit=25` gives you the second page of 25 resources.\n\nThe response will always be a collection response in which the used (provided or default) values for `limit`\nand `offset` are available in its `query` property. The `total` property provides the total amount of resources available in the system which gives you insight in the total number of \"pages\" that could be retrieved.\n\n```json5\n{\n  \"query\": {\n    \"limit\": 25,\n    \"offset\": 0\n  },\n  \"result\": [\n    // resources for first \"page\".\n  ],\n  \"total\": 34\n}\n```\n"
   - name: Clients
-    description: Clients are used to represent the individuals receiving care. There must only be 1 client per individual, identified by their personalId.
+    description: Clients are used to represent the individuals receiving care. There must only be 1 client per individual, identified by their PersonalID.
   - name: Projects
-    description: Projects are used to represent the projects that provide services to clients. Each project has a unique projectId.
+    description: Projects are used to represent the projects that provide services to clients. Each project has a unique ProjectID.
   - name: Enrollments
-    description: Enrollments are used to represent the relationship between a client and a project. Each enrollment has a unique enrollmentId.
+    description: Enrollments are used to represent the relationship between a client and a project. Each enrollment has a unique EnrollmentID.
   - name: Users
-    description: Users are used to represent the individuals who have access to the system. Each user has a unique userID.
+    description: Users are used to represent the individuals who have access to the system. Each user has a unique UserId.
   - name: Organizations
-    description: Organizations are used to represent the entities that manage projects and users. Each organization has a unique organizationId.
+    description: Organizations are used to represent the entities that manage projects and users. Each organization has a unique OrganizationID.
   - name: Funders
     description: Data related to funding sources.
   - name: ProjectCoCs
@@ -58,13 +58,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /youtheducationstatus/{youthEducationStatusId}:
+  /youtheducationstatus/{YouthEducationStatusID}:
     get:
       tags:
         - YouthEducationStatus
       summary: Get YouthEducationStatus data by YouthEducationStatus ID
       parameters:
-        - name: youthEducationStatusId
+        - name: YouthEducationStatusID
           in: path
           required: true
           description: Unique identifier for a YouthEducationStatus record
@@ -86,7 +86,7 @@ paths:
         - YouthEducationStatus
       summary: Update an existing YouthEducationStatus record
       parameters:
-        - name: youthEducationStatusId
+        - name: YouthEducationStatusID
           in: path
           required: true
           description: Unique identifier for the YouthEducationStatus to update
@@ -112,7 +112,7 @@ paths:
         - YouthEducationStatus
       summary: Delete a YouthEducationStatus record
       parameters:
-        - name: youthEducationStatusId
+        - name: YouthEducationStatusID
           in: path
           required: true
           description: Unique identifier for the YouthEducationStatus to delete
@@ -142,13 +142,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /events/{eventId}:
+  /events/{EventID}:
     get:
       tags:
         - Events
       summary: Get Event data by Event ID
       parameters:
-        - name: eventId
+        - name: EventID
           in: path
           required: true
           description: Unique identifier for an Event record
@@ -170,7 +170,7 @@ paths:
         - Events
       summary: Update an existing Event record
       parameters:
-        - name: eventId
+        - name: EventID
           in: path
           required: true
           description: Unique identifier for the Event to update
@@ -196,7 +196,7 @@ paths:
         - Events
       summary: Delete an Event record
       parameters:
-        - name: eventId
+        - name: EventID
           in: path
           required: true
           description: Unique identifier for the Event to delete
@@ -225,13 +225,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /assessmentquestions/{assessmentQuestionId}:
+  /assessmentquestions/{AssessmentQuestionID}:
     get:
       tags:
         - AssessmentQuestions
       summary: Get AssessmentQuestion data by AssessmentQuestion ID
       parameters:
-        - name: assessmentQuestionId
+        - name: AssessmentQuestionID
           in: path
           required: true
           description: Unique identifier for an AssessmentQuestion record
@@ -253,7 +253,7 @@ paths:
         - AssessmentQuestions
       summary: Update an existing AssessmentQuestion record
       parameters:
-        - name: assessmentQuestionId
+        - name: AssessmentQuestionID
           in: path
           required: true
           description: Unique identifier for the AssessmentQuestion to update
@@ -279,7 +279,7 @@ paths:
         - AssessmentQuestions
       summary: Delete an AssessmentQuestion record
       parameters:
-        - name: assessmentQuestionId
+        - name: AssessmentQuestionID
           in: path
           required: true
           description: Unique identifier for the AssessmentQuestion to delete
@@ -309,13 +309,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /assessments/{assessmentId}:
+  /assessments/{AassessmentID}:
     get:
       tags:
         - Assessments
       summary: Get Assessment data by Assessment ID
       parameters:
-        - name: assessmentId
+        - name: AassessmentID
           in: path
           required: true
           description: Unique identifier for an Assessment record
@@ -337,7 +337,7 @@ paths:
         - Assessments
       summary: Update an existing Assessment record
       parameters:
-        - name: assessmentId
+        - name: AassessmentID
           in: path
           required: true
           description: Unique identifier for the Assessment to update
@@ -363,7 +363,7 @@ paths:
         - Assessments
       summary: Delete an Assessment record
       parameters:
-        - name: assessmentId
+        - name: AassessmentID
           in: path
           required: true
           description: Unique identifier for the Assessment to delete
@@ -376,7 +376,7 @@ paths:
         '404':
           description: Assessment not found
 
-  /currentlivingsituation:
+  /CurrentLivingSituation:
     post:
       summary: Create a new CurrentLivingSituation record
       tags:
@@ -393,13 +393,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /currentlivingsituation/{currentLivingSitId}:
+  /CurrentLivingSituation/{CurrentLivingSitID}:
     get:
       tags:
         - CurrentLivingSituation
       summary: Get CurrentLivingSituation data by CurrentLivingSitID
       parameters:
-        - name: currentLivingSitId
+        - name: CurrentLivingSitID
           in: path
           required: true
           description: Unique identifier for a CurrentLivingSituation record
@@ -421,7 +421,7 @@ paths:
         - CurrentLivingSituation
       summary: Update an existing CurrentLivingSituation record
       parameters:
-        - name: currentLivingSitId
+        - name: CurrentLivingSitID
           in: path
           required: true
           description: Unique identifier for the CurrentLivingSituation to update
@@ -447,7 +447,7 @@ paths:
         - CurrentLivingSituation
       summary: Delete a CurrentLivingSituation record
       parameters:
-        - name: currentLivingSitId
+        - name: CurrentLivingSitID
           in: path
           required: true
           description: Unique identifier for the CurrentLivingSituation to delete
@@ -477,13 +477,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /services/{servicesId}:
+  /services/{ServicesID}:
     get:
       tags:
         - Services
       summary: Get Services data by Services ID
       parameters:
-        - name: servicesId
+        - name: ServicesID
           in: path
           required: true
           description: Unique identifier for a Services record
@@ -505,7 +505,7 @@ paths:
         - Services
       summary: Update an existing Services record
       parameters:
-        - name: servicesId
+        - name: ServicesID
           in: path
           required: true
           description: Unique identifier for the Services to update
@@ -531,7 +531,7 @@ paths:
         - Services
       summary: Delete a Services record
       parameters:
-        - name: servicesId
+        - name: ServicesID
           in: path
           required: true
           description: Unique identifier for the Services to delete
@@ -561,13 +561,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /disabilities/{disabilitiesId}:
+  /disabilities/{DisabilitiesID}:
     get:
       tags:
         - Disabilities
       summary: Get Disabilities data by Disabilities ID
       parameters:
-        - name: disabilitiesId
+        - name: DisabilitiesID
           in: path
           required: true
           description: Unique identifier for a Disabilities record
@@ -589,7 +589,7 @@ paths:
         - Disabilities
       summary: Update an existing Disabilities record
       parameters:
-        - name: disabilitiesId
+        - name: DisabilitiesID
           in: path
           required: true
           description: Unique identifier for the Disabilities to update
@@ -615,7 +615,7 @@ paths:
         - Disabilities
       summary: Delete a Disabilities record
       parameters:
-        - name: disabilitiesId
+        - name: DisabilitiesID
           in: path
           required: true
           description: Unique identifier for the Disabilities to delete
@@ -645,13 +645,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /employmenteducation/{employmentEducationId}:
+  /employmenteducation/{EmploymentEducationID}:
     get:
       tags:
         - EmploymentEducation
       summary: Get EmploymentEducation data by EmploymentEducation ID
       parameters:
-        - name: employmentEducationId
+        - name: EmploymentEducationID
           in: path
           required: true
           description: Unique identifier for an EmploymentEducation record
@@ -673,7 +673,7 @@ paths:
         - EmploymentEducation
       summary: Update an existing EmploymentEducation record
       parameters:
-        - name: employmentEducationId
+        - name: EmploymentEducationID
           in: path
           required: true
           description: Unique identifier for the EmploymentEducation to update
@@ -699,7 +699,7 @@ paths:
         - EmploymentEducation
       summary: Delete an EmploymentEducation record
       parameters:
-        - name: employmentEducationId
+        - name: EmploymentEducationID
           in: path
           required: true
           description: Unique identifier for the EmploymentEducation to delete
@@ -729,13 +729,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /healthanddv/{healthAndDVId}:
+  /healthanddv/{HealthAndDVID}:
     get:
       tags:
         - HealthAndDV
       summary: Get HealthAndDV data by HealthAndDV ID
       parameters:
-        - name: healthAndDVId
+        - name: HealthAndDVID
           in: path
           required: true
           description: Unique identifier for a HealthAndDV record
@@ -757,7 +757,7 @@ paths:
         - HealthAndDV
       summary: Update an existing HealthAndDV record
       parameters:
-        - name: healthAndDVId
+        - name: HealthAndDVID
           in: path
           required: true
           description: Unique identifier for the HealthAndDV to update
@@ -783,7 +783,7 @@ paths:
         - HealthAndDV
       summary: Delete a HealthAndDV record
       parameters:
-        - name: healthAndDVId
+        - name: HealthAndDVID
           in: path
           required: true
           description: Unique identifier for the HealthAndDV to delete
@@ -813,13 +813,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /incomebenefits/{incomeBenefitsId}:
+  /incomebenefits/{IncomeBenefitsID}:
     get:
       tags:
         - IncomeBenefits
       summary: Get IncomeBenefits data by IncomeBenefits ID
       parameters:
-        - name: incomeBenefitsId
+        - name: IncomeBenefitsID
           in: path
           required: true
           description: Unique identifier for an IncomeBenefits
@@ -841,7 +841,7 @@ paths:
         - IncomeBenefits
       summary: Update an existing IncomeBenefits record
       parameters:
-        - name: incomeBenefitsId
+        - name: IncomeBenefitsID
           in: path
           required: true
           description: Unique identifier for the IncomeBenefits to update
@@ -867,7 +867,7 @@ paths:
         - IncomeBenefits
       summary: Delete an IncomeBenefits record
       parameters:
-        - name: incomeBenefitsId
+        - name: IncomeBenefitsID
           in: path
           required: true
           description: Unique identifier for the IncomeBenefits to delete
@@ -897,13 +897,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /exits/{exitId}:
+  /exits/{ExitID}:
     get:
       tags:
         - Exits
       summary: Get Exit data by Exit ID
       parameters:
-        - name: exitId
+        - name: ExitID
           in: path
           required: true
           description: Unique identifier for an Exit
@@ -925,7 +925,7 @@ paths:
         - Exits
       summary: Update an existing Exit record
       parameters:
-        - name: exitId
+        - name: ExitID
           in: path
           required: true
           description: Unique identifier for the Exit to update
@@ -951,7 +951,7 @@ paths:
         - Exits
       summary: Delete an Exit record
       parameters:
-        - name: exitId
+        - name: ExitID
           in: path
           required: true
           description: Unique identifier for the Exit to delete
@@ -981,13 +981,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /ceparticipations/{ceParticipationId}:
+  /ceparticipations/{CEParticipationID}:
     get:
       tags:
         - CEParticipations
       summary: Get CEParticipation data by CEParticipation ID
       parameters:
-        - name: ceParticipationId
+        - name: CEParticipationID
           in: path
           required: true
           description: Unique identifier for a CEParticipation
@@ -1009,7 +1009,7 @@ paths:
         - CEParticipations
       summary: Update an existing CEParticipation record
       parameters:
-        - name: ceParticipationId
+        - name: CEParticipationID
           in: path
           required: true
           description: Unique identifier for the CEParticipation to update
@@ -1035,7 +1035,7 @@ paths:
         - CEParticipations
       summary: Delete a CEParticipation record
       parameters:
-        - name: ceParticipationId
+        - name: CEParticipationID
           in: path
           required: true
           description: Unique identifier for the CEParticipation to delete
@@ -1065,13 +1065,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /hmisparticipations/{hmisParticipationId}:
+  /hmisparticipations/{HMISParticipationID}:
     get:
       tags:
         - HMISParticipations
       summary: Get HMISParticipation data by HMISParticipation ID
       parameters:
-        - name: hmisParticipationId
+        - name: HMISParticipationID
           in: path
           required: true
           description: Unique identifier for an HMISParticipation
@@ -1093,7 +1093,7 @@ paths:
         - HMISParticipations
       summary: Update an existing HMISParticipation record
       parameters:
-        - name: hmisParticipationId
+        - name: HMISParticipationID
           in: path
           required: true
           description: Unique identifier for the HMISParticipation to update
@@ -1119,7 +1119,7 @@ paths:
         - HMISParticipations
       summary: Delete an HMISParticipation record
       parameters:
-        - name: hmisParticipationId
+        - name: HMISParticipationID
           in: path
           required: true
           description: Unique identifier for the HMISParticipation to delete
@@ -1149,13 +1149,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /affiliations/{affiliationId}:
+  /affiliations/{AffiliationId}:
     get:
       tags:
         - Affiliations
       summary: Get Affiliation data by Affiliation ID
       parameters:
-        - name: affiliationId
+        - name: AffiliationId
           in: path
           required: true
           description: Unique identifier for an Affiliation
@@ -1177,7 +1177,7 @@ paths:
         - Affiliations
       summary: Update an existing Affiliation record
       parameters:
-        - name: affiliationId
+        - name: AffiliationId
           in: path
           required: true
           description: Unique identifier for the Affiliation to update
@@ -1203,7 +1203,7 @@ paths:
         - Affiliations
       summary: Delete an Affiliation record
       parameters:
-        - name: affiliationId
+        - name: AffiliationId
           in: path
           required: true
           description: Unique identifier for the Affiliation to delete
@@ -1233,13 +1233,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /inventories/{inventoryId}:
+  /inventories/{InventoryID}:
     get:
       tags:
         - Inventories
       summary: Get Inventory data by Inventory ID
       parameters:
-        - name: inventoryId
+        - name: InventoryID
           in: path
           required: true
           description: Unique identifier for an Inventory
@@ -1261,7 +1261,7 @@ paths:
         - Inventories
       summary: Update an existing Inventory record
       parameters:
-        - name: inventoryId
+        - name: InventoryID
           in: path
           required: true
           description: Unique identifier for the Inventory to update
@@ -1287,7 +1287,7 @@ paths:
         - Inventories
       summary: Delete an Inventory record
       parameters:
-        - name: inventoryId
+        - name: InventoryID
           in: path
           required: true
           description: Unique identifier for the Inventory to delete
@@ -1317,13 +1317,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /funders/{funderId}:
+  /funders/{FunderId}:
     get:
       tags:
         - Funders
       summary: Get funder data by Funder ID
       parameters:
-        - name: funderId
+        - name: FunderId
           in: path
           required: true
           description: Unique identifier for a funder
@@ -1345,7 +1345,7 @@ paths:
         - Funders
       summary: Update an existing funder record
       parameters:
-        - name: funderId
+        - name: FunderId
           in: path
           required: true
           description: Unique identifier for the funder to update
@@ -1371,7 +1371,7 @@ paths:
         - Funders
       summary: Delete a funder record
       parameters:
-        - name: funderId
+        - name: FunderId
           in: path
           required: true
           description: Unique identifier for the funder to delete
@@ -1407,7 +1407,7 @@ paths:
         - ProjectCoCs
       summary: Get ProjectCoC data by ProjectCoC ID
       parameters:
-        - name: projectCoCId
+        - name: ProjectCoCID
           in: path
           required: true
           description: Unique identifier for a ProjectCoC
@@ -1429,7 +1429,7 @@ paths:
         - ProjectCoCs
       summary: Update an existing ProjectCoC record
       parameters:
-        - name: projectCoCId
+        - name: ProjectCoCID
           in: path
           required: true
           description: Unique identifier for the ProjectCoC to update
@@ -1455,7 +1455,7 @@ paths:
         - ProjectCoCs
       summary: Delete a ProjectCoC record
       parameters:
-        - name: projectCoCId
+        - name: ProjectCoCID
           in: path
           required: true
           description: Unique identifier for the ProjectCoC to delete
@@ -1485,13 +1485,14 @@ paths:
         '400':
           description: Invalid input provided
 
-  /enrollments/{enrollmentId}:
+
+  /enrollments/{EnrollmentID}:
     get:
       tags:
         - Enrollments
       summary: Get enrollment data by their Enrollment ID
       parameters:
-        - name: enrollmentId
+        - name: EnrollmentID
           in: path
           required: true
           description: Unique identifier for an enrollment
@@ -1513,7 +1514,7 @@ paths:
         - Enrollments
       summary: Update an existing enrollment record
       parameters:
-        - name: enrollmentId
+        - name: EnrollmentID
           in: path
           required: true
           description: Unique identifier for the enrollment to update
@@ -1539,7 +1540,7 @@ paths:
         - Enrollments
       summary: Delete an enrollment record
       parameters:
-        - name: enrollmentId
+        - name: EnrollmentID
           in: path
           required: true
           description: Unique identifier for the enrollment to delete
@@ -1569,13 +1570,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /projects/{projectId}:
+  /projects/{ProjectID}:
     get:
       tags:
         - Projects
       summary: Get project data by their Project ID
       parameters:
-        - name: projectId
+        - name: ProjectID
           in: path
           required: true
           description: Unique identifier for a project
@@ -1597,7 +1598,7 @@ paths:
         - Projects
       summary: Update an existing project record
       parameters:
-        - name: projectId
+        - name: ProjectID
           in: path
           required: true
           description: Unique identifier for the project to update
@@ -1623,7 +1624,7 @@ paths:
         - Projects
       summary: Delete a project record
       parameters:
-        - name: projectId
+        - name: ProjectID
           in: path
           required: true
           description: Unique identifier for the project to delete
@@ -1653,13 +1654,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /organizations/{organizationId}:
+  /organizations/{OrganizationID}:
     get:
       tags:
         - Organizations
       summary: Get organization data by their Organization ID
       parameters:
-        - name: organizationId
+        - name: OrganizationID
           in: path
           required: true
           description: Unique identifier for an organization
@@ -1681,7 +1682,7 @@ paths:
         - Organizations
       summary: Update an existing organization record
       parameters:
-        - name: organizationId
+        - name: OrganizationID
           in: path
           required: true
           description: Unique identifier for the organization to update
@@ -1707,7 +1708,7 @@ paths:
         - Organizations
       summary: Delete an organization record
       parameters:
-        - name: organizationId
+        - name: OrganizationID
           in: path
           required: true
           description: Unique identifier for the organization to delete
@@ -1737,13 +1738,13 @@ paths:
         '400':
           description: Invalid input provided
 
-  /users/{userId}:
+  /users/{UserId}:
     get:
       tags:
         - Users
-      summary: Get user data by their userId
+      summary: Get user data by their UserId
       parameters:
-        - name: userId
+        - name: UserId
           in: path
           required: true
           description: Unique identifier for a user
@@ -1765,7 +1766,7 @@ paths:
         - Users
       summary: Update an existing user record
       parameters:
-        - name: userId
+        - name: UserId
           in: path
           required: true
           description: Unique identifier for the user to update
@@ -1791,7 +1792,7 @@ paths:
         - Users
       summary: Delete a user record
       parameters:
-        - name: userId
+        - name: UserId
           in: path
           required: true
           description: Unique identifier for the user to delete
@@ -1819,13 +1820,13 @@ paths:
           description: Client successfully created
         '400':
           description: Invalid input provided
-  /clients/{personalId}:
+  /clients/{PersonalID}:
     get:
       tags:
         - Clients
       summary: Get client data by their Personal Identifier
       parameters:
-        - name: personalId
+        - name: PersonalID
           in: path
           required: true
           description: Unique identifier for a client
@@ -2021,16 +2022,16 @@ components:
       oneOf:
         - title: "PHYSICAL_DISABILITY"
           const: 5
-          description: "Physical impairments."
+          description: "Physical Disability."
         - title: "DEVELOPMENTAL_DISABILITY"
           const: 6
-          description: "Developmental impairments."
+          description: "Developmental Disability."
         - title: "CHRONIC_HEALTH_CONDITION"
           const: 7
           description: "Ongoing health conditions."
         - title: "HIV_AIDS"
           const: 8
-          description: "HIV or AIDS conditions."
+          description: "HIV or AIDS."
         - title: "MENTAL_HEALTH_DISORDER"
           const: 9
           description: "Mental health disorders."
@@ -2047,31 +2048,31 @@ components:
           description: "Services under PATH."
         - title: "RHY_SERVICE_CONNECTIONS"
           const: 142
-          description: "Connections services under RHY."
+          description: "Services provided to Homeless Youth."
         - title: "HOPWA_SERVICE"
           const: 143
-          description: "Services under HOPWA."
+          description: "Services dedicated to housing needs of people living with HIV/AIDS."
         - title: "SSVF_SERVICE"
           const: 144
-          description: "Services under SSVF."
+          description: "Supportive Services for Veteran Families."
         - title: "HOPWA_FINANCIAL_ASSISTANCE"
           const: 151
-          description: "Financial assistance under HOPWA."
+          description: "Financial assistance through Services dedicated to the housing needs of people living with HIV/AIDS."
         - title: "SSVF_FINANCIAL_ASSISTANCE"
           const: 152
-          description: "Financial assistance under SSVF."
+          description: "Financial assistance Supportive Services for Veteran Families."
         - title: "PATH_REFERRAL"
           const: 161
-          description: "Referral services under PATH."
+          description: "Referral services through Projects for Assistance in Transition from Homelessness (PATH)."
         - title: "BED_NIGHT"
           const: 200
-          description: "Record of bed nights."
+          description: "Record of bed nights at Night-by-Night shelter."
         - title: "HUD_VASH_VOUCHER_TRACKING"
           const: 210
           description: "Voucher tracking under HUD-VASH."
         - title: "MOVING_ON_ASSISTANCE"
           const: 300
-          description: "Assistance for moving on."
+          description: "Assistance provided for moving on."
 
     HashStatus:
       type: integer
@@ -2452,10 +2453,10 @@ components:
       oneOf:
         - title: "NO"
           const: 0
-          description: "Not a HOPWA funded project"
+          description: "Not a HOPWA-funded medical assisted living facility."
         - title: "YES"
           const: 1
-          description: "Yes, it is a HOPWA funded project"
+          description: "Yes, HOPWA-funded medical assisted living facility."
         - title: "NON_HOPWA_FUNDED_PROJECT"
           const: 2
           description: "Non-HOPWA funded project"
@@ -2479,17 +2480,17 @@ components:
 
     HMISParticipationType:
       type: integer
-      description: "Level of participation in the HMIS system by the project."
+      description: "Level of participation in the CoC's HMIS or VSP's comparable database by the project."
       oneOf:
         - title: "NOT_PARTICIPATING"
           const: 0
-          description: "Not participating in HMIS"
+          description: "No persons in this project have data collected in the CoC's HMIS or by VSP in a comparable database."
         - title: "HMIS_PARTICIPATING"
           const: 1
-          description: "Participating in HMIS"
+          description: "All persons in this project have data collected in the CoC's HMIS."
         - title: "COMPARABLE_DATABASE_PARTICIPATING"
           const: 2
-          description: "Using a comparable database participating in HMIS"
+          description: "All persons in this project have data collected in a VSP comparable database"
 
     NameDataQuality:
       type: integer
@@ -2777,7 +2778,7 @@ components:
 
     WhenDVOccurred:
       type: integer
-      description: "Specifies when domestic violence occurred relative to the current date."
+      description: "Specifies when domestic violence occurred relative to the Information date."
       oneOf:
         - title: "WITHIN_THREE_MONTHS"
           const: 1
@@ -2846,7 +2847,7 @@ components:
 
     Referral:
       type: integer
-      description: "Type of event or referral action taken."
+      description: "Type of Event or referral action taken."
       oneOf:
         - title: "REFERRAL_TO_PREVENTION_ASSISTANCE_PROJECT"
           const: 1
@@ -2872,9 +2873,9 @@ components:
         - title: "REFERRAL_TO_NON_CONTINUUM_SERVICES_INELIGIBLE"
           const: 8
           description: "Referral to Non-continuum services: Ineligible for continuum services"
-        - title: "REFERRAL_TO_NON_CONTINUUM_SERVICES_NO_AVAILABILITY"
+        - title: "REFERRAL_TO_NON_CONTINUUM_SERVICES_NO_Availability"
           const: 9
-          description: "Referral to Non-continuum services: No availability in continuum services"
+          description: "Referral to Non-continuum services: No Availability in continuum services"
         - title: "REFERRAL_TO_EMERGENCY_SHELTER_BED_OPENING"
           const: 10
           description: "Referral to Emergency Shelter bed opening"
@@ -2930,6 +2931,9 @@ components:
         - title: "ANNUAL_ASSESSMENT"
           const: 5
           description: "Annual assessment"
+        - title: "POST_EXIT"
+          const: 5
+          description: "Post Exit"          
 
     PATHServices:
       type: integer
@@ -3098,9 +3102,9 @@ components:
         - title: "OUT_OF_AGE_RANGE"
           const: 1
           description: "Out of age range"
-        - title: "WARD_OF_THE_STATE"
+        - title: "WARD_OF_THE_State"
           const: 2
-          description: "Ward of the state"
+          description: "Ward of the State"
         - title: "WARD_OF_THE_CRIMINAL_JUSTICE_SYSTEM"
           const: 3
           description: "Ward of the criminal justice system"
@@ -3247,7 +3251,7 @@ components:
 
     NotEmployedReason:
       type: integer
-      description: "Reason why the client is not employed."
+      description: "Reason why the client is not Employed."
       oneOf:
         - title: "LOOKING_FOR_WORK"
           const: 1
@@ -3293,7 +3297,7 @@ components:
 
     RHYNumberofYears:
       type: integer
-      description: "Number of years a client has been involved with RHY."
+      description: "Years formerly a ward of Child Welfare or Foster Care Agency."
       oneOf:
         - title: "LESS_THAN_ONE_YEAR"
           const: 1
@@ -3357,7 +3361,7 @@ components:
 
     CountExchangeForSex:
       type: integer
-      description: "Reports the frequency of exchanging sex."
+      description: "How may times ever received anything for sex."
       oneOf:
         - title: "1_TO_3"
           const: 1
@@ -3895,7 +3899,7 @@ components:
         - title: "586_JACKSON_MS"
           const: "586"
           description: "Jackson, MS"
-        - title: "589_KANSAS_CITY_MO"
+        - title: "589_KANSAS_City_MO"
           const: "589"
           description: "Kansas City, MO"
         - title: "590_HAMPTON_VA"
@@ -3970,7 +3974,7 @@ components:
         - title: "632_NORTHPORT_NY"
           const: "632"
           description: "Northport, NY"
-        - title: "635_OKLAHOMA_CITY_OK"
+        - title: "635_OKLAHOMA_City_OK"
           const: "635"
           description: "Oklahoma City, OK"
         - title: "636_NEBRASKA_W_IOWA_NE"
@@ -4024,7 +4028,7 @@ components:
         - title: "659_SALISBURY_NC"
           const: "659"
           description: "Salisbury, NC"
-        - title: "660_SALT_LAKE_CITY_UT"
+        - title: "660_SALT_LAKE_City_UT"
           const: "660"
           description: "Salt Lake City, UT"
         - title: "662_SAN_FRANCISCO_CA"
@@ -4081,7 +4085,7 @@ components:
         - title: "691_GREATER_LOS_ANGELES_HCS"
           const: "691"
           description: "Greater Los Angeles HCS"
-        - title: "692_WHITE_CITY_OR"
+        - title: "692_WHITE_City_OR"
           const: "692"
           description: "White City, OR"
         - title: "693_WILKES_BARRE_PA"
@@ -4117,7 +4121,7 @@ components:
         - title: "589A4_COLUMBIA_MO"
           const: "589A4"
           description: "Columbia, MO"
-        - title: "589A5_KANSAS_CITY_MO"
+        - title: "589A5_KANSAS_City_MO"
           const: "589A5"
           description: "Kansas City, MO"
         - title: "589A6_EASTERN_KS_HCS_KS"
@@ -4129,7 +4133,7 @@ components:
         - title: "636A6_CENTRAL_IOWA_IA"
           const: "636A6"
           description: "Central Iowa, IA"
-        - title: "636A8_IOWA_CITY_IA"
+        - title: "636A8_IOWA_City_IA"
           const: "636A8"
           description: "Iowa City, IA"
         - title: "657A4_POPLAR_BLUFF_MO"
@@ -4168,7 +4172,7 @@ components:
       oneOf:
         - title: "0_DOLLARS"
           const: 0
-          description: "$0 (i.e., not employed, not receiving cash benefits, no other current income)"
+          description: "$0 (i.e., not Employed, not receiving cash benefits, no other current income)"
         - title: "1_TO_14_PERCENT_AMI"
           const: 1
           description: "1-14% of AMI for household size"
@@ -4218,7 +4222,7 @@ components:
 
     IncarceratedAdult:
       type: integer
-      description: "Incarceration history of the adult."
+      description: "Incarcerated as adult (any adult in household)."
       oneOf:
         - title: "NOT_INCARCERATED"
           const: 0
@@ -4639,42 +4643,45 @@ components:
     Client:
       type: object
       properties:
-        personalId:
+        PersonalID:
           type: string
           description: Unique identifier for the client
           maxLength: 32
-        name:
+        Name:
           type: object
           properties:
-            firstName:
-              type:
+
+            FirstName:
                 - string
                 - 'null'
               description: First name of the client
               maxLength: 50
-            middleName:
+
+            MiddleName:
               type:
                 - string
                 - 'null'
               description: Middle name of the client
               maxLength: 50
-            lastName:
-              type:
+
+            LastName:
+              type: 
                 - string
                 - 'null'
               description: Last name of the client
               maxLength: 50
-            nameSuffix:
+
+            NameSuffix:
               type:
                 - string
                 - 'null'
               description: Suffix of the client's name
               maxLength: 50
-            nameDataQuality:
+            NameDataQuality:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NameDataQuality'
-        socialSecurity:
+        SSN:
           type: object
           properties:
             socialSecurityNumber:
@@ -4700,7 +4707,7 @@ components:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/DateOfBirthDataQuality'
-        raceAndEthnicity:
+        raceAndEthniCity:
           type: object
           properties:
             amIndAkNative:
@@ -4738,7 +4745,8 @@ components:
               description: non-null only if all other race fields are 0 (UNKNOWN)
               oneOf:
                 - $ref: '#/components/schemas/RaceGenderNone'
-            additionalRaceEthnicity:
+
+            AdditionalRaceEthnicity:
               type:
                 - string
                 - 'null'
@@ -4847,16 +4855,17 @@ components:
                 - 'null'
               oneOf:
                 - $ref: '#/components/schemas/DischargeStatus'
-        dateCreated:
+        DateCreated:
           type: string
           format: datetime
-        dateUpdated:
+        DateUpdated:
           type: string
           format: datetime
-        userID:
+        UserId:
           type: string
           maxLength: 32
-        dateDeleted:
+
+        DateDeleted:
           type:
             - string
             - 'null'
@@ -4864,43 +4873,43 @@ components:
     User:
       type: object
       properties:
-        userId:
+        UserId:
           type: string
           maxLength: 32
-        userFirstName:
+        UserFirstName:
           type: string
           maxLength: 50
-        userLastName:
+        UserLastName:
           type: string
           maxLength: 50
-        userPhone:
+        UserPhone:
           type: string
           pattern: '^[2-9][0-9]{2}[2-9][0-9]{2}[0-9]{4}$'
           maxLength: 10
-        userExtension:
+        UserExtension:
           type: string
           pattern: '^[0-9]{1,5}$'
           maxLength: 5
-        userEmail:
+        UserEmail:
           type: string
           format: email
           maxLength: 320
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
       required:
-        - userId
+        - UserId
 
     Organization:
       type: object
       properties:
-        organizationId:
+        OrganizationID:
           type: string
           maxLength: 32
         organizationName:
@@ -4916,159 +4925,194 @@ components:
             - string
             - 'null'
           maxLength: 200
-        dateCreated:
+
+        DateCreated:
           type: string
           format: date-time
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
-        userId:
+        UserId:
           type: string
           maxLength: 32
-        dateDeleted:
+
+        DateDeleted:
           type:
             - string
             - 'null'
           format: date-time
       required:
-        - organizationId
+        - OrganizationID
 
     Project:
       type: object
       properties:
-        projectId:
+        ProjectID:
           type: string
           maxLength: 32
-        organizationId:
+        OrganizationID:
           type: string
           maxLength: 32
-        projectName:
+        ProjectName:
           type: string
           maxLength: 200
-        projectCommonName:
+
+        ProjectCommonName:
           type:
             - string
             - 'null'
           maxLength: 200
-        operatingStartDate:
+        OperatingStartDate:
           type: string
           format: date
-        operatingEndDate:
+        OperatingEndDate:
           type:
             - string
             - 'null'
           format: date
-        continuumProject:
+        ContinuumProject:
           type: integer
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        projectType:
+        ProjectType:
           type: integer
           oneOf:
             - ref: '#/components/schemas/ProjectType'
-        housingType:
+
+        HousingType:
+          type: integer
+          nullable: true
+          oneOf:
+            - ref: '#/components/schemas/HousingType'
+        RRHSubType:
+          type: integer
+          nullable: true
+          oneOf:
+            - ref: '#/components/schemas/RRHSubType'
+        RresidentialAffiliation:
+          type: integer
+          nullable: true
+          oneOf:
+            - ref: '#/components/schemas/NoYes'
+        TargetPopulation:
+          type: integer
+          nullable: true
+          oneOf:
+            - ref: '#/components/schemas/TargetPopulation'
+        HOPWAMedAssistedLivingFac:
+          type: integer
+          nullable: true
+          oneOf:
+            - ref: '#/components/schemas/HOPWAMedAssistedLivingFac'
+        PITCount:
+          type: integer
+          nullable: true
+        DateCreated:
+        HousingType:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/HousingType'
-        rRHSubType:
+        RRHSubType:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/RRHSubType'
-        residentialAffiliation:
+        ResidentialAffiliation:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        targetPopulation:
+        TargetPopulation:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/TargetPopulation'
-        hOPWAMedAssistedLivingFac:
+        HOPWAMedAssistedLivingFac:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/HOPWAMedAssistedLivingFac'
-        pITCount:
+        PITCount:
           type:
             - integer
             - 'null'
         dateCreated:
           type: string
           format: date-time
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
-        userId:
+        UserId:
           type: string
           maxLength: 32
-        dateDeleted:
+
+        DateDeleted:
           type:
             - string
             - 'null'
           format: date-time
       required:
-        - projectId
+        - ProjectID
 
     Enrollment:
       type: object
       properties:
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
-        projectId:
+        ProjectID:
           type: string
           maxLength: 32
-        entryDate:
+        EntryDate:
           type: string
           format: date
-        householdID:
+        HouseholdID:
           type: string
           maxLength: 32
-        relationshipToHoH:
+        RelationshipToHoH:
           type: integer
           oneOf:
             - ref: '#/components/schemas/RelationshipToHoH'
-        enrollmentCoC:
+        EnrollmentCoC:
           type: string
           pattern: '^[A-Za-z]{2}-[0-9]{3}$'
           maxLength: 6
-        livingSituation:
+        LivingSituation:
           type: integer
           oneOf:
             - ref: '#/components/schemas/LivingSituation'
-        dateOfEngagement:
+
+        DateOfEngagement:
           type:
             - string
             - 'null'
           format: date
-        moveInDate:
+        MoveInDate:
           type:
             - string
             - 'null'
           format: date
-        dateOfPATHStatus:
+        DateOfPATHStatus:
           type:
             - string
             - 'null'
           format: date
-        percentAMI:
+        PercentAMI:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/PercentAMI'
-        vAMCStation:
+        VAMCStation:
           type: string
           maxLength: 5
           oneOf:
@@ -5079,42 +5123,43 @@ components:
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        rentalSubsidyType:
+
+        RentalSubsidyType:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/RentalSubsidyTypes'
-        lengthOfStay:
+        LengthOfStay:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/LengthOfStay'
-        lOSUnderThreshold:
+        LOSUnderThreshold:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        previousStreetESSH:
+        PreviousStreetESSH:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        dateToStreetESSH:
+        DateToStreetESSH:
           type:
             - string
             - 'null'
           format: date
-        timesHomelessPastThreeYears:
+        TimesHomelessPastThreeYears:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/TimesHomelessPastThreeYears'
-        monthsHomelessPastThreeYears:
+        MonthsHomelessPastThreeYears:
           type:
             - integer
             - 'null'
@@ -5126,31 +5171,32 @@ components:
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYesReasonsForMissingData'
-        clientEnrolledInPATH:
+
+        ClientEnrolledInPATH:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        reasonNotEnrolled:
+        ReasonNotEnrolled:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/ReasonNotEnrolled'
-        referralSource:
+        ReferralSource:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/ReferralSource'
-        eligibleForRHY:
+        EligibleForRHY:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        reasonNoServices:
+        ReasonNoServices:
           type:
             - integer
             - 'null'
@@ -5168,29 +5214,30 @@ components:
             - 'null'
           oneOf:
             - ref: '#/components/schemas/SexualOrientation'
-        formerWardChildWelfare:
+
+        FormerWardChildWelfare:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYesReasonsForMissingData'
-        childWelfareYears:
+        ChildWelfareYears:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/ChildWelfareYears'
-        childWelfareMonths:
+        ChildWelfareMonths:
           type:
             - integer
             - 'null'
-        formerWardJuvenileJustice:
+        FormerWardJuvenileJustice:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYesReasonsForMissingData'
-        juvenileJusticeYears:
+        JuvenileJusticeYears:
           type:
             - integer
             - 'null'
@@ -5200,77 +5247,77 @@ components:
           type:
             - integer
             - 'null'
-        unemploymentFam:
+        UnemploymentFam:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        mentalHealthDisorderFam:
+        MentalHealthDisorderFam:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        physicalDisabilityFam:
+        PhysicalDisabilityFam:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        alcoholDrugUseDisorderFam:
+        AlcoholDrugUseDisorderFam:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        insufficientIncome:
+        InsufficientIncome:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        incarceratedParent:
+        IncarceratedParent:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        sSVF_HP_Targeting_Criteria:
+        SSVF_HP_Targeting_Criteria:
           type:
             - integer
             - 'null'
-        timeToHousingLoss:
+        TimeToHousingLoss:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/TimeToHousingLoss'
-        annualPercentAMI:
+        AnnualPercentAMI:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/AnnualPercentAMI'
-        literalHomelessHistory:
+        LiteralHomelessHistory:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/LiteralHomelessHistory'
-        clientLeaseHolder:
+        ClientLeaseholder:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        hOHLeaseHolder:
+        HOHLeaseholder:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        subsidyAtRisk:
+        SubsidyAtRisk:
           type:
             - integer
             - 'null'
@@ -5306,7 +5353,8 @@ components:
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        disableHoH:
+
+        DisableHoH:
           type:
             - integer
             - 'null'
@@ -5318,19 +5366,20 @@ components:
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        singleParent:
+
+        SingleParent:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        dependentUnder6:
+        DependentUnder6:
           type:
             - integer
             - 'null'
           oneOf:
             - ref: '#/components/schemas/DependentUnder6'
-        hH5Plus:
+        HH5Plus:
           type:
             - integer
             - 'null'
@@ -5342,15 +5391,16 @@ components:
             - 'null'
           oneOf:
             - ref: '#/components/schemas/NoYes'
-        hPScreeningScore:
+
+        HPScreeningScore:
           type:
             - integer
             - 'null'
-        thresholdScore:
+        ThresholdScore:
           type:
             - integer
             - 'null'
-        translationNeeded:
+        TranslationNeeded:
           type:
             - integer
             - 'null'
@@ -5365,16 +5415,19 @@ components:
             - string
             - 'null'
           maxLength: 100
-        dateCreated:
+
+
+        DateCreated:
           type: string
           format: date-time
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
-        userId:
+        UserId:
           type: string
           maxLength: 32
-        dateDeleted:
+
+        DateDeleted:
           type:
             - string
             - 'null'
@@ -5384,48 +5437,49 @@ components:
     Funder:
       type: object
       properties:
-        funderId:
+        FunderId:
           type: string
           maxLength: 32
           description: Unique identifier
-        projectId:
+        ProjectID:
           type: string
           maxLength: 32
           description: Must match a record in Project
-        fundingSource:
+        FundingSource:
           type: integer
           description: Funding source identifier
           oneOf:
-            - $ref: '#/components/schemas/FundingSource'
-        otherFunder:
+
+            $ref: '#/components/schemas/FundingSource'
+        OtherFunder:
           type: string
           maxLength: 100
           description: Required if FundingSource = 46
-        grantId:
+        GrantID:
           type: string
           maxLength: 100
           description: Grant identifier
-        startDate:
+        StartDate:
           type: string
           format: date
           description: Start date
-        endDate:
+        EndDate:
           type: string
           format: date
           description: End date
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type: string
           format: date-time
           description: Date deleted
@@ -5436,70 +5490,75 @@ components:
           type: string
           maxLength: 32
           description: Unique identifier
-        projectId:
+        ProjectID:
           type: string
           maxLength: 32
-          description: Must match a ProjectId in Project
-        coCCode:
+          description: Must match a ProjectID in Project
+        CoCCode:
           type: string
           maxLength: 6
           pattern: '^[a-zA-Z]{2}-[0-9]{3}$'
           description: Two letters, a dash, and 3 numbers
-        geocode3:
+
+        Geocode3:
           type:
             - string
             - 'null'
           maxLength: 6
           pattern: '^[0-9]{6}$'
           description: Limited to six digits
-        address1:
+
+        Address1:
           type:
             - string
             - 'null'
           maxLength: 100
-        address2:
+        Address2:
           type:
             - string
             - 'null'
           maxLength: 100
-        city:
+        City:
           type:
             - string
             - 'null'
           maxLength: 50
-        state:
+        State:
           type:
             - string
             - 'null'
           maxLength: 2
           pattern: '^[a-zA-Z]{2}$'
           description: Limited to USPS-defined two-letter abbreviations
-        zip:
+
+        Zip:
           type:
             - string
             - 'null'
           maxLength: 5
           pattern: '^[0-9]{5}$'
           description: Limited to five digits
-        geographyType:
+
+        GeographyType:
           type:
             - integer
             - 'null'
           oneOf:
             - $ref: '#/components/schemas/GeographyType'
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User Id
-        dateDeleted:
+
+        DateDeleted:
           type:
             - string
             - 'null'
@@ -5508,103 +5567,104 @@ components:
     Inventory:
       type: object
       properties:
-        inventoryId:
+        InventoryID:
           type: string
           maxLength: 32
           description: Unique identifier
-        projectId:
+        ProjectID:
           type: string
           maxLength: 32
+
           description: Must match a ProjectId in ProjectCoC.csv
-        coCCode:
+        CoCCode:
           type:
             - string
             - 'null'
           maxLength: 6
           description: Must match a CoCCode in ProjectCoC.csv for the same ProjectID
-        householdType:
+        HouseholdType:
           type: integer
           description: Household type
           oneOf:
             - $ref: '#/components/schemas/HouseholdType'
-        availability:
+        Availability:
           type:
             - integer
             - 'null'
           description: Availability status
           oneOf:
             - $ref: '#/components/schemas/Availability'
-        unitInventory:
+        UnitInventory:
           type: integer
           description: Unit inventory
-        bedInventory:
+        BedInventory:
           type: integer
           description: Bed inventory
-        cHVetBedInventory:
+        CHVetBedInventory:
           type:
             - integer
             - 'null'
           description: Chronic homeless veteran bed inventory
-        youthVetBedInventory:
+        YouthVetBedInventory:
           type:
             - integer
             - 'null'
           description: Youth veteran bed inventory
-        vetBedInventory:
+        VetBedInventory:
           type:
             - integer
             - 'null'
           description: Veteran bed inventory
-        cHYouthBedInventory:
+        CHYouthBedInventory:
           type:
             - integer
             - 'null'
           description: Chronic homeless youth bed inventory
-        youthBedInventory:
+        YouthBedInventory:
           type:
             - integer
             - 'null'
           description: Youth bed inventory
-        cHBedInventory:
+        CHBedInventory:
           type:
             - integer
             - 'null'
           description: Chronic homeless bed inventory
-        otherBedInventory:
+        OtherBedInventory:
           type:
             - integer
             - 'null'
           description: Other bed inventory
-        eSBedType:
+        ESBedType:
           type:
             - integer
             - 'null'
           description: Emergency shelter bed type
           oneOf:
             - $ref: '#/components/schemas/BedType'
-        inventoryStartDate:
+        InventoryStartDate:
           type: string
           format: date
           description: Inventory start date
-        inventoryEndDate:
+        InventoryEndDate:
           type:
             - string
             - 'null'
           format: date
           description: Inventory end date
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type:
             - string
             - 'null'
@@ -5613,31 +5673,32 @@ components:
     Affiliation:
       type: object
       properties:
-        affiliationId:
+        AffiliationId:
           type: string
           maxLength: 32
           description: Unique identifier
-        projectId:
+        ProjectID:
           type: string
           maxLength: 32
-          description: Must match a projectId in Project where (ProjectType = 6) or (ProjectType = 13 and RRHSubType = 1)
-        resProjectId:
+          description: Must match a ProjectID in Project where (ProjectType = 6) or (ProjectType = 13 and RRHSubType = 1)
+        ResProjectID:
           type: string
           maxLength: 32
           description: Must match a record in Project where ProjectType = 0, 1, 2, 3, 8, 9, 10, or 13. If ProjectType = 13, RRHSubType must be 2.
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User Id
-        dateDeleted:
+
+        DateDeleted:
           type:
             - string
             - 'null'
@@ -5646,42 +5707,42 @@ components:
     HMISParticipation:
       type: object
       properties:
-        hmisParticipationId:
+        HMISParticipationID:
           type: string
           maxLength: 32
           description: Unique identifier
-        projectId:
+        ProjectID:
           type: string
           maxLength: 32
-          description: Must match a projectId in Projects
-        hmisParticipationType:
+          description: Must match a ProjectID in Projects
+        HMISParticipationType:
           type: integer
           description: HMISParticipationType
           oneOf:
             - $ref: '#/components/schemas/HMISParticipationType'
-        hmisParticipationStatusStartDate:
+        HmisParticipationStatusStartDate:
           type: string
           format: date
           description: HMISParticipation status start date
-        hmisParticipationStatusEndDate:
+        HmisParticipationStatusEndDate:
           type:
             - string
             - 'null'
           format: date
           description: HMISParticipation status end date
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User Id
-        dateDeleted:
+        DateDeleted:
           type:
             - string
             - 'null'
@@ -5690,75 +5751,76 @@ components:
     CEParticipation:
       type: object
       properties:
-        ceParticipationId:
+        CEParticipationID:
           type: string
           maxLength: 32
           description: Unique identifier
-        projectId:
+        ProjectID:
           type: string
           maxLength: 32
-          description: Must match a projectId in Projects
-        accessPoint:
+          description: Must match a ProjectID in Projects
+        AccessPoint:
           type: integer
           description: Access point
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        preventionAssessment:
+        PreventionAssessment:
           type:
             - integer
             - 'null'
           description: Prevention assessment
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        crisisAssessment:
+        CrisisAssessment:
           type:
             - integer
             - 'null'
           description: Crisis assessment
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        housingAssessment:
+        HousingAssessment:
           type:
             - integer
             - 'null'
           description: Housing assessment
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        directServices:
+        DirectServices:
           type:
             - integer
             - 'null'
           description: Direct services
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        receivesReferrals:
+        ReceivesReferrals:
           type: integer
           description: Receives referrals
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        ceParticipationStatusStartDate:
+        CeParticipationStatusStartDate:
           type: string
           format: date
           description: CEParticipation status start date
-        ceParticipationStatusEndDate:
+        CeParticipationStatusEndDate:
           type:
             - string
             - 'null'
           format: date
           description: CEParticipation status end date
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+
+        DateDeleted:
           type:
             - string
             - 'null'
@@ -5767,187 +5829,190 @@ components:
     Exit:
       type: object
       properties:
-        exitId:
+        ExitID:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment Id
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal Id
-        exitDate:
+        ExitDate:
           type: string
           format: date
           description: Exit date
-        destination:
+        Destination:
           type: integer
           description: Destination
           $ref: '#/components/schemas/LivingSituation'
-        destinationSubsidyType:
+
+        DestinationSubsidyType:
           type:
             - integer
             - 'null'
           description: Destination subsidy type
           $ref: '#/components/schemas/RentalSubsidyTypes'
-        otherDestination:
+        OtherDestination:
           type:
             - string
             - 'null'
           maxLength: 50
           description: Other destination
-        housingAssessment:
+        HousingAssessment:
           type: integer
           description: Housing assessment at exit
           $ref: '#/components/schemas/HousingAssessmentAtExit'
-        subsidyInformation:
+        SubsidyInformation:
           type:
             - integer
             - 'null'
           description: Includes data for W5.A and W5.B.
           $ref: '#/components/schemas/SubsidyInformation'
-        projectCompletionStatus:
+        ProjectCompletionStatus:
           type: integer
           description: Project completion status
           $ref: '#/components/schemas/ProjectCompletionStatus'
-        earlyExitReason:
+        EarlyExitReason:
           type:
             - integer
             - 'null'
           description: Expelled reason
           $ref: '#/components/schemas/ExpelledReason'
-        exchangeForSex:
+        ExchangeForSex:
           type: integer
           description: Exchange for sex
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        exchangeForSexPastThreeMonths:
+
+        ExchangeForSexPastThreeMonths:
           type:
             - integer
             - 'null'
           description: Exchange for sex past three months
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        countOfExchangeForSex:
+        CountOfExchangeForSex:
           type:
             - integer
             - 'null'
           description: Count of exchange for sex
           $ref: '#/components/schemas/CountExchangeForSex'
-        askedOrForcedToExchangeForSex:
+        AskedOrForcedToExchangeForSex:
           type:
             - integer
             - 'null'
           description: Asked or forced to exchange for sex
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        askedOrForcedToExchangeForSexPastThreeMonths:
+        AskedOrForcedToExchangeForSexPastThreeMonths:
           type:
             - integer
             - 'null'
           description: Asked or forced to exchange for sex past three months
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        workplaceViolenceThreats:
+        WorkplaceViolenceThreats:
           type: integer
           description: Workplace violence threats
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        workplacePromiseDifference:
+        WorkplacePromiseDifference:
           type: integer
           description: Workplace promise difference
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        coercedToContinueWork:
+        CoercedToContinueWork:
           type:
             - integer
             - 'null'
           description: Coerced to continue work
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        laborExploitPastThreeMonths:
+        LaborExploitPastThreeMonths:
           type:
             - integer
             - 'null'
           description: Labor exploit past three months
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        counselingReceived:
+        CounselingReceived:
           type: integer
           description: Counseling received
           $ref: '#/components/schemas/NoYesMissing'
-        individualCounseling:
+        IndividualCounseling:
           type:
             - integer
             - 'null'
           description: Individual counseling
           $ref: '#/components/schemas/NoYesMissing'
-        familyCounseling:
+        FamilyCounseling:
           type:
             - integer
             - 'null'
           description: Family counseling
           $ref: '#/components/schemas/NoYesMissing'
-        groupCounseling:
+        GroupCounseling:
           type:
             - integer
             - 'null'
           description: Group counseling
           $ref: '#/components/schemas/NoYesMissing'
-        sessionCountAtExit:
+        SessionCountAtExit:
           type:
             - integer
             - 'null'
           description: Session count at exit
-        postExitCounselingPlan:
+        PostExitCounselingPlan:
           type: integer
           description: Post exit counseling plan
           $ref: '#/components/schemas/NoYesMissing'
-        sessionsInPlan:
+
+        SessionsInPlan:
           type:
             - integer
             - 'null'
           description: Sessions in plan
-        destinationSafeClient:
+        DestinationSafeClient:
           type: integer
           description: Destination safe for client
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        destinationSafeWorker:
+        DestinationSafeWorker:
           type: integer
           description: Destination safe for worker
           $ref: '#/components/schemas/WorkerResponse'
-        posAdultConnections:
+        PosAdultConnections:
           type: integer
           description: Positive adult connections
           $ref: '#/components/schemas/WorkerResponse'
-        posPeerConnections:
+        PosPeerConnections:
           type: integer
           description: Positive peer connections
           $ref: '#/components/schemas/WorkerResponse'
-        posCommunityConnections:
+        PosCommunityConnections:
           type: integer
           description: Positive community connections
           $ref: '#/components/schemas/WorkerResponse'
-        aftercareDate:
+        AftercareDate:
           type:
             - string
             - 'null'
           format: date
           description: Aftercare date
-        aftercareProvided:
+        AftercareProvided:
           type:
             - integer
             - 'null'
           description: Aftercare provided
           $ref: '#/components/schemas/AftercareProvided'
-        emailSocialMedia:
+        EmailSocialMedia:
           type:
             - integer
             - 'null'
           description: Email or social media contact
           $ref: '#/components/schemas/NoYesMissing'
-        telephone:
+        Telephone:
           type:
             - integer
             - 'null'
           description: Telephone contact
           $ref: '#/components/schemas/NoYesMissing'
-        inPersonIndividual:
+        InPersonIndividual:
           type:
             - integer
             - 'null'
@@ -5959,25 +6024,25 @@ components:
             - 'null'
           description: In-person group contact
           $ref: '#/components/schemas/NoYesMissing'
-        cmExitReason:
+        CMExitReason:
           type:
             - integer
             - 'null'
           description: Case management exit reason
           $ref: '#/components/schemas/CMExitReason'
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type:
             - string
             - 'null'
@@ -5986,432 +6051,437 @@ components:
     IncomeBenefits:
       type: object
       properties:
-        incomeBenefitsId:
+        IncomeBenefitsID:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment ID
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal ID
-        informationDate:
+        InformationDate:
           type: string
           format: date
           description: Information date
-        incomeFromAnySource:
+        IncomeFromAnySource:
           type: integer
           description: Income from any source
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        totalMonthlyIncome:
+
+        TotalMonthlyIncome:
           type:
             - number
             - 'null'
           format: double
           description: Total monthly income
-        earned:
+
+        Earned:
           type:
             - integer
             - 'null'
           description: Earned
           $ref: '#/components/schemas/NoYesMissing'
-        earnedAmount:
+        EarnedAmount:
           type:
             - number
             - 'null'
           format: double
           description: Earned amount
-        unemployment:
+        Unemployment:
           type:
             - integer
             - 'null'
           description: Unemployment
           $ref: '#/components/schemas/NoYesMissing'
-        unemploymentAmount:
+        UnemploymentAmount:
           type:
             - number
             - 'null'
           format: double
           description: Unemployment amount
-        ssi:
+        SSI:
           type:
             - integer
             - 'null'
           description: SSI
           $ref: '#/components/schemas/NoYesMissing'
-        ssiAmount:
+        SSIAmount:
           type:
             - number
             - 'null'
           format: double
           description: SSI amount
-        ssdi:
+
+        SSDI:
           type:
             - integer
             - 'null'
           description: SSDI
           $ref: '#/components/schemas/NoYesMissing'
-        ssdiAmount:
+        SSDIAmount:
           type:
             - number
             - 'null'
           format: double
           description: SSDI amount
-        vaDisabilityService:
+
+        VADisabilityService:
           type:
             - integer
             - 'null'
           description: VA Disability Service
           $ref: '#/components/schemas/NoYesMissing'
-        vaDisabilityServiceAmount:
+        VADisabilityServiceAmount:
           type:
             - number
             - 'null'
           format: double
           description: VA Disability Service amount
-        vaDisabilityNonService:
+        VADisabilityNonService:
           type:
             - integer
             - 'null'
           description: VA Disability Non-Service
           $ref: '#/components/schemas/NoYesMissing'
-        vaDisabilityNonServiceAmount:
+        VADisabilityNonServiceAmount:
           type:
             - number
             - 'null'
           format: double
           description: VA Disability Non-Service amount
-        privateDisability:
+        PrivateDisability:
           type:
             - integer
             - 'null'
           description: Private Disability
           $ref: '#/components/schemas/NoYesMissing'
-        privateDisabilityAmount:
+        PrivateDisabilityAmount:
           type:
             - number
             - 'null'
           format: double
           description: Private Disability amount
-        workersComp:
+        WorkersComp:
           type:
             - integer
             - 'null'
           description: Workers Compensation
           $ref: '#/components/schemas/NoYesMissing'
-        workersCompAmount:
+        WorkersCompAmount:
           type:
             - number
             - 'null'
           format: double
           description: Workers Compensation amount
-        tanf:
+        TANF:
           type:
             - integer
             - 'null'
           description: TANF
           $ref: '#/components/schemas/NoYesMissing'
-        tanfAmount:
+        TANFAmount:
           type:
             - number
             - 'null'
           format: double
           description: TANF amount
-        ga:
+        GA:
           type:
             - integer
             - 'null'
           description: General Assistance (GA)
           $ref: '#/components/schemas/NoYesMissing'
-        gaAmount:
+        GAAmount:
           type:
             - number
             - 'null'
           format: double
           description: General Assistance amount
-        socSecRetirement:
+        SocSecRetirement:
           type:
             - integer
             - 'null'
           description: Social Security Retirement
           $ref: '#/components/schemas/NoYesMissing'
-        socSecRetirementAmount:
+        SocSecRetirementAmount:
           type:
             - number
             - 'null'
           format: double
           description: Social Security Retirement amount
-        pension:
+        Pension:
           type:
             - integer
             - 'null'
           description: Pension
           $ref: '#/components/schemas/NoYesMissing'
-        pensionAmount:
+        PensionAmount:
           type:
             - number
             - 'null'
           format: double
           description: Pension amount
-        childSupport:
+        ChildSupport:
           type:
             - integer
             - 'null'
           description: Child Support
           $ref: '#/components/schemas/NoYesMissing'
-        childSupportAmount:
+        ChildSupportAmount:
           type:
             - number
             - 'null'
           format: double
           description: Child Support amount
-        alimony:
+        Alimony:
           type:
             - integer
             - 'null'
           description: Alimony
           $ref: '#/components/schemas/NoYesMissing'
-        alimonyAmount:
+        AlimonyAmount:
           type:
             - number
             - 'null'
           format: double
           description: Alimony amount
-        otherIncomeSource:
+        OtherIncomeSource:
           type:
             - integer
             - 'null'
           description: Other Income Source
           $ref: '#/components/schemas/NoYesMissing'
-        otherIncomeAmount:
+        OtherIncomeAmount:
           type:
             - number
             - 'null'
           format: double
           description: Other Income amount
-        otherIncomeSourceIdentify:
+        OtherIncomeSourceIdentify:
           type:
             - string
             - 'null'
           maxLength: 50
           description: Identify other income source (if OtherIncomeSource = 1)
-        benefitsFromAnySource:
+        BenefitsFromAnySource:
           type: integer
           description: Benefits from any source
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        snap:
+        SNAP:
           type:
             - integer
             - 'null'
           description: SNAP
           $ref: '#/components/schemas/NoYesMissing'
-        wic:
+        WIC:
           type:
             - integer
             - 'null'
           description: WIC
           $ref: '#/components/schemas/NoYesMissing'
-        tanfChildCare:
+        TANFChildCare:
           type:
             - integer
             - 'null'
           description: TANF Child Care
           $ref: '#/components/schemas/NoYesMissing'
-        tanfTransportation:
+        TANFTransportation:
           type:
             - integer
             - 'null'
           description: TANF Transportation
           $ref: '#/components/schemas/NoYesMissing'
-        otherTANF:
+        OtherTANF:
           type:
             - integer
             - 'null'
           description: Other TANF
           $ref: '#/components/schemas/NoYesMissing'
-        otherBenefitsSource:
+        OtherBenefitsSource:
           type:
             - integer
             - 'null'
           description: Other Benefits Source
           $ref: '#/components/schemas/NoYesMissing'
-        otherBenefitsSourceIdentify:
+        OtherBenefitsSourceIdentify:
           type:
             - string
             - 'null'
           maxLength: 50
           description: Identify other benefits source (if OtherBenefitsSource = 1)
-        insuranceFromAnySource:
+        InsuranceFromAnySource:
           type: integer
           description: Insurance from any source
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        medicaid:
+
+        Medicaid:
           type:
             - integer
             - 'null'
           description: Medicaid
           $ref: '#/components/schemas/NoYesMissing'
-        noMedicaidReason:
+        NoMedicaidReason:
           type:
             - integer
             - 'null'
           description: Reason for no Medicaid (if Medicaid = 0)
           $ref: '#/components/schemas/ReasonNotInsured'
-        medicare:
+        Medicare:
           type:
             - integer
             - 'null'
           description: Medicare
-        noMedicareReason:
+        NoMedicareReason:
           type:
             - integer
             - 'null'
           description: Reason for no Medicare (if Medicare = 0)
           $ref: '#/components/schemas/ReasonNotInsured'
-        schip:
+        SCHIP:
           type:
             - integer
             - 'null'
           description: SCHIP
           $ref: '#/components/schemas/NoYesMissing'
-        noSchipReason:
+        NoSCHIPReason:
           type:
             - integer
             - 'null'
           description: Reason for no SCHIP (if SCHIP = 0)
           $ref: '#/components/schemas/ReasonNotInsured'
-        vhaServices:
+        VHAServices:
           type:
             - integer
             - 'null'
           description: VHA Services
           $ref: '#/components/schemas/NoYesMissing'
-        noVhaReason:
+        NoVHAReason:
           type:
             - integer
             - 'null'
           description: Reason for no VHA Services (if VHAServices = 0)
           $ref: '#/components/schemas/ReasonNotInsured'
-        employerProvided:
+        EmployerProvided:
           type:
             - integer
             - 'null'
           description: Employer Provided Insurance
           $ref: '#/components/schemas/NoYesMissing'
-        noEmployerProvidedReason:
+        NoEmployerProvidedReason:
           type:
             - integer
             - 'null'
           description: Reason for no Employer Provided Insurance (if EmployerProvided = 0)
           $ref: '#/components/schemas/ReasonNotInsured'
-        cobra:
+        COBRA:
           type:
             - integer
             - 'null'
           description: COBRA
           $ref: '#/components/schemas/NoYesMissing'
-        noCobraReason:
+        NoCOBRAReason:
           type:
             - integer
             - 'null'
           description: Reason for no COBRA (if COBRA = 0)
           $ref: '#/components/schemas/ReasonNotInsured'
-        privatePay:
+        PrivatePay:
           type:
             - integer
             - 'null'
           description: Private Pay Insurance
           $ref: '#/components/schemas/NoYesMissing'
-        noPrivatePayReason:
+        NoPrivatePayReason:
           type:
             - integer
             - 'null'
           description: Reason for no Private Pay Insurance (if PrivatePay = 0)
           $ref: '#/components/schemas/ReasonNotInsured'
-        stateHealthIns:
+        StateHealthIns:
           type:
             - integer
             - 'null'
           description: State Health Insurance
           $ref: '#/components/schemas/NoYesMissing'
-        noStateHealthInsReason:
+        NoStateHealthInsReason:
           type:
             - integer
             - 'null'
           description: Reason for no State Health Insurance (if StateHealthIns = 0)
           $ref: '#/components/schemas/ReasonNotInsured'
-        indianHealthServices:
+        IndianHealthServices:
           type:
             - integer
             - 'null'
           description: Indian Health Services
           $ref: '#/components/schemas/NoYesMissing'
-        noIndianHealthServicesReason:
+        NoIndianHealthServicesReason:
           type:
             - integer
             - 'null'
           description: Reason for no Indian Health Services (if IndianHealthServices = 0)
           $ref: '#/components/schemas/ReasonNotInsured'
-        otherInsurance:
+        OtherInsurance:
           type:
             - integer
             - 'null'
           description: Other Insurance
           $ref: '#/components/schemas/NoYesMissing'
-        otherInsuranceIdentify:
-          type:
+        OtherInsuranceIdentify:
+          type: 
             - string
             - 'null'
           maxLength: 50
           description: Identify other insurance (if OtherInsurance = 1)
-        adap:
+        ADAP:
           type:
             - integer
             - 'null'
           description: ADAP
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        noAdapReason:
+        NoADAPReason:
           type:
             - integer
             - 'null'
           description: Reason for no ADAP (if ADAP = 0)
           $ref: '#/components/schemas/NoAssistanceReason'
-        ryanWhiteMedDent:
+        RyanWhiteMedDent:
           type:
             - integer
             - 'null'
           description: Ryan White Medical/Dental
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        noRyanWhiteReason:
+        NoRyanWhiteReason:
           type:
             - integer
             - 'null'
           description: Reason for no Ryan White Medical/Dental (if RyanWhiteMedDent = 0)
           $ref: '#/components/schemas/NoAssistanceReason'
-        connectionWithSOAR:
+        ConnectionWithSOAR:
           type: integer
           description: Connection with SOAR
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        dataCollectionStage:
+        DataCollectionStage:
           type: integer
           description: Data Collection Stage
           $ref: '#/components/schemas/DataCollectionStage'
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User Id
-        dateDeleted:
+        DateDeleted:
           type:
             - string
             - 'null'
@@ -6420,23 +6490,23 @@ components:
     HealthAndDV:
       type: object
       properties:
-        healthAndDVId:
+        HealthAndDVID:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment ID
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal ID
-        informationDate:
+        InformationDate:
           type: string
           format: date
           description: Information date
-        domesticViolenceSurvivor:
+        DomesticViolenceSurvivor:
           type: integer
           description: Domestic violence survivor
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
@@ -6446,57 +6516,57 @@ components:
             - 'null'
           description: When domestic violence occurred (if DomesticViolenceSurvivor = 1)
           $ref: '#/components/schemas/WhenDVOccurred'
-        currentlyFleeing:
+        CurrentlyFleeing:
           type:
             - integer
             - 'null'
           description: Currently fleeing (if DomesticViolenceSurvivor = 1)
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        generalHealthStatus:
+        GeneralHealthStatus:
           type:
             - integer
             - 'null'
           description: General health status
           $ref: '#/components/schemas/HealthStatus'
-        dentalHealthStatus:
+        DentalHealthStatus:
           type:
             - integer
             - 'null'
           description: Dental health status
           $ref: '#/components/schemas/HealthStatus'
-        mentalHealthStatus:
+        MentalHealthStatus:
           type:
             - integer
             - 'null'
           description: Mental health status
           $ref: '#/components/schemas/HealthStatus'
-        pregnancyStatus:
+        PregnancyStatus:
           type: integer
           description: Pregnancy status
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        dueDate:
+        DueDate:
           type:
             - string
             - 'null'
           format: date
           description: Due date (if PregnancyStatus = 1)
-        dataCollectionStage:
+        DataCollectionStage:
           type: integer
           description: Data collection stage
           $ref: '#/components/schemas/DataCollectionStage'
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type:
             - string
             - 'null'
@@ -6505,67 +6575,67 @@ components:
     EmploymentEducation:
       type: object
       properties:
-        employmentEducationId:
+        EmploymentEducationID:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment Id
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal Id
-        informationDate:
+        InformationDate:
           type: string
           format: date
           description: Information date
-        lastGradeCompleted:
+        LastGradeCompleted:
           type:
             - integer
             - 'null'
           description: Last grade completed
           $ref: '#/components/schemas/LastGradeCompleted'
-        schoolStatus:
+        SchoolStatus:
           type:
             - integer
             - 'null'
           description: School status
           $ref: '#/components/schemas/SchoolStatus'
-        employed:
+        Employed:
           type: integer
           description: Employed
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        employmentType:
+        EmploymentType:
           type:
             - integer
             - 'null'
           description: Employment type (if Employed = 1)
           $ref: '#/components/schemas/EmploymentType'
-        notEmployedReason:
+        NotEmployedReason:
           type:
             - integer
             - 'null'
           description: Reason for not being employed (if Employed = 0)
           $ref: '#/components/schemas/NotEmployedReason'
-        dataCollectionStage:
+        DataCollectionStage:
           type: integer
           description: Data collection stage
           $ref: '#/components/schemas/DataCollectionStage'
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type:
             - string
             - 'null'
@@ -6574,92 +6644,92 @@ components:
     Disabilities:
       type: object
       properties:
-        disabilitiesId:
+        DisabilitiesID:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment ID
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal ID
-        informationDate:
+        InformationDate:
           type: string
           format: date
           description: Information date
-        disabilityType:
+        DisabilityType:
           type: integer
           description: Disability type
           $ref: '#/components/schemas/DisabilityType'
-        disabilityResponse:
+        DisabilityResponse:
           type: integer
           description: Disability response
-        indefiniteAndImpairs:
+        IndefiniteAndImpairs:
           type:
             - integer
             - 'null'
           description: Indefinite and impairs
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        tCellCountAvailable:
+        TCellCountAvailable:
           type:
             - integer
             - 'null'
           description: T-cell count available (if DisabilityType = 8 AND DisabilityResponse = 1)
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        tCellCount:
+        TCellCount:
           type:
             - integer
             - 'null'
           description: T-cell count (if TCellCountAvailable = 1)
-        tCellSource:
+        TCellSource:
           type:
             - integer
             - 'null'
           description: T-cell source (if TCellCount is not null)
-          $ref: '#/components/schemas/TCellSourceViralLoadSource'
-        viralLoadAvailable:
+          $ref: '#/components/schemas/TCellSourceViralLoad'
+        ViralLoadAvailable:
           type:
             - integer
             - 'null'
           description: Viral load available (if DisabilityType = 8 AND DisabilityResponse = 1)
           $ref: '#/components/schemas/ViralLoadAvailable'
-        viralLoad:
+        ViralLoad:
           type:
             - integer
             - 'null'
           description: Viral load (if ViralLoadAvailable = 1)
-        viralLoadSource:
+        ViralLoadSource:
           type:
             - integer
             - 'null'
           description: Viral load source (if ViralLoad is not null)
-          $ref: '#/components/schemas/TCellSourceViralLoadSource'
-        antiRetroviral:
+          $ref: '#/components/schemas/TCellSourceViralLoad'
+        AntiRetroviral:
           type:
             - integer
             - 'null'
           description: Anti-retroviral (if DisabilityType = 8 AND DisabilityResponse = 1)
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        dataCollectionStage:
+        DataCollectionStage:
           type: integer
           description: Data collection stage
           $ref: '#/components/schemas/DataCollectionStage'
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type:
             - string
             - 'null'
@@ -6668,27 +6738,27 @@ components:
     Services:
       type: object
       properties:
-        servicesId:
+        ServicesID:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment ID
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal ID
-        dateProvided:
+        DateProvided:
           type: string
           format: date
           description: Date provided
-        recordType:
+        RecordType:
           type: integer
           description: Record type
           $ref: '#/components/schemas/RecordType'
-        typeProvided:
+        TypeProvided:
           type: integer
           description: Type provided
           oneOf:
@@ -6702,19 +6772,19 @@ components:
             - $ref: '#/components/schemas/BedNight'
             - $ref: '#/components/schemas/VoucherTracking'
             - $ref: '#/components/schemas/MovingOnAssistance'
-        otherTypeProvided:
+        OtherTypeProvided:
           type:
             - string
             - 'null'
           maxLength: 50
           description: Other type provided (if RecordType = 144 and TypeProvided = 6 or RecordType = 210 and TypeProvided = 12)
-        movingOnOtherType:
+        MovingOnOtherType:
           type:
             - string
             - 'null'
           maxLength: 50
           description: Moving on other type (if RecordType = 300 and TypeProvided = 5)
-        subTypeProvided:
+        SubTypeProvided:
           type:
             - integer
             - 'null'
@@ -6723,43 +6793,44 @@ components:
             - $ref: '#/components/schemas/SSVFSubType3'
             - $ref: '#/components/schemas/SSVFSubType4'
             - $ref: '#/components/schemas/SSVFSubType5'
-        faAmount:
+
+        FAAmount:
           type:
             - number
             - 'null'
           format: double
           description: Financial assistance amount (if RecordType = 151 or 152)
-        faStartDate:
+        FAStartDate:
           type:
             - string
             - 'null'
           format: date
           description: Financial assistance start date (if RecordType = 151 or 152)
-        faEndDate:
+        FAEndDate:
           type:
             - string
             - 'null'
           format: date
           description: Financial assistance end date (if RecordType = 151 or 152)
-        referralOutcome:
+        ReferralOutcome:
           type:
             - integer
             - 'null'
           description: Referral outcome (if RecordType = 161)
           $ref: '#/components/schemas/PATHReferralOutcome'
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type:
             - string
             - 'null'
@@ -6768,57 +6839,57 @@ components:
     CurrentLivingSituation:
       type: object
       properties:
-        currentLivingSitId:
+        CurrentLivingSitID:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment ID
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal ID
-        informationDate:
+        InformationDate:
           type: string
           format: date
           description: Information date
-        currentLivingSituation:
+        CurrentLivingSituation:
           type: integer
           description: Current living situation
           $ref: '#/components/schemas/LivingSituation'
-        clsSubsidyType:
+        CLSSubsidyType:
           type:
             - integer
             - 'null'
           description: Current living situation subsidy type (if CurrentLivingSituation = 435)
           $ref: '#/components/schemas/RentalSubsidyTypes'
-        verifiedBy:
+        VerifiedBy:
           type:
             - string
             - 'null'
           maxLength: 100
           description: Verified by (if ProjectType = 14)
-        leaveSituation14Days:
+        LeaveSituation14Days:
           type:
             - integer
             - 'null'
           description: Leave situation in 14 days (if CurrentLivingSituation in [215, 206, 207, 225, 204, 205, 302, 329, 314, 332, 336, 335, 410, 435, 421, 411])
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        subsequentResidence:
+        SubsequentResidence:
           type:
             - integer
             - 'null'
           description: Subsequent residence (if LeaveSituation14Days = 1)
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        resourcesToObtain:
+        ResourcesToObtain:
           type:
             - integer
             - 'null'
           description: Resources to obtain (if LeaveSituation14Days = 1)
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        leaseOwn60Day:
+        LeaseOwn60Day:
           type:
             - integer
             - 'null'
@@ -6830,25 +6901,25 @@ components:
             - 'null'
           description: Moved two or more times (if LeaveSituation14Days = 1)
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        locationDetails:
+        LocationDetails:
           type:
             - string
             - 'null'
           maxLength: 250
           description: Location details
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type:
             - string
             - 'null'
@@ -6857,59 +6928,59 @@ components:
     Assessments:
       type: object
       properties:
-        assessmentId:
+        AassessmentID:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment Id
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal Id
-        assessmentDate:
+        AssessmentDate:
           type: string
           format: date
           description: Assessment date
-        assessmentLocation:
+        AssessmentLocation:
           type:
             - string
             - 'null'
           maxLength: 250
           description: Assessment location
-        assessmentType:
+        AssessmentType:
           type:
             - integer
             - 'null'
           description: Assessment type
           $ref: '#/components/schemas/AssessmentType'
-        assessmentLevel:
+        AssessmentLevel:
           type:
             - integer
             - 'null'
           description: Assessment level
           $ref: '#/components/schemas/AssessmentLevel'
-        prioritizationStatus:
+        PrioritizationStatus:
           type:
             - integer
             - 'null'
           description: Prioritization status
           $ref: '#/components/schemas/PrioritizationStatus'
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type:
             - string
             - 'null'
@@ -6918,56 +6989,56 @@ components:
     AssessmentQuestions:
       type: object
       properties:
-        assessmentQuestionId:
+        AssessmentQuestionID:
           type: string
           maxLength: 32
           description: Unique identifier
-        assessmentId:
+        AassessmentID:
           type: string
           maxLength: 32
           description: Assessment ID
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment ID
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal ID
-        assessmentQuestionGroup:
+        AssessmentQuestionGroup:
           type:
             - string
             - 'null'
           maxLength: 250
           description: Assessment question group (locally determined)
-        assessmentQuestionOrder:
+        AssessmentQuestionOrder:
           type:
             - integer
             - 'null'
           description: Assessment question order (locally determined)
-        assessmentQuestion:
+        AssessmentQuestion:
           type: string
           maxLength: 250
           description: Assessment question (cannot be null if AssessmentQuestions.csv is populated)
-        assessmentAnswer:
+        AssessmentAnswer:
           type:
             - string
             - 'null'
           maxLength: 500
           description: Assessment answer (locally determined)
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type:
             - string
             - 'null'
@@ -6976,69 +7047,69 @@ components:
     Event:
       type: object
       properties:
-        eventId:
+        EventID:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment Id
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal Id
-        eventDate:
+        EventDate:
           type: string
           format: date
           description: Event date
-        event:
+        Event:
           type: integer
           description: Event type
           $ref: '#/components/schemas/Referral'
-        probSolDivRRResult:
+        ProbSolDivRRResult:
           type:
             - integer
             - 'null'
           description: Problem-solving/diversion/rapid resolution result
           $ref: '#/components/schemas/NoYesMissing'
-        referralCaseManageAfter:
+        ReferralCaseManageAfter:
           type:
             - integer
             - 'null'
           description: Referral for case management after event
           $ref: '#/components/schemas/NoYesMissing'
-        locationCrisisOrPHHousing:
+        LocationCrisisOrPHHousing:
           type:
             - string
             - 'null'
           maxLength: 250
           description: Location of crisis or permanent housing
-        referralResult:
+        ReferralResult:
           type:
             - integer
             - 'null'
           description: Referral result
           $ref: '#/components/schemas/ReferralResult'
-        resultDate:
+        ResultDate:
           type:
             - string
             - 'null'
           format: date
           description: Result date (if ReferralResult is not null)
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type:
             - string
             - 'null'
@@ -7047,55 +7118,55 @@ components:
     YouthEducationStatus:
       type: object
       properties:
-        youthEducationStatusId:
+        YouthEducationStatusID:
           type: string
           maxLength: 32
           description: Unique identifier
-        enrollmentId:
+        EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment ID
-        personalId:
+        PersonalID:
           type: string
           maxLength: 32
           description: Personal ID
-        informationDate:
+        InformationDate:
           type: string
           format: date
           description: Information date
-        currentSchoolAttend:
+        CurrentSchoolAttend:
           type: integer
           description: Current school attendance
           $ref: '#/components/schemas/CurrentSchoolAttend'
-        mostRecentEdStatus:
+        MostRecentEdStatus:
           type:
             - integer
             - 'null'
           description: Most recent education status (if CurrentSchoolAttend = 0)
           $ref: '#/components/schemas/MostRecentEdStatus'
-        currentEdStatus:
+        CurrentEdStatus:
           type:
             - integer
             - 'null'
           description: Current education status (if CurrentSchoolAttend = 1 or 2)
           $ref: '#/components/schemas/CurrentEdStatus'
-        dataCollectionStage:
+        DataCollectionStage:
           type: integer
           description: Data collection stage
           $ref: '#/components/schemas/DataCollectionStage'
-        dateCreated:
+        DateCreated:
           type: string
           format: date-time
           description: Date created
-        dateUpdated:
+        DateUpdated:
           type: string
           format: date-time
           description: Date updated
-        userId:
+        UserId:
           type: string
           maxLength: 32
           description: User ID
-        dateDeleted:
+        DateDeleted:
           type:
             - string
             - 'null'
