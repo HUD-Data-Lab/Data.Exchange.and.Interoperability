@@ -54,24 +54,26 @@ Chosen option: "REST API", because [justification. e.g., only option, which meet
 ## Pros and Cons of the Options <!-- optional -->
 
 ### REST API
-REST is the most widely used style due to its simplicity and flexibility. 
+REST is the most widely used style due to its simplicity and flexibility.
 
 Uses standard HTTP protocol with URIs for requests and JSON for responses.
 
+See: https://en.wikipedia.org/wiki/REST
+
 Common use Cases: Internal APIs, enterprise integrations, financial transactions
 
-- Good, because simple, widely adopted, flexible
+- Good, because simple, widely adopted, flexible. Good for public APIs.
 - Good, because lots of support libraries for various dev environments
 - Good, because security is well understood. Lots of existing products already support.
 - Good, because it's stateless.
 - Bad, because it can be chatty (multiple requests for complex data), not ideal for complex data structures.
-- Bad, because it can be harder to integrate with medical systems using FHIR.
+- Bad, an architecture not a standard, so lots of different opinions on the best way to do the same thing.
 
 
 ### GraphQL
 GraphQL is gaining popularity for its efficiency in complex data retrieval scenarios.
 
-Client specifies exact data needs through a query language. Efficient for fetching complex data structures. 
+Client specifies exact data needs through a query language. Efficient for fetching complex data structures allowing developers to specify the exact data they need via a rich query language.
 Uses standard HTTP protocol with URIs for requests and JSON for responses.
 
 See: https://spec.graphql.org/October2021/
@@ -81,12 +83,12 @@ Common use cases: Mobile apps, single-page applications, complex data relationsh
 - Good, because efficient data fetching, reduces over-fetching.
 - Good, because good for complex user interfaces (e.g. websites).
 - Bad, because learning curve for query language, potential performance overhead for simple queries.
-- Bad, because more complex to correctly enforce access permissions.
-- Bad, because it can be harder to integrate with medical systems using FHIR.
+- Bad, because more complex query features, it can be harder to correctly enforce access permissions.
 
-
-### FHIR/HL7
+### FHIR
 HL7 and FHIR are specific to healthcare data exchange and interoperability. FHIR is the newer, more modern standard.
+
+HL7 is not very human readable, but FHIR improves when used with JSON responses.
 
 See: https://www.hl7.org/fhir/http.html
 
@@ -94,11 +96,11 @@ Common use cases: Sharing electronic health records, healthcare information exch
 
 - Good, because specific to healthcare data exchange, focuses on standardized resources and interactions. Could argue HUD data is similar to healthcare data
 - Good, because standardized for healthcare data exchange, simplifies interoperability between healthcare systems.
+- Good, uses standardized resources and formats (standardized for healthcare).
+- Good, rapidly being adopted because closer to REST.
 - Bad, because limited use case outside healthcare.
 - Bad, not widely supported by all coding language and libraries as REST.
-- Bad, requires more training and expertise to become proficient.
-- Bad, supports multiple response types (XML, JSON, RDF), so more complex
-
+- Bad, supports multiple response types (XML, JSON, RDF), so more complex. Subset of JSON-only might be acceptable?
 
 ### gRPC
 gRPC is ideal for high-performance internal APIs within microservices architectures.
@@ -128,7 +130,6 @@ Common use cases: Internal APIs, enterprise integrations, financial transactions
 
 - [Link type](link to adr) <!-- example: Refined by [xxx](yyyymmdd-xxx.md) -->
 - … <!-- numbers of links can vary -->
-
 
 
 **Design Philosophy/Pattern:**
