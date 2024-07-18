@@ -66,6 +66,7 @@ Common use Cases: Internal APIs, enterprise integrations, financial transactions
 - Good, because lots of support libraries for various dev environments
 - Good, because security is well understood. Lots of existing products already support.
 - Good, because it's stateless.
+- Good, because it can migrated to FHIR using something like [SMART](https://docs.smarthealthit.org/).
 - Bad, because it can be chatty (multiple requests for complex data), not ideal for complex data structures.
 - Bad, an architecture not a standard, so lots of different opinions on the best way to do the same thing.
 
@@ -99,7 +100,7 @@ Common use cases: Sharing electronic health records, healthcare information exch
 - Good, uses standardized resources and formats (standardized for healthcare).
 - Good, rapidly being adopted because closer to REST.
 - Bad, because limited use case outside healthcare.
-- Bad, not widely supported by all coding language and libraries as REST.
+- Bad, because requires mapping the existing complex CSV types into FHIR.
 - Bad, supports multiple response types (XML, JSON, RDF), so more complex. Subset of JSON-only might be acceptable?
 
 ### gRPC
