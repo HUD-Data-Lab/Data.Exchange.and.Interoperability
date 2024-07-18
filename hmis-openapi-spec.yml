@@ -44,6 +44,7 @@ paths:
   /youtheducationstatus:
     post:
       summary: Create a new YouthEducationStatus record
+      description: Create a new YouthEducationStatus record
       tags:
         - YouthEducationStatus
       requestBody:
@@ -63,6 +64,7 @@ paths:
       tags:
         - YouthEducationStatus
       summary: Get YouthEducationStatus data by YouthEducationStatus ID
+      description: Get YouthEducationStatus data by YouthEducationStatus ID
       parameters:
         - name: YouthEducationStatusID
           in: path
@@ -85,6 +87,7 @@ paths:
       tags:
         - YouthEducationStatus
       summary: Update an existing YouthEducationStatus record
+      description: Update an existing YouthEducationStatus record
       parameters:
         - name: YouthEducationStatusID
           in: path
@@ -111,6 +114,7 @@ paths:
       tags:
         - YouthEducationStatus
       summary: Delete a YouthEducationStatus record
+      description: Delete a YouthEducationStatus record
       parameters:
         - name: YouthEducationStatusID
           in: path
@@ -128,6 +132,7 @@ paths:
   /events:
     post:
       summary: Create a new Event record
+      description: This creates a new Event record
       tags:
         - Events
       requestBody:
@@ -147,6 +152,7 @@ paths:
       tags:
         - Events
       summary: Get Event data by Event ID
+      description: This gets Event data by Event ID
       parameters:
         - name: EventID
           in: path
@@ -169,6 +175,7 @@ paths:
       tags:
         - Events
       summary: Update an existing Event record
+      description: Update an existing Event record
       parameters:
         - name: EventID
           in: path
@@ -195,6 +202,7 @@ paths:
       tags:
         - Events
       summary: Delete an Event record
+      description: This marks the event record as deleted
       parameters:
         - name: EventID
           in: path
@@ -211,6 +219,7 @@ paths:
   /assessmentquestions:
     post:
       summary: Create a new AssessmentQuestion record
+      description: Create a new AssessmentQuestion record
       tags:
         - AssessmentQuestions
       requestBody:
@@ -230,6 +239,7 @@ paths:
       tags:
         - AssessmentQuestions
       summary: Get AssessmentQuestion data by AssessmentQuestion ID
+      description: Get AssessmentQuestion data by AssessmentQuestion ID
       parameters:
         - name: AssessmentQuestionID
           in: path
@@ -252,6 +262,7 @@ paths:
       tags:
         - AssessmentQuestions
       summary: Update an existing AssessmentQuestion record
+      description: Update an existing AssessmentQuestion record
       parameters:
         - name: AssessmentQuestionID
           in: path
@@ -278,6 +289,7 @@ paths:
       tags:
         - AssessmentQuestions
       summary: Delete an AssessmentQuestion record
+      description: Delete an AssessmentQuestion record
       parameters:
         - name: AssessmentQuestionID
           in: path
@@ -295,6 +307,7 @@ paths:
   /assessments:
     post:
       summary: Create a new Assessment record
+      description: Create a new Assessment record
       tags:
         - Assessments
       requestBody:
@@ -314,6 +327,7 @@ paths:
       tags:
         - Assessments
       summary: Get Assessment data by Assessment ID
+      description: Get Assessment data by Assessment ID
       parameters:
         - name: AassessmentID
           in: path
@@ -336,6 +350,7 @@ paths:
       tags:
         - Assessments
       summary: Update an existing Assessment record
+      description: Update an existing Assessment record
       parameters:
         - name: AassessmentID
           in: path
@@ -362,6 +377,7 @@ paths:
       tags:
         - Assessments
       summary: Delete an Assessment record
+      description: This deletes an Assessment record
       parameters:
         - name: AassessmentID
           in: path
@@ -379,6 +395,7 @@ paths:
   /currentlivingsituation:
     post:
       summary: Create a new CurrentLivingSituation record
+      description: Create a new CurrentLivingSituation record
       tags:
         - CurrentLivingSituation
       requestBody:
@@ -398,6 +415,7 @@ paths:
       tags:
         - CurrentLivingSituation
       summary: Get CurrentLivingSituation data by CurrentLivingSitID
+      description: Get CurrentLivingSituation data by CurrentLivingSitID
       parameters:
         - name: CurrentLivingSitID
           in: path
@@ -420,6 +438,7 @@ paths:
       tags:
         - CurrentLivingSituation
       summary: Update an existing CurrentLivingSituation record
+      description: Update an existing CurrentLivingSituation record
       parameters:
         - name: CurrentLivingSitID
           in: path
@@ -446,6 +465,7 @@ paths:
       tags:
         - CurrentLivingSituation
       summary: Delete a CurrentLivingSituation record
+      description: Delete a CurrentLivingSituation record
       parameters:
         - name: CurrentLivingSitID
           in: path
@@ -463,6 +483,7 @@ paths:
   /services:
     post:
       summary: Create a new Services record
+      description: This creates a new Services record
       tags:
         - Services
       requestBody:
@@ -482,6 +503,7 @@ paths:
       tags:
         - Services
       summary: Get Services data by Services ID
+      description: Get Services data by Services ID
       parameters:
         - name: ServicesID
           in: path
@@ -504,6 +526,7 @@ paths:
       tags:
         - Services
       summary: Update an existing Services record
+      description: Update an existing Services record
       parameters:
         - name: ServicesID
           in: path
@@ -530,6 +553,7 @@ paths:
       tags:
         - Services
       summary: Delete a Services record
+      description: This deletes a Services record
       parameters:
         - name: ServicesID
           in: path
@@ -547,6 +571,7 @@ paths:
   /disabilities:
     post:
       summary: Create a new Disabilities record
+      description: Create a new Disabilities record
       tags:
         - Disabilities
       requestBody:
@@ -566,6 +591,7 @@ paths:
       tags:
         - Disabilities
       summary: Get Disabilities data by Disabilities ID
+      description: Get Disabilities data by Disabilities ID
       parameters:
         - name: DisabilitiesID
           in: path
@@ -588,6 +614,7 @@ paths:
       tags:
         - Disabilities
       summary: Update an existing Disabilities record
+      description: Update an existing Disabilities record
       parameters:
         - name: DisabilitiesID
           in: path
@@ -614,6 +641,7 @@ paths:
       tags:
         - Disabilities
       summary: Delete a Disabilities record
+      description: This deletes a Disabilities record
       parameters:
         - name: DisabilitiesID
           in: path
@@ -631,6 +659,7 @@ paths:
   /employmenteducation:
     post:
       summary: Create a new EmploymentEducation record
+      description: Create a new EmploymentEducation record
       tags:
         - EmploymentEducation
       requestBody:
@@ -650,6 +679,7 @@ paths:
       tags:
         - EmploymentEducation
       summary: Get EmploymentEducation data by EmploymentEducation ID
+      description: Get EmploymentEducation data by EmploymentEducation ID
       parameters:
         - name: EmploymentEducationID
           in: path
@@ -672,6 +702,7 @@ paths:
       tags:
         - EmploymentEducation
       summary: Update an existing EmploymentEducation record
+      description:  Update an existing EmploymentEducation record
       parameters:
         - name: EmploymentEducationID
           in: path
@@ -698,6 +729,7 @@ paths:
       tags:
         - EmploymentEducation
       summary: Delete an EmploymentEducation record
+      description: Delete an EmploymentEducation record
       parameters:
         - name: EmploymentEducationID
           in: path
@@ -715,6 +747,7 @@ paths:
   /healthanddv:
     post:
       summary: Create a new HealthAndDV record
+      description: Create a new HealthAndDV record
       tags:
         - HealthAndDV
       requestBody:
@@ -734,6 +767,7 @@ paths:
       tags:
         - HealthAndDV
       summary: Get HealthAndDV data by HealthAndDV ID
+      description: Get HealthAndDV data by HealthAndDV ID
       parameters:
         - name: HealthAndDVID
           in: path
@@ -756,6 +790,7 @@ paths:
       tags:
         - HealthAndDV
       summary: Update an existing HealthAndDV record
+      description: Update an existing HealthAndDV record
       parameters:
         - name: HealthAndDVID
           in: path
@@ -782,6 +817,7 @@ paths:
       tags:
         - HealthAndDV
       summary: Delete a HealthAndDV record
+      description: This deletes a HealthAndDV record
       parameters:
         - name: HealthAndDVID
           in: path
@@ -799,6 +835,7 @@ paths:
   /incomebenefits:
     post:
       summary: Create a new IncomeBenefits record
+      description: Create a new IncomeBenefits record
       tags:
         - IncomeBenefits
       requestBody:
@@ -818,6 +855,7 @@ paths:
       tags:
         - IncomeBenefits
       summary: Get IncomeBenefits data by IncomeBenefits ID
+      description: Get IncomeBenefits data by IncomeBenefits ID
       parameters:
         - name: IncomeBenefitsID
           in: path
@@ -840,6 +878,7 @@ paths:
       tags:
         - IncomeBenefits
       summary: Update an existing IncomeBenefits record
+      description: Update an existing IncomeBenefits record
       parameters:
         - name: IncomeBenefitsID
           in: path
@@ -866,6 +905,7 @@ paths:
       tags:
         - IncomeBenefits
       summary: Delete an IncomeBenefits record
+      description: Delete an IncomeBenefits record
       parameters:
         - name: IncomeBenefitsID
           in: path
@@ -883,6 +923,7 @@ paths:
   /exits:
     post:
       summary: Create a new Exit record
+      description: This creates a new exit record
       tags:
         - Exits
       requestBody:
@@ -902,6 +943,7 @@ paths:
       tags:
         - Exits
       summary: Get Exit data by Exit ID
+      description: This gets Exit data by Exit ID
       parameters:
         - name: ExitID
           in: path
@@ -924,6 +966,7 @@ paths:
       tags:
         - Exits
       summary: Update an existing Exit record
+      description: Update an existing Exit record
       parameters:
         - name: ExitID
           in: path
@@ -950,6 +993,7 @@ paths:
       tags:
         - Exits
       summary: Delete an Exit record
+      description: This marks an Exit record as deleted
       parameters:
         - name: ExitID
           in: path
@@ -967,6 +1011,7 @@ paths:
   /ceparticipations:
     post:
       summary: Create a new CEParticipation record
+      description: Create a new CEParticipation record
       tags:
         - CEParticipations
       requestBody:
@@ -986,6 +1031,7 @@ paths:
       tags:
         - CEParticipations
       summary: Get CEParticipation data by CEParticipation ID
+      description: Get CEParticipation data by CEParticipation ID
       parameters:
         - name: CEParticipationID
           in: path
@@ -1008,6 +1054,7 @@ paths:
       tags:
         - CEParticipations
       summary: Update an existing CEParticipation record
+      description: Update an existing CEParticipation record
       parameters:
         - name: CEParticipationID
           in: path
@@ -1034,6 +1081,7 @@ paths:
       tags:
         - CEParticipations
       summary: Delete a CEParticipation record
+      description: Delete a CEParticipation record
       parameters:
         - name: CEParticipationID
           in: path
@@ -1051,6 +1099,7 @@ paths:
   /hmisparticipations:
     post:
       summary: Create a new HMISParticipation record
+      description: Create a new HMISParticipation record
       tags:
         - HMISParticipations
       requestBody:
@@ -1070,6 +1119,7 @@ paths:
       tags:
         - HMISParticipations
       summary: Get HMISParticipation data by HMISParticipation ID
+      description: Get HMISParticipation data by HMISParticipation ID
       parameters:
         - name: HMISParticipationID
           in: path
@@ -1092,6 +1142,7 @@ paths:
       tags:
         - HMISParticipations
       summary: Update an existing HMISParticipation record
+      description: Update an existing HMISParticipation record
       parameters:
         - name: HMISParticipationID
           in: path
@@ -1118,6 +1169,7 @@ paths:
       tags:
         - HMISParticipations
       summary: Delete an HMISParticipation record
+      description: Delete an HMISParticipation record
       parameters:
         - name: HMISParticipationID
           in: path
@@ -1135,6 +1187,7 @@ paths:
   /affiliations:
     post:
       summary: Create a new Affiliation record
+      description: Create a new Affiliation record
       tags:
         - Affiliations
       requestBody:
@@ -1154,6 +1207,7 @@ paths:
       tags:
         - Affiliations
       summary: Get Affiliation data by Affiliation ID
+      description: Get Affiliation data by Affiliation ID
       parameters:
         - name: AffiliationId
           in: path
@@ -1176,6 +1230,7 @@ paths:
       tags:
         - Affiliations
       summary: Update an existing Affiliation record
+      description: Update an existing Affiliation record
       parameters:
         - name: AffiliationId
           in: path
@@ -1202,6 +1257,7 @@ paths:
       tags:
         - Affiliations
       summary: Delete an Affiliation record
+      description: This deletes an Affiliation record
       parameters:
         - name: AffiliationId
           in: path
@@ -1219,6 +1275,7 @@ paths:
   /inventories:
     post:
       summary: Create a new Inventory record
+      description: This creates a new Inventory record
       tags:
         - Inventories
       requestBody:
@@ -1238,6 +1295,7 @@ paths:
       tags:
         - Inventories
       summary: Get Inventory data by Inventory ID
+      description: Get Inventory data by Inventory ID
       parameters:
         - name: InventoryID
           in: path
@@ -1260,6 +1318,7 @@ paths:
       tags:
         - Inventories
       summary: Update an existing Inventory record
+      description: Update an existing Inventory record
       parameters:
         - name: InventoryID
           in: path
@@ -1286,6 +1345,7 @@ paths:
       tags:
         - Inventories
       summary: Delete an Inventory record
+      description: This deletes an Inventory record
       parameters:
         - name: InventoryID
           in: path
@@ -1303,6 +1363,7 @@ paths:
   /funders:
     post:
       summary: Create a new funder record
+      description: This creates a new funder record
       tags:
         - Funders
       requestBody:
@@ -1322,6 +1383,7 @@ paths:
       tags:
         - Funders
       summary: Get funder data by Funder ID
+      description: This gets funder data by Funder ID
       parameters:
         - name: FunderId
           in: path
@@ -1344,6 +1406,7 @@ paths:
       tags:
         - Funders
       summary: Update an existing funder record
+      description: Update an existing funder record
       parameters:
         - name: FunderId
           in: path
@@ -1370,6 +1433,7 @@ paths:
       tags:
         - Funders
       summary: Delete a funder record
+      description: This marks a funder record as deleted
       parameters:
         - name: FunderId
           in: path
@@ -1387,6 +1451,7 @@ paths:
   /projectcocs:
     post:
       summary: Create a new ProjectCoC record
+      description: Create a new ProjectCoC record
       tags:
         - ProjectCoCs
       requestBody:
@@ -1401,11 +1466,12 @@ paths:
         '400':
           description: Invalid input provided
 
-  /projectcocs/{projectCoCId}:
+  /projectcocs/{ProjectCoCID}:
     get:
       tags:
         - ProjectCoCs
       summary: Get ProjectCoC data by ProjectCoC ID
+      description: Get ProjectCoC data by ProjectCoC ID
       parameters:
         - name: ProjectCoCID
           in: path
@@ -1428,6 +1494,7 @@ paths:
       tags:
         - ProjectCoCs
       summary: Update an existing ProjectCoC record
+      description: Update an existing ProjectCoC record
       parameters:
         - name: ProjectCoCID
           in: path
@@ -1454,6 +1521,7 @@ paths:
       tags:
         - ProjectCoCs
       summary: Delete a ProjectCoC record
+      description: This deletes a ProjectCoC record
       parameters:
         - name: ProjectCoCID
           in: path
@@ -1471,6 +1539,7 @@ paths:
   /enrollments:
     post:
       summary: Create a new enrollment record
+      description: Create a new enrollment record
       tags:
         - Enrollments
       requestBody:
@@ -1491,6 +1560,7 @@ paths:
       tags:
         - Enrollments
       summary: Get enrollment data by their Enrollment ID
+      description: Get enrollment data by their Enrollment ID
       parameters:
         - name: EnrollmentID
           in: path
@@ -1513,6 +1583,7 @@ paths:
       tags:
         - Enrollments
       summary: Update an existing enrollment record
+      description: Update an existing enrollment record
       parameters:
         - name: EnrollmentID
           in: path
@@ -1539,6 +1610,7 @@ paths:
       tags:
         - Enrollments
       summary: Delete an enrollment record
+      description: This deletes an enrollment record
       parameters:
         - name: EnrollmentID
           in: path
@@ -1556,6 +1628,7 @@ paths:
   /projects:
     post:
       summary: Create a new project record
+      description: This creates a new project record
       tags:
         - Projects
       requestBody:
@@ -1575,6 +1648,7 @@ paths:
       tags:
         - Projects
       summary: Get project data by their Project ID
+      description: Get project data by their Project ID
       parameters:
         - name: ProjectID
           in: path
@@ -1597,6 +1671,7 @@ paths:
       tags:
         - Projects
       summary: Update an existing project record
+      description: Update an existing project record
       parameters:
         - name: ProjectID
           in: path
@@ -1623,6 +1698,7 @@ paths:
       tags:
         - Projects
       summary: Delete a project record
+      description: This marks a project record as deleted
       parameters:
         - name: ProjectID
           in: path
@@ -1640,6 +1716,7 @@ paths:
   /organizations:
     post:
       summary: Create a new organization record
+      description: Create a new organization record
       tags:
         - Organizations
       requestBody:
@@ -1659,6 +1736,7 @@ paths:
       tags:
         - Organizations
       summary: Get organization data by their Organization ID
+      description: Get organization data by their Organization ID
       parameters:
         - name: OrganizationID
           in: path
@@ -1681,6 +1759,7 @@ paths:
       tags:
         - Organizations
       summary: Update an existing organization record
+      description: Update an existing organization record
       parameters:
         - name: OrganizationID
           in: path
@@ -1707,6 +1786,7 @@ paths:
       tags:
         - Organizations
       summary: Delete an organization record
+      description: This deletes an organization record
       parameters:
         - name: OrganizationID
           in: path
@@ -1724,6 +1804,7 @@ paths:
   /users:
     post:
       summary: Create a new user record
+      description: This creates a new user record
       tags:
         - Users
       requestBody:
@@ -1743,6 +1824,7 @@ paths:
       tags:
         - Users
       summary: Get user data by their UserId
+      description: This gets user data by their UserId
       parameters:
         - name: UserId
           in: path
@@ -1765,6 +1847,7 @@ paths:
       tags:
         - Users
       summary: Update an existing user record
+      description: Update an existing user record
       parameters:
         - name: UserId
           in: path
@@ -1791,6 +1874,7 @@ paths:
       tags:
         - Users
       summary: Delete a user record
+      description: This marks a user record as deleted
       parameters:
         - name: UserId
           in: path
@@ -1807,6 +1891,7 @@ paths:
   /clients:
     post:
       summary: Create a new client record
+      description: This creates a new client record
       tags:
         - Clients
       requestBody:
@@ -1825,6 +1910,7 @@ paths:
       tags:
         - Clients
       summary: Get client data by their Personal Identifier
+      description: Get client data by their Personal Identifier
       parameters:
         - name: PersonalID
           in: path
@@ -1847,8 +1933,9 @@ paths:
       tags:
         - Clients
       summary: Update an existing client record.
+      description: Update an existing client record.
       parameters:
-        - name: personalId
+        - name: PersonalID
           in: path
           required: true
           description: Unique identifier for the client to update
@@ -1873,8 +1960,9 @@ paths:
       tags:
         - Clients
       summary: Delete a client record
+      description: This marks the client record as deleted
       parameters:
-        - name: personalId
+        - name: PersonalID
           in: path
           required: true
           description: Unique identifier for the client to delete
@@ -1887,6 +1975,10 @@ paths:
         '404':
           description: Client not found
 components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
   schemas:
     LivingSituation:
       type: integer
@@ -1990,7 +2082,7 @@ components:
           description: "Data not collected"
     ExportPeriodType:
       type: integer
-      description: "Describes the type of export period."
+      description: "Describes the type of export period. May not be used"
       oneOf:
         - title: "UPDATED"
           const: 1
@@ -2768,7 +2860,7 @@ components:
           description: "Both alcohol and drug use disorders"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -3174,7 +3266,7 @@ components:
           description: "GED"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -3183,10 +3275,10 @@ components:
           description: "Some college"
         - title: "ASSOCIATES_DEGREE"
           const: 11
-          description: "Associate’s degree"
+          description: "Associate's degree"
         - title: "BACHELORS_DEGREE"
           const: 12
-          description: "Bachelor’s degree"
+          description: "Bachelor's degree"
         - title: "GRADUATE_DEGREE"
           const: 13
           description: "Graduate degree"
@@ -3634,10 +3726,10 @@ components:
           description: "Legal services - outstanding fines and penalties"
         - title: "LEGAL_SERVICES_RESTORE_ACQUIRE_DRIVERS_LICENSE"
           const: 8
-          description: "Legal services - restore / acquire driver’s license"
+          description: "Legal services - restore / acquire driver's license"
         - title: "LEGAL_SERVICES_OTHER"
           const: 9
-          description: "Legal services – other"
+          description: "Legal services-other"
         - title: "CHILD_CARE"
           const: 10
           description: "Child care"
@@ -4916,7 +5008,7 @@ components:
           type: integer
           description: "Indicates whether the organization is a victim service provider (1=yes, 0=no)"
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
         organizationCommonName:
           type:
             - string
@@ -4970,41 +5062,46 @@ components:
         ContinuumProject:
           type: integer
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
         ProjectType:
           type: integer
           oneOf:
-            - ref: '#/components/schemas/ProjectType'
+            - $ref: '#/components/schemas/ProjectType'
 
         HousingType:
-          type: integer
-          nullable: true
+          type: 
+            - integer
+            - 'null'
           oneOf:
-            - ref: '#/components/schemas/HousingType'
+            - $ref: '#/components/schemas/HousingType'
         RRHSubType:
-          type: integer
-          nullable: true
+          type: 
+            - integer
+            - 'null'
           oneOf:
-            - ref: '#/components/schemas/RRHSubType'
+            - $ref: '#/components/schemas/RRHSubType'
         RresidentialAffiliation:
-          type: integer
-          nullable: true
+          type: 
+            - integer
+            - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
         TargetPopulation:
-          type: integer
-          nullable: true
+          type: 
+            - integer
+            - 'null'
           oneOf:
-            - ref: '#/components/schemas/TargetPopulation'
+            - $ref: '#/components/schemas/TargetPopulation'
         HOPWAMedAssistedLivingFac:
-          type: integer
-          nullable: true
+          type: 
+            - integer
+            - 'null'
           oneOf:
-            - ref: '#/components/schemas/HOPWAMedAssistedLivingFac'
+            - $ref: '#/components/schemas/HOPWAMedAssistedLivingFac'
         PITCount:
-          type: integer
-          nullable: true
-
+          type: 
+            - integer
+            - 'null'
         DateCreated:
           type: string
           format: date-time
@@ -5044,7 +5141,7 @@ components:
         RelationshipToHoH:
           type: integer
           oneOf:
-            - ref: '#/components/schemas/RelationshipToHoH'
+            - $ref: '#/components/schemas/RelationshipToHoH'
         EnrollmentCoC:
           type: string
           pattern: '^[A-Za-z]{2}-[0-9]{3}$'
@@ -5052,7 +5149,7 @@ components:
         LivingSituation:
           type: integer
           oneOf:
-            - ref: '#/components/schemas/LivingSituation'
+            - $ref: '#/components/schemas/LivingSituation'
 
         DateOfEngagement:
           type:
@@ -5074,43 +5171,43 @@ components:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/PercentAMI'
+            - $ref: '#/components/schemas/PercentAMI'
         VAMCStation:
           type: string
           maxLength: 5
           oneOf:
-            - ref: '#/components/schemas/VAMCStation'
+            - $ref: '#/components/schemas/VAMCStationNumber'
         targetScreenReqd:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
 
         RentalSubsidyType:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/RentalSubsidyTypes'
+            - $ref: '#/components/schemas/RentalSubsidyTypes'
         LengthOfStay:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/LengthOfStay'
+            - $ref: '#/components/schemas/LengthOfStay'
         LOSUnderThreshold:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
         PreviousStreetESSH:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
         DateToStreetESSH:
           type:
             - string
@@ -5121,131 +5218,135 @@ components:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/TimesHomelessPastThreeYears'
+            - $ref: '#/components/schemas/TimesHomelessPastThreeYears'
         MonthsHomelessPastThreeYears:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/MonthsHomelessPastThreeYears'
+            - $ref: '#/components/schemas/MonthsHomelessPastThreeYears'
         disablingCondition:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYesReasonsForMissingData'
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
 
         ClientEnrolledInPATH:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
         ReasonNotEnrolled:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/ReasonNotEnrolled'
+            - $ref: '#/components/schemas/ReasonNotEnrolled'
         ReferralSource:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/ReferralSource'
+            - $ref: '#/components/schemas/ReferralSource'
         EligibleForRHY:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
         ReasonNoServices:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/ReasonNoServices'
+            - $ref: '#/components/schemas/ReasonNoServices'
         runawayYouth:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYesReasonsForMissingData'
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
         sexualOrientation:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/SexualOrientation'
+            - $ref: '#/components/schemas/SexualOrientation'
 
         FormerWardChildWelfare:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYesReasonsForMissingData'
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
         ChildWelfareYears:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/ChildWelfareYears'
+            - $ref: '#/components/schemas/RHYNumberofYears'
         ChildWelfareMonths:
           type:
             - integer
             - 'null'
+          minimum: 1
+          maximum: 11
         FormerWardJuvenileJustice:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYesReasonsForMissingData'
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
         JuvenileJusticeYears:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/JuvenileJusticeYears'
-        juvenileJusticeMonths:
+            - $ref: '#/components/schemas/RHYNumberofYears'
+        JuvenileJusticeMonths:
           type:
             - integer
             - 'null'
+          minimum: 1
+          maximum: 11
         UnemploymentFam:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
         MentalHealthDisorderFam:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
         PhysicalDisabilityFam:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
         AlcoholDrugUseDisorderFam:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
         InsufficientIncome:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
         IncarceratedParent:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
         SSVF_HP_Targeting_Criteria:
           type:
             - integer
@@ -5255,105 +5356,105 @@ components:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/TimeToHousingLoss'
+            - $ref: '#/components/schemas/TimeToHousingLoss'
         AnnualPercentAMI:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/AnnualPercentAMI'
+            - $ref: '#/components/schemas/AnnualPercentAMI'
         LiteralHomelessHistory:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/LiteralHomelessHistory'
+            - $ref: '#/components/schemas/LiteralHomelessHistory'
         ClientLeaseholder:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
         HOHLeaseholder:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
         SubsidyAtRisk:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
         evictionHistory:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/EvictionHistory'
-        criminalRecord:
+            - $ref: '#/components/schemas/EvictionHistory'
+        CriminalRecord:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/CriminalRecord'
+            - $ref: '#/components/schemas/NoYes'
         incarceratedAdult:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/IncarceratedAdult'
+            - $ref: '#/components/schemas/IncarceratedAdult'
         prisonDischarge:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
         sexOffender:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
 
         DisableHoH:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
         currentPregnant:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
 
         SingleParent:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
         DependentUnder6:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/DependentUnder6'
+            - $ref: '#/components/schemas/DependentUnder6'
         HH5Plus:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/HH5Plus'
+            - $ref: '#/components/schemas/NoYes'
         coCPrioritized:
           type:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes'
 
         HPScreeningScore:
           type:
@@ -5368,7 +5469,7 @@ components:
             - integer
             - 'null'
           oneOf:
-            - ref: '#/components/schemas/NoYesReasonsForMissingData'
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
         preferredLanguage:
           type:
             - integer
@@ -6628,7 +6729,10 @@ components:
           $ref: '#/components/schemas/DisabilityType'
         DisabilityResponse:
           type: integer
-          description: Disability response
+          description: If DisabilityType = 10 use '#/components/schemas/DisabilityResponse', all other DisabilityType use "#/components/schemas/NoYes"
+          oneOf: 
+            - $ref: '#/components/schemas/DisabilityResponse'
+            - $ref: "#/components/schemas/NoYes"
         IndefiniteAndImpairs:
           type:
             - integer
@@ -6769,8 +6873,9 @@ components:
           format: date
           description: Financial assistance start date (if RecordType = 151 or 152)
         FAEndDate:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
           format: date
           description: Financial assistance end date (if RecordType = 151 or 152)
         ReferralOutcome:
@@ -7133,3 +7238,5 @@ components:
             - 'null'
           format: date-time
           description: Date deleted
+security: 
+  -  BasicAuth: []
