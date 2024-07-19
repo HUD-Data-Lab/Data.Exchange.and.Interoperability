@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: HMIS API
   description: API for accessing HMIS data
-  version: "1.0"
+  version: "v1.0 - beta 1"
 tags:
   - name: Authentication
     description: "## Prerequisites\n\nTo make use of this API you need to have an API key, User Id and User Secret.\n\nWith those credentials you can request a token which you will need to access this API's resources.\n## Retrieving a token\n\nTo retrieve a token you need to make a POST request to your HMIS OAuth2 endpoint.\n\nResponse body\n```json\n{\n  \"access_token\": \"eyJraWQ.........\",\n  \"expires_in\": 3600,\n  \"token_type\": \"Bearer\"\n}\n```\n\nIn the response body you will find your access token.\n## Using your token\n\nTo make use of your access token you need to add the following headers to your requests.\n\n    Authorization: Bearer <your access token>\n    x-api-key: <your api key>\n\n"
@@ -4963,6 +4963,41 @@ components:
               - string
               - 'null'
             format: datetime
+    ClientSummary:
+      type: object
+      properties:
+        PersonalID:
+          type: string
+          description: Unique identifier for the client
+          maxLength: 32
+        Name:
+          type: object
+          properties:
+            FirstName:
+              type:
+                - string
+                - 'null'
+              description: First name of the client
+              maxLength: 50
+            LastName:
+              type: 
+                - string
+                - 'null'
+              description: Last name of the client
+              maxLength: 50
+            NameSuffix:
+              type:
+                - string
+                - 'null'
+              description: Suffix of the client's name
+              maxLength: 50
+        socialSecurityNumber:
+              type:
+                - string
+                - 'null'
+              description: Social Security Number, should be formatted as 'XXX-XX-####'
+              pattern: '^XXX-XX-[0-9]{4}$'
+
     User:
       type: object
       properties:
