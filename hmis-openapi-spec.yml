@@ -1899,7 +1899,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Client'
+              $ref: '#/components/schemas/ClientBase'
       responses:
         '201':
           description: Client successfully created
@@ -1947,7 +1947,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Client'
+              $ref: '#/components/schemas/ClientBase'
       responses:
         '200':
           description: Client successfully updated
@@ -4732,13 +4732,9 @@ components:
           const: 99
           description: "Data not collected"
 
-    Client:
+    ClientBase:
       type: object
       properties:
-        PersonalID:
-          type: string
-          description: Unique identifier for the client
-          maxLength: 32
         Name:
           type: object
           properties:
@@ -4944,21 +4940,29 @@ components:
                 - 'null'
               oneOf:
                 - $ref: '#/components/schemas/DischargeStatus'
-        DateCreated:
-          type: string
-          format: datetime
-        DateUpdated:
-          type: string
-          format: datetime
         UserId:
           type: string
           maxLength: 32
-
-        DateDeleted:
-          type:
-            - string
-            - 'null'
-          format: datetime
+    Client:
+      allOf: 
+        -  $ref: "#/components/schemas/ClientBase"
+        -  type: object
+        properties:
+          PersonalID:
+            type: string
+            description: Unique identifier for the client
+            maxLength: 32
+          DateCreated:
+            type: string
+            format: datetime
+          DateUpdated:
+            type: string
+            format: datetime
+          DateDeleted:
+            type:
+              - string
+              - 'null'
+            format: datetime
     User:
       type: object
       properties:
