@@ -4769,61 +4769,61 @@ components:
         SSN:
           type: object
           properties:
-            socialSecurityNumber:
+            SocialSecurityNumber:
               type:
                 - string
                 - 'null'
               description: Social Security Number, potentially masked with 'x'
               pattern: '^[0-9xX]{9}$'
-            socialSecurityNumberDataQuality:
+            SocialSecurityNumberDataQuality:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/SocialSecurityNumberDataQuality'
-        vitalStatistics:
+        VitalStatistics:
           type: object
           properties:
-            dateOfBirth:
+            DateOfBirth:
               type:
                 - string
                 - 'null'
               description: Date of birth of the client
               format: date
-            dateOfBirthDataQuality:
+            DateOfBirthDataQuality:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/DateOfBirthDataQuality'
-        raceAndEthniCity:
+        RaceAndEthnicity:
           type: object
           properties:
-            amIndAkNative:
+            AmIndAkNative:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYes'
-            asian:
+            Asian:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYes'
-            blackAfAmerican:
+            BlackAfAmerican:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYes'
-            hispanicLatinaeo:
+            HispanicLatinaeo:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYes'
-            midEastNAfrican:
+            MidEastNAfrican:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYes'
-            nativeHiPacific:
+            NativeHiPacific:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYes'
-            white:
+            White:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYes'
-            raceNone:
+            RaceNone:
               type:
                 - integer
                 - 'null'
@@ -4836,105 +4836,105 @@ components:
                 - string
                 - 'null'
               maxLength: 100
-        gender:
+        Gender:
           type: object
           properties:
-            woman:
+            Woman:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYes'
-            man:
+            Man:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYes'
-            nonBinary:
+            NonBinary:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYes'
-            culturallySpecific:
+            CulturallySpecific:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYes'
-            transgender:
+            Transgender:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYes'
-            questioning:
+            Questioning:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYes'
-            differentIdentity:
+            DifferentIdentity:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYes'
-            genderNone:
+            GenderNone:
               type:
                 - integer
                 - 'null'
               description: Non-null only if all other gender fields = 0
               oneOf:
                 - $ref: '#/components/schemas/RaceGenderNone'
-            differentIdentityText:
+            DifferentIdentityText:
               type:
                 - string
                 - 'null'
               maxLength: 100
-        veteran:
+        Veteran:
           type: object
           properties:
-            veteranStatus:
+            VeteranStatus:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-            yearEnteredService:
+            YearEnteredService:
               type:
                 - string
                 - 'null'
               pattern: '^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$'
-            yearSeparated:
+            YearSeparated:
               type:
                 - string
                 - 'null'
               pattern: '^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$'
-            worldWarII:
+            WorldWarII:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-            koreanWar:
+            KoreanWar:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-            vietnamWar:
+            VietnamWar:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-            desertStorm:
+            DesertStorm:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-            afghanistanOEF:
+            AfghanistanOEF:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-            iraqOIF:
+            IraqOIF:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-            iraqOND:
+            IraqOND:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-            otherTheater:
+            OtherTheater:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-            militaryBranch:
+            MilitaryBranch:
               type:
                 - integer
                 - 'null'
               oneOf:
                 - $ref: '#/components/schemas/MilitaryBranch'
-            dischargeStatus:
+            DischargeStatus:
               type:
                 - integer
                 - 'null'
@@ -4945,7 +4945,7 @@ components:
           maxLength: 32
     Client:
       allOf: 
-        -  $ref: "#/components/schemas/ClientBase"
+        -  $ref: '#/components/schemas/ClientBase'
         -  type: object
         properties:
           PersonalID:
@@ -5005,15 +5005,15 @@ components:
         OrganizationID:
           type: string
           maxLength: 32
-        organizationName:
+        OrganizationName:
           type: string
           maxLength: 200
-        victimServiceProvider:
+        VictimServiceProvider:
           type: integer
           description: "Indicates whether the organization is a victim service provider (1=yes, 0=no)"
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        organizationCommonName:
+        OrganizationCommonName:
           type:
             - string
             - 'null'
@@ -6733,10 +6733,10 @@ components:
           $ref: '#/components/schemas/DisabilityType'
         DisabilityResponse:
           type: integer
-          description: If DisabilityType = 10 use '#/components/schemas/DisabilityResponse', all other DisabilityType use "#/components/schemas/NoYes"
+          description: If DisabilityType = 10 use '#/components/schemas/DisabilityResponse', all other DisabilityType use '#/components/schemas/NoYes'
           oneOf: 
             - $ref: '#/components/schemas/DisabilityResponse'
-            - $ref: "#/components/schemas/NoYes"
+            - $ref: '#/components/schemas/NoYes'
         IndefiniteAndImpairs:
           type:
             - integer
