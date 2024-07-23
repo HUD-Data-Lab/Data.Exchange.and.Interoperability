@@ -4947,7 +4947,7 @@ components:
       allOf: 
         -  $ref: '#/components/schemas/ClientBase'
         -  type: object
-        properties:
+      properties:
           PersonalID:
             type: string
             description: Unique identifier for the client
