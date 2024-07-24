@@ -5,9 +5,173 @@ info:
   version: "v1.0 - beta 1"
 tags:
   - name: Authentication
-    description: "## Prerequisites\n\nTo make use of this API you need to have an API key, User Id and User Secret.\n\nWith those credentials you can request a token which you will need to access this API's resources.\n## Retrieving a token\n\nTo retrieve a token you need to make a POST request to your HMIS OAuth2 endpoint.\n\nResponse body\n```json\n{\n  \"access_token\": \"eyJraWQ.........\",\n  \"expires_in\": 3600,\n  \"token_type\": \"Bearer\"\n}\n```\n\nIn the response body you will find your access token.\n## Using your token\n\nTo make use of your access token you need to add the following headers to your requests.\n\n    Authorization: Bearer <your access token>\n    x-api-key: <your api key>\n\n"
+    description: |
+     ## Prerequisites
+
+      To make use of this API you need to have an API key, User Id and User Secret.
+
+      With those credentials you can request a token which you will need to access this API's resources.
+      ## Retrieving a token
+
+      To retrieve a token you need to make a POST request to your HMIS OAuth2 endpoint.
+
+      Response body
+      ```json
+      {
+        "access_token": "eyJraWQ.........",
+        "expires_in": 3600,
+        "token_type": "Bearer"
+      }
+      ```
+
+      In the response body you will find your access token.
+      ## Using your token
+
+      To make use of your access token you need to add the following headers to your requests.
+
+          Authorization: Bearer <your access token>
+          x-api-key: <your api key>
+
+
   - name: Concepts
-    description: "# Api Calls\n\nThe HMIS API is a RESTFul API with different endpoints returning JSON data defined by HUD.\n## Base URL\n\nThe base address of the HMIS API will be the same across endpoints and will be provided by your HMIS.\n## Requests\n\nResources are accessed via standard HTTP requests in UTF-8 format to an endpoint. The HMIS API uses the following\nHTTP verbs:\n\n| Method  | Action                                                     |\n|---------|------------------------------------------------------------|\n| GET     | Used for retrieving resources                              |\n| POST    | Used for creating resources                                |\n| PUT     | Used for changing or replacing resources                   |\n| DELETE  | Used for removing resources                                |\n| OPTIONS | Can be issued against any resource to request CORS support |\n## Responses\n\nThe HMIS API will return JSON in the response body.\n### Response status codes\n\n| Status Code | Description                                                                                                                                                                         | Methods               |\n|-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------|\n| 200         | OK - The request has succeeded. The user can read the result of the request in the body and the headers of the response.                                                          | all                   |\n| 201         | Created - The request has been fulfilled and resulted in a new resource being created.                                                                                              | `POST` `PUT`          |\n| 202         | Accepted - The request has been accepted for processing, but the processing has not been completed..                                                                                | `POST` `PUT` `DELETE` |\n| 204         | No content - Request is processed successfully but no response payload is returned.                                                                                                 | `PUT` `DELETE`        |\n| 301         | Moved permanently - This request and all future requests should be directed to the response's given URI.                                                                            | all                   |\n| 303         | See other - Response has a Location header with a URL to which the user should redirect.                                                                                          | `POST` `PUT` `DELETE` |\n| 304         | Not modified - User has requested a resource that has not been modified since the last request.                                                                                   | `POST` `PUT` `DELETE` |\n| 400         | Bad request - Error indicating that the server cannot process the request due to something that is perceived to be a user error (e.g. malformed request syntax, invalid request). | all                   |\n| 401         | Unauthorized - Credentials are not valid for the target resource (user is denied server-authentication).                                                                          | all                   |\n| 403         | Forbidden - Request is successfully understood but the user is not authorized to use or access this resource.                                                                         | all                   |\n| 404         | Not found - Requested resource is not found.                                                                                                                                        | all                   |\n| 405         | Method not allowed - HTTP method is not allowed for the request's URI.                                                                                                              | all                   |\n| 406         | Not acceptable - Request has specified a desired type, format or content-type in its headers but server is not able to provide.                                                     | all                   |\n| 408         | Request timeout - Server times out waiting for the resource.                                                                                                                        | all                   |\n| 409         | Conflict - Request cannot be completed due to conflict of the target resource.                                                                                                      | `POST` `PUT` `DELETE` |\n| 410         | Gone - Requested resource does not exist any longer.                                                                                                                                | all                   |\n| 412         | Precondition failed - Specified client precondition(s), described in request-headers, cannot be met.                                                                                | all                   |\n| 415         | Unsupported media type - Requested content-type is unknown to server.                                                                                                               | all                   |\n| 423         | Locked - Requested resource is currently unavailable.                                                                                                                               | `PUT` `DELETE`        |\n| 428         | Precondition required - User has not specified required precondition(s).                                                                                                          | all                   |\n| 429         | Too many requests - User has exceeded rate limits and sent too many requests.                                                                                                     | all                   |\n| 500         | Internal server error - Unexpected server execution resulting in a failure to respond successfully.                                                                                 | all                   |\n| 501         | Not implemented - User has requested for functionality that the server has specified it's not able to fulfill.                                                                    | all                   |\n| 503         | Service unavailable - Server is currently unable to fulfill request. User is suggested to try again later.                                                                        | all                   |\n### Error response\n\nThe HMIS API uses a single response to describe an error. This error response can be detected by the returned status\ncode (`4XX` or `5XX`) and the `Content-Type` header which will have a value of `application/problem+json`.\n\nThe response itself will be a JSON structure according to [RFC-7807](https://www.rfc-editor.org/rfc/rfc7807). In general\nthis response looks like:\n\n```json\n{\n  \"type\": \"about:blank\",\n  \"status\": 403,\n  \"title\": \"Forbidden\",\n  \"detail\": \"You don't have permission to access this resource.\"\n}\n```\n\n- The `status` property contains the status code from the response.\n- The `title` property contains short a human-readable summary of the occurred problem.\n- The `detail` property contains a detailed human-readable description of the occurred problem and usually provides more\n  insight into the resolution (if any).\n- The `type` property describes the _type_ of problem and can be used as a discriminator for problem variants with\n  additional properties. Type `about:blank` is the default and will only contain the aforementioned properties.\n\n**Example of a non-default problem type**\n\n```json\n{\n  \"type\": \"/problems/violations\",\n  \"status\": 400,\n  \"title\": \"Bad request\",\n  \"detail\": \"The request contains one or more violations. Please resolve all of them and try again.\",\n  \"violations\": [\n    {\n      \"property_path\": \"/customer_id\",\n      \"in\": \"body\",\n      \"detailscode\", \"INVAID_UUID\",\n      \"detail\": \"This value must be a valid UUID.\"\n    }\n  ]\n}\n```\n\n---\n> \n### Note\n> If a resource endpoint supports one or more of the problem types they will be documented as a possible response.\n---\n## Collection response\n\nIf the response is for a collection of resources its structure will always look like the following.\n\n```json5\n{\n  \"query\": {\n    // applied query\n  },\n  \"result\": [\n    // 0 or more resources\n    {\n      \"id\": \"Resource 1\"\n    },\n    {\n      \"id\": \"Resource 2\"\n    }\n  ],\n  \"total\": 2\n}\n```\n\n- The `query` property will always contain the query parameters that have been applied to get the resulting resources.\n  These include all provided query parameters and those not provided, but with a default.\n- The `result` property will contain a list of zero or more resources matching the executed query.\n- The `total` property will contain the total number of resources matching provided query parameters.\n## Pagination\n\nIf a resource supports the `limit` and `offset` query parameters the collection response will only contain a subset of\nthe total available resources (a single page).\n\n- The `limit` parameter can be used to control the maximum amount of resource returned per page.\n- The `offset` parameter can be used to control the index of the first resource returned. E.g. `?offset=0&limit=25`\n  gives the first page of 25 resources. `?offset=25&limit=25` gives you the second page of 25 resources.\n\nThe response will always be a collection response in which the used (provided or default) values for `limit`\nand `offset` are available in its `query` property. The `total` property provides the total amount of resources available in the system which gives you insight in the total number of \"pages\" that could be retrieved.\n\n```json5\n{\n  \"query\": {\n    \"limit\": 25,\n    \"offset\": 0\n  },\n  \"result\": [\n    // resources for first \"page\".\n  ],\n  \"total\": 34\n}\n```\n\n\n"
+    description: |
+      # Api Calls 
+      The HMIS API is a RESTFul API with different endpoints returning JSON data defined by HUD.
+      ## Base URL 
+      The base address of the HMIS API will be the same across endpoints and will be provided by your HMIS.
+      ## Requests
+
+      Resources are accessed via standard HTTP requests in UTF-8 format to an endpoint. The HMIS API uses the following
+      HTTP verbs:
+
+      | Method  | Action                                                     |
+      |---------|------------------------------------------------------------|
+      | GET     | Used for retrieving resources                              |
+      | POST    | Used for creating resources                                |
+      | PUT     | Used for changing or replacing resources                   |
+      | DELETE  | Used for removing resources                                |
+      | OPTIONS | Can be issued against any resource to request CORS support |
+      ## Responses
+
+      The HMIS API will return JSON in the response body.
+      ### Response status codes
+
+      | Status Code | Description                                                                                                                                                                         | Methods               |
+      |-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------|
+      | 200         | OK - The request has succeeded. The user can read the result of the request in the body and the headers of the response.                                                          | all                   |
+      | 201         | Created - The request has been fulfilled and resulted in a new resource being created.                                                                                              | `POST` `PUT`          |
+      | 202         | Accepted - The request has been accepted for processing, but the processing has not been completed..                                                                                | `POST` `PUT` `DELETE` |
+      | 204         | No content - Request is processed successfully but no response payload is returned.                                                                                                 | `PUT` `DELETE`        |
+      | 301         | Moved permanently - This request and all future requests should be directed to the response's given URI.                                                                            | all                   |
+      | 303         | See other - Response has a Location header with a URL to which the user should redirect.                                                                                          | `POST` `PUT` `DELETE` |
+      | 304         | Not modified - User has requested a resource that has not been modified since the last request.                                                                                   | `POST` `PUT` `DELETE` |
+      | 400         | Bad request - Error indicating that the server cannot process the request due to something that is perceived to be a user error (e.g. malformed request syntax, invalid request). | all                   |
+      | 401         | Unauthorized - Credentials are not valid for the target resource (user is denied server-authentication).                                                                          | all                   |
+      | 403         | Forbidden - Request is successfully understood but the user is not authorized to use or access this resource.                                                                         | all                   |
+      | 404         | Not found - Requested resource is not found.                                                                                                                                        | all                   |
+      | 405         | Method not allowed - HTTP method is not allowed for the request's URI.                                                                                                              | all                   |
+      | 406         | Not acceptable - Request has specified a desired type, format or content-type in its headers but server is not able to provide.                                                     | all                   |
+      | 408         | Request timeout - Server times out waiting for the resource.                                                                                                                        | all                   |
+      | 409         | Conflict - Request cannot be completed due to conflict of the target resource.                                                                                                      | `POST` `PUT` `DELETE` |
+      | 410         | Gone - Requested resource does not exist any longer.                                                                                                                                | all                   |
+      | 412         | Precondition failed - Specified client precondition(s), described in request-headers, cannot be met.                                                                                | all                   |
+      | 415         | Unsupported media type - Requested content-type is unknown to server.                                                                                                               | all                   |
+      | 423         | Locked - Requested resource is currently unavailable.                                                                                                                               | `PUT` `DELETE`        |
+      | 428         | Precondition required - User has not specified required precondition(s).                                                                                                          | all                   |
+      | 429         | Too many requests - User has exceeded rate limits and sent too many requests.                                                                                                     | all                   |
+      | 500         | Internal server error - Unexpected server execution resulting in a failure to respond successfully.                                                                                 | all                   |
+      | 501         | Not implemented - User has requested for functionality that the server has specified it's not able to fulfill.                                                                    | all                   |
+      | 503         | Service unavailable - Server is currently unable to fulfill request. User is suggested to try again later.                                                                        | all                   |
+      ### Error response
+
+      The HMIS API uses a single response to describe an error. This error response can be detected by the returned status
+      code (`4XX` or `5XX`) and the `Content-Type` header which will have a value of `application/problem+json`.
+
+      The response itself will be a JSON structure according to [RFC-7807](https://www.rfc-editor.org/rfc/rfc7807). In general
+      this response looks like:
+
+      ```json
+      {
+        "type": "about:blank",
+        "status": 403,
+        "title": "Forbidden",
+        "detail": "You don't have permission to access this resource."
+      }
+      ```
+
+      - The `status` property contains the status code from the response.
+      - The `title` property contains short a human-readable summary of the occurred problem.
+      - The `detail` property contains a detailed human-readable description of the occurred problem and usually provides more
+        insight into the resolution (if any).
+      - The `type` property describes the _type_ of problem and can be used as a discriminator for problem variants with
+        additional properties. Type `about:blank` is the default and will only contain the aforementioned properties.
+
+      **Example of a non-default problem type**
+
+      ```json5
+      {
+        msg: "SSN is invalid",
+        error_code: "MISSING_SSN"
+
+      }
+      ```
+
+      ---
+      > 
+      ### Note
+      > If a resource endpoint supports one or more of the problem types they will be documented as a possible response.
+      ---
+      ## Collection response
+
+      If the response is for a collection of resources its structure will always look like the following.
+
+      ```json5
+      {
+        "query": {
+          // applied query
+        },
+        "result": [
+          // 0 or more resources
+          {
+            "id": "Resource 1"
+          },
+          {
+            "id": "Resource 2"
+          }
+        ],
+        "total": 2
+      }
+      ```
+
+      - The `query` property will always contain the query parameters that have been applied to get the resulting resources.
+        These include all provided query parameters and those not provided, but with a default.
+      - The `result` property will contain a list of zero or more resources matching the executed query.
+      - The `total` property will contain the total number of resources matching provided query parameters.
+      ## Pagination
+
+      If a resource supports the `limit` and `offset` query parameters the collection response will only contain a subset of
+      the total available resources (a single page).
+
+      - The `limit` parameter can be used to control the maximum amount of resource returned per page.
+      - The `offset` parameter can be used to control the index of the first resource returned. E.g. `?offset=0&limit=25`
+        gives the first page of 25 resources. `?offset=25&limit=25` gives you the second page of 25 resources.
+
+      The response will always be a collection response in which the used (provided or default) values for `limit`
+      and `offset` are available in its `query` property. The `total` property provides the total amount of resources available in the system which gives you insight in the total number of "pages" that could be retrieved.
+
+      ```json5
+      {
+        "query": {
+          "limit": 25,
+          "offset": 0
+        },
+        "result": [
+          // resources for first "page".
+        ],
+        "total": 34
+      }
+      ```
+
   - name: Clients
     description: Clients are used to represent the individuals receiving care. There must only be 1 client per individual, identified by their PersonalID.
   - name: Projects
@@ -2025,9 +2189,15 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ClientSummary'
+                  $ref: '#/components/schemas/ClientSummaryResponse'
         '404':
           description: Client not found
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request generated an error and could not process.
 
 
 components:
@@ -4788,6 +4958,23 @@ components:
           const: 99
           description: "Data not collected"
 
+    ErrorResponse:
+      description: An object that can optionally include information about the error.
+      properties:
+        msg:
+          description: A detailed error message.
+          title: Msg
+          type: string
+        error_code:
+          description: The short string of the error
+          title: Error Code
+          type: string
+      required:
+      - msg
+      - error_code
+      title: ErrorResponse
+      type: object
+
     ClientBase:
       type: object
       properties:
@@ -5053,6 +5240,18 @@ components:
                 - 'null'
               description: Social Security Number, should be formatted as 'XXX-XX-####'
               pattern: '^XXX-XX-[0-9]{4}$'
+    
+    ClientSummaryResponse:
+      type: object
+      properties: 
+        query:
+          type: object
+        result:
+          type: array
+          items: 
+            $ref: "#/components/schemas/ClientSummary"
+        total:
+          type: integer
 
     User:
       type: object
