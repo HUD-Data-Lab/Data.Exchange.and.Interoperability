@@ -1974,6 +1974,62 @@ paths:
           description: Client successfully deleted
         '404':
           description: Client not found
+  /clientsummary:
+    get:
+      tags:
+        - ClientSummary
+      summary: Get a list of clients by their Personal Identifiable Information (PII)
+      description: Get a list of clients by their Personal Identifiable Information (PII)
+      parameters:
+        - name: FirstName
+          in: query
+          required: false
+          description: Optional first name or prefix partial first name of client
+          schema:
+            type: string
+            maxLength: 32
+        - name: LastName
+          in: query
+          required: false
+          description: Optional last name or prefix partial last name of client
+          schema:
+            type: string
+            maxLength: 32
+        - name: DateOfBirth
+          in: query
+          required: false
+          description: Optional date of birth of client. A date in ISO 8601 format. The year is always required, the month + day is optional.
+          example: 
+            - "%Y-%m-%d"
+            - "1994-11-05"
+            - "1994-11"
+            - "1994"
+          schema:
+            type: string
+        - name: SocialSecurityNumber
+          in: query
+          required: false
+          description: Optional Social Security Number. Either full or partial SSN.
+          example: 
+            - "123-00-6789"
+            - "6789"
+          schema:
+            type: string
+            maxLength: 9
+            pattern: '^[0-9]{3}-[0-9]{2}-[0-9]{4}$|^[0-9]{4}$'
+      responses:
+        '200':
+          description: A list of clients that match the query
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClientSummary'
+        '404':
+          description: Client not found
+
+
 components:
   securitySchemes:
     BasicAuth:
@@ -2596,7 +2652,7 @@ components:
           description: "Partial, street name, or code name reported"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -2616,7 +2672,7 @@ components:
           description: "Approximate or partial SSN reported"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -2636,7 +2692,7 @@ components:
           description: "Approximate or partial date of birth reported"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesnt know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -2691,13 +2747,13 @@ components:
           description: "Self (Head of Household)"
         - title: "HEAD_OF_HOUSEHOLD_CHILD"
           const: 2
-          description: "Head of household’s child"
+          description: "Head of household's child"
         - title: "HEAD_OF_HOUSEHOLD_SPOUSE_OR_PARTNER"
           const: 3
-          description: "Head of household’s spouse or partner"
+          description: "Head of household's spouse or partner"
         - title: "HEAD_OF_HOUSEHOLD_OTHER_RELATION_MEMBER"
           const: 4
-          description: "Head of household’s other relation member"
+          description: "Head of household's other relation member"
         - title: "OTHER_NON_RELATION_MEMBER"
           const: 5
           description: "Other: non-relation member"
@@ -2729,7 +2785,7 @@ components:
           description: "Two to six nights"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -2755,7 +2811,7 @@ components:
           description: "Four or more times"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -2808,7 +2864,7 @@ components:
           description: "More than 12 months"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -2834,7 +2890,7 @@ components:
           description: "Insurance type n/a for this client"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -2886,7 +2942,7 @@ components:
           description: "One year or more"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -3179,7 +3235,7 @@ components:
           description: "Other Organization"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -3231,7 +3287,7 @@ components:
           description: "Other"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -3316,7 +3372,7 @@ components:
           description: "Expelled"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -3379,7 +3435,7 @@ components:
           description: "Poor"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -3469,7 +3525,7 @@ components:
           description: "12 or more times"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -3566,7 +3622,7 @@ components:
           description: "Space Force"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -3598,7 +3654,7 @@ components:
           description: "Uncharacterized"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -3688,7 +3744,7 @@ components:
           description: "Legal services - outstanding fines and penalties"
         - title: "LEGAL_SERVICES_RESTORE_ACQUIRE_DRIVERS_LICENSE"
           const: 10
-          description: "Legal services - restore / acquire driver’s license"
+          description: "Legal services - restore / acquire driver's license"
         - title: "LEGAL_SERVICES_OTHER"
           const: 11
           description: "Legal services – other"
@@ -4516,7 +4572,7 @@ components:
           description: "Insurance type not applicable for this client"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -4539,7 +4595,7 @@ components:
           description: "Undetectable"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -4588,7 +4644,7 @@ components:
           description: "Jail/prison"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -4657,7 +4713,7 @@ components:
           description: "Currently enrolled and attending regularly (when school or the course is in session)"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesn’t know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -4712,10 +4768,10 @@ components:
           description: "Pursuing a high school diploma or GED"
         - title: "PURSUING_ASSOCIATES_DEGREE"
           const: 1
-          description: "Pursuing Associate’s Degree"
+          description: "Pursuing Associate's Degree"
         - title: "PURSUING_BACHELORS_DEGREE"
           const: 2
-          description: "Pursuing Bachelor’s Degree"
+          description: "Pursuing Bachelor's Degree"
         - title: "PURSUING_GRADUATE_DEGREE"
           const: 3
           description: "Pursuing Graduate Degree"
