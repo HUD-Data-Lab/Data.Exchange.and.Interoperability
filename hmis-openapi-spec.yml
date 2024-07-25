@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: HMIS API
   description: API for accessing HMIS data
-  version: "v1.0 - beta 1"
+  version: "v1.0 - beta 2"
 tags:
   - name: Authentication
     description: |
@@ -44,13 +44,13 @@ tags:
       Resources are accessed via standard HTTP requests in UTF-8 format to an endpoint. The HMIS API uses the following
       HTTP verbs:
 
-      | Method  | Action                                                     |
-      |---------|------------------------------------------------------------|
-      | GET     | Used for retrieving resources                              |
-      | POST    | Used for creating resources                                |
-      | PUT     | Used for changing or replacing resources                   |
-      | DELETE  | Used for removing resources                                |
-      | OPTIONS | Can be issued against any resource to request CORS support |
+      | Method  | Action                                                                                         |
+      |---------|------------------------------------------------------------------------------------------------|
+      | GET     | Used for retrieving resources                                                                  |
+      | POST    | Used for creating resources                                                                    |
+      | PUT     | Used for changing or replacing resources and queries that contain PII or sensitive information |
+      | DELETE  | Used for removing resources                                                                    |
+      | OPTIONS | Can be issued against any resource to request CORS support                                     |
       ## Responses
 
       The HMIS API will return JSON in the response body.
@@ -2141,48 +2141,22 @@ paths:
         '404':
           description: Client not found
   /clientsummary:
-    get:
+    post:
       tags:
         - ClientSummary
-      summary: Get a list of clients by their Personal Identifiable Information (PII)
-      description: Get a list of clients by their Personal Identifiable Information (PII)
-      parameters:
-        - name: FirstName
-          in: query
-          required: false
-          description: Optional first name or prefix partial first name of client
-          schema:
-            type: string
-            maxLength: 32
-        - name: LastName
-          in: query
-          required: false
-          description: Optional last name or prefix partial last name of client
-          schema:
-            type: string
-            maxLength: 32
-        - name: DateOfBirth
-          in: query
-          required: false
-          description: Optional date of birth of client. A date in ISO 8601 format. The year is always required, the month + day is optional.
-          example:
-            - "%Y-%m-%d"
-            - "1994-11-05"
-            - "1994-11"
-            - "1994"
-          schema:
-            type: string
-        - name: SocialSecurityNumber
-          in: query
-          required: false
-          description: Optional Social Security Number. Either full or partial SSN.
-          example:
-            - "123-00-6789"
-            - "6789"
-          schema:
-            type: string
-            maxLength: 9
-            pattern: '^[0-9]{3}-[0-9]{2}-[0-9]{4}$|^[0-9]{4}$'
+      summary: Request via POST a summary list of clients.
+      description: |
+        Get a list of clients by partial Personal Identifiable Information (PII). 
+        The request parameter are passed via the http body for security/privacy reasons. 
+        Putting PII in url parameter could in them ending up in logs.
+
+        The fields in the ClientSummary can be partial. e.g. Prefix of last name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientSummary'
       responses:
         '200':
           description: A list of clients that match the query
@@ -4960,6 +4934,14 @@ components:
           const: 99
           description: "Data not collected"
 
+    ErrorCodes:
+      type: string
+      description: "Enumeration of all error conditions returned by queries."
+      oneOf:
+        - title: "TOO_MANY_RESULTS"
+          const: "TOO_MANY_RESULTS"
+          description: "The query would return too many responses. Be more specific with the query data."
+
     ErrorResponse:
       description: An object that can optionally include information about the error.
       properties:
@@ -4971,6 +4953,7 @@ components:
           description: The short string of the error
           title: Error Code
           type: string
+          $ref: "#/components/schemas/ErrorCodes"
       required:
       - msg
       - error_code
@@ -5208,13 +5191,12 @@ components:
               - string
               - 'null'
             format: datetime
-    ClientSummary:
+
+    ClientSummaryQuery:
+      description: |
+        This structure is used to query or return a subset of client fields. For queries, the PersonalID field is not required but is returned in ClientSummaryResponses
       type: object
       properties:
-        PersonalID:
-          type: string
-          description: Unique identifier for the client
-          maxLength: 32
         Name:
           type: object
           properties:
@@ -5222,36 +5204,53 @@ components:
               type:
                 - string
                 - 'null'
-              description: First name of the client
+              description: First name of the client (for Query optional and may be a prefix partial)
               maxLength: 50
             LastName:
               type: 
                 - string
                 - 'null'
-              description: Last name of the client
+              description: Last name of the client (for Query optional and may be a prefix partial)
               maxLength: 50
             NameSuffix:
               type:
                 - string
                 - 'null'
-              description: Suffix of the client's name
+              description: Suffix of the client's name (for Query optional and may be a prefix partial)
               maxLength: 50
         DateOfBirth:
-              type: 
-                - string
-              description: Optional date of birth of client. A date in ISO 8601 format. The year is always required, the month + day is optional.
-              examples: 
-              - "%Y-%m-%d"
-              - "1994-11-05"
-              - "1994-11"
-              - "1994"
+          type: 
+            - string
+          description: Optional date of birth of client. A date in ISO 8601 format. The year is always required, the month + day is optional.
+          # todo: Figure out how to show multiple examples
+          # example:
+          #   oneOf:
+          #     - "1994-11-05"
+          #     - "1994-11"
+          #     - "1994"
         SocialSecurityNumber:
-              type:
-                - string
-                - 'null'
-              description: Social Security Number, should be formatted as 'XXX-XX-####'
-              pattern: '^XXX-XX-[0-9]{4}$'
-    
+          type:
+            - string
+            - 'null'
+          description: Social Security Number, should be formatted as 4 charaters represeting the last 4 digit
+          pattern: '^[0-9]{4}$'
+
+    ClientSummary:
+      allOf: 
+        -  $ref: '#/components/schemas/ClientSummaryQuery'
+        -  type: object
+      properties:
+        PersonalID:
+          type: string
+          description: Unique identifier for the client
+          maxLength: 32
+      required: 
+        - PersonalID
+        - FirstName
+        - LastName
+        - DateOfBirth
+        - SocialSecurityNumber
+
     ClientSummaryResponse:
       type: object
       properties: 
