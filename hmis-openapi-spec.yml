@@ -146,6 +146,7 @@ tags:
         These include all provided query parameters and those not provided, but with a default.
       - The `result` property will contain a list of zero or more resources matching the executed query.
       - The `total` property will contain the total number of resources matching provided query parameters.
+
       ## Pagination
 
       If a resource supports the `limit` and `offset` query parameters the collection response will only contain a subset of
@@ -1724,7 +1725,9 @@ paths:
       tags: 
         -  EnrollmentSummary
       summary: Get enrollments by PersonalID
-      description: This gets enrollments by PersonalID
+      description: |
+        This gets enrollments by PersonalID. 
+        Commonly sorted alphabetically by ProjectName, EntryDate (most recent entry date at top), ExitDate (NULL exit date at top)
       parameters:
         - name: PersonalID
           in: path
@@ -1732,7 +1735,9 @@ paths:
           description: Unique identifier for a client
           schema:
             type: string
-            maxLength: 32   
+            maxLength: 32
+        - $ref: '#/components/parameters/OffsetParam'
+        - $ref: '#/components/parameters/LimitParam'
       responses:
         '200':
           description: A list of enrollments 
@@ -2199,12 +2204,45 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: The request generated an error and could not process.
 
-
 components:
   securitySchemes:
     BasicAuth:
       type: http
       scheme: basic
+  parameters:
+    LimitParam: 
+      in: query
+      name: limit
+      description: The numbers of items to return.
+      required: false
+      schema: 
+        type: integer
+        minimum: 1
+        maximum: 50
+        default: 20
+    OffsetParam:
+      in: query
+      name: offset
+      description: The number of items to skip before starting to collect the result set.
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+
+        # name: limit
+        #   in: query
+        #   required: false
+        #   schema:
+        #     type: integer
+        #     minimum: 1
+        #     maximum: 50
+        # name: offset
+        #   in: query
+        #   required: false
+        #   schema:
+        #     type: integer
+        #     minimum: 0
   schemas:
     LivingSituation:
       type: integer
@@ -4964,7 +5002,7 @@ components:
       oneOf:
         - title: "TOO_MANY_RESULTS"
           const: "TOO_MANY_RESULTS"
-          description: "The query would return too many responses. Be more specific with the query data."
+          description: "The query would return too many responses. Be more specific with the query data or include pagination in request."
 
     ErrorResponse:
       description: An object that can optionally include information about the error.
@@ -4983,6 +5021,8 @@ components:
       - error_code
       title: ErrorResponse
       type: object
+
+
 
     ClientBase:
       type: object
@@ -5351,7 +5391,6 @@ components:
         UserId:
           type: string
           maxLength: 32
-
         DateDeleted:
           type:
             - string
@@ -5359,6 +5398,7 @@ components:
           format: date-time
       required:
         - OrganizationID
+
 
     Project:
       type: object
