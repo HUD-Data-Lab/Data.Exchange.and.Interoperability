@@ -32,7 +32,6 @@ tags:
           Authorization: Bearer <your access token>
           x-api-key: <your api key>
 
-
   - name: Concepts
     description: |
       # Api Calls 
@@ -1720,6 +1719,31 @@ paths:
         '400':
           description: Invalid input provided
 
+  /enrollmentsummary/{PersonalID}:
+    get:
+      tags: 
+        -  EnrollmentSummary
+      summary: Get enrollments by PersonalID
+      description: This gets enrollments by PersonalID
+      parameters:
+        - name: PersonalID
+          in: path
+          required: true
+          description: Unique identifier for a client
+          schema:
+            type: string
+            maxLength: 32   
+      responses:
+        '200':
+          description: A list of enrollments 
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EnrollmentSummaryResponse'
+        '404':
+          description: Enrollment not found
 
   /enrollments/{EnrollmentID}:
     get:
@@ -5058,7 +5082,6 @@ components:
               description: non-null only if all other race fields are 0 (UNKNOWN)
               oneOf:
                 - $ref: '#/components/schemas/RaceGenderNone'
-
             AdditionalRaceEthnicity:
               type:
                 - string
@@ -5171,6 +5194,7 @@ components:
         UserId:
           type: string
           maxLength: 32
+   
     Client:
       allOf: 
         -  $ref: '#/components/schemas/ClientBase'
@@ -5318,7 +5342,6 @@ components:
             - string
             - 'null'
           maxLength: 200
-
         DateCreated:
           type: string
           format: date-time
@@ -5349,7 +5372,6 @@ components:
         ProjectName:
           type: string
           maxLength: 200
-
         ProjectCommonName:
           type:
             - string
@@ -5371,7 +5393,6 @@ components:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/ProjectType'
-
         HousingType:
           type: 
             - integer
@@ -5415,7 +5436,6 @@ components:
         UserId:
           type: string
           maxLength: 32
-
         DateDeleted:
           type:
             - string
@@ -5424,7 +5444,7 @@ components:
       required:
         - ProjectID
 
-    Enrollment:
+    EnrollmentBase:
       type: object
       properties:
         EnrollmentID:
@@ -5454,7 +5474,6 @@ components:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/LivingSituation'
-
         DateOfEngagement:
           type:
             - string
@@ -5487,7 +5506,6 @@ components:
             - 'null'
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-
         RentalSubsidyType:
           type:
             - integer
@@ -5535,7 +5553,6 @@ components:
             - 'null'
           oneOf:
             - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-
         ClientEnrolledInPATH:
           type:
             - integer
@@ -5578,7 +5595,6 @@ components:
             - 'null'
           oneOf:
             - $ref: '#/components/schemas/SexualOrientation'
-
         FormerWardChildWelfare:
           type:
             - integer
@@ -5721,7 +5737,6 @@ components:
             - 'null'
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-
         DisableHoH:
           type:
             - integer
@@ -5734,7 +5749,6 @@ components:
             - 'null'
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-
         SingleParent:
           type:
             - integer
@@ -5759,7 +5773,6 @@ components:
             - 'null'
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-
         HPScreeningScore:
           type:
             - integer
@@ -5783,25 +5796,71 @@ components:
             - string
             - 'null'
           maxLength: 100
-
-
+  
+    Enrollment:
+      allOf: 
+        -  $ref: '#/components/schemas/EnrollmentBase'
+        -  type: object
+      properties:
+        EnrollmentID:
+          type: string
+          description: Unique identifier for the enrollment record
+          maxLength: 32
         DateCreated:
           type: string
-          format: date-time
+          format: datetime
         DateUpdated:
           type: string
-          format: date-time
-        UserId:
-          type: string
-          maxLength: 32
-
+          format: datetime
         DateDeleted:
           type:
             - string
             - 'null'
-          format: date-time
+          format: datetime
       required:
-        - EnrollmentID
+      - EnrollmentID
+
+    EnrollmentSummary:
+      type: object
+      properties: 
+        PersonalID:
+          type: string
+          description: Unique identifier for the client
+          maxLength: 32
+        EnrollmentID:
+          type: string
+          description: Unique identifier for an enrollment
+          maxLength: 32
+        ProjectName:
+          type: string
+          maxLength: 200
+          description: ProjectName comes from the Project table
+        ProjectCommonName:
+          type:
+            - string
+            - 'null'
+          maxLength: 200
+        EntryDate:
+          type: string
+          format: date
+        ExitDate:
+          type: 
+          - string
+          - 'null'
+          format: date
+
+    EnrollmentSummaryResponse:
+      type: object
+      properties: 
+        query:
+          type: object
+        result:
+          type: array
+          items: 
+            $ref: "#/components/schemas/EnrollmentSummary"
+        total:
+          type: integer
+
     Funder:
       type: object
       properties:
