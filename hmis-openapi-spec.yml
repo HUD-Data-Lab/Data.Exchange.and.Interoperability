@@ -2165,7 +2165,7 @@ paths:
           in: query
           required: false
           description: Optional date of birth of client. A date in ISO 8601 format. The year is always required, the month + day is optional.
-          example: |
+          example:
             - "%Y-%m-%d"
             - "1994-11-05"
             - "1994-11"
@@ -2176,7 +2176,7 @@ paths:
           in: query
           required: false
           description: Optional Social Security Number. Either full or partial SSN.
-          example: |
+          example:
             - "123-00-6789"
             - "6789"
           schema:
@@ -5236,7 +5236,16 @@ components:
                 - 'null'
               description: Suffix of the client's name
               maxLength: 50
-        socialSecurityNumber:
+        DateOfBirth:
+              type: 
+                - string
+              description: Optional date of birth of client. A date in ISO 8601 format. The year is always required, the month + day is optional.
+              examples: 
+              - "%Y-%m-%d"
+              - "1994-11-05"
+              - "1994-11"
+              - "1994"
+        SocialSecurityNumber:
               type:
                 - string
                 - 'null'
