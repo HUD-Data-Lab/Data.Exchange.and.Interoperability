@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: HMIS API
   description: API for accessing HMIS data
-  version: "v1.0 - beta 2"
+  version: "v1.0 - beta 3"
 tags:
   - name: Authentication
     description: |
@@ -1744,9 +1744,9 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/EnrollmentSummaryResponse'
+                allOf:
+                  - $ref: '#/components/schemas/EnrollmentSummaryResponse'
+                  - $ref: '#/components/schemas/PaginatedList'
         '404':
           description: Enrollment not found
 
@@ -5900,6 +5900,47 @@ components:
             $ref: "#/components/schemas/EnrollmentSummary"
         total:
           type: integer
+
+    Pagination:
+      type: object
+      description: page info for paginated endpoints
+      properties:
+        total:
+          type: integer
+          description: total number of results for the query
+        limit:
+          type: integer
+        offset:
+          type: integer
+          description: the starting point for this
+        next:
+          description: |
+            fields for the next page, if any.
+            Null if this is the last page.
+          type:
+            - object
+            - "null"
+          properties:
+            offset:
+              type: number
+              description: the offset for the next page
+            limit:
+              type: number
+              description: the same as the above limit, for consistency
+            url:
+              type: string
+              description: |
+                the assembled url for the next page,
+                with query parameters already included.
+    PaginatedList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+        _pagination:
+          $ref: "#/components/schemas/Pagination"
 
     Funder:
       type: object
