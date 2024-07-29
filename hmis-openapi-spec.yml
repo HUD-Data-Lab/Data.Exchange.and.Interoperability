@@ -2529,10 +2529,10 @@ components:
       oneOf:
         - title: "EMERGENCY_SHELTER_ENTRY_EXIT"
           const: 0
-          description: "Emergency Shelter – Entry Exit"
+          description: "Emergency Shelter - Entry Exit"
         - title: "EMERGENCY_SHELTER_NIGHT_BY_NIGHT"
           const: 1
-          description: "Emergency Shelter – Night-by-Night"
+          description: "Emergency Shelter - Night-by-Night"
         - title: "TRANSITIONAL_HOUSING"
           const: 2
           description: "Transitional Housing"
@@ -2587,13 +2587,13 @@ components:
       oneOf:
         - title: "SITE_BASED_SINGLE_SITE"
           const: 1
-          description: "Site-based – single site"
+          description: "Site-based - single site"
         - title: "SITE_BASED_CLUSTERED_MULTIPLE_SITES"
           const: 2
-          description: "Site-based – clustered / multiple sites"
+          description: "Site-based - clustered / multiple sites"
         - title: "TENANT_BASED_SCATTERED_SITE"
           const: 3
-          description: "Tenant-based – scattered site"
+          description: "Tenant-based - scattered site"
     
     FundingSource:
       type: integer
@@ -2601,79 +2601,79 @@ components:
       oneOf:
         - title: "HUD_COC_HOMELESSNESS_PREVENTION"
           const: 1
-          description: "HUD: CoC – Homelessness Prevention (High Performing Communities Only)"
+          description: "HUD: CoC - Homelessness Prevention (High Performing Communities Only)"
         - title: "HUD_COC_PERMANENT_SUPPORTIVE_HOUSING"
           const: 2
-          description: "HUD: CoC – Permanent Supportive Housing"
+          description: "HUD: CoC - Permanent Supportive Housing"
         - title: "HUD_COC_RAPID_RE_HOUSING"
           const: 3
-          description: "HUD: CoC – Rapid Re-Housing"
+          description: "HUD: CoC - Rapid Re-Housing"
         - title: "HUD_COC_SUPPORTIVE_SERVICES_ONLY"
           const: 4
-          description: "HUD: CoC – Supportive Services Only"
+          description: "HUD: CoC - Supportive Services Only"
         - title: "HUD_COC_TRANSITIONAL_HOUSING"
           const: 5
-          description: "HUD: CoC – Transitional Housing"
+          description: "HUD: CoC - Transitional Housing"
         - title: "HUD_COC_SAFE_HAVEN"
           const: 6
-          description: "HUD: CoC – Safe Haven"
+          description: "HUD: CoC - Safe Haven"
         - title: "HUD_COC_SINGLE_ROOM_OCCUPANCY"
           const: 7
-          description: "HUD: CoC – Single Room Occupancy (SRO)"
+          description: "HUD: CoC - Single Room Occupancy (SRO)"
         - title: "HUD_ESG_EMERGENCY_SHELTER"
           const: 8
-          description: "HUD: ESG – Emergency Shelter (operating and/or essential services)"
+          description: "HUD: ESG - Emergency Shelter (operating and/or essential services)"
         - title: "HUD_ESG_HOMELESSNESS_PREVENTION"
           const: 9
-          description: "HUD: ESG – Homelessness Prevention"
+          description: "HUD: ESG - Homelessness Prevention"
         - title: "HUD_ESG_RAPID_REHOUSING"
           const: 10
-          description: "HUD: ESG – Rapid Rehousing"
+          description: "HUD: ESG - Rapid Rehousing"
         - title: "HUD_ESG_STREET_OUTREACH"
           const: 11
-          description: "HUD: ESG – Street Outreach"
+          description: "HUD: ESG - Street Outreach"
         - title: "HUD_HOPWA_HOTEL_MOTEL_VOUCHERS"
           const: 13
-          description: "HUD: HOPWA – Hotel/Motel Vouchers"
+          description: "HUD: HOPWA - Hotel/Motel Vouchers"
         - title: "HUD_HOPWA_HOUSING_INFORMATION"
           const: 14
-          description: "HUD: HOPWA – Housing Information"
+          description: "HUD: HOPWA - Housing Information"
         - title: "HUD_HOPWA_PERMANENT_HOUSING"
           const: 15
-          description: "HUD: HOPWA – Permanent Housing (facility based or TBRA)"
+          description: "HUD: HOPWA - Permanent Housing (facility based or TBRA)"
         - title: "HUD_HOPWA_PERMANENT_HOUSING_PLACEMENT"
           const: 16
-          description: "HUD: HOPWA – Permanent Housing Placement"
+          description: "HUD: HOPWA - Permanent Housing Placement"
         - title: "HUD_HOPWA_SHORT_TERM_RENT_MORTGAGE_UTILITY"
           const: 17
-          description: "HUD: HOPWA – Short-Term Rent, Mortgage, Utility assistance"
+          description: "HUD: HOPWA - Short-Term Rent, Mortgage, Utility assistance"
         - title: "HUD_HOPWA_SHORT_TERM_SUPPORTIVE_FACILITY"
           const: 18
-          description: "HUD: HOPWA – Short-Term Supportive Facility"
+          description: "HUD: HOPWA - Short-Term Supportive Facility"
         - title: "HUD_HOPWA_TRANSITIONAL_HOUSING"
           const: 19
-          description: "HUD: HOPWA – Transitional Housing (facility based or TBRA)"
+          description: "HUD: HOPWA - Transitional Housing (facility based or TBRA)"
         - title: "HUD_HUD_VASH"
           const: 20
           description: "HUD: HUD/VASH"
         - title: "HHS_PATH_STREET_OUTREACH"
           const: 21
-          description: "HHS: PATH – Street Outreach & Supportive Services Only"
+          description: "HHS: PATH - Street Outreach & Supportive Services Only"
         - title: "HHS_RHY_BASIC_CENTER_PROGRAM"
           const: 22
-          description: "HHS: RHY – Basic Center Program (prevention and shelter)"
+          description: "HHS: RHY - Basic Center Program (prevention and shelter)"
         - title: "HHS_RHY_MATERNITY_GROUP_HOME"
           const: 23
-          description: "HHS: RHY – Maternity Group Home for Pregnant and Parenting Youth"
+          description: "HHS: RHY - Maternity Group Home for Pregnant and Parenting Youth"
         - title: "HHS_RHY_TRANSITIONAL_LIVING_PROGRAM"
           const: 24
-          description: "HHS: RHY – Transitional Living Program"
+          description: "HHS: RHY - Transitional Living Program"
         - title: "HHS_RHY_STREET_OUTREACH_PROJECT"
           const: 25
-          description: "HHS: RHY – Street Outreach Project"
+          description: "HHS: RHY - Street Outreach Project"
         - title: "HHS_RHY_DEMONSTRATION_PROJECT"
           const: 26
-          description: "HHS: RHY – Demonstration Project"
+          description: "HHS: RHY - Demonstration Project"
         - title: "VA_CRS_CONTRACT_RESIDENTIAL_SERVICES"
           const: 27
           description: "VA: CRS Contract Residential Services"
@@ -2694,40 +2694,40 @@ components:
           description: "HUD: Public and Indian Housing (PIH) Programs"
         - title: "VA_GRANT_PER_DIEM_BRIDGE_HOUSING"
           const: 37
-          description: "VA: Grant Per Diem – Bridge Housing"
+          description: "VA: Grant Per Diem - Bridge Housing"
         - title: "VA_GRANT_PER_DIEM_LOW_DEMAND"
           const: 38
-          description: "VA: Grant Per Diem – Low Demand"
+          description: "VA: Grant Per Diem - Low Demand"
         - title: "VA_GRANT_PER_DIEM_HOSPITAL_TO_HOUSING"
           const: 39
-          description: "VA: Grant Per Diem – Hospital to Housing"
+          description: "VA: Grant Per Diem - Hospital to Housing"
         - title: "VA_GRANT_PER_DIEM_CLINICAL_TREATMENT"
           const: 40
-          description: "VA: Grant Per Diem – Clinical Treatment"
+          description: "VA: Grant Per Diem - Clinical Treatment"
         - title: "VA_GRANT_PER_DIEM_SERVICE_INTENSIVE_TRANSITIONAL_HOUSING"
           const: 41
-          description: "VA: Grant Per Diem – Service Intensive Transitional Housing"
+          description: "VA: Grant Per Diem - Service Intensive Transitional Housing"
         - title: "VA_GRANT_PER_DIEM_TRANSITION_IN_PLACE"
           const: 42
-          description: "VA: Grant Per Diem – Transition in Place"
+          description: "VA: Grant Per Diem - Transition in Place"
         - title: "HUD_COC_YOUTH_HOMELESS_DEMONSTRATION_PROGRAM"
           const: 43
-          description: "HUD: CoC – Youth Homeless Demonstration Program (YHDP)"
+          description: "HUD: CoC - Youth Homeless Demonstration Program (YHDP)"
         - title: "HUD_COC_JOINT_COMPONENT_TH_RRH"
           const: 44
-          description: "HUD: CoC – Joint Component TH/RRH"
+          description: "HUD: CoC - Joint Component TH/RRH"
         - title: "VA_GRANT_PER_DIEM_CASE_MANAGEMENT_HOUSING_RETENTION"
           const: 45
-          description: "VA: Grant Per Diem – Case Management/Housing Retention"
+          description: "VA: Grant Per Diem - Case Management/Housing Retention"
         - title: "LOCAL_OR_OTHER_FUNDING_SOURCE"
           const: 46
           description: "Local or Other Funding Source (Please Specify)"
         - title: "HUD_ESG_CV"
           const: 47
-          description: "HUD: ESG – CV"
+          description: "HUD: ESG - CV"
         - title: "HUD_HOPWA_CV"
           const: 48
-          description: "HUD: HOPWA – CV"
+          description: "HUD: HOPWA - CV"
         - title: "HUD_HOME"
           const: 50
           description: "HUD: HOME"
@@ -2739,7 +2739,7 @@ components:
           description: "HUD: PIH (Emergency Housing Voucher)"
         - title: "HUD_ESG_RUSH"
           const: 53
-          description: "HUD: ESG – RUSH"
+          description: "HUD: ESG - RUSH"
         - title: "HUD_UNSHELTERED_SPECIAL_NOFO"
           const: 54
           description: "HUD: Unsheltered Special NOFO"
@@ -3955,7 +3955,7 @@ components:
           description: "Legal services - restore / acquire driver's license"
         - title: "LEGAL_SERVICES_OTHER"
           const: 11
-          description: "Legal services – other"
+          description: "Legal services - other"
         - title: "CHILD_CARE"
           const: 12
           description: "Child care"
@@ -4037,7 +4037,7 @@ components:
           description: "Emergency housing assistance"
         - title: "SHALLOW_SUBSIDY_FINANCIAL_ASSISTANCE"
           const: 15
-          description: "Shallow Subsidy –Financial Assistance"
+          description: "Shallow Subsidy -Financial Assistance"
         - title: "FOOD_ASSISTANCE"
           const: 16
           description: "Food assistance"
@@ -4628,7 +4628,7 @@ components:
           description: "Voucher revoked or expired"
         - title: "VOUCHER_IN_USE"
           const: 5
-          description: "Voucher in use – veteran moved into housing"
+          description: "Voucher in use - veteran moved into housing"
         - title: "VOUCHER_PORTED_LOCALLY"
           const: 6
           description: "Voucher was ported locally"
@@ -4640,13 +4640,13 @@ components:
           description: "Voucher was converted to Housing Choice Voucher"
         - title: "VETERAN_EXITED_RETURNED_VOUCHER"
           const: 9
-          description: "Veteran exited – voucher was returned"
+          description: "Veteran exited - voucher was returned"
         - title: "VETERAN_EXITED_FAMILY_MAINTAINED_VOUCHER"
           const: 10
-          description: "Veteran exited – family maintained the voucher"
+          description: "Veteran exited - family maintained the voucher"
         - title: "VETERAN_EXITED_PRIOR_TO_RECEIVING_VOUCHER"
           const: 11
-          description: "Veteran exited – prior to ever receiving a voucher"
+          description: "Veteran exited - prior to ever receiving a voucher"
         - title: "OTHER"
           const: 12
           description: "Other"
@@ -4846,7 +4846,7 @@ components:
           description: "Moved to a transitional or temporary housing facility or program"
         - title: "BECAME_HOMELESS"
           const: 6
-          description: "Client became homeless – moving to a shelter or other place unfit for human habitation"
+          description: "Client became homeless - moving to a shelter or other place unfit for human habitation"
         - title: "JAIL_PRISON"
           const: 7
           description: "Jail/prison"
@@ -5246,15 +5246,15 @@ components:
             maxLength: 32
           DateCreated:
             type: string
-            format: datetime
+            format: date-time
           DateUpdated:
             type: string
-            format: datetime
+            format: date-time
           DateDeleted:
             type:
               - string
               - 'null'
-            format: datetime
+            format: date-time
 
     ClientSummaryQuery:
       description: |
@@ -5848,15 +5848,15 @@ components:
           maxLength: 32
         DateCreated:
           type: string
-          format: datetime
+          format: date-time
         DateUpdated:
           type: string
-          format: datetime
+          format: date-time
         DateDeleted:
           type:
             - string
             - 'null'
-          format: datetime
+          format: date-time
       required:
       - EnrollmentID
 
@@ -6356,7 +6356,6 @@ components:
           type: integer
           description: Destination
           $ref: '#/components/schemas/LivingSituation'
-
         DestinationSubsidyType:
           type:
             - integer
@@ -6393,7 +6392,6 @@ components:
           type: integer
           description: Exchange for sex
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-
         ExchangeForSexPastThreeMonths:
           type:
             - integer
@@ -6469,7 +6467,6 @@ components:
           type: integer
           description: Post exit counseling plan
           $ref: '#/components/schemas/NoYesMissing'
-
         SessionsInPlan:
           type:
             - integer
