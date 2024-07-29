@@ -28,6 +28,17 @@ paths:
             schema:
               $ref: '#/components/schemas/ClientBase'
       responses:
+        '200':
+          description: Successful response with client data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: 
+                  PersonalID:
+                    type: string
+                    description: Unique identifier for the client
+                    maxLength: 32
         '201':
           description: Client successfully created
         '400':
@@ -435,7 +446,7 @@ components:
         This structure is used to query or return a subset of client fields. For queries, the PersonalID field is not required but is returned in ClientSummaryResponses
       type: object
       properties:
-        Name:
+        NameSummary:
           type: object
           properties:
             FirstName:
