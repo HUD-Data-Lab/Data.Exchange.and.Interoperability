@@ -11,7 +11,7 @@ paths:
 #TODO: Add paths for
 # CEParticipation
 # Exit
-#Funder
+# Funder
 # Organization
 # Project
 # User
@@ -420,15 +420,15 @@ components:
             maxLength: 32
           DateCreated:
             type: string
-            format: datetime
+            format: date-time
           DateUpdated:
             type: string
-            format: datetime
+            format: date-time
           DateDeleted:
             type:
               - string
               - 'null'
-            format: datetime
+            format: date-time
   
     ClientSummaryQuery:
       description: |
@@ -865,15 +865,15 @@ components:
           maxLength: 32
         DateCreated:
           type: string
-          format: datetime
+          format: date-time
         DateUpdated:
           type: string
-          format: datetime
+          format: date-time
         DateDeleted:
           type:
             - string
             - 'null'
-          format: datetime
+          format: date-time
       required:
       - EnrollmentID
 
