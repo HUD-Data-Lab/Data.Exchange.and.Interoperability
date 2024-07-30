@@ -33,12 +33,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: 
-                  PersonalID:
-                    type: string
-                    description: Unique identifier for the client
-                    maxLength: 32
+                $ref: '#/components/schemas/Client'
         '201':
           description: Client successfully created
         '400':
@@ -320,30 +315,22 @@ components:
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         PreventionAssessment:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: Prevention assessment
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         CrisisAssessment:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: Crisis assessment
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         HousingAssessment:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: Housing assessment
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         DirectServices:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: Direct services
           oneOf:
             - $ref: '#/components/schemas/NoYes'
@@ -357,9 +344,7 @@ components:
           format: date
           description: CEParticipation status start date
         CeParticipationStatusEndDate:
-          type:
-            - string
-            - 'null'
+          type: string
           format: date
           description: CEParticipation status end date
 
@@ -478,10 +463,8 @@ components:
           #     - "1994-11"
           #     - "1994"
         SocialSecurityNumber:
-          type:
-            - string
-            - 'null'
-          description: Social Security Number, should be formatted as 4 charaters represeting the last 4 digit
+          type: string
+          description: Social Security Number, should be formatted as 4 characters representing the last 4 digit
           pattern: '^[0-9]{4}$'
 
     ClientSummary:
@@ -538,29 +521,21 @@ components:
           type: string
           pattern: '^[A-Za-z]{2}-[0-9]{3}$'
           maxLength: 6
-        LivingSituation:
+        livingSituation:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/LivingSituation'
         DateOfEngagement:
-          type:
-            - string
-            - 'null'
+          type: string
           format: date
         MoveInDate:
-          type:
-            - string
-            - 'null'
+          type: string
           format: date
         DateOfPATHStatus:
-          type:
-            - string
-            - 'null'
+          type: string
           format: date
         PercentAMI:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/PercentAMI'
         VAMCStation:
@@ -569,300 +544,198 @@ components:
           oneOf:
             - $ref: '#/components/schemas/VAMCStationNumber'
         targetScreenReqd:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        RentalSubsidyType:
-          type:
-            - integer
-            - 'null'
+        rentalSubsidyType:
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/RentalSubsidyTypes'
-        LengthOfStay:
-          type:
-            - integer
-            - 'null'
+        lengthOfStay:
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/LengthOfStay'
         LOSUnderThreshold:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         PreviousStreetESSH:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         DateToStreetESSH:
-          type:
-            - string
-            - 'null'
+          type: string
           format: date
-        TimesHomelessPastThreeYears:
-          type:
-            - integer
-            - 'null'
+        timesHomelessPastThreeYears:
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/TimesHomelessPastThreeYears'
-        MonthsHomelessPastThreeYears:
-          type:
-            - integer
-            - 'null'
+        monthsHomelessPastThreeYears:
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/MonthsHomelessPastThreeYears'
         disablingCondition:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYesReasonsForMissingData'
         ClientEnrolledInPATH:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        ReasonNotEnrolled:
-          type:
-            - integer
-            - 'null'
+        reasonNotEnrolled:
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/ReasonNotEnrolled'
-        ReferralSource:
-          type:
-            - integer
-            - 'null'
+        referralSource:
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/ReferralSource'
         EligibleForRHY:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        ReasonNoServices:
-          type:
-            - integer
-            - 'null'
+        reasonNoServices:
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/ReasonNoServices'
         runawayYouth:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYesReasonsForMissingData'
         sexualOrientation:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/SexualOrientation'
         FormerWardChildWelfare:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYesReasonsForMissingData'
         ChildWelfareYears:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/RHYNumberofYears'
         ChildWelfareMonths:
-          type:
-            - integer
-            - 'null'
+          type: integer
           minimum: 1
           maximum: 11
         FormerWardJuvenileJustice:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYesReasonsForMissingData'
         JuvenileJusticeYears:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/RHYNumberofYears'
         JuvenileJusticeMonths:
-          type:
-            - integer
-            - 'null'
+          type: integer
           minimum: 1
           maximum: 11
         UnemploymentFam:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         MentalHealthDisorderFam:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         PhysicalDisabilityFam:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         AlcoholDrugUseDisorderFam:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         InsufficientIncome:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         IncarceratedParent:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         SSVF_HP_Targeting_Criteria:
-          type:
-            - integer
-            - 'null'
-        TimeToHousingLoss:
-          type:
-            - integer
-            - 'null'
+          type: integer
+        timeToHousingLoss:
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/TimeToHousingLoss'
-        AnnualPercentAMI:
-          type:
-            - integer
-            - 'null'
+        annualPercentAMI:
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/AnnualPercentAMI'
-        LiteralHomelessHistory:
-          type:
-            - integer
-            - 'null'
+        literalHomelessHistory:
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/LiteralHomelessHistory'
         ClientLeaseholder:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         HOHLeaseholder:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         SubsidyAtRisk:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         evictionHistory:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/EvictionHistory'
         CriminalRecord:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         incarceratedAdult:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/IncarceratedAdult'
         prisonDischarge:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         sexOffender:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         DisableHoH:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         currentPregnant:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         SingleParent:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         DependentUnder6:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/DependentUnder6'
         HH5Plus:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         coCPrioritized:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         HPScreeningScore:
-          type:
-            - integer
-            - 'null'
+          type: integer
         ThresholdScore:
-          type:
-            - integer
-            - 'null'
+          type: integer
         TranslationNeeded:
-          type:
-            - integer
-            - 'null'
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYesReasonsForMissingData'
         preferredLanguage:
-          type:
-            - integer
-            - 'null'
+          type: integer
         preferredLanguageDifferent:
-          type:
-            - string
-            - 'null'
+          type: string
           maxLength: 100
 
     Enrollment:
@@ -881,9 +754,7 @@ components:
           type: string
           format: date-time
         DateDeleted:
-          type:
-            - string
-            - 'null'
+          type: string
           format: date-time
       required:
       - EnrollmentID
@@ -904,9 +775,7 @@ components:
           maxLength: 200
           description: ProjectName comes from the Project table
         ProjectCommonName:
-          type:
-            - string
-            - 'null'
+          type: string
           maxLength: 200
         EntryDate:
           type: string
@@ -953,35 +822,27 @@ components:
           description: Destination
           $ref: '#/components/schemas/LivingSituation'
         DestinationSubsidyType:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: Destination subsidy type
           $ref: '#/components/schemas/RentalSubsidyTypes'
         OtherDestination:
-          type:
-            - string
-            - 'null'
+          type: string
           maxLength: 50
           description: Other destination
         HousingAssessment:
           type: integer
           description: Housing assessment at exit
           $ref: '#/components/schemas/HousingAssessmentAtExit'
-        SubsidyInformation:
-          type:
-            - integer
-            - 'null'
+        subsidyInformation:
+          type: integer
           description: Includes data for W5.A and W5.B.
           $ref: '#/components/schemas/SubsidyInformation'
-        ProjectCompletionStatus:
+        projectCompletionStatus:
           type: integer
           description: Project completion status
           $ref: '#/components/schemas/ProjectCompletionStatus'
         EarlyExitReason:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: Expelled reason
           $ref: '#/components/schemas/ExpelledReason'
         ExchangeForSex:
@@ -989,27 +850,19 @@ components:
           description: Exchange for sex
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
         ExchangeForSexPastThreeMonths:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: Exchange for sex past three months
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        CountOfExchangeForSex:
-          type:
-            - integer
-            - 'null'
+        countOfExchangeForSex:
+          type: integer
           description: Count of exchange for sex
           $ref: '#/components/schemas/CountExchangeForSex'
         AskedOrForcedToExchangeForSex:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: Asked or forced to exchange for sex
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
         AskedOrForcedToExchangeForSexPastThreeMonths:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: Asked or forced to exchange for sex past three months
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
         WorkplaceViolenceThreats:
@@ -1021,15 +874,11 @@ components:
           description: Workplace promise difference
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
         CoercedToContinueWork:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: Coerced to continue work
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
         LaborExploitPastThreeMonths:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: Labor exploit past three months
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
         CounselingReceived:
@@ -1037,36 +886,26 @@ components:
           description: Counseling received
           $ref: '#/components/schemas/NoYesMissing'
         IndividualCounseling:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: Individual counseling
           $ref: '#/components/schemas/NoYesMissing'
         FamilyCounseling:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: Family counseling
           $ref: '#/components/schemas/NoYesMissing'
         GroupCounseling:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: Group counseling
           $ref: '#/components/schemas/NoYesMissing'
         SessionCountAtExit:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: Session count at exit
         PostExitCounselingPlan:
           type: integer
           description: Post exit counseling plan
           $ref: '#/components/schemas/NoYesMissing'
         SessionsInPlan:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: Sessions in plan
         DestinationSafeClient:
           type: integer
@@ -1089,45 +928,31 @@ components:
           description: Positive community connections
           $ref: '#/components/schemas/WorkerResponse'
         AftercareDate:
-          type:
-            - string
-            - 'null'
+          type: string
           format: date
           description: Aftercare date
-        AftercareProvided:
-          type:
-            - integer
-            - 'null'
+        aftercareProvided:
+          type: integer
           description: Aftercare provided
           $ref: '#/components/schemas/AftercareProvided'
         EmailSocialMedia:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: Email or social media contact
           $ref: '#/components/schemas/NoYesMissing'
         Telephone:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: Telephone contact
           $ref: '#/components/schemas/NoYesMissing'
         InPersonIndividual:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: In-person individual contact
           $ref: '#/components/schemas/NoYesMissing'
         inPersonGroup:
-          type:
-            - integer
-            - 'null'
+          type: integer
           description: In-person group contact
           $ref: '#/components/schemas/NoYesMissing'
-        CMExitReason:
-          type:
-            - integer
-            - 'null'
+        cmExitReason:
+          type: integer
           description: Case management exit reason
           $ref: '#/components/schemas/CMExitReason'
 
@@ -1157,9 +982,7 @@ components:
           maxLength: 32
           description: User ID
         DateDeleted:
-          type:
-            - string
-            - 'null'
+          type: string
           format: date-time
           description: Date deleted
 
@@ -1174,7 +997,7 @@ components:
           type: string
           maxLength: 32
           description: Must match a record in Project
-        FundingSource:
+        fundingSource:
           type: integer
           description: Funding source identifier
           oneOf:
@@ -1227,9 +1050,7 @@ components:
           oneOf:
             - $ref: '#/components/schemas/NoYes'
         OrganizationCommonName:
-          type:
-            - string
-            - 'null'
+          type: string
           maxLength: 200
         DateCreated:
           type: string
@@ -1241,9 +1062,7 @@ components:
           type: string
           maxLength: 32
         DateDeleted:
-          type:
-            - string
-            - 'null'
+          type: string
           format: date-time
       required:
         - OrganizationID
@@ -1261,60 +1080,44 @@ components:
           type: string
           maxLength: 200
         ProjectCommonName:
-          type:
-            - string
-            - 'null'
+          type: string
           maxLength: 200
         OperatingStartDate:
           type: string
           format: date
         OperatingEndDate:
-          type:
-            - string
-            - 'null'
+          type: string
           format: date
         ContinuumProject:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        ProjectType:
+        projectType:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/ProjectType'
-        HousingType:
-          type: 
-            - integer
-            - 'null'
+        housingType:
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/HousingType'
-        RRHSubType:
-          type: 
-            - integer
-            - 'null'
+        rrhSubType:
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/RRHSubType'
-        RresidentialAffiliation:
-          type: 
-            - integer
-            - 'null'
+        residentialAffiliation:
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        TargetPopulation:
-          type: 
-            - integer
-            - 'null'
+        targetPopulation:
+          type: integer
           oneOf:
             - $ref: '#/components/schemas/TargetPopulation'
         HOPWAMedAssistedLivingFac:
-          type: 
-            - integer
-            - 'null'
+          type: integer
           oneOf:
-            - $ref: '#/components/schemas/HOPWAMedAssistedLivingFac'
+            - $ref: '#/components/schemas/HOPWAMedAssistedLivingFacNum'
         PITCount:
-          type: 
-            - integer
-            - 'null'
+          type: integer
         DateCreated:
           type: string
           format: date-time
@@ -1325,9 +1128,7 @@ components:
           type: string
           maxLength: 32
         DateDeleted:
-          type:
-            - string
-            - 'null'
+          type: string
           format: date-time
       required:
         - ProjectID
@@ -1392,7 +1193,7 @@ components:
         - title: "INSTITUTIONAL_FOSTER_CARE"
           const: 215
           description: "Foster care home or foster care group home"
-        - title: "INSTUTIONAL_HOSPITAL"
+        - title: "INSTITUTIONAL_HOSPITAL"
           const: 206
           description: "Hospital or other residential non-psychiatric medical facility"
         - title: "INSTITUTIONAL_JAIL"
@@ -1422,10 +1223,10 @@ components:
         - title: "TEMPORARY_FAMILY_SHORT_TERM"
           const: 312
           description: "Staying or living with family, temporary tenure (e.g. room, apartment, or house)"
-        - title: "TEMPOARY_FRIENDS_SHORT_TERM"
+        - title: "TEMPORARY_FRIENDS_SHORT_TERM"
           const: 313
           description: "Staying or living with friends, temporary tenure (e.g. room, apartment, or house)"
-        - title: "TEMPOARY_HOPWA"
+        - title: "TEMPORARY_HOPWA"
           const: 327
           description: "Moved from one HOPWA funded project to HOPWA TH"
         - title: "TEMPORARY_FRIENDS_UNKNOWN_TERM"
@@ -2751,7 +2552,7 @@ components:
           const: 4
           description: "Not applicable"
 
-    HOPWAMedAssistedLivingFac:
+    HOPWAMedAssistedLivingFacNum:
       type: integer
       description: "Defines whether a project is a HOPWA-funded medical assisted living facility."
       oneOf:
@@ -2865,9 +2666,7 @@ components:
           description: |
             fields for the next page, if any.
             Null if this is the last page.
-          type:
-            - object
-            - "null"
+          type: object
           properties:
             offset:
               type: number
