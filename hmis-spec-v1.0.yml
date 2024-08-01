@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: HMIS API
   description: API for accessing HMIS data
-  version: "v1.0 - beta"
+  version: "v1.0 - GT.test_beta"
 security: 
   -  BasicAuth: []
 servers:
@@ -288,7 +288,7 @@ components:
         default: 0
 
   schemas:
-# TODO:
+# TODO:these are the tables to be included in v1.0
 # Change security - BasicAuth not recommended
 # CEParticipation - needs summary
 # Client - ready for review
@@ -378,33 +378,181 @@ components:
           type: object
           properties:
             FirstName:
-              type:
-                - string
-                - 'null'
+              type: string
               description: First name of the client
               maxLength: 50
             MiddleName:
-              type:
-                - string
-                - 'null'
+              type: string
               description: Middle name of the client
               maxLength: 50
             LastName:
-              type: 
-                - string
-                - 'null'
+              type: string
               description: Last name of the client
               maxLength: 50
             NameSuffix:
-              type:
-                - string
-                - 'null'
+              type: string
               description: Suffix of the client's name
               maxLength: 50
             NameDataQuality:
               type: integer
               oneOf:
                 - $ref: '#/components/schemas/NameDataQuality'
+        SSN:
+          type: object
+          properties:
+            SocialSecurityNumber:
+              type: string
+              description: Social Security Number, potentially masked with 'x'
+              pattern: '^[0-9xX]{9}$'
+            SocialSecurityNumberDataQuality:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/SocialSecurityNumberDataQuality'
+        VitalStatistics:
+          type: object
+          properties:
+            DateOfBirth:
+              type: string
+              description: Date of birth of the client
+              format: date
+            DateOfBirthDataQuality:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/DateOfBirthDataQuality'
+        RaceAndEthnicity:
+          type: object
+          properties:
+            AmIndAkNative:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYes'
+            Asian:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYes'
+            BlackAfAmerican:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYes'
+            HispanicLatinaeo:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYes'
+            MidEastNAfrican:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYes'
+            NativeHiPacific:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYes'
+            White:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYes'
+            RaceNone:
+              type: integer
+              description: non-null only if all other race fields are 0 (UNKNOWN)
+              oneOf:
+                - $ref: '#/components/schemas/RaceGenderNone'
+            AdditionalRaceEthnicity:
+              type: string
+              maxLength: 100
+        Gender:
+          type: object
+          properties:
+            Woman:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYes'
+            Man:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYes'
+            NonBinary:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYes'
+            CulturallySpecific:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYes'
+            Transgender:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYes'
+            Questioning:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYes'
+            DifferentIdentity:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYes'
+            GenderNone:
+              type: integer
+              description: Non-null only if all other gender fields = 0
+              oneOf:
+                - $ref: '#/components/schemas/RaceGenderNone'
+            DifferentIdentityText:
+              type: string
+              maxLength: 100
+        Veteran:
+          type: object
+          properties:
+            VeteranStatus:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            YearEnteredService:
+              type: string
+              pattern: '^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$'
+            YearSeparated:
+              type: string
+              pattern: '^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$'
+            WorldWarII:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            KoreanWar:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            VietnamWar:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            DesertStorm:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            AfghanistanOEF:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            IraqOIF:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            IraqOND:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            OtherTheater:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            MilitaryBranch:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/MilitaryBranch'
+            DischargeStatus:
+              type: integer
+              oneOf:
+                - $ref: '#/components/schemas/DischargeStatus'
+        UserId:
+          type: string
+          maxLength: 32
     Client:
       allOf: 
         -  $ref: '#/components/schemas/ClientBase'
@@ -421,9 +569,7 @@ components:
             type: string
             format: date-time
           DateDeleted:
-            type:
-              - string
-              - 'null'
+            type: string
             format: date-time
   
     ClientSummaryQuery:
@@ -435,21 +581,15 @@ components:
           type: object
           properties:
             FirstName:
-              type:
-                - string
-                - 'null'
+              type: string
               description: First name of the client (for Query optional and may be a prefix partial)
               maxLength: 50
             LastName:
-              type: 
-                - string
-                - 'null'
+              type: string
               description: Last name of the client (for Query optional and may be a prefix partial)
               maxLength: 50
             NameSuffix:
-              type:
-                - string
-                - 'null'
+              type: string
               description: Suffix of the client's name (for Query optional and may be a prefix partial)
               maxLength: 50
         DateOfBirth:
@@ -781,9 +921,7 @@ components:
           type: string
           format: date
         ExitDate:
-          type: 
-          - string
-          - 'null'
+          type: string
           format: date
 
     EnrollmentSummaryResponse:
@@ -1067,7 +1205,7 @@ components:
       required:
         - OrganizationID
 
-    Project:
+    ProjectBase:
       type: object
       properties:
         ProjectID:
@@ -1118,6 +1256,17 @@ components:
             - $ref: '#/components/schemas/HOPWAMedAssistedLivingFacNum'
         PITCount:
           type: integer
+      required:
+        - ProjectID
+
+    Project:
+      allOf:
+        - $ref: "#/components/schemas/ProjectBase"
+        - type: object
+      properties: 
+        ProjectID:
+          type: string
+          maxLength: 32
         DateCreated:
           type: string
           format: date-time
@@ -1133,7 +1282,77 @@ components:
       required:
         - ProjectID
 
-# Response lists I
+    ProjectSummaryQuery:
+      description: |
+        This structure is used to query or return a subset of ProjectIDs when the ProjectID is unkown.
+      type: object
+      properties: 
+        OrganizationID:
+          type: string
+          maxLength: 32
+        OrganizationName:
+          type: string
+          maxLength: 200
+        ProjectName:
+          type: string
+          maxLength: 200
+        ProjectCommonName:
+          type: string
+          maxLength: 200
+        OperatingStartDate:
+          type: string
+          format: date
+        OperatingEndDate:
+          type: string
+          format: date
+
+    ProjectSummary:
+      allOf: 
+        -  $ref: "#/components/schemas/ProjectSummaryQuery"
+        - type: object
+      properties: 
+        ProjectID:
+          type: string
+          maxLength: 32
+
+    User:
+      type: object
+      properties:
+        UserId:
+          type: string
+          maxLength: 32
+        UserFirstName:
+          type: string
+          maxLength: 50
+        UserLastName:
+          type: string
+          maxLength: 50
+        UserPhone:
+          type: string
+          pattern: '^[2-9][0-9]{2}[2-9][0-9]{2}[0-9]{4}$'
+          maxLength: 10
+        UserExtension:
+          type: string
+          pattern: '^[0-9]{1,5}$'
+          maxLength: 5
+        UserEmail:
+          type: string
+          format: email
+          maxLength: 320
+        DateCreated:
+          type: string
+          format: date-time
+        DateUpdated:
+          type: string
+          format: date-time
+        DateDeleted:
+          type: string
+          format: date-time
+      required:
+        - UserId
+
+
+# Quality Response lists
 
     NameDataQuality:
       type: integer
@@ -1155,6 +1374,51 @@ components:
           const: 99
           description: "Data not collected"
 
+    SocialSecurityNumberDataQuality:
+      type: integer
+      description: "Indicates the data quality of the reported Social Security Number."
+      oneOf:
+        - title: "FULL_SSN_REPORTED"
+          const: 1
+          description: "Full SSN reported"
+        - title: "APPROXIMATE_OR_PARTIAL_SSN_REPORTED"
+          const: 2
+          description: "Approximate or partial SSN reported"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+
+
+    DateOfBirthDataQuality:
+      type: integer
+      description: "Indicates the data quality of the reported date of birth."
+      oneOf:
+        - title: "FULL_DOB_REPORTED"
+          const: 1
+          description: "Full date of birth reported"
+        - title: "APPROXIMATE_OR_PARTIAL_DOB_REPORTED"
+          const: 2
+          description: "Approximate or partial date of birth reported"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesnt know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+  
+
+
+
+  # Response List I
     RelationshipToHoH:
       type: integer
       description: "Defines the client's relationship to the Head of Household."
@@ -2566,41 +2830,74 @@ components:
           const: 2
           description: "Non-HOPWA funded project"
 
-    User:
-      type: object
-      properties:
-        UserId:
-          type: string
-          maxLength: 32
-        UserFirstName:
-          type: string
-          maxLength: 50
-        UserLastName:
-          type: string
-          maxLength: 50
-        UserPhone:
-          type: string
-          pattern: '^[2-9][0-9]{2}[2-9][0-9]{2}[0-9]{4}$'
-          maxLength: 10
-        UserExtension:
-          type: string
-          pattern: '^[0-9]{1,5}$'
-          maxLength: 5
-        UserEmail:
-          type: string
-          format: email
-          maxLength: 320
-        DateCreated:
-          type: string
-          format: date-time
-        DateUpdated:
-          type: string
-          format: date-time
-        DateDeleted:
-          type: string
-          format: date-time
-      required:
-        - UserId
+    MilitaryBranch:
+      type: integer
+      description: "Branch of military service."
+      oneOf:
+        - title: "ARMY"
+          const: 1
+          description: "Army"
+        - title: "AIR_FORCE"
+          const: 2
+          description: "Air Force"
+        - title: "NAVY"
+          const: 3
+          description: "Navy"
+        - title: "MARINES"
+          const: 4
+          description: "Marines"
+        - title: "COAST_GUARD"
+          const: 6
+          description: "Coast Guard"
+        - title: "SPACE_FORCE"
+          const: 7
+          description: "Space Force"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+
+    DischargeStatus:
+      type: integer
+      description: "Military discharge status."
+      oneOf:
+        - title: "HONORABLE"
+          const: 1
+          description: "Honorable"
+        - title: "GENERAL_UNDER_HONORABLE_CONDITIONS"
+          const: 2
+          description: "General under honorable conditions"
+        - title: "BAD_CONDUCT"
+          const: 4
+          description: "Bad conduct"
+        - title: "DISHONORABLE"
+          const: 5
+          description: "Dishonorable"
+        - title: "UNDER_OTHER_THAN_HONORABLE_CONDITIONS"
+          const: 6
+          description: "Under other than honorable conditions (OTH)"
+        - title: "UNCHARACTERIZED"
+          const: 7
+          description: "Uncharacterized"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+
+
+
+
+
 
 # Response Lists II
 
@@ -2648,6 +2945,20 @@ components:
         - title: "DATA_NOT_COLLECTED"
           const: 99
           description: "Data not collected."
+
+    RaceGenderNone:
+      type: integer
+      description: "Indicates if race or gender data is not specified."
+      oneOf:
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client does not know their race or gender."
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer race or gender questions."
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Race or gender data was not collected."
 
 # Parameter Schemas
     Pagination:
