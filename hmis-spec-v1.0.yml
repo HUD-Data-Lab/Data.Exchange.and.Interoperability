@@ -260,6 +260,129 @@ paths:
         '404':
           description: Enrollment not found
 
+  /projects:
+    post:
+      summary: Create a new project record
+      description: This creates a new project record
+      tags:
+        - Project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectBase'
+      responses:
+        '200':
+          description: Successful response with project data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '201':
+          description: Proejct successfully created
+        '400':
+          description: Invalid input provided
+
+  /project{ProjectID}:
+    get: 
+      tags:
+        - Project
+      summary: Get Project data by the Project Identifier
+      description: Get Project data by the Project Identifier
+      parameters:
+        - name: ProjectID
+          in: path
+          required: true
+          description: Unique identifier for a Project
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with Project data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '404':
+          description: Project not found
+    put:
+      tags:
+        - Project
+      summary: Update an existing client record.
+      description: Update an existing client record.
+      parameters:
+        - name: ProjectID
+          in: path
+          required: true
+          description: Unique identifier for the Project to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectBase'
+      responses:
+        '200':
+          description: Project successfully updated
+        '404':
+          description: Project not found
+        '400':
+          description: Invalid input provided
+    delete:
+      tags:
+        - Project
+      summary: Delete a Project record
+      description: This marks the Project record as deleted
+      parameters:
+        - name: ProjectID
+          in: path
+          required: true
+          description: Unique identifier for the Project to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: Project successfully deleted
+        '404':
+          description: Project not found
+
+  /projectsummary:
+    get: 
+      tags: 
+        -  ProjectSummary
+      summary: Get a list of Projects by partial Project Information
+      description: |
+        Get a list of Projects by partial Project Information. 
+      requestBody: 
+        required: true
+        content: 
+          application/json:
+            schema: 
+              $ref: "#/components/schemas/ProjectSummary"
+      responses:
+        '200':
+          description: A list of proejcts that match the query
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ProjectSummaryResponse"
+        '404':
+          description: Project not found
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request generated an error and could not process.
+      
 
 components: 
   securitySchemes:
@@ -1173,7 +1296,7 @@ components:
           format: date-time
           description: Date deleted
 
-    Organization:
+    OrganizationBase:
       type: object
       properties:
         OrganizationID:
@@ -1190,6 +1313,14 @@ components:
         OrganizationCommonName:
           type: string
           maxLength: 200
+
+      required:
+        - OrganizationID
+
+    Organization:
+      allOf: 
+        -  $ref: "#/components/schemas/OrganizationBase"
+      properties: 
         DateCreated:
           type: string
           format: date-time
@@ -1202,8 +1333,9 @@ components:
         DateDeleted:
           type: string
           format: date-time
-      required:
-        - OrganizationID
+
+
+
 
     ProjectBase:
       type: object
@@ -1284,7 +1416,7 @@ components:
 
     ProjectSummaryQuery:
       description: |
-        This structure is used to query or return a subset of ProjectIDs when the ProjectID is unkown.
+        This structure is used to query or return a subset of ProjectIDs when the ProjectID is unknown.
       type: object
       properties: 
         OrganizationID:
@@ -1314,6 +1446,25 @@ components:
         ProjectID:
           type: string
           maxLength: 32
+      required: 
+        - ProjectID
+        - ProjectName
+        - ProjectCommonName
+        - OperatingStartDate
+        - OperatingEndDate
+        - OrganizationID
+
+    ProjectSummaryResponse:
+      type: object
+      properties: 
+        query:
+          type: object
+        result:
+          type: array
+          items: 
+            $ref: "#/components/schemas/ProjectSummary"
+        total:
+          type: integer
 
     User:
       type: object
