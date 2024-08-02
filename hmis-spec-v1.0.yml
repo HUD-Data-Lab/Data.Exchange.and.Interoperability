@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: HMIS API
   description: API for accessing HMIS data
-  version: "v1.0 - GT.test_beta"
+  version: "v1.0b5"
 security: 
   -  BasicAuth: []
 servers:
@@ -284,7 +284,7 @@ paths:
         '400':
           description: Invalid input provided
 
-  /project{ProjectID}:
+  /project/{ProjectID}:
     get: 
       tags:
         - Project
@@ -359,12 +359,8 @@ paths:
       summary: Get a list of Projects by partial Project Information
       description: |
         Get a list of Projects by partial Project Information. 
-      requestBody: 
-        required: true
-        content: 
-          application/json:
-            schema: 
-              $ref: "#/components/schemas/ProjectSummary"
+      parameters: 
+        - $ref: "#/components/schemas/ProjectSummaryQuery"
       responses:
         '200':
           description: A list of proejcts that match the query
@@ -383,7 +379,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: The request generated an error and could not process.
       
-
 components: 
   securitySchemes:
     BasicAuth:
@@ -419,7 +414,7 @@ components:
 # Exit - needs summary
 # Funder - needs base and summary
 # Organization - needs base and summary
-# Project - needs base and summary
+# Project - ready for review
 # User - needs base and summary
     CEParticipationBase:
       type: object
@@ -716,8 +711,8 @@ components:
               description: Suffix of the client's name (for Query optional and may be a prefix partial)
               maxLength: 50
         DateOfBirth:
-          type: 
-            - string
+          type: string
+          format: date
           description: Optional date of birth of client. A date in ISO 8601 format. The year is always required, the month + day is optional.
           # todo: Figure out how to show multiple examples
           # example:
@@ -1418,7 +1413,7 @@ components:
       description: |
         This structure is used to query or return a subset of ProjectIDs when the ProjectID is unknown.
       type: object
-      properties: 
+      properties:
         OrganizationID:
           type: string
           maxLength: 32
@@ -3045,11 +3040,6 @@ components:
           const: 99
           description: "Data not collected"
 
-
-
-
-
-
 # Response Lists II
 
     NoYes:
@@ -3110,6 +3100,19 @@ components:
         - title: "DATA_NOT_COLLECTED"
           const: 99
           description: "Race or gender data was not collected."
+
+    MissingDataQuality:
+      type: integer
+      description: |
+        Factored out the [Client Doesn't Know], [Client perfers not to answer], and [data not collected]
+        The intention is to limit the number of lists that we define throughout the API reference.
+      oneOf: 
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
 
 # Parameter Schemas
     Pagination:
