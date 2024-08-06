@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: HMIS API
   description: API for accessing HMIS data
-  version: "v1.0b6"
+  version: "v1.0b7"
 security: 
   - oauth2: [] #TODO define the Oauth2 security schema
 servers:
@@ -13,10 +13,10 @@ paths:
 # Client -- Ready for Review
 # Enrollment -- Ready for Review
 # Exit -- Ready for Review
-# Funder
-# Organization
+# Funder -- Ready for Review
+# Organization -- Ready for Review
 # Project -- Ready for review
-# User
+# User -- Ready for review
 
   /ceparticipation:
     post:
@@ -35,7 +35,6 @@ paths:
           description: CEParticipation successfully created
         '400':
           description: Invalid input provided
-
   /ceparticipation/{CEParticipationID}:
     put: 
       tags:
@@ -81,7 +80,6 @@ paths:
           description: Project successfully deleted
         '404':
           description: Project not found
-
   /ceparticipationsummary/{ProjectID}:
     get: 
       tags: 
@@ -265,7 +263,6 @@ paths:
           description: Enrollment successfully created
         '400':
           description: Invalid input provided
-
   /enrollmentsummary/{PersonalID}:
     get:
       tags: 
@@ -295,7 +292,6 @@ paths:
                   - $ref: '#/components/schemas/PaginatedList'
         '404':
           description: Enrollment not found
-
   /enrollments/{EnrollmentID}:
     get:
       tags:
@@ -383,7 +379,6 @@ paths:
           description: Exit successfully created
         '400':
           description: Invalid input provided 
-
   /exitsummary/{PersonalID}:
     get:
       tags: 
@@ -412,7 +407,6 @@ paths:
                   - $ref: '#/components/schemas/PaginatedList'
         '404':
           description: Exits not found
-
   /exit/{ExitID}:
     put:
       tags:
@@ -459,6 +453,237 @@ paths:
         '404':
           description: Enrollment not found
 
+  /funders:
+    post:
+      summary: Create a new funder record
+      description: This creates a new funder record
+      tags:
+        - Funders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Funder'
+      responses:
+        '201':
+          description: Funder successfully created
+        '400':
+          description: Invalid input provided
+  /funders/{FunderId}:
+    get:
+      tags:
+        - Funders
+      summary: Get funder data by Funder ID
+      description: This gets funder data by Funder ID
+      parameters:
+        - name: FunderId
+          in: path
+          required: true
+          description: Unique identifier for a funder
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with funder data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Funder'
+        '404':
+          description: Funder not found
+
+    put:
+      tags:
+        - Funders
+      summary: Update an existing funder record
+      description: Update an existing funder record
+      parameters:
+        - name: FunderId
+          in: path
+          required: true
+          description: Unique identifier for the funder to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Funder'
+      responses:
+        '200':
+          description: Funder successfully updated
+        '404':
+          description: Funder not found
+        '400':
+          description: Invalid input provided
+
+    delete:
+      tags:
+        - Funders
+      summary: Delete a funder record
+      description: This marks a funder record as deleted
+      parameters:
+        - name: FunderId
+          in: path
+          required: true
+          description: Unique identifier for the funder to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: Funder successfully deleted
+        '404':
+          description: Funder not found
+  /fundersummary/{FunderID}:
+    get:
+      tags: 
+        -  FunderSummary
+      summary: |
+        Get Funder information by FunderID. 
+        This table includes all projects, enrollemnts, and clients under the funding source
+      description: |
+        Get Funder information by FunderID. 
+        This table includes all projects, enrollemnts, and clients under the funding source
+      parameters:
+        - name: FunderID
+          in: path
+          required: true
+          description: Unique identifier for a funding source
+          schema:
+            type: string
+            maxLength: 32
+        - $ref: '#/components/parameters/OffsetParam'
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: All clients, enrollments, and projects using a specific funding source 
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/FunderSummaryResponse'
+                  - $ref: '#/components/schemas/PaginatedList'
+        '404':
+            description: FunderID not found
+  
+  /organizations:
+    post:
+      summary: Create a new organization record
+      description: Create a new organization record
+      tags:
+        - Organizations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organization'
+      responses:
+        '201':
+          description: Organization successfully created
+        '400':
+          description: Invalid input provided
+  /organizations/{OrganizationID}:
+    get: 
+      tags:
+        - Organizations
+      summary: Get Organization data by the Organization Identifier
+      description: Get Organization data by the Organization Identifier
+      parameters:
+        - name: OrganizationID
+          in: path
+          required: true
+          description: Unique identifier for a Organization
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with Organization data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '404':
+          description: Organization not found
+    put:
+      tags:
+        - Organizations
+      summary: Update an existing organization record
+      description: Update an existing organization record
+      parameters:
+        - name: OrganizationID
+          in: path
+          required: true
+          description: Unique identifier for the organization to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organization'
+      responses:
+        '200':
+          description: Organization successfully updated
+        '404':
+          description: Organization not found
+        '400':
+          description: Invalid input provided
+    delete:
+      tags:
+        - Organizations
+      summary: Delete an organization record
+      description: This deletes an organization record
+      parameters:
+        - name: OrganizationID
+          in: path
+          required: true
+          description: Unique identifier for the organization to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: Organization successfully deleted
+        '404':
+          description: Organization not found
+  /organizationsummary:
+    get: 
+      tags: 
+        -  OrganizationSummary
+      summary: Get a list of Organizations by partial Organization name
+      description: |
+        Get a list of Organizations by partial Organization name
+      parameters: 
+        - in: query
+          name: OrganizationSummaryQuery
+          schema: 
+            $ref: "#/components/schemas/OrganizationSummaryQuery"
+      responses:
+        '200':
+          description: A list of Organizations that match the query
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OrganizationSummaryResponse"
+        '404':
+          description: Organizaiton not found
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request generated an error and could not process.  
 
   /projects:
     post:
@@ -483,7 +708,6 @@ paths:
           description: Proejct successfully created
         '400':
           description: Invalid input provided
-
   /project/{ProjectID}:
     get: 
       tags:
@@ -551,7 +775,6 @@ paths:
           description: Project successfully deleted
         '404':
           description: Project not found
-
   /projectsummary:
     get: 
       tags: 
@@ -581,7 +804,94 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: The request generated an error and could not process.
-      
+
+  /users:
+    post:
+      summary: Create a new user record
+      description: This creates a new user record
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User successfully created
+        '400':
+          description: Invalid input provided
+  /users/{UserId}:
+    get:
+      tags:
+        - Users
+      summary: Get user data by their UserId
+      description: This gets user data by their UserId
+      parameters:
+        - name: UserId
+          in: path
+          required: true
+          description: Unique identifier for a user
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with user data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+
+    put:
+      tags:
+        - Users
+      summary: Update an existing user record
+      description: Update an existing user record
+      parameters:
+        - name: UserId
+          in: path
+          required: true
+          description: Unique identifier for the user to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User successfully updated
+        '404':
+          description: User not found
+        '400':
+          description: Invalid input provided
+
+    delete:
+      tags:
+        - Users
+      summary: Delete a user record
+      description: This marks a user record as deleted
+      parameters:
+        - name: UserId
+          in: path
+          required: true
+          description: Unique identifier for the user to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: User successfully deleted
+        '404':
+          description: User not found
+
 components: 
   # securitySchemes:
   #   oauth2:
@@ -1555,7 +1865,7 @@ components:
           type: integer
 
 
-    Funder:
+    FunderBase:
       type: object
       properties:
         FunderId:
@@ -1587,6 +1897,20 @@ components:
           type: string
           format: date
           description: End date
+        UserId:
+          type: string
+          maxLength: 32
+          description: User ID
+
+    Funder:
+      allOf: 
+        - $ref: "#/components/schemas/FunderBase"
+        - type: object
+      properties:
+        FunderId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
         DateCreated:
           type: string
           format: date-time
@@ -1595,14 +1919,52 @@ components:
           type: string
           format: date-time
           description: Date updated
-        UserId:
-          type: string
-          maxLength: 32
-          description: User ID
         DateDeleted:
           type: string
           format: date-time
           description: Date deleted
+
+    FunderSummary:
+      type: object
+      description: This is to identify all clients from a single funding source
+      properties:
+        FunderId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        fundingSource:
+          type: integer
+          description: Funding source identifier
+          oneOf:
+            - $ref: '#/components/schemas/FundingSource'
+        OtherFunder:
+          type: string
+          maxLength: 100
+          description: Required if FundingSource = 46
+        ProjectID:
+          type: string
+          maxLength: 32
+          description: Must match a record in Project
+        EnrollmentID:
+          type: string
+          description: Unique identifier for an enrollment
+          maxLength: 32
+        PersonalID:
+          type: string
+          description: Unique identifier for the client
+          maxLength: 32
+
+    FunderSummaryResponse:
+      type: object
+      properties: 
+        query:
+          type: object
+        result:
+          type: array
+          items: 
+            $ref: "#/components/schemas/FunderSummary"
+        total:
+          type: integer
 
     OrganizationBase:
       type: object
@@ -1621,7 +1983,9 @@ components:
         OrganizationCommonName:
           type: string
           maxLength: 200
-
+        UserId:
+          type: string
+          maxLength: 32
       required:
         - OrganizationID
 
@@ -1635,12 +1999,49 @@ components:
         DateUpdated:
           type: string
           format: date-time
-        UserId:
-          type: string
-          maxLength: 32
         DateDeleted:
           type: string
           format: date-time
+
+    OrganizationSummaryQuery:
+        description: |
+          This structure is used to query or return a subset of OrganizationIds 
+          when the OrganizationID is unknown.
+        type: object
+        properties:
+          OrganizationName:
+            description: Organization name (for Query optional and may be a prefix partial)
+            type: string
+            maxLength: 200
+          OrganizationCommonName:
+            description: Organization common name (for Query optional and may be a prefix partial)
+            type: string
+            maxLength: 200
+
+    OrganizationSummary:
+      allOf: 
+        - $ref: "#/components/schemas/OrganizationSummaryQuery"
+        - type: object
+      properties:
+        OrganizationID:
+          type: string
+          maxLength: 32
+      required: 
+        - OrganizationID
+        - OrgnaizationName
+        - OrganizationCommonName
+  
+    OrganizationSummaryResponse:
+      type: object
+      properties: 
+        query:
+          type: object
+        result:
+          type: array
+          items: 
+            $ref: "#/components/schemas/OrganizationSummary"
+        total:
+          type: integer
 
     ProjectBase:
       type: object
@@ -1771,7 +2172,7 @@ components:
         total:
           type: integer
 
-    User:
+    UserBase:
       type: object
       properties:
         UserId:
@@ -1795,6 +2196,12 @@ components:
           type: string
           format: email
           maxLength: 320
+      required:
+        - UserId
+
+    User:
+      type: object
+      properties:
         DateCreated:
           type: string
           format: date-time
@@ -1804,8 +2211,7 @@ components:
         DateDeleted:
           type: string
           format: date-time
-      required:
-        - UserId
+
 
 
 # Quality Response lists
