@@ -2,19 +2,125 @@ openapi: 3.1.0
 info:
   title: HMIS API
   description: API for accessing HMIS data
-  version: "v1.0b5"
+  version: "v1.0b6"
 security: 
-  -  BasicAuth: []
+  - oauth2: [] #TODO define the Oauth2 security schema
 servers:
   - url: 'https://example.com/hmis'
 paths:
 #TODO: Add paths for
-# CEParticipation
-# Exit
+# CEParticipation -- Ready for review
+# Client -- Ready for Review
+# Enrollment -- Ready for Review
+# Exit -- Ready for Review
 # Funder
 # Organization
-# Project
+# Project -- Ready for review
 # User
+
+  /ceparticipation:
+    post:
+      summary: Create a new CEParticipation record
+      description: Create a new CEParticipation record
+      tags:
+        - CEParticipations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CEParticipationBase'
+      responses: 
+        '201':
+          description: CEParticipation successfully created
+        '400':
+          description: Invalid input provided
+
+  /ceparticipation/{CEParticipationID}:
+    put: 
+      tags:
+        - CEParticipation
+      summary: Update an existing client record.
+      description: Update an existing client record.
+      parameters:
+        - name: CEParticipationID
+          in: path
+          required: true
+          description: Unique identifier to update CEParticipation
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CEParticipationBase'
+      responses:
+        '200':
+          description: CEParticipation successfully updated
+        '404':
+          description: CEParticipation not found
+        '400':
+          description: Invalid input provided
+    delete:
+      tags:
+        - CEParticipation
+      summary: Delete a Project record
+      description: This marks the Project record as deleted
+      parameters:
+        - name: CEParticipationID
+          in: path
+          required: true
+          description: Unique identifier for the Project to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: Project successfully deleted
+        '404':
+          description: Project not found
+
+  /ceparticipationsummary/{ProjectID}:
+    get: 
+      tags: 
+        -  CEParticipation
+      summary: Get a list of CEParticipation by ProjectID Information
+      description: |
+        Get a list of Projects by partial Project Information. 
+      parameters: 
+        - name: ProjectID
+          in: path
+          required: true
+          description: The unique ID for Projects
+          schema:
+            type: string
+            maxLength: 32
+        - name: CEParticipationSummary
+          in: query
+          schema: 
+            $ref: "#/components/schemas/CEParticipationQuery"
+        - $ref: "#/components/parameters/OffsetParam"
+        - $ref: "#/components/parameters/LimitParam"
+      responses:
+        '200':
+          description: A list of CEParticipationIDs that match the query
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: "#/components/schemas/CEParticipationSummaryResponse"
+                  - $ref: "#/components/schemas/PaginatedList"
+        '404':
+          description: Project not found
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request generated an error and could not process.
+
   /clients:
     post:
       summary: Create a new client record
@@ -260,6 +366,100 @@ paths:
         '404':
           description: Enrollment not found
 
+  /exit:
+    post: 
+      summary: Create a new Exit record
+      description: This creates a new exit record
+      tags:
+        - Exits
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExitBase'
+      responses:
+        '201':
+          description: Exit successfully created
+        '400':
+          description: Invalid input provided 
+
+  /exitsummary/{PersonalID}:
+    get:
+      tags: 
+        -  ExitSummary
+      summary: Get exits by PersonalID
+      description: |
+        This gets all the exits for a client by PersonalID. 
+      parameters:
+        - name: PersonalID
+          in: path
+          required: true
+          description: Unique identifier for a client
+          schema:
+            type: string
+            maxLength: 32
+        - $ref: '#/components/parameters/OffsetParam'
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: A list of exits 
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ExitSummaryResponse'
+                  - $ref: '#/components/schemas/PaginatedList'
+        '404':
+          description: Exits not found
+
+  /exit/{ExitID}:
+    put:
+      tags:
+        - Exits
+      summary: Update an existing Exit record
+      description: Update an existing Exit record
+      parameters:
+        - name: ExitID
+          in: path
+          required: true
+          description: Unique identifier for the Exit to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exit'
+      responses:
+        '200':
+          description: Exit successfully updated
+        '404':
+          description: Exit not found
+        '400':
+          description: Invalid input provided
+    delete:
+      tags:
+        - Exits
+      summary: Delete an enrollment record
+      description: This deletes an enrollment record
+      parameters:
+        - name: ExitID
+          in: path
+          required: true
+          description: Unique identifier for the enrollment to delete
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '204':
+          description: Enrollment successfully deleted
+        '404':
+          description: Enrollment not found
+
+
   /projects:
     post:
       summary: Create a new project record
@@ -360,7 +560,10 @@ paths:
       description: |
         Get a list of Projects by partial Project Information. 
       parameters: 
-        - $ref: "#/components/schemas/ProjectSummaryQuery"
+        - in: query
+          name: ProjectSummaryQuery
+          schema: 
+            $ref: "#/components/schemas/ProjectSummaryQuery"
       responses:
         '200':
           description: A list of proejcts that match the query
@@ -380,10 +583,21 @@ paths:
           description: The request generated an error and could not process.
       
 components: 
-  securitySchemes:
-    BasicAuth:
-      type: http
-      scheme: basic
+  # securitySchemes:
+  #   oauth2:
+  #     type: oauth2
+  #     flows:
+  #       implicit:
+  #         authorizationUrl: https://example.com/api/oauth/dialog
+  #         scopes:
+  #           write:pets: modify pets in your account
+  #           read:pets: read your pets
+  #       authorizationCode:
+  #         authorizationUrl: https://example.com/api/oauth/dialog
+  #         tokenUrl: https://example.com/api/oauth/token
+  #         scopes:
+  #           write:pets: modify pets in your account
+  #           read:pets: read your pets
   parameters:
     LimitParam: 
       in: query
@@ -466,7 +680,6 @@ components:
           format: date
           description: CEParticipation status end date
 
-
     CEParticipation:
       allOf: 
         -  $ref: "#/components/schemas/CEParticipationBase"
@@ -488,6 +701,71 @@ components:
           type: string
           maxLength: 32
           description: User ID
+
+    CEParticipationQuery:
+      description: |
+        This structure is used to query or return a subset of CEParticipartion fields.     
+      type: object
+      properties:
+        CEParticipationID:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        ProjectID:
+          type: string
+          maxLength: 32
+          description: Must match a ProjectID in Projects
+        AccessPoint:
+          type: integer
+          description: Access point
+          oneOf:
+            - $ref: '#/components/schemas/NoYes'
+        DirectServices:
+          type: integer
+          description: Direct services
+          oneOf:
+            - $ref: '#/components/schemas/NoYes'
+        ReceivesReferrals:
+          type: integer
+          description: Receives referrals
+          oneOf:
+            - $ref: '#/components/schemas/NoYes'
+        CeParticipationStatusStartDate:
+          type: string
+          format: date
+          description: CEParticipation status start date
+        CeParticipationStatusEndDate:
+          type: string
+          format: date
+          description: CEParticipation status end date
+    
+    CEParticipationSummary:
+      allOf:
+        - $ref: "#/components/schemas/CEParticipationQuery"
+        - type: object
+      properties:
+        CEParticipationID:
+          type: string
+          description: Unique identifier for the CEParticipation status
+          maxLength: 32
+      required: 
+        - CEParticipationID
+        - ProjectID
+        - CeParticipationStatusStartDate
+        - CeParticipationStatusEndDate
+
+    CEParticipationSummaryResponse:
+      type: object
+      properties:
+        query:
+          type: object
+        result:
+          type: array
+          items: 
+            $ref: "#/components/schemas/CEParticipationSummary"
+        total:
+          type: integer
+
 
     ClientBase:
       type: object
@@ -1242,6 +1520,41 @@ components:
           format: date-time
           description: Date deleted
 
+    ExitSummary:
+      type: object
+      properties:
+        ExitID:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          description: Enrollment Id
+        PersonalID:
+          type: string
+          description: Unique identifier for the client
+          maxLength: 32
+        EntryDate:
+          type: string
+          format: date
+        ExitDate:
+          type: string
+          format: date
+
+    ExitSummaryResponse:
+      type: object
+      properties: 
+        query:
+          type: object
+        result:
+          type: array
+          items: 
+            $ref: "#/components/schemas/ExitSummary"
+        total:
+          type: integer
+
+
     Funder:
       type: object
       properties:
@@ -1328,9 +1641,6 @@ components:
         DateDeleted:
           type: string
           format: date-time
-
-
-
 
     ProjectBase:
       type: object

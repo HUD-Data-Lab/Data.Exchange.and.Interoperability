@@ -6,4 +6,4 @@ THE BETA VERSION IS STILL IN THE TESTING PHASE AND IS PROVIDED ON AN “AS IS”
 
 Resource links:
 
-Follow this link to view hmis-openapi-spec.yml in the ReDoc Interactive Demo: https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/HUD-Data-Lab/Data.Exchange.and.Interoperability/main/hmis-openapi-spec.yml
+Follow this link to view hmis-spec-v1.0.yml in the ReDoc Interactive Demo: https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/HUD-Data-Lab/Data.Exchange.and.Interoperability/main/hmis-spec-v1.0.yml
