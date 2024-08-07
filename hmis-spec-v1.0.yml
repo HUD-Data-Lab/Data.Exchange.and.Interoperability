@@ -2,28 +2,221 @@ openapi: 3.1.0
 info:
   title: HMIS API
   description: API for accessing HMIS data
-  version: "v1.0b7"
+  version: "v1.0b8"
+tags:
+  - name: Authentication
+    description: |
+     ## Prerequisites
+
+      To make use of this API you need to have an API key, User Id and User Secret.
+
+      With those credentials you can request a token which you will need to access this API's resources.
+      ## Retrieving a token
+
+      To retrieve a token you need to make a POST request to your HMIS OAuth2 endpoint.
+
+      Response body
+      ```json
+      {
+        "access_token": "eyJraWQ.........",
+        "expires_in": 3600,
+        "token_type": "Bearer"
+      }
+      ```
+
+      In the response body you will find your access token.
+      ## Using your token
+
+      To make use of your access token you need to add the following headers to your requests.
+
+          Authorization: Bearer <your access token>
+          x-api-key: <your api key>
+  - name: Concepts
+    description: |
+      # Api Calls 
+      The HMIS API is a RESTFul API with different endpoints returning JSON data defined by HUD.
+      ## Base URL 
+      The base address of the HMIS API will be the same across endpoints and will be provided by your HMIS.
+      ## Requests
+
+      Resources are accessed via standard HTTP requests in UTF-8 format to an endpoint. The HMIS API uses the following
+      HTTP verbs:
+
+      | Method  | Action                                                                                         |
+      |---------|------------------------------------------------------------------------------------------------|
+      | GET     | Used for retrieving resources                                                                  |
+      | POST    | Used for creating resources                                                                    |
+      | PUT     | Used for changing or replacing resources and queries that contain PII or sensitive information |
+      | DELETE  | Used for removing resources                                                                    |
+      | OPTIONS | Can be issued against any resource to request CORS support                                     |
+      ## Responses
+
+      The HMIS API will return JSON in the response body.
+      ### Response status codes
+
+      | Status Code | Description                                                                                                                                                                         | Methods               |
+      |-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------|
+      | 200         | OK - The request has succeeded. The user can read the result of the request in the body and the headers of the response.                                                          | all                   |
+      | 201         | Created - The request has been fulfilled and resulted in a new resource being created.                                                                                              | `POST` `PUT`          |
+      | 202         | Accepted - The request has been accepted for processing, but the processing has not been completed..                                                                                | `POST` `PUT` `DELETE` |
+      | 204         | No content - Request is processed successfully but no response payload is returned.                                                                                                 | `PUT` `DELETE`        |
+      | 301         | Moved permanently - This request and all future requests should be directed to the response's given URI.                                                                            | all                   |
+      | 303         | See other - Response has a Location header with a URL to which the user should redirect.                                                                                          | `POST` `PUT` `DELETE` |
+      | 304         | Not modified - User has requested a resource that has not been modified since the last request.                                                                                   | `POST` `PUT` `DELETE` |
+      | 400         | Bad request - Error indicating that the server cannot process the request due to something that is perceived to be a user error (e.g. malformed request syntax, invalid request). | all                   |
+      | 401         | Unauthorized - Credentials are not valid for the target resource (user is denied server-authentication).                                                                          | all                   |
+      | 403         | Forbidden - Request is successfully understood but the user is not authorized to use or access this resource.                                                                         | all                   |
+      | 404         | Not found - Requested resource is not found.                                                                                                                                        | all                   |
+      | 405         | Method not allowed - HTTP method is not allowed for the request's URI.                                                                                                              | all                   |
+      | 406         | Not acceptable - Request has specified a desired type, format or content-type in its headers but server is not able to provide.                                                     | all                   |
+      | 408         | Request timeout - Server times out waiting for the resource.                                                                                                                        | all                   |
+      | 409         | Conflict - Request cannot be completed due to conflict of the target resource.                                                                                                      | `POST` `PUT` `DELETE` |
+      | 410         | Gone - Requested resource does not exist any longer.                                                                                                                                | all                   |
+      | 412         | Precondition failed - Specified client precondition(s), described in request-headers, cannot be met.                                                                                | all                   |
+      | 415         | Unsupported media type - Requested content-type is unknown to server.                                                                                                               | all                   |
+      | 423         | Locked - Requested resource is currently unavailable.                                                                                                                               | `PUT` `DELETE`        |
+      | 428         | Precondition required - User has not specified required precondition(s).                                                                                                          | all                   |
+      | 429         | Too many requests - User has exceeded rate limits and sent too many requests.                                                                                                     | all                   |
+      | 500         | Internal server error - Unexpected server execution resulting in a failure to respond successfully.                                                                                 | all                   |
+      | 501         | Not implemented - User has requested for functionality that the server has specified it's not able to fulfill.                                                                    | all                   |
+      | 503         | Service unavailable - Server is currently unable to fulfill request. User is suggested to try again later.                                                                        | all                   |
+      ### Error response
+
+      The HMIS API uses a single response to describe an error. This error response can be detected by the returned status
+      code (`4XX` or `5XX`) and the `Content-Type` header which will have a value of `application/problem+json`.
+
+      The response itself will be a JSON structure according to [RFC-7807](https://www.rfc-editor.org/rfc/rfc7807). In general
+      this response looks like:
+
+      ```json
+      {
+        "type": "about:blank",
+        "status": 403,
+        "title": "Forbidden",
+        "detail": "You don't have permission to access this resource."
+      }
+      ```
+
+      - The `status` property contains the status code from the response.
+      - The `title` property contains short a human-readable summary of the occurred problem.
+      - The `detail` property contains a detailed human-readable description of the occurred problem and usually provides more
+        insight into the resolution (if any).
+      - The `type` property describes the _type_ of problem and can be used as a discriminator for problem variants with
+        additional properties. Type `about:blank` is the default and will only contain the aforementioned properties.
+
+      **Example of a non-default problem type**
+
+      ```json5
+      {
+        msg: "SSN is invalid",
+        error_code: "MISSING_SSN"
+
+      }
+      ```
+
+      ---
+      > 
+      ### Note
+      > If a resource endpoint supports one or more of the problem types they will be documented as a possible response.
+      ---
+      ## Collection response
+
+      If the response is for a collection of resources its structure will always look like the following.
+
+      ```json5
+      {
+        "query": {
+          // applied query
+        },
+        "result": [
+          // 0 or more resources
+          {
+            "id": "Resource 1"
+          },
+          {
+            "id": "Resource 2"
+          }
+        ],
+        "total": 2
+      }
+      ```
+
+      - The `query` property will always contain the query parameters that have been applied to get the resulting resources.
+        These include all provided query parameters and those not provided, but with a default.
+      - The `result` property will contain a list of zero or more resources matching the executed query.
+      - The `total` property will contain the total number of resources matching provided query parameters.
+
+      ## Pagination
+
+      If a resource supports the `limit` and `offset` query parameters the collection response will only contain a subset of
+      the total available resources (a single page).
+
+      - The `limit` parameter can be used to control the maximum amount of resource returned per page.
+      - The `offset` parameter can be used to control the index of the first resource returned. E.g. `?offset=0&limit=25`
+        gives the first page of 25 resources. `?offset=25&limit=25` gives you the second page of 25 resources.
+
+      The response will always be a collection response in which the used (provided or default) values for `limit`
+      and `offset` are available in its `query` property. The `total` property provides the total amount of resources available in the system which gives you insight in the total number of "pages" that could be retrieved.
+
+      ```json5
+      {
+        "query": {
+          "limit": 25,
+          "offset": 0
+        },
+        "result": [
+          // resources for first "page".
+        ],
+        "total": 34
+      }
+      ```
+  - name: CEParticipation
+    description: Data related to CE Participations.
+  - name: Clients
+    description: Clients are used to represent the individuals receiving care. There must only be 1 client per individual, identified by their PersonalID.
+  - name: ClientSummary
+    description: Summary of clients
+  - name: Enrollments
+    description: Enrollments are used to represent the relationship between a client and a project. Each enrollment has a unique EnrollmentID.
+
+  - name: Enrollments
+    description: Enrollments are used to represent the relationship between a client and a project. Each enrollment has a unique EnrollmentID.
+  - name: Exits
+    description: Data related to Exits.
+  - name: Funders
+    description: Data related to funding sources.
+  - name: FunderSummary
+    description: Summary of data related to funding sources.
+  - name: Organizations
+    description: Organizations are used to represent the entities that manage projects and users. Each organization has a unique OrganizationID.
+  - name: OrganizationSummary
+    description: Summary of data related to Organizations.
+  - name: Project
+    description: Projects are used to represent the projects that provide services to clients. Each project has a unique ProjectID.
+  - name: ProjectSummary
+    description: Summary of data related to Projects.
+  - name: Users
+    description: Users are used to represent the individuals who have access to the system. Each user has a unique UserId.
 security: 
   - oauth2: [] #TODO define the Oauth2 security schema
 servers:
   - url: 'https://example.com/hmis'
 paths:
-#TODO: Add paths for
-# CEParticipation -- Ready for review
-# Client -- Ready for Review
-# Enrollment -- Ready for Review
-# Exit -- Ready for Review
-# Funder -- Ready for Review
-# Organization -- Ready for Review
-# Project -- Ready for review
-# User -- Ready for review
-
+#NOTE v.1.0 includes the tables and paths for the following .csv files:
+# CEParticipation
+# Client
+# Enrollment
+# Exit 
+# Funder
+# Organization
+# Project
+# User
   /ceparticipation:
     post:
       summary: Create a new CEParticipation record
       description: Create a new CEParticipation record
       tags:
-        - CEParticipations
+        - CEParticipation
       requestBody:
         required: true
         content:
@@ -39,8 +232,8 @@ paths:
     put: 
       tags:
         - CEParticipation
-      summary: Update an existing client record.
-      description: Update an existing client record.
+      summary: Update an existing record.
+      description: Update an existing CEParticipation record.
       parameters:
         - name: CEParticipationID
           in: path
@@ -54,7 +247,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CEParticipationBase'
+              $ref: '#/components/schemas/CEParticipation'
       responses:
         '200':
           description: CEParticipation successfully updated
@@ -220,6 +413,7 @@ paths:
         Get a list of clients by partial Personal Identifiable Information (PII). 
         The request parameter are passed via the http body for security/privacy reasons. 
         Putting PII in url parameter could in them ending up in logs.
+        
 
         The fields in the ClientSummary can be partial. e.g. Prefix of last name
       requestBody:
@@ -539,21 +733,21 @@ paths:
           description: Funder successfully deleted
         '404':
           description: Funder not found
-  /fundersummary/{FunderID}:
+  /fundersummary/{ProjectID}:
     get:
       tags: 
         -  FunderSummary
       summary: |
-        Get Funder information by FunderID. 
-        This table includes all projects, enrollemnts, and clients under the funding source
+        Get Funder information by ProjectID. 
+        This table includes all the funding sources for the specific ProjectID.
       description: |
-        Get Funder information by FunderID. 
-        This table includes all projects, enrollemnts, and clients under the funding source
+        Get Funder information by ProjectID. 
+        This table includes all the funding sources for the specific ProjectID.
       parameters:
-        - name: FunderID
+        - name: ProjectID
           in: path
           required: true
-          description: Unique identifier for a funding source
+          description: Unique identifier for a project
           schema:
             type: string
             maxLength: 32
@@ -570,7 +764,7 @@ paths:
                   - $ref: '#/components/schemas/PaginatedList'
         '404':
             description: FunderID not found
-  
+
   /organizations:
     post:
       summary: Create a new organization record
@@ -1322,12 +1516,6 @@ components:
           type: string
           description: Unique identifier for the client
           maxLength: 32
-      required: 
-        - PersonalID
-        - FirstName
-        - LastName
-        - DateOfBirth
-        - SocialSecurityNumber
 
     ClientSummaryResponse:
       type: object
@@ -1338,8 +1526,15 @@ components:
           type: array
           items: 
             $ref: "#/components/schemas/ClientSummary"
+            required: 
+              - PersonalID
+              - FirstName
+              - LastName
+              - DateOfBirth
+              - SocialSecurityNumber      
         total:
           type: integer
+        
 
     EnrollmentBase:
       type: object
@@ -1616,6 +1811,10 @@ components:
           type: string
           description: Unique identifier for an enrollment
           maxLength: 32
+        ProjectID:
+          type: string
+          description: Unique identifier for project
+          maxLength: 32
         ProjectName:
           type: string
           maxLength: 200
@@ -1623,6 +1822,10 @@ components:
         ProjectCommonName:
           type: string
           maxLength: 200
+        projectType:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/ProjectType'
         EntryDate:
           type: string
           format: date
@@ -1926,7 +2129,7 @@ components:
 
     FunderSummary:
       type: object
-      description: This is to identify all clients from a single funding source
+      description: This is to retrieve a subset of funder information
       properties:
         FunderId:
           type: string
@@ -1945,14 +2148,6 @@ components:
           type: string
           maxLength: 32
           description: Must match a record in Project
-        EnrollmentID:
-          type: string
-          description: Unique identifier for an enrollment
-          maxLength: 32
-        PersonalID:
-          type: string
-          description: Unique identifier for the client
-          maxLength: 32
 
     FunderSummaryResponse:
       type: object
@@ -2125,6 +2320,13 @@ components:
         This structure is used to query or return a subset of ProjectIDs when the ProjectID is unknown.
       type: object
       properties:
+        ProjectID:
+          type: string
+          maxLength: 32
+        projectType:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/ProjectType'
         OrganizationID:
           type: string
           maxLength: 32
