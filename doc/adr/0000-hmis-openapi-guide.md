@@ -15,7 +15,9 @@ To accomplish this action the workflow shown in the API is for the external plat
 
 ## Request a list of PersonalIDs and select the correct PersonalIDs (Skip this step is PersonalIDs is known)
 
-```
+NOTE: We chose to use a post instead of a get. 
+
+```yaml
  /clientsummary:
     post:
       tags:
@@ -54,7 +56,7 @@ To accomplish this action the workflow shown in the API is for the external plat
 
 ## Using the PersonalIDs return the client data
 
-```
+```yaml
   /clients/{PersonalID}:
     get:
       tags:
@@ -87,7 +89,7 @@ To accomplish this action the workflow shown in the API is for the external plat
 
 ## Use PersonalID to update a client-level record (If PersonalID is unknown use the workflow in "See if a person has a record in HMIS" to identify PersonalID)
 
-```  
+```yaml  
 /clients/{PersonalID}:
     put:
       tags:
@@ -116,9 +118,9 @@ To accomplish this action the workflow shown in the API is for the external plat
         '400':
           description: Invalid input provided
 ```
-## Enter the new client information
+## Create a new client information 
 
-```
+```yaml
 /clients:
     post:
       summary: Create a new client record
@@ -148,7 +150,7 @@ To accomplish this action the workflow shown in the API is for the external plat
 
 ## Using the PersonalID return a list of their enrollments (If PersonalID is unknown use the workflow in "See if a person has a record in HMIS" to identify PersonalID)
 
-```
+```yaml
 /enrollmentsummary/{PersonalID}:
     get:
       tags: 
@@ -182,15 +184,48 @@ To accomplish this action the workflow shown in the API is for the external plat
 
 # See if a person has been enrolled in a CE project
 
-[Create endpoint for this]
+For Discussion:
 
-1. Identify PersonalID
-2. Use PersonalID to identify all enrollments (add more fields into EnrollmentSummary{PersonalID})
+1. Add more fields to enrollmentsummary (returns the CEParticipation data elements + Enrollment information)
+2. Create new endpoint at the client level (/CEparticpationExample/{PersonalID}) that returns a yes/no. Add a query to the GET and a yes/no response.
 
 # See if a person is or has been enrolled in a specific project type (ES, PSH, etc.) 
  
-[Create endpoint for this]
+Use the /enrollmentsummary/{PersonalID} endpoint to return a table of all enrollments the client has. This table includes project type.
+
 
 # See if a person is or has been enrolled in a project with specific funding (PATH, Pay for Success, etc.) 
 
-[Create endpoint for this]
+```yaml
+/fundersummary/{ProjectID}:
+    get:
+      tags: 
+        -  FunderSummary
+      summary: |
+        Get Funder information by ProjectID. 
+        This table includes all the funding sources for the specific ProjectID.
+      description: |
+        Get Funder information by ProjectID. 
+        This table includes all the funding sources for the specific ProjectID.
+      parameters:
+        - name: ProjectID
+          in: path
+          required: true
+          description: Unique identifier for a project
+          schema:
+            type: string
+            maxLength: 32
+        - $ref: '#/components/parameters/OffsetParam'
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: All clients, enrollments, and projects using a specific funding source 
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/FunderSummaryResponse'
+                  - $ref: '#/components/schemas/PaginatedList'
+        '404':
+            description: FunderID not found
+```
