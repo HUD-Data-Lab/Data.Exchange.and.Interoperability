@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: HMIS API
   description: API for accessing HMIS data
-  version: "v1.0b8"
+  version: "v1.0b9"
 tags:
   - name: Authentication
     description: |
@@ -200,7 +200,7 @@ tags:
 security: 
   - oauth2: [] #TODO define the Oauth2 security schema
 servers:
-  - url: 'https://example.com/hmis'
+  - url: 'https://example.com/hmis/v1.0'
 paths:
 #NOTE v.1.0 includes the tables and paths for the following .csv files:
 # CEParticipation
@@ -1495,7 +1495,7 @@ components:
         DateOfBirth:
           type: string
           format: date
-          description: Optional date of birth of client. A date in ISO 8601 format. The year is always required, the month + day is optional.
+          description: Optional date of birth of client. A date in ISO 8601 format. The year + month + day is optional.
           # todo: Figure out how to show multiple examples
           # example:
           #   oneOf:
@@ -1527,11 +1527,7 @@ components:
           items: 
             $ref: "#/components/schemas/ClientSummary"
             required: 
-              - PersonalID
-              - FirstName
-              - LastName
-              - DateOfBirth
-              - SocialSecurityNumber      
+              - PersonalID  
         total:
           type: integer
         
@@ -2066,7 +2062,6 @@ components:
             $ref: "#/components/schemas/ExitSummary"
         total:
           type: integer
-
 
     FunderBase:
       type: object
