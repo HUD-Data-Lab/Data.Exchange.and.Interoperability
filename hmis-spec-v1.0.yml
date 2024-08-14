@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: HMIS API
   description: API for accessing HMIS data
-  version: "v1.0b9"
+  version: "v1.0b10"
 tags:
   - name: Authentication
     description: |
@@ -178,9 +178,6 @@ tags:
     description: Summary of clients
   - name: Enrollments
     description: Enrollments are used to represent the relationship between a client and a project. Each enrollment has a unique EnrollmentID.
-
-  - name: Enrollments
-    description: Enrollments are used to represent the relationship between a client and a project. Each enrollment has a unique EnrollmentID.
   - name: Exits
     description: Data related to Exits.
   - name: Funders
@@ -222,7 +219,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CEParticipationBase'
+              allOf: 
+                - $ref: '#/components/schemas/CEParticipationBase'
+                - $ref: "#/components/schemas/BaseResponse"
       responses: 
         '201':
           description: CEParticipation successfully created
@@ -242,12 +241,16 @@ paths:
           schema:
             type: string
             maxLength: 32
+        - $ref: "#/components/parameters/LimitParam"
+        - $ref: "#/components/parameters/OffsetParam"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CEParticipation'
+              allOf: 
+                - $ref: '#/components/schemas/CEParticipation'
+                - $ref: "#/components/schemas/BaseResponse"
       responses:
         '200':
           description: CEParticipation successfully updated
@@ -255,6 +258,7 @@ paths:
           description: CEParticipation not found
         '400':
           description: Invalid input provided
+
     delete:
       tags:
         - CEParticipation
@@ -302,7 +306,7 @@ paths:
               schema:
                 allOf: 
                   - $ref: "#/components/schemas/CEParticipationSummaryResponse"
-                  - $ref: "#/components/schemas/PaginatedList"
+                  - $ref: "#/components/schemas/BaseResponse"
         '404':
           description: Project not found
         '400':
@@ -413,15 +417,18 @@ paths:
         Get a list of clients by partial Personal Identifiable Information (PII). 
         The request parameter are passed via the http body for security/privacy reasons. 
         Putting PII in url parameter could in them ending up in logs.
-        
 
         The fields in the ClientSummary can be partial. e.g. Prefix of last name
+      parameters: 
+        - $ref: "#/components/parameters/LimitParam"
+        - $ref: "#/components/parameters/OffsetParam"
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ClientSummary'
+            
       responses:
         '200':
           description: A list of clients that match the query
@@ -429,8 +436,9 @@ paths:
             application/json:
               schema:
                 type: array
-                items:
-                  $ref: '#/components/schemas/ClientSummaryResponse'
+                allOf: 
+                  - $ref: '#/components/schemas/ClientSummaryResponse'
+                  - $ref: "#/components/schemas/PaginatedList" 
         '404':
           description: Client not found
         '400':
@@ -483,7 +491,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/EnrollmentSummaryResponse'
-                  - $ref: '#/components/schemas/PaginatedList'
+                  - $ref: "#/components/schemas/BaseResponse"
         '404':
           description: Enrollment not found
   /enrollments/{EnrollmentID}:
@@ -500,13 +508,18 @@ paths:
           schema:
             type: string
             maxLength: 32
+        - $ref: "#/components/parameters/OffsetParam"
+        - $ref: "#/components/parameters/LimitParam"
+
       responses:
         '200':
           description: Successful response with enrollment data
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Enrollment'
+                allOf: 
+                  - $ref: '#/components/schemas/Enrollment'
+                  - $ref: "#/components/schemas/BaseResponse"
         '404':
           description: Enrollment not found
 
@@ -598,7 +611,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/ExitSummaryResponse'
-                  - $ref: '#/components/schemas/PaginatedList'
+                  - $ref: "#/components/schemas/BaseResponse"
         '404':
           description: Exits not found
   /exit/{ExitID}:
@@ -678,6 +691,8 @@ paths:
           schema:
             type: string
             maxLength: 32
+        - $ref: "#/components/parameters/OffsetParam"
+        - $ref: "#/components/parameters/LimitParam"
       responses:
         '200':
           description: Successful response with funder data
@@ -761,7 +776,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/FunderSummaryResponse'
-                  - $ref: '#/components/schemas/PaginatedList'
+                  - $ref: "#/components/schemas/BaseResponse"
         '404':
             description: FunderID not found
 
@@ -796,13 +811,17 @@ paths:
           schema:
             type: string
             maxLength: 32
+        - $ref: "#/components/parameters/OffsetParam"
+        - $ref: "#/components/parameters/LimitParam"
       responses:
         '200':
           description: Successful response with Organization data
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Organization'
+                allOf: 
+                  - $ref: '#/components/schemas/Organization'
+                  - $ref: "#/components/schemas/BaseResponse"
         '404':
           description: Organization not found
     put:
@@ -861,6 +880,8 @@ paths:
           name: OrganizationSummaryQuery
           schema: 
             $ref: "#/components/schemas/OrganizationSummaryQuery"
+        - $ref: "#/components/parameters/OffsetParam"
+        - $ref: "#/components/parameters/LimitParam"
       responses:
         '200':
           description: A list of Organizations that match the query
@@ -869,7 +890,9 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/OrganizationSummaryResponse"
+                  allOf: 
+                    - $ref: "#/components/schemas/OrganizationSummaryResponse"
+                    - $ref: "#/components/schemas/BaseResponse"
         '404':
           description: Organizaiton not found
         '400':
@@ -916,13 +939,17 @@ paths:
           schema:
             type: string
             maxLength: 32
+        - $ref: "#/components/parameters/OffsetParam"
+        - $ref: "#/components/parameters/LimitParam"
       responses:
         '200':
           description: Successful response with Project data
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Project'
+                allOf: 
+                  - $ref: '#/components/schemas/Project'
+                  - $ref: "#/components/schemas/BaseResponse"
         '404':
           description: Project not found
     put:
@@ -981,6 +1008,8 @@ paths:
           name: ProjectSummaryQuery
           schema: 
             $ref: "#/components/schemas/ProjectSummaryQuery"
+        - $ref: "#/components/parameters/OffsetParam"
+        - $ref: "#/components/parameters/LimitParam"
       responses:
         '200':
           description: A list of proejcts that match the query
@@ -989,7 +1018,9 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ProjectSummaryResponse"
+                  allOf: 
+                    - $ref: "#/components/schemas/ProjectSummaryResponse"
+                    - $ref: "#/components/schemas/BaseResponse"
         '404':
           description: Project not found
         '400':
@@ -999,23 +1030,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: The request generated an error and could not process.
 
-  /users:
-    post:
-      summary: Create a new user record
-      description: This creates a new user record
-      tags:
-        - Users
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-      responses:
-        '201':
-          description: User successfully created
-        '400':
-          description: Invalid input provided
   /users/{UserId}:
     get:
       tags:
@@ -1030,13 +1044,17 @@ paths:
           schema:
             type: string
             maxLength: 32
+        - $ref: "#/components/parameters/OffsetParam"
+        - $ref: "#/components/parameters/LimitParam"
       responses:
         '200':
           description: Successful response with user data
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                allOf: 
+                  - $ref: '#/components/schemas/User'
+                  - $ref: "#/components/schemas/BaseResponse"
         '404':
           description: User not found
 
@@ -1274,228 +1292,208 @@ components:
     ClientBase:
       type: object
       properties:
-        Name:
-          type: object
-          properties:
-            FirstName:
-              type: string
-              description: First name of the client
-              maxLength: 50
-            MiddleName:
-              type: string
-              description: Middle name of the client
-              maxLength: 50
-            LastName:
-              type: string
-              description: Last name of the client
-              maxLength: 50
-            NameSuffix:
-              type: string
-              description: Suffix of the client's name
-              maxLength: 50
-            NameDataQuality:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NameDataQuality'
-        SSN:
-          type: object
-          properties:
-            SocialSecurityNumber:
-              type: string
-              description: Social Security Number, potentially masked with 'x'
-              pattern: '^[0-9xX]{9}$'
-            SocialSecurityNumberDataQuality:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/SocialSecurityNumberDataQuality'
-        VitalStatistics:
-          type: object
-          properties:
-            DateOfBirth:
-              type: string
-              description: Date of birth of the client
-              format: date
-            DateOfBirthDataQuality:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/DateOfBirthDataQuality'
-        RaceAndEthnicity:
-          type: object
-          properties:
-            AmIndAkNative:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYes'
-            Asian:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYes'
-            BlackAfAmerican:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYes'
-            HispanicLatinaeo:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYes'
-            MidEastNAfrican:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYes'
-            NativeHiPacific:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYes'
-            White:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYes'
-            RaceNone:
-              type: integer
-              description: non-null only if all other race fields are 0 (UNKNOWN)
-              oneOf:
-                - $ref: '#/components/schemas/RaceGenderNone'
-            AdditionalRaceEthnicity:
-              type: string
-              maxLength: 100
-        Gender:
-          type: object
-          properties:
-            Woman:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYes'
-            Man:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYes'
-            NonBinary:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYes'
-            CulturallySpecific:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYes'
-            Transgender:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYes'
-            Questioning:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYes'
-            DifferentIdentity:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYes'
-            GenderNone:
-              type: integer
-              description: Non-null only if all other gender fields = 0
-              oneOf:
-                - $ref: '#/components/schemas/RaceGenderNone'
-            DifferentIdentityText:
-              type: string
-              maxLength: 100
-        Veteran:
-          type: object
-          properties:
-            VeteranStatus:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-            YearEnteredService:
-              type: string
-              pattern: '^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$'
-            YearSeparated:
-              type: string
-              pattern: '^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$'
-            WorldWarII:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-            KoreanWar:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-            VietnamWar:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-            DesertStorm:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-            AfghanistanOEF:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-            IraqOIF:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-            IraqOND:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-            OtherTheater:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-            MilitaryBranch:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/MilitaryBranch'
-            DischargeStatus:
-              type: integer
-              oneOf:
-                - $ref: '#/components/schemas/DischargeStatus'
-        UserId:
+        FirstName:
           type: string
-          maxLength: 32
+          description: First name of the client
+          maxLength: 50
+        MiddleName:
+          type: string
+          description: Middle name of the client
+          maxLength: 50
+        LastName:
+          type: string
+          description: Last name of the client
+          maxLength: 50
+        NameSuffix:
+          type: string
+          description: Suffix of the client's name
+          maxLength: 50
+        NameDataQuality:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NameDataQuality'
+        SocialSecurityNumber:
+          type: string
+          description: Social Security Number, potentially masked with 'x'
+          pattern: '^[0-9xX]{9}$'
+        SocialSecurityNumberDataQuality:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/SocialSecurityNumberDataQuality'
+        DateOfBirth:
+          type: string
+          description: Date of birth of the client
+          format: date
+        DateOfBirthDataQuality:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/DateOfBirthDataQuality'
+        AmIndAkNative:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes'
+        Asian:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes'
+        BlackAfAmerican:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes'
+        HispanicLatinaeo:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes'
+        MidEastNAfrican:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes'
+        NativeHiPacific:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes'
+        White:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes'
+        RaceNone:
+          type: integer
+          description: non-null only if all other race fields are 0 (UNKNOWN)
+          oneOf:
+            - $ref: '#/components/schemas/RaceGenderNone'
+        AdditionalRaceEthnicity:
+          type: string
+          maxLength: 100
+        Woman:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes'
+        Man:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes'
+        NonBinary:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes'
+        CulturallySpecific:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes'
+        Transgender:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes'
+        Questioning:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes'
+        DifferentIdentity:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes'
+        GenderNone:
+          type: integer
+          description: Non-null only if all other gender fields = 0
+          oneOf:
+            - $ref: '#/components/schemas/RaceGenderNone'
+        DifferentIdentityText:
+          type: string
+          maxLength: 100
+        VeteranStatus:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        YearEnteredService:
+          type: string
+          pattern: '^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$'
+        YearSeparated:
+          type: string
+          pattern: '^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$'
+        WorldWarII:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        KoreanWar:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        VietnamWar:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        DesertStorm:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        AfghanistanOEF:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        IraqOIF:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        IraqOND:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        OtherTheater:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+        MilitaryBranch:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/MilitaryBranch'
+        DischargeStatus:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/DischargeStatus'
     Client:
       allOf: 
         -  $ref: '#/components/schemas/ClientBase'
         -  type: object
       properties:
-          PersonalID:
-            type: string
-            description: Unique identifier for the client
-            maxLength: 32
-          DateCreated:
-            type: string
-            format: date-time
-          DateUpdated:
-            type: string
-            format: date-time
-          DateDeleted:
-            type: string
-            format: date-time
+        PersonalID:
+          type: string
+          description: Unique identifier for the client
+          maxLength: 32
+        UserId:
+          type: string
+          maxLength: 32
+        DateCreated:
+          type: string
+          format: date-time
+        DateUpdated:
+          type: string
+          format: date-time
+        DateDeleted:
+          type: string
+          format: date-time
   
     ClientSummaryQuery:
       description: |
-        This structure is used to query or return a subset of client fields. For queries, the PersonalID field is not required but is returned in ClientSummaryResponses
+        This structure is used to query or return a subset of client fields. 
+        For queries, the PersonalID field is not required but is returned in ClientSummaryResponses
       type: object
       properties:
-        NameSummary:
-          type: object
-          properties:
-            FirstName:
-              type: string
-              description: First name of the client (for Query optional and may be a prefix partial)
-              maxLength: 50
-            LastName:
-              type: string
-              description: Last name of the client (for Query optional and may be a prefix partial)
-              maxLength: 50
-            NameSuffix:
-              type: string
-              description: Suffix of the client's name (for Query optional and may be a prefix partial)
-              maxLength: 50
+        FirstName:
+          type: string
+          description: First name of the client (for Query optional and may be a prefix partial)
+          maxLength: 50
+        LastName:
+          type: string
+          description: Last name of the client (for Query optional and may be a prefix partial)
+          maxLength: 50
+        NameSuffix:
+          type: string
+          description: Suffix of the client's name (for Query optional and may be a prefix partial)
+          maxLength: 50
         DateOfBirth:
           type: string
           format: date
-          description: Optional date of birth of client. A date in ISO 8601 format. The year + month + day is optional.
+          description: Optional date of birth of client. A date in ISO 8601 format. The year month + day is optional.
           # todo: Figure out how to show multiple examples
           # example:
           #   oneOf:
@@ -1558,7 +1556,7 @@ components:
           type: string
           pattern: '^[A-Za-z]{2}-[0-9]{3}$'
           maxLength: 6
-        livingSituation:
+        LivingSituation:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/LivingSituation'
@@ -1580,7 +1578,7 @@ components:
           maxLength: 5
           oneOf:
             - $ref: '#/components/schemas/VAMCStationNumber'
-        targetScreenReqd:
+        TargetScreenReqd:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
@@ -1588,7 +1586,7 @@ components:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/RentalSubsidyTypes'
-        lengthOfStay:
+        LengthOfStay:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/LengthOfStay'
@@ -1603,15 +1601,15 @@ components:
         DateToStreetESSH:
           type: string
           format: date
-        timesHomelessPastThreeYears:
+        TimesHomelessPastThreeYears:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/TimesHomelessPastThreeYears'
-        monthsHomelessPastThreeYears:
+        MonthsHomelessPastThreeYears:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/MonthsHomelessPastThreeYears'
-        disablingCondition:
+        DisablingCondition:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYesReasonsForMissingData'
@@ -1619,11 +1617,11 @@ components:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        reasonNotEnrolled:
+        ReasonNotEnrolled:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/ReasonNotEnrolled'
-        referralSource:
+        ReferralSource:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/ReferralSource'
@@ -1631,15 +1629,15 @@ components:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        reasonNoServices:
+        ReasonNoServices:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/ReasonNoServices'
-        runawayYouth:
+        RunawayYouth:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        sexualOrientation:
+        SexualOrientation:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/SexualOrientation'
@@ -1693,15 +1691,15 @@ components:
             - $ref: '#/components/schemas/NoYes'
         SSVF_HP_Targeting_Criteria:
           type: integer
-        timeToHousingLoss:
+        TimeToHousingLoss:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/TimeToHousingLoss'
-        annualPercentAMI:
+        AnnualPercentAMI:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/AnnualPercentAMI'
-        literalHomelessHistory:
+        LiteralHomelessHistory:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/LiteralHomelessHistory'
@@ -1717,7 +1715,7 @@ components:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        evictionHistory:
+        EvictionHistory:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/EvictionHistory'
@@ -1725,15 +1723,15 @@ components:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        incarceratedAdult:
+        IncarceratedAdult:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/IncarceratedAdult'
-        prisonDischarge:
+        PrisonDischarge:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        sexOffender:
+        SexOffender:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
@@ -1741,7 +1739,7 @@ components:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        currentPregnant:
+        CurrentPregnant:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
@@ -1769,9 +1767,9 @@ components:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        preferredLanguage:
+        PreferredLanguage:
           type: integer
-        preferredLanguageDifferent:
+        PreferredLanguageDifferent:
           type: string
           maxLength: 100
 
@@ -1818,10 +1816,10 @@ components:
         ProjectCommonName:
           type: string
           maxLength: 200
-        projectType:
+        ProjectType:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/ProjectType'
+            - $ref: '#/components/schemas/ProjectType_list'
         EntryDate:
           type: string
           format: date
@@ -1876,11 +1874,11 @@ components:
           type: integer
           description: Housing assessment at exit
           $ref: '#/components/schemas/HousingAssessmentAtExit'
-        subsidyInformation:
+        SubsidyInformation:
           type: integer
           description: Includes data for W5.A and W5.B.
           $ref: '#/components/schemas/SubsidyInformation'
-        projectCompletionStatus:
+        ProjectCompletionStatus:
           type: integer
           description: Project completion status
           $ref: '#/components/schemas/ProjectCompletionStatus'
@@ -1896,7 +1894,7 @@ components:
           type: integer
           description: Exchange for sex past three months
           $ref: '#/components/schemas/NoYesReasonsForMissingData'
-        countOfExchangeForSex:
+        CountOfExchangeForSex:
           type: integer
           description: Count of exchange for sex
           $ref: '#/components/schemas/CountExchangeForSex'
@@ -1974,7 +1972,7 @@ components:
           type: string
           format: date
           description: Aftercare date
-        aftercareProvided:
+        AftercareProvided:
           type: integer
           description: Aftercare provided
           $ref: '#/components/schemas/AftercareProvided'
@@ -1990,14 +1988,14 @@ components:
           type: integer
           description: In-person individual contact
           $ref: '#/components/schemas/NoYesMissing'
-        inPersonGroup:
+        InPersonGroup:
           type: integer
           description: In-person group contact
           $ref: '#/components/schemas/NoYesMissing'
-        cmExitReason:
+        CmExitReason:
           type: integer
           description: Case management exit reason
-          $ref: '#/components/schemas/CMExitReason'
+          $ref: '#/components/schemas/CMExitReason_list'
 
     Exit:
       allOf: 
@@ -2074,11 +2072,11 @@ components:
           type: string
           maxLength: 32
           description: Must match a record in Project
-        fundingSource:
+        FundingSource:
           type: integer
           description: Funding source identifier
           oneOf:
-            - $ref: '#/components/schemas/FundingSource'
+            - $ref: '#/components/schemas/FundingSource_list'
         OtherFunder:
           type: string
           maxLength: 100
@@ -2095,10 +2093,7 @@ components:
           type: string
           format: date
           description: End date
-        UserId:
-          type: string
-          maxLength: 32
-          description: User ID
+
 
     Funder:
       allOf: 
@@ -2121,6 +2116,10 @@ components:
           type: string
           format: date-time
           description: Date deleted
+        UserId:
+          type: string
+          maxLength: 32
+          description: User ID
 
     FunderSummary:
       type: object
@@ -2130,11 +2129,11 @@ components:
           type: string
           maxLength: 32
           description: Unique identifier
-        fundingSource:
+        FundingSource:
           type: integer
           description: Funding source identifier
           oneOf:
-            - $ref: '#/components/schemas/FundingSource'
+            - $ref: '#/components/schemas/FundingSource_list'
         OtherFunder:
           type: string
           maxLength: 100
@@ -2173,9 +2172,6 @@ components:
         OrganizationCommonName:
           type: string
           maxLength: 200
-        UserId:
-          type: string
-          maxLength: 32
       required:
         - OrganizationID
 
@@ -2183,6 +2179,9 @@ components:
       allOf: 
         -  $ref: "#/components/schemas/OrganizationBase"
       properties: 
+        UserId:
+          type: string
+          maxLength: 32
         DateCreated:
           type: string
           format: date-time
@@ -2258,26 +2257,26 @@ components:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        projectType:
+        ProjectType:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/ProjectType'
-        housingType:
+            - $ref: '#/components/schemas/ProjectType_list'
+        HousingType:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/HousingType'
-        rrhSubType:
+        RRhSubType:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/RRHSubType'
-        residentialAffiliation:
+            - $ref: '#/components/schemas/RRHSubType_list'
+        ResidentialAffiliation:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes'
-        targetPopulation:
+        TargetPopulation:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/TargetPopulation'
+            - $ref: '#/components/schemas/TargetPopulation_list'
         HOPWAMedAssistedLivingFac:
           type: integer
           oneOf:
@@ -2318,10 +2317,10 @@ components:
         ProjectID:
           type: string
           maxLength: 32
-        projectType:
+        ProjectType:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/ProjectType'
+            - $ref: '#/components/schemas/ProjectType_list'
         OrganizationID:
           type: string
           maxLength: 32
@@ -3593,7 +3592,7 @@ components:
           const: 9
           description: "Client prefers not to answer"
 
-    CMExitReason:
+    CMExitReason_list:
       type: integer
       description: "Reasons for exiting case management."
       oneOf:
@@ -3637,7 +3636,7 @@ components:
           const: 13
           description: "Other"
 
-    FundingSource:
+    FundingSource_list:
       type: integer
       description: "Specifies the source of funding for housing and services projects."
       oneOf:
@@ -3789,7 +3788,7 @@ components:
           const: 55
           description: "HUD: Rural Special NOFO"
 
-    ProjectType:
+    ProjectType_list:
       type: integer
       description: "Defines the type of housing or service project."
       oneOf:
@@ -3836,7 +3835,7 @@ components:
           const: 14
           description: "Coordinated Entry"
 
-    RRHSubType:
+    RRHSubType_list:
       type: integer
       description: "Subtypes for Rapid Re-Housing projects."
       oneOf:
@@ -3861,7 +3860,7 @@ components:
           const: 3
           description: "Tenant-based - scattered site"
 
-    TargetPopulation:
+    TargetPopulation_list:
       type: integer
       description: "Identifies the target population for the project."
       oneOf:
@@ -4028,44 +4027,72 @@ components:
           const: 99
 
 # Parameter Schemas
-    Pagination:
+
+# Commented out to test BaseResponse and create a general response format that includes pagination
+    # Pagination:
+    #   type: object
+    #   description: page info for paginated endpoints
+    #   properties:
+    #     total:
+    #       type: integer
+    #       description: total number of results for the query
+    #     limit:
+    #       type: integer
+    #     offset:
+    #       type: integer
+    #       description: the starting point for this
+    #     next:
+    #       description: |
+    #         fields for the next page, if any.
+    #         Null if this is the last page.
+    #       type: object
+    #       properties:
+    #         offset:
+    #           type: number
+    #           description: the offset for the next page
+    #         limit:
+    #           type: number
+    #           description: the same as the above limit, for consistency
+    #         url:
+    #           type: string
+    #           description: |
+    #             the assembled url for the next page,
+    #             with query parameters already included.
+    # PaginatedList:
+    #   type: object
+    #   properties:
+    #     items:
+    #       type: array
+    #       items:
+    #         type: object
+    #     pagination:
+    #       $ref: "#/components/schemas/Pagination"
+
+# Response Schemas
+    BaseResponse:
       type: object
-      description: page info for paginated endpoints
       properties:
-        total:
-          type: integer
-          description: total number of results for the query
-        limit:
-          type: integer
-        offset:
-          type: integer
-          description: the starting point for this
-        next:
-          description: |
-            fields for the next page, if any.
-            Null if this is the last page.
+        query:
           type: object
           properties:
-            offset:
-              type: number
-              description: the offset for the next page
             limit:
-              type: number
-              description: the same as the above limit, for consistency
-            url:
-              type: string
-              description: |
-                the assembled url for the next page,
-                with query parameters already included.
-    PaginatedList:
+              type: integer
+              default: 25
+            offset:
+              type: integer
+              default: 0
+        total:
+          type: integer
+
+    BasePagination:
       type: object
       properties:
-        items:
-          type: array
-          items:
-            type: object
-        _pagination:
-          $ref: "#/components/schemas/Pagination"
+        limit:
+          type: integer
+          default: 25
+        offset:
+          type: integer
+          default: 0
 
 # Error Response Schemas
     ErrorCodes:
