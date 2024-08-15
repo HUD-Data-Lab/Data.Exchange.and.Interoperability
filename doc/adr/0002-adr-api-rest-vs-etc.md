@@ -1,11 +1,9 @@
-# [short title of solved problem and solution]
+# ADR for choosing REST API
 
-- Status: proposed
+- Status: accepted
 - Deciders: ICF, HUD, USDS
-- Date Updated: July 16, 2024 
+- Date Updated: 8/15/2024
 - Tags: API, HUD
-
-Technical Story: [description | ticket/issue URL] <!-- optional -->
 
 ## Context and Problem Statement
 
@@ -14,7 +12,7 @@ This ADR discusses many of pro/cons of the various options.
 
 Why use a REST API over other options like GraphQL or FHIR?
 
-## Decision Drivers <!-- optional -->
+## Decision Drivers
 
 ### Primary goals:
 - Easy to adopt. 
@@ -39,19 +37,12 @@ Why use a REST API over other options like GraphQL or FHIR?
 
 ## Decision Outcome
 
-Chosen option: "REST API", because [justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force force | … | comes out best (see below)].
+Chosen option: "REST API". This decision was made by ICF, USDS, and HUD after ICF and USDS had 1:1 meetings with all of the workgroup particpants as of 5/09/2024 (Bitfocus, Caseworthy, Eccovia, Green River and Wellsky). The purpose of the 1:1 meeting was to understand where each vendor is with developing an API and what would make sense for a standard. 
 
-### Positive Consequences <!-- optional -->
+A REST API in JSON was what most vendors interviewed were using/able to support. Additionally REST is simple, widely adopted, flexible, and because it can migrated to FHIR using something like [SMART](https://docs.smarthealthit.org/).
 
-- [e.g., improvement of quality attribute satisfaction, follow-up decisions required, …]
-- …
 
-### Negative Consequences <!-- optional -->
-
-- [e.g., compromising quality attribute, follow-up decisions required, …]
-- …
-
-## Pros and Cons of the Options <!-- optional -->
+## Pros and Cons of the Options
 
 ### REST API
 REST is the most widely used style due to its simplicity and flexibility.
