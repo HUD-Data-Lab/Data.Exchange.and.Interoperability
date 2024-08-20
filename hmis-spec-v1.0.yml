@@ -1168,32 +1168,32 @@ components:
           type: integer
           description: Access point
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         PreventionAssessment:
           type: integer
           description: Prevention assessment
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         CrisisAssessment:
           type: integer
           description: Crisis assessment
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         HousingAssessment:
           type: integer
           description: Housing assessment
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         DirectServices:
           type: integer
           description: Direct services
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         ReceivesReferrals:
           type: integer
           description: Receives referrals
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         CeParticipationStatusStartDate:
           type: string
           format: date
@@ -1242,17 +1242,17 @@ components:
           type: integer
           description: Access point
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         DirectServices:
           type: integer
           description: Direct services
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         ReceivesReferrals:
           type: integer
           description: Receives referrals
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         CeParticipationStatusStartDate:
           type: string
           format: date
@@ -1332,79 +1332,79 @@ components:
         AmIndAkNative:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         Asian:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         BlackAfAmerican:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         HispanicLatinaeo:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         MidEastNAfrican:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         NativeHiPacific:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         White:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         RaceNone:
           type: integer
           description: non-null only if all other race fields are 0 (UNKNOWN)
           oneOf:
-            - $ref: '#/components/schemas/RaceGenderNone'
+            - $ref: '#/components/schemas/RaceGenderNone_list'
         AdditionalRaceEthnicity:
           type: string
           maxLength: 100
         Woman:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         Man:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         NonBinary:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         CulturallySpecific:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         Transgender:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         Questioning:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         DifferentIdentity:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         GenderNone:
           type: integer
           description: Non-null only if all other gender fields = 0
           oneOf:
-            - $ref: '#/components/schemas/RaceGenderNone'
+            - $ref: '#/components/schemas/RaceGenderNone_list'
         DifferentIdentityText:
           type: string
           maxLength: 100
         VeteranStatus:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         YearEnteredService:
           type: string
           pattern: '^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$'
@@ -1414,35 +1414,35 @@ components:
         WorldWarII:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         KoreanWar:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         VietnamWar:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         DesertStorm:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         AfghanistanOEF:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         IraqOIF:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         IraqOND:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         OtherTheater:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         MilitaryBranch:
           type: integer
           oneOf:
@@ -1552,7 +1552,7 @@ components:
         RelationshipToHoH:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/RelationshipToHoH'
+            - $ref: '#/components/schemas/RelationshipToHoH_list'
         EnrollmentCoC:
           type: string
           pattern: '^[A-Za-z]{2}-[0-9]{3}$'
@@ -1560,7 +1560,7 @@ components:
         LivingSituation:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/LivingSituation'
+            - $ref: '#/components/schemas/LivingSituation_list'
         DateOfEngagement:
           type: string
           format: date
@@ -1573,83 +1573,83 @@ components:
         PercentAMI:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/PercentAMI'
+            - $ref: '#/components/schemas/PercentAMI_list'
         VAMCStation:
           type: string
           maxLength: 5
           oneOf:
-            - $ref: '#/components/schemas/VAMCStationNumber'
+            - $ref: '#/components/schemas/VAMCStationNumber_list'
         TargetScreenReqd:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         rentalSubsidyType:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/RentalSubsidyTypes'
+            - $ref: '#/components/schemas/RentalSubsidyTypes_list'
         LengthOfStay:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/LengthOfStay'
+            - $ref: '#/components/schemas/LengthOfStay_list'
         LOSUnderThreshold:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         PreviousStreetESSH:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         DateToStreetESSH:
           type: string
           format: date
         TimesHomelessPastThreeYears:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/TimesHomelessPastThreeYears'
+            - $ref: '#/components/schemas/TimesHomelessPastThreeYears_list'
         MonthsHomelessPastThreeYears:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/MonthsHomelessPastThreeYears'
+            - $ref: '#/components/schemas/MonthsHomelessPastThreeYears_list'
         DisablingCondition:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         ClientEnrolledInPATH:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         ReasonNotEnrolled:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/ReasonNotEnrolled'
+            - $ref: '#/components/schemas/ReasonNotEnrolled_list'
         ReferralSource:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/ReferralSource'
+            - $ref: '#/components/schemas/ReferralSource_list'
         EligibleForRHY:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         ReasonNoServices:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/ReasonNoServices'
+            - $ref: '#/components/schemas/ReasonNoServices_list'
         RunawayYouth:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         SexualOrientation:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/SexualOrientation'
+            - $ref: '#/components/schemas/SexualOrientation_list'
         FormerWardChildWelfare:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         ChildWelfareYears:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/RHYNumberofYears'
+            - $ref: '#/components/schemas/RHYNumberofYears_list'
         ChildWelfareMonths:
           type: integer
           minimum: 1
@@ -1657,11 +1657,11 @@ components:
         FormerWardJuvenileJustice:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         JuvenileJusticeYears:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/RHYNumberofYears'
+            - $ref: '#/components/schemas/RHYNumberofYears_list'
         JuvenileJusticeMonths:
           type: integer
           minimum: 1
@@ -1669,97 +1669,97 @@ components:
         UnemploymentFam:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         MentalHealthDisorderFam:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         PhysicalDisabilityFam:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         AlcoholDrugUseDisorderFam:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         InsufficientIncome:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         IncarceratedParent:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         SSVF_HP_Targeting_Criteria:
           type: integer
-        TimeToHousingLoss:
+        TimeToHousingLoss_list:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/TimeToHousingLoss'
+            - $ref: '#/components/schemas/TimeToHousingLoss_list'
         AnnualPercentAMI:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/AnnualPercentAMI'
+            - $ref: '#/components/schemas/AnnualPercentAMI_list'
         LiteralHomelessHistory:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/LiteralHomelessHistory'
+            - $ref: '#/components/schemas/LiteralHomelessHistory_list'
         ClientLeaseholder:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         HOHLeaseholder:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         SubsidyAtRisk:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         EvictionHistory:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/EvictionHistory'
+            - $ref: '#/components/schemas/EvictionHistory_list'
         CriminalRecord:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         IncarceratedAdult:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/IncarceratedAdult'
+            - $ref: '#/components/schemas/IncarceratedAdult_list'
         PrisonDischarge:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         SexOffender:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         DisableHoH:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         CurrentPregnant:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         SingleParent:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         DependentUnder6:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/DependentUnder6'
+            - $ref: '#/components/schemas/DependentUnder6_list'
         HH5Plus:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         coCPrioritized:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         HPScreeningScore:
           type: integer
         ThresholdScore:
@@ -1767,7 +1767,7 @@ components:
         TranslationNeeded:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData'
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         PreferredLanguage:
           type: integer
         PreferredLanguageDifferent:
@@ -1862,11 +1862,11 @@ components:
         Destination:
           type: integer
           description: Destination
-          $ref: '#/components/schemas/LivingSituation'
+          $ref: '#/components/schemas/LivingSituation_list'
         DestinationSubsidyType:
           type: integer
           description: Destination subsidy type
-          $ref: '#/components/schemas/RentalSubsidyTypes'
+          $ref: '#/components/schemas/RentalSubsidyTypes_list'
         OtherDestination:
           type: string
           maxLength: 50
@@ -1874,101 +1874,101 @@ components:
         HousingAssessment:
           type: integer
           description: Housing assessment at exit
-          $ref: '#/components/schemas/HousingAssessmentAtExit'
+          $ref: '#/components/schemas/HousingAssessmentAtExit_list'
         SubsidyInformation:
           type: integer
           description: Includes data for W5.A and W5.B.
-          $ref: '#/components/schemas/SubsidyInformation'
+          $ref: '#/components/schemas/SubsidyInformation_list'
         ProjectCompletionStatus:
           type: integer
           description: Project completion status
-          $ref: '#/components/schemas/ProjectCompletionStatus'
+          $ref: '#/components/schemas/ProjectCompletionStatus_list'
         EarlyExitReason:
           type: integer
           description: Expelled reason
-          $ref: '#/components/schemas/ExpelledReason'
+          $ref: '#/components/schemas/ExpelledReason_list'
         ExchangeForSex:
           type: integer
           description: Exchange for sex
-          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         ExchangeForSexPastThreeMonths:
           type: integer
           description: Exchange for sex past three months
-          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         CountOfExchangeForSex:
           type: integer
           description: Count of exchange for sex
-          $ref: '#/components/schemas/CountExchangeForSex'
+          $ref: '#/components/schemas/CountExchangeForSex_list'
         AskedOrForcedToExchangeForSex:
           type: integer
           description: Asked or forced to exchange for sex
-          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         AskedOrForcedToExchangeForSexPastThreeMonths:
           type: integer
           description: Asked or forced to exchange for sex past three months
-          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         WorkplaceViolenceThreats:
           type: integer
           description: Workplace violence threats
-          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         WorkplacePromiseDifference:
           type: integer
           description: Workplace promise difference
-          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         CoercedToContinueWork:
           type: integer
           description: Coerced to continue work
-          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         LaborExploitPastThreeMonths:
           type: integer
           description: Labor exploit past three months
-          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         CounselingReceived:
           type: integer
           description: Counseling received
-          $ref: '#/components/schemas/NoYesMissing'
+          $ref: '#/components/schemas/NoYesMissing_list'
         IndividualCounseling:
           type: integer
           description: Individual counseling
-          $ref: '#/components/schemas/NoYesMissing'
+          $ref: '#/components/schemas/NoYesMissing_list'
         FamilyCounseling:
           type: integer
           description: Family counseling
-          $ref: '#/components/schemas/NoYesMissing'
+          $ref: '#/components/schemas/NoYesMissing_list'
         GroupCounseling:
           type: integer
           description: Group counseling
-          $ref: '#/components/schemas/NoYesMissing'
+          $ref: '#/components/schemas/NoYesMissing_list'
         SessionCountAtExit:
           type: integer
           description: Session count at exit
         PostExitCounselingPlan:
           type: integer
           description: Post exit counseling plan
-          $ref: '#/components/schemas/NoYesMissing'
+          $ref: '#/components/schemas/NoYesMissing_list'
         SessionsInPlan:
           type: integer
           description: Sessions in plan
         DestinationSafeClient:
           type: integer
           description: Destination safe for client
-          $ref: '#/components/schemas/NoYesReasonsForMissingData'
+          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         DestinationSafeWorker:
           type: integer
           description: Destination safe for worker
-          $ref: '#/components/schemas/WorkerResponse'
+          $ref: '#/components/schemas/WorkerResponse_list'
         PosAdultConnections:
           type: integer
           description: Positive adult connections
-          $ref: '#/components/schemas/WorkerResponse'
+          $ref: '#/components/schemas/WorkerResponse_list'
         PosPeerConnections:
           type: integer
           description: Positive peer connections
-          $ref: '#/components/schemas/WorkerResponse'
+          $ref: '#/components/schemas/WorkerResponse_list'
         PosCommunityConnections:
           type: integer
           description: Positive community connections
-          $ref: '#/components/schemas/WorkerResponse'
+          $ref: '#/components/schemas/WorkerResponse_list'
         AftercareDate:
           type: string
           format: date
@@ -1976,23 +1976,23 @@ components:
         AftercareProvided:
           type: integer
           description: Aftercare provided
-          $ref: '#/components/schemas/AftercareProvided'
+          $ref: '#/components/schemas/AftercareProvided_list'
         EmailSocialMedia:
           type: integer
           description: Email or social media contact
-          $ref: '#/components/schemas/NoYesMissing'
+          $ref: '#/components/schemas/NoYesMissing_list'
         Telephone:
           type: integer
           description: Telephone contact
-          $ref: '#/components/schemas/NoYesMissing'
+          $ref: '#/components/schemas/NoYesMissing_list'
         InPersonIndividual:
           type: integer
           description: In-person individual contact
-          $ref: '#/components/schemas/NoYesMissing'
+          $ref: '#/components/schemas/NoYesMissing_list'
         InPersonGroup:
           type: integer
           description: In-person group contact
-          $ref: '#/components/schemas/NoYesMissing'
+          $ref: '#/components/schemas/NoYesMissing_list'
         CmExitReason:
           type: integer
           description: Case management exit reason
@@ -2169,7 +2169,7 @@ components:
           type: integer
           description: "Indicates whether the organization is a victim service provider (1=yes, 0=no)"
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         OrganizationCommonName:
           type: string
           maxLength: 200
@@ -2257,7 +2257,7 @@ components:
         ContinuumProject:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         ProjectType:
           type: integer
           oneOf:
@@ -2273,7 +2273,7 @@ components:
         ResidentialAffiliation:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NoYes'
+            - $ref: '#/components/schemas/NoYes_list'
         TargetPopulation:
           type: integer
           oneOf:
@@ -2281,7 +2281,7 @@ components:
         HOPWAMedAssistedLivingFac:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/HOPWAMedAssistedLivingFacNum'
+            - $ref: '#/components/schemas/HOPWAMedAssistedLivingFacNum_list'
         PITCount:
           type: integer
       required:
@@ -2478,7 +2478,7 @@ components:
 
 
   # Response List I
-    RelationshipToHoH:
+    RelationshipToHoH_list:
       type: integer
       description: "Defines the client's relationship to the Head of Household."
       oneOf:
@@ -2500,7 +2500,7 @@ components:
         - title: "DATA_NOT_COLLECTED"
           const: 99
           description: "Data not collected"
-    LivingSituation:
+    LivingSituation_list:
       type: integer
       description: "Enumerates types of living situations."
       oneOf:
@@ -2601,7 +2601,7 @@ components:
           const: 99
           description: "Data not collected"
   
-    PercentAMI:
+    PercentAMI_list:
       type: integer
       description: "Percentage of Area Median Income (AMI) that the client's income falls into."
       oneOf:
@@ -2620,7 +2620,7 @@ components:
         - title: "DATA_NOT_COLLECTED"
           const: 99
           description: "Data not collected"
-    VAMCStationNumber:
+    VAMCStationNumber_list:
       type: string
       description: "VA Medical Center Station Numbers with corresponding facility names."
       oneOf:
@@ -3054,7 +3054,7 @@ components:
           const: "99"
           description: "Data not collected"
 
-    RentalSubsidyTypes:
+    RentalSubsidyTypes_list:
       type: integer
       description: "Specifies the type of rental subsidy provided to the client."
       oneOf:
@@ -3092,7 +3092,7 @@ components:
           const: 440
           description: "Other permanent housing dedicated for formerly homeless persons"
 
-    LengthOfStay:
+    LengthOfStay_list:
       type: integer
       description: "Indicates the length of the client's stay."
       oneOf:
@@ -3124,7 +3124,7 @@ components:
           const: 99
           description: "Data not collected"
 
-    TimesHomelessPastThreeYears:
+    TimesHomelessPastThreeYears_list:
       type: integer
       description: "Number of times the client has been homeless in the past three years."
       oneOf:
@@ -3150,7 +3150,7 @@ components:
           const: 99
           description: "Data not collected"
 
-    MonthsHomelessPastThreeYears:
+    MonthsHomelessPastThreeYears_list:
       type: integer
       description: "Total months the client has been homeless in the past three years."
       oneOf:
@@ -3203,7 +3203,7 @@ components:
           const: 99
           description: "Data not collected"
 
-    ReasonNotEnrolled:
+    ReasonNotEnrolled_list:
       type: integer
       description: "Reasons why a client was not enrolled in the PATH program."
       oneOf:
@@ -3217,7 +3217,7 @@ components:
           const: 3
           description: "Unable to locate client"
 
-    ReferralSource:
+    ReferralSource_list:
       type: integer
       description: "Sources from which referrals are received."
       oneOf:
@@ -3267,7 +3267,7 @@ components:
           const: 99
           description: "Data not collected"          
 
-    ReasonNoServices:
+    ReasonNoServices_list:
       type: integer
       description: "Reasons for not providing services."
       oneOf:
@@ -3287,7 +3287,7 @@ components:
           const: 99
           description: "Data not collected"
 
-    SexualOrientation:
+    SexualOrientation_list:
       type: integer
       description: "Sexual orientation of the client."
       oneOf:
@@ -3319,7 +3319,7 @@ components:
           const: 99
           description: "Data not collected"
 
-    RHYNumberofYears:
+    RHYNumberofYears_list:
       type: integer
       description: "Years formerly a ward of Child Welfare or Foster Care Agency."
       oneOf:
@@ -3333,7 +3333,7 @@ components:
           const: 3
           description: "3 to 5 or more years"
 
-    TimeToHousingLoss:
+    TimeToHousingLoss_list:
       type: integer
       description: "Time remaining before housing loss occurs."
       oneOf:
@@ -3353,7 +3353,7 @@ components:
           const: 99
           description: "Data not collected"
 
-    AnnualPercentAMI:
+    AnnualPercentAMI_list:
       type: integer
       description: "Percentage of Area Median Income (AMI) for the household."
       oneOf:
@@ -3373,7 +3373,7 @@ components:
           const: 99
           description: "Data not collected"
 
-    LiteralHomelessHistory:
+    LiteralHomelessHistory_list:
       type: integer
       description: "History of literal homelessness."
       oneOf:
@@ -3390,7 +3390,7 @@ components:
           const: 99
           description: "Data not collected"
 
-    EvictionHistory:
+    EvictionHistory_list:
       type: integer
       description: "History of rental evictions for the individual."
       oneOf:
@@ -3407,7 +3407,7 @@ components:
           const: 99
           description: "Data not collected"
 
-    IncarceratedAdult:
+    IncarceratedAdult_list:
       type: integer
       description: "Incarcerated as adult (any adult in household)."
       oneOf:
@@ -3424,7 +3424,7 @@ components:
           const: 99
           description: "Data not collected"
 
-    DependentUnder6:
+    DependentUnder6_list:
       type: integer
       description: "Presence and age of youngest child under six years in the household."
       oneOf:
@@ -3441,7 +3441,7 @@ components:
           const: 99
           description: "Data not collected"
 
-    HousingAssessmentAtExit:
+    HousingAssessmentAtExit_list:
       type: integer
       description: "Assessment of housing situation at the time of project exit."
       oneOf:
@@ -3462,7 +3462,7 @@ components:
           description: "Moved to a transitional or temporary housing facility or program"
         - title: "BECAME_HOMELESS"
           const: 6
-          description: "Client became homeless – moving to a shelter or other place unfit for human habitation"
+          description: "Client became homeless-moving to a shelter or other place unfit for human habitation"
         - title: "JAIL_PRISON"
           const: 7
           description: "Jail/prison"
@@ -3479,7 +3479,7 @@ components:
           const: 99
           description: "Data not collected"
 
-    SubsidyInformation:
+    SubsidyInformation_list:
       type: integer
       description: "Type of subsidy or financial assistance the client has at project exit."
       oneOf:
@@ -3502,7 +3502,7 @@ components:
           const: 12
           description: "Without an on-going subsidy"
 
-    ProjectCompletionStatus:
+    ProjectCompletionStatus_list:
       type: integer
       description: "Completion status of the project."
       oneOf:
@@ -3516,7 +3516,7 @@ components:
           const: 3
           description: "Client was expelled or otherwise involuntarily discharged from project"
 
-    ExpelledReason:
+    ExpelledReason_list:
       type: integer
       description: "Reasons for expulsion from the project."
       oneOf:
@@ -3539,7 +3539,7 @@ components:
           const: 6
           description: "Unknown/disappeared"
 
-    CountExchangeForSex:
+    CountExchangeForSex_list:
       type: integer
       description: "How may times ever received anything for sex."
       oneOf:
@@ -3565,7 +3565,7 @@ components:
           const: 99
           description: "Data not collected"
 
-    WorkerResponse:
+    WorkerResponse_list:
       type: integer
       description: "Worker's response to a query or situation."
       oneOf:
@@ -3579,7 +3579,7 @@ components:
           const: 2
           description: "Worker does not know"
 
-    AftercareProvided:
+    AftercareProvided_list:
       type: integer
       description: "Specifies if aftercare was provided following service completion."
       oneOf:
@@ -3875,7 +3875,7 @@ components:
           const: 4
           description: "Not applicable"
 
-    HOPWAMedAssistedLivingFacNum:
+    HOPWAMedAssistedLivingFacNum_list:
       type: integer
       description: "Defines whether a project is a HOPWA-funded medical assisted living facility."
       oneOf:
@@ -3955,7 +3955,7 @@ components:
 
 # Response Lists II
 
-    NoYes:
+    NoYes_list:
       type: integer
       description: "Indicates a simple binary choice."
       oneOf:
@@ -3966,7 +3966,7 @@ components:
           const: 1
           description: "Yes"
 
-    NoYesMissing:
+    NoYesMissing_list:
       type: integer
       description: "A basic boolean with an additional option for missing data."
       oneOf:
@@ -3980,7 +3980,7 @@ components:
           const: 99
           description: "Data for this field was not collected."
 
-    NoYesReasonsForMissingData:
+    NoYesReasonsForMissingData_list:
       type: integer
       description: "Boolean with reasons for missing data."
       oneOf:
@@ -4000,7 +4000,7 @@ components:
           const: 99
           description: "Data not collected."
 
-    RaceGenderNone:
+    RaceGenderNone_list:
       type: integer
       description: "Indicates if race or gender data is not specified."
       oneOf:
@@ -4014,7 +4014,7 @@ components:
           const: 99
           description: "Race or gender data was not collected."
 
-    MissingDataQuality:
+    MissingDataQuality_list:
       type: integer
       description: |
         Factored out the [Client Doesn't Know], [Client perfers not to answer], and [data not collected]
