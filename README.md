@@ -7,3 +7,41 @@ THE BETA VERSION IS STILL IN THE TESTING PHASE AND IS PROVIDED ON AN “AS IS”
 Resource links:
 
 Follow this link to view hmis-spec-v1.0.yml in the ReDoc Interactive Demo: https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/HUD-Data-Lab/Data.Exchange.and.Interoperability/main/hmis-spec-v1.0.yml
+
+## Release Versions
+
+The HUD API Reference will mirror the tables/files of the HMIS CSV Specifications (https://files.hudexchange.info/resources/documents/HMIS-CSV-Format-Specifications-2024.pdf). 
+
+Each new version of the API Reference will include additional tables/files fo the HMIS CSV. See release schedule below:
+
+### Verion 1.0
+| **Version** | **HUD CSV Table** | **Expected Release** |
+| - | - | - |
+| V1.0||October 2024| 
+|| CE Participation
+|| Client
+|| Enrollment
+|| Exit
+|| Funder
+|| Organization
+|| Project
+|| User
+| V1.1
+|| CurrentLivingSituation
+|| Disabilities
+|| EmploymentEducation
+|| HealthAndDV
+|| IncomeBenefits
+|| Services
+|| YouthEducationStatus
+| V1.2
+|| Assessment
+|| AssessmentQuestions
+!! AssessmentResults
+|| Event
+| Version 1.3
+|| Affiliation
+|| Export
+|| HMISParticiaption
+|| Inventory
+|| ProjectCoC
