@@ -1,3 +1,26 @@
+# HMIS API Reference Walkthrough Guide
+
+- Status: draft
+- Deciders: ICF, HUD
+- Date: 2024-08-12
+
+## Context and Problem Statement
+
+The HUD HMIS API Reference was created to set the minimum requirements for data exhcange and interoperability using APIs for HMIS. This walkthrough is meant to serve as a guide to show how the API can be used to solve various user scenarios. 
+
+
+# User Scenarios
+
+1. Allow an external platform/user(s) confirm if a client is enrolled in CES
+2. 
+
+| **Scenario** | **API Version** | **Endpoint(s)** |
+| - | - | - |
+| Enrolled in CES | v.1.0 | ``` clientsummary/ ``` |
+| Sarah | Developer | $60,000 |  
+| Lisa | Designer | $50,000 |
+
+
 # HMIS openapi guide
 
 Version 1.0 of the API reference is intended to allow for the following functionality from external platforms/users:
