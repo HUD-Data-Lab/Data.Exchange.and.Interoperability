@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: HMIS API
   description: API for accessing HMIS data
-  version: "v1.0b10"
+  version: "v1.0b11"
 tags:
   - name: Authentication
     description: |
@@ -208,6 +208,7 @@ paths:
 # Organization
 # Project
 # User
+
   /ceparticipation:
     post:
       summary: Create a new CEParticipation record
@@ -438,7 +439,7 @@ paths:
                 type: array
                 allOf: 
                   - $ref: '#/components/schemas/ClientSummaryResponse'
-                  - $ref: "#/components/schemas/PaginatedList" 
+                  - $ref: "#/components/schemas/BaseResponse"
         '404':
           description: Client not found
         '400':
@@ -1311,15 +1312,15 @@ components:
         NameDataQuality:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/NameDataQuality'
+            - $ref: '#/components/schemas/NameDataQuality_list'
         SocialSecurityNumber:
           type: string
           description: Social Security Number, potentially masked with 'x'
-          pattern: '^[0-9xX]{9}$'
+          pattern: '^[0-9]{9}$'
         SocialSecurityNumberDataQuality:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/SocialSecurityNumberDataQuality'
+            - $ref: '#/components/schemas/SocialSecurityNumberDataQuality_list'
         DateOfBirth:
           type: string
           description: Date of birth of the client
@@ -1327,7 +1328,7 @@ components:
         DateOfBirthDataQuality:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/DateOfBirthDataQuality'
+            - $ref: '#/components/schemas/DateOfBirthDataQuality_list'
         AmIndAkNative:
           type: integer
           oneOf:
@@ -1445,11 +1446,11 @@ components:
         MilitaryBranch:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/MilitaryBranch'
+            - $ref: '#/components/schemas/MilitaryBranch_list'
         DischargeStatus:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/DischargeStatus'
+            - $ref: '#/components/schemas/DischargeStatus_list'
     Client:
       allOf: 
         -  $ref: '#/components/schemas/ClientBase'
@@ -2412,7 +2413,7 @@ components:
 
 # Quality Response lists
 
-    NameDataQuality:
+    NameDataQuality_list:
       type: integer
       description: "Indicates the data quality of the reported name."
       oneOf:
@@ -2432,7 +2433,7 @@ components:
           const: 99
           description: "Data not collected"
 
-    SocialSecurityNumberDataQuality:
+    SocialSecurityNumberDataQuality_list:
       type: integer
       description: "Indicates the data quality of the reported Social Security Number."
       oneOf:
@@ -2453,7 +2454,7 @@ components:
           description: "Data not collected"
 
 
-    DateOfBirthDataQuality:
+    DateOfBirthDataQuality_list:
       type: integer
       description: "Indicates the data quality of the reported date of birth."
       oneOf:
@@ -3888,7 +3889,7 @@ components:
           const: 2
           description: "Non-HOPWA funded project"
 
-    MilitaryBranch:
+    MilitaryBranch_list:
       type: integer
       description: "Branch of military service."
       oneOf:
@@ -3920,7 +3921,7 @@ components:
           const: 99
           description: "Data not collected"
 
-    DischargeStatus:
+    DischargeStatus_list:
       type: integer
       description: "Military discharge status."
       oneOf:
