@@ -14,7 +14,6 @@ The HUD API Reference will mirror the tables/files of the HMIS CSV Specification
 
 Each new version of the API Reference will include additional tables/files fo the HMIS CSV. See release schedule below:
 
-### Verion 1.0
 | **Version** | **HUD CSV Table** | **Expected Release** |
 | - | - | - |
 | V1.0||October 2024| 
@@ -26,7 +25,7 @@ Each new version of the API Reference will include additional tables/files fo th
 || Organization
 || Project
 || User
-| V1.1
+| V1.1 ||TBD
 || CurrentLivingSituation
 || Disabilities
 || EmploymentEducation
@@ -34,12 +33,12 @@ Each new version of the API Reference will include additional tables/files fo th
 || IncomeBenefits
 || Services
 || YouthEducationStatus
-| V1.2
+| V1.2 || TBD
 || Assessment
 || AssessmentQuestions
-!! AssessmentResults
+|| AssessmentResults
 || Event
-| Version 1.3
+| Version 1.3 || TBD
 || Affiliation
 || Export
 || HMISParticiaption
