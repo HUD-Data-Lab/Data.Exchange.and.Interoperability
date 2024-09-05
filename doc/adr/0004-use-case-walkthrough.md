@@ -6,7 +6,7 @@
 
 ## Context and Problem Statement
 
-The HUD HMIS API Reference was created to set the minimum requirements for data exhcange and interoperability using APIs for HMIS. This walkthrough is meant to serve as a guide to show how the API can be used to solve various user scenarios. 
+The HUD HMIS API Reference was created to set the minimum requirements for data exchange and interoperability using APIs for HMIS. This walkthrough is meant to serve as a guide to show how the API can be used to solve various user scenarios. 
 
 
 # User Scenarios
