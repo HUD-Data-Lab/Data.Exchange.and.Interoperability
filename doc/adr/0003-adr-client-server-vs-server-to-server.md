@@ -27,56 +27,43 @@ Our process:
 
 ## Considered Options
 
-- [option 1] Establish a reference for Client to Server API designed around HUD CSV specs with Server to Server functionality and FHIR integration as future goals
-- [option 2] Establish a reference for Server to Server API designed around HUD CSV specs with FHIR integration as a future goal
-- [option 3] Establish a reference for Client to Server API designed around FHIR with Server to Server functionality as a future goal
-- [option 4] Establish a reference for Server to Server API designed around FHIR
+- Start with a Client to Server API
+- Start with a Server to Server API
 
 ## Decision Outcome
 
-Chosen option: "[option 1]",  
+Chosen option: "Start with a Client to Server API"
 
 ### Positive Consequences <!-- optional -->
 
--
-- [e.g., improvement of quality attribute satisfaction, follow-up decisions required, …]
-- …
+- Allows real-time access to data and allows client applications to retrieve and display up-to-date information
+- Allows for end-user interaction with the process, specifically record matching
 
 ### Negative Consequences <!-- optional -->
 
-- 
-- Requires user interaction on the client side
-- [e.g., compromising quality attribute, follow-up decisions required, …]
-- …
+- This specific approach it is not intended for bulk data import/export
 
 ## Pros and Cons of the Options <!-- optional -->
 
-### [option 1]
+### Start with a Client to Server API
 
-[example | description | pointer to more information | …] <!-- optional -->
+This option would allow an external system to connect to HMIS and provide users of that external system with the ability to interact with HMIS data. <!-- optional -->
 
-- Good, because [argument a]
-- Good, because [argument b]
-- Bad, because does not establish process for bulk data import/export via API
-- … <!-- numbers of pros and cons can vary -->
+- Good, because Client to Server APIs enable real-time access to data, allowing client applications to retrieve and display up-to-date information, which is crucial for decision-making and user experience.
+- Good, because Client to Server APIs streamline data exchange processes and enhance overall efficiency.
+- Good, because Client to Server APIs provide the flexibility to customize interactions and data exchanges to meet specific business needs and user requirements.
+- Good, because it allows for end-user interaction with the process, specifically record matching
+- Bad, because this specific approach it is not intended for bulk data import/export
 
-### [option 2]
+### Start with a Server to Server API
 
-[example | description | pointer to more information | …] <!-- optional -->
+This option would allow an external system to connect to HMIS and transfer data without end-user interaction. <!-- optional -->
 
-- Good, because [argument a]
-- Good, because [argument b]
-- Bad, because [argument c]
-- … <!-- numbers of pros and cons can vary -->
-
-### [option 3]
-
-[example | description | pointer to more information | …] <!-- optional -->
-
-- Good, because [argument a]
-- Good, because [argument b]
-- Bad, because [argument c]
-- … <!-- numbers of pros and cons can vary -->
+- Good, because Server-to-Server APIs often use strong authentication methods and encrypted communication channels, ensuring data is securely transmitted between servers.
+- Good, because direct server-to-server communication reduces latency and speeds up data transfer, leading to faster response times and overall improved performance.
+- Good, because they enable automated workflows and processes, reducing the need for manual intervention and minimizing the potential for human error.
+- Good, because they allow for centralized management of services and data, simplifying administration and oversight.
+- Bad, because they do not enable end-user intervention in the record matching process.
 
 ## Links <!-- optional -->
 
