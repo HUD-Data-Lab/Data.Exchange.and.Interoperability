@@ -25,7 +25,7 @@ Each new version of the API Reference will include additional tables/files fo th
 || Organization
 || Project
 || User
-| V1.1 ||TBD
+| V1.1 ||Upcoming
 || CurrentLivingSituation
 || Disabilities
 || EmploymentEducation
@@ -33,12 +33,12 @@ Each new version of the API Reference will include additional tables/files fo th
 || IncomeBenefits
 || Services
 || YouthEducationStatus
-| V1.2 || TBD
+| V1.2 || Upcoming
 || Assessment
 || AssessmentQuestions
 || AssessmentResults
 || Event
-| Version 1.3 || TBD
+| Version 1.3 || Upcoming
 || Affiliation
 || Export
 || HMISParticiaption
