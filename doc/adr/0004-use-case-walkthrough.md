@@ -1,4 +1,4 @@
-# HMIS API Reference Walkthrough Guide
+# HMIS API Reference Walkthrough Guide for v1.0
 
 - Status: draft
 - Deciders: ICF, HUD
@@ -6,33 +6,25 @@
 
 ## Context and Problem Statement
 
-The HUD HMIS API Reference was created to set the minimum requirements for data exchange and interoperability using APIs for HMIS. This walkthrough is meant to serve as a guide to show how the API can be used to solve various user scenarios. 
+The HUD API reference is to provide a standardized baseline of what external parties and users can expect from an HMIS vendor. Each vendor is required to implement the foundational endpoints.
+
+This walkthrough is meant to serve as a guide to show how the API can be used to solve various user scenarios using the foundational endpoints. There may be additional business logic needed to implement these scenarios, but these walkthroughs highlight how the API reference can be used.
 
 
-# User Scenarios
+# User Scenario Workflows
 
-1. Allow an external platform/user(s) confirm if a client is enrolled in CES
-2. 
+The table below is a list of a
 
-| **Scenario** | **API Version** | **Endpoint(s)** |
-| - | - | - |
-| Enrolled in CES | v.1.0 | ``` clientsummary/ ``` |
-| Sarah | Developer | $60,000 |  
-| Lisa | Designer | $50,000 |
+| **Scenario** | **API Version** | **Endpoint(s)** | **Foundational/Optional** |
+| - | - | - | - |
+| See if a person has a record in HMIS | v.1.0 | ``` clientsummary/ ```, ```/clients/{PersonalID}```| Foundational |
+| Update/create a client-level record | v.1.0 | ``` /clients/{PersonalID}```,```/clients```  | Foundational |
+| See if a person has active enrollments | v.1.0 | ``` /enrollmentsummary/{PersonalID} ``` | Foundartional |
+| See if a person has been enrolled in a CE project | v.1.0 | Upcoming | Optional |
+| See if a person is or has been enrolled in a specific project type (ES, PSH, etc.)  | v.1.0 | ```/enrollmentsummary/{PersonalID}``` | Foundational |
+| See if a person is or has been enrolled in a project with specific funding (PATH, Pay for Success, etc.)  | v.1.0 | ```/fundersummary/{ProjectID}``` | Foundational |
 
-
-# HMIS openapi guide
-
-Version 1.0 of the API reference is intended to allow for the following functionality from external platforms/users:
-- See if a person has a record in HMIS
-- Update/create a client-level record
-- See if a person has active enrollments 
-- See if a person is or has been enrolled in a CE project 
-- See if a person is or has been enrolled in a specific project type (ES, PSH, etc.) 
-- See if a person is or has been enrolled in a project with specific funding (PATH, Pay for Success, etc.) 
-- Update records associated with these tables [note: full enrollment functionality would come with v1.1]
-
-## See if a person has a record in HMIS
+## Workflow: See if a person has a record in HMIS
 
 To accomplish this action the workflow shown in the API is for the external platform/user to do the following:
 
@@ -106,7 +98,7 @@ NOTE: We chose to use a post instead of a get.
 ```
 
 
-# Update/Create a client-level record
+# Workflow: Update/Create a client-level record
 
 To accomplish this action the workflow shown in the API is for the external platform/user to do the following:
 
@@ -169,7 +161,7 @@ To accomplish this action the workflow shown in the API is for the external plat
           description: Invalid input provided
 ```
 
-# See if a person has active enrollments 
+# Workflow: See if a person has active enrollments 
 
 ## Using the PersonalID return a list of their enrollments (If PersonalID is unknown use the workflow in "See if a person has a record in HMIS" to identify PersonalID)
 
@@ -205,19 +197,19 @@ To accomplish this action the workflow shown in the API is for the external plat
           description: Enrollment not found
 ```
 
-# See if a person has been enrolled in a CE project
+# Workflow: See if a person has been enrolled in a CE project
 
 For Discussion:
 
 1. Add more fields to enrollmentsummary (returns the CEParticipation data elements + Enrollment information)
 2. Create new endpoint at the client level (/CEparticpationExample/{PersonalID}) that returns a yes/no. Add a query to the GET and a yes/no response.
 
-# See if a person is or has been enrolled in a specific project type (ES, PSH, etc.) 
+# Workflow: See if a person is or has been enrolled in a specific project type (ES, PSH, etc.) 
  
 Use the /enrollmentsummary/{PersonalID} endpoint to return a table of all enrollments the client has. This table includes project type.
 
 
-# See if a person is or has been enrolled in a project with specific funding (PATH, Pay for Success, etc.) 
+# Workflow: See if a person is or has been enrolled in a project with specific funding (PATH, Pay for Success, etc.) 
 
 ```yaml
 /fundersummary/{ProjectID}:
