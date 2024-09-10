@@ -15,17 +15,17 @@ Why use a REST API over other options like GraphQL or FHIR?
 ## Decision Drivers
 
 ### Primary goals:
-- Easy to adopt. 
-- Easy to document.
+- Easy to adopt
+- Easy to document
 - Secure
 - Support for future enhancements
 - Easy to map existing CSV specification/requirements into it
 
 ### Factors to consider:
-- Type of application: Public APIs, internal APIs, mobile apps, healthcare systems.
-- Data complexity: Simple data structures vs. complex nested objects.
-- Performance requirements: Need for speed and efficiency.
-- Developer familiarity: Choose a style your team is comfortable with.
+- Type of application: Public APIs, internal APIs, mobile apps, healthcare systems
+- Data complexity: Simple data structures vs. complex nested objects
+- Performance requirements: Need for speed and efficiency
+- Developer familiarity: Choose a style your team is comfortable with
 
 ## Considered Options
 
@@ -37,15 +37,15 @@ Why use a REST API over other options like GraphQL or FHIR?
 
 ## Decision Outcome
 
-Chosen option: "REST API". This decision was made by ICF, USDS, and HUD after ICF and USDS had 1:1 meetings with all of the workgroup particpants as of 5/09/2024 (Bitfocus, Caseworthy, Eccovia, Green River and Wellsky). The purpose of the 1:1 meeting was to understand where each vendor is with developing an API and what would make sense for a standard. 
+Chosen option: "REST API". This decision was made by ICF, USDS, and HUD after ICF and USDS had 1:1 meetings with all of the HMIS vendor workgroup participants as of 5/09/2024 (Bitfocus, Caseworthy, Eccovia, Green River and Wellsky). The purpose of the 1:1 meeting was to understand where each vendor is with developing an API and what would make sense for a standard.
 
-A REST API in JSON was what most vendors interviewed were using/able to support. Additionally REST is simple, widely adopted, flexible, and because it can migrated to FHIR using something like [SMART](https://docs.smarthealthit.org/).
+A JSON REST API was what most vendors interviewed were using/able to support. Additionally REST is simple, widely adopted, flexible, and can migrated to FHIR in the future using something like [SMART](https://docs.smarthealthit.org/).
 
 
 ## Pros and Cons of the Options
 
 ### REST API
-REST is the most widely used style due to its simplicity and flexibility.
+REST is currently the most widely used style due to its simplicity and flexibility.
 
 Uses standard HTTP protocol with URIs for requests and JSON for responses.
 
@@ -54,12 +54,12 @@ See: https://en.wikipedia.org/wiki/REST
 Common use Cases: Internal APIs, enterprise integrations, financial transactions
 
 - Good, because simple, widely adopted, flexible. Good for public APIs.
-- Good, because lots of support libraries for various dev environments
-- Good, because security is well understood. Lots of existing products already support.
+- Good, because a lot of support libraries for various dev environments
+- Good, because security is well understood. A lot of existing products already support.
 - Good, because it's stateless.
 - Good, because it can migrated to FHIR using something like [SMART](https://docs.smarthealthit.org/).
 - Bad, because it can be chatty (multiple requests for complex data), not ideal for complex data structures.
-- Bad, an architecture not a standard, so lots of different opinions on the best way to do the same thing.
+- Bad, an architecture not a standard, so a lot of different opinions on the best way to do the same thing.
 
 
 ### GraphQL
