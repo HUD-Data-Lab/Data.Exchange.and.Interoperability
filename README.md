@@ -38,9 +38,9 @@ Each new version of the API Reference will include additional tables/files fo th
 || AssessmentQuestions
 || AssessmentResults
 || Event
-| Version 1.3 || Upcoming
+| V1.3 || Upcoming
 || Affiliation
 || Export
-|| HMISParticiaption
+|| HMISParticipation
 || Inventory
 || ProjectCoC
