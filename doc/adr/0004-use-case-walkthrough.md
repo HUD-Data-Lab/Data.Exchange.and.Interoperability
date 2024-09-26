@@ -2,7 +2,7 @@
 
 - Status: draft
 - Deciders: ICF, HUD
-- Date: 2024-08-12
+- Date last updated: 2024-09-26
 
 ## Context and Problem Statement
 
@@ -13,24 +13,20 @@ This walkthrough is meant to serve as a guide to show how the API can be used to
 
 # User Scenario Workflows
 
-The table below is a list of a
 
-| **Scenario** | **API Version** | **Endpoint(s)** | **Foundational/Optional** |
+| **Scenario** | **API Version** | **Relevant Endpoint(s)** | **Foundational/Optional** |
 | - | - | - | - |
 | See if a person has a record in HMIS | v.1.0 | ``` clientsummary/ ```, ```/clients/{PersonalID}```| Foundational |
 | Update/create a client-level record | v.1.0 | ``` /clients/{PersonalID}```,```/clients```  | Foundational |
-| See if a person has active enrollments | v.1.0 | ``` /enrollmentsummary/{PersonalID} ``` | Foundartional |
-| See if a person has been enrolled in a CE project | v.1.0 | Upcoming | Optional |
+| See if a person has any enrollments | v.1.0 | ``` /enrollmentsummary/{PersonalID} ``` | Foundartional |
+| See if a person has been enrolled in a CE project | TBD | Upcoming | Optional |
 | See if a person is or has been enrolled in a specific project type (ES, PSH, etc.)  | v.1.0 | ```/enrollmentsummary/{PersonalID}``` | Foundational |
-| See if a person is or has been enrolled in a project with specific funding (PATH, Pay for Success, etc.)  | v.1.0 | ```/fundersummary/{ProjectID}``` | Foundational |
 
 ## Workflow: See if a person has a record in HMIS
 
-To accomplish this action the workflow shown in the API is for the external platform/user to do the following:
+## Request a list of PersonalIDs by PII and select the correct PersonalID (Skip this step is PersonalID is known)
 
-## Request a list of PersonalIDs and select the correct PersonalIDs (Skip this step is PersonalIDs is known)
-
-NOTE: We chose to use a post instead of a get. 
+NOTE: We are intentionally using POST for this search.
 
 ```yaml
  /clientsummary:
@@ -68,6 +64,7 @@ NOTE: We chose to use a post instead of a get.
                 $ref: '#/components/schemas/ErrorResponse'
           description: The request generated an error and could not process.
 ```
+From the returned list of PersonalIDs the end user will select the correct PersonalID. Once the PersonalID is known then that can be used to return the rest of the client data.
 
 ## Using the PersonalIDs return the client data
 
@@ -100,13 +97,11 @@ NOTE: We chose to use a post instead of a get.
 
 # Workflow: Update/Create a client-level record
 
-To accomplish this action the workflow shown in the API is for the external platform/user to do the following:
-
 ## Use PersonalID to update a client-level record (If PersonalID is unknown use the workflow in "See if a person has a record in HMIS" to identify PersonalID)
 
 ```yaml  
 /clients/{PersonalID}:
-    put:
+    patch:
       tags:
         - Clients
       summary: Update an existing client record.
@@ -134,7 +129,7 @@ To accomplish this action the workflow shown in the API is for the external plat
           description: Invalid input provided
 ```
 ## Create a new client information 
-
+If the client is not in HMIS use this workflow to create a new client.
 ```yaml
 /clients:
     post:
@@ -161,7 +156,7 @@ To accomplish this action the workflow shown in the API is for the external plat
           description: Invalid input provided
 ```
 
-# Workflow: See if a person has active enrollments 
+# Workflow: See if a person has any enrollments 
 
 ## Using the PersonalID return a list of their enrollments (If PersonalID is unknown use the workflow in "See if a person has a record in HMIS" to identify PersonalID)
 
@@ -199,7 +194,7 @@ To accomplish this action the workflow shown in the API is for the external plat
 
 # Workflow: See if a person has been enrolled in a CE project
 
-For Discussion:
+Under Discussion.
 
 1. Add more fields to enrollmentsummary (returns the CEParticipation data elements + Enrollment information)
 2. Create new endpoint at the client level (/CEparticpationExample/{PersonalID}) that returns a yes/no. Add a query to the GET and a yes/no response.
@@ -208,25 +203,20 @@ For Discussion:
  
 Use the /enrollmentsummary/{PersonalID} endpoint to return a table of all enrollments the client has. This table includes project type.
 
-
-# Workflow: See if a person is or has been enrolled in a project with specific funding (PATH, Pay for Success, etc.) 
-
 ```yaml
-/fundersummary/{ProjectID}:
+/enrollmentsummary/{PersonalID}:
     get:
       tags: 
-        -  FunderSummary
-      summary: |
-        Get Funder information by ProjectID. 
-        This table includes all the funding sources for the specific ProjectID.
+        -  EnrollmentSummary
+      summary: Get enrollments by PersonalID
       description: |
-        Get Funder information by ProjectID. 
-        This table includes all the funding sources for the specific ProjectID.
+        This gets enrollments by PersonalID. 
+        Commonly sorted alphabetically by ProjectName, EntryDate (most recent entry date at top), ExitDate (NULL exit date at top)
       parameters:
-        - name: ProjectID
+        - name: PersonalID
           in: path
           required: true
-          description: Unique identifier for a project
+          description: Unique identifier for a client
           schema:
             type: string
             maxLength: 32
@@ -234,13 +224,13 @@ Use the /enrollmentsummary/{PersonalID} endpoint to return a table of all enroll
         - $ref: '#/components/parameters/LimitParam'
       responses:
         '200':
-          description: All clients, enrollments, and projects using a specific funding source 
+          description: A list of enrollments 
           content:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/FunderSummaryResponse'
+                  - $ref: '#/components/schemas/EnrollmentSummaryResponse'
                   - $ref: '#/components/schemas/PaginatedList'
         '404':
-            description: FunderID not found
+          description: Enrollment not found
 ```
