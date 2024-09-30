@@ -148,7 +148,7 @@ tags:
   #     - The `total` property will contain the total number of resources matching provided query parameters.
 
   - name: CEParticipation
-    description: Data related to CE Participations.
+    description: Data related to CE Participation.
   - name: Clients
     description: Clients are used to represent the individuals receiving care. There must only be 1 client per individual, identified by their PersonalID.
   - name: ClientSummary
@@ -176,8 +176,6 @@ security:
 servers:
   - url: 'https://example.com/hmis/v1.0'
 paths:
-
-
   /ceparticipation:
     post:
       summary: Create a new CEParticipation record
@@ -191,6 +189,7 @@ paths:
             schema:
               anyOf: 
                 - $ref: '#/components/schemas/CEParticipationBase' #Flagging for review of the request body
+                - $ref: "#/components/schemas/CEParticipationBaseAdditional"
       responses: 
         '200':
           description: OK
@@ -201,8 +200,8 @@ paths:
               schema: 
                 type: string
                 description: Invalid input provided
-  /ceparticipation/{CEParticipationID}:
-    get: 
+  /ceparticipation/{CEParticipationID}: #Flag to review the GET.
+    get:
       tags:
         - CEParticipation
       summary: Get CE Participation Record by CE Participation ID
@@ -222,7 +221,7 @@ paths:
               schema:
                 allOf: 
                   -  $ref:  "#/components/schemas/CEParticipationBase"
-                  -  $ref: "#/components/schemas/CEParticipationBaseAdditional" #This includes fields that aren't in Mockoon
+                  -  $ref: "#/components/schemas/CEParticipationBaseAdditional"
         '404':
           description: CE Participation Record not found
     patch: 
@@ -327,7 +326,7 @@ paths:
           application/json:
             schema:
               anyOf: 
-                -  $ref: '#/components/schemas/ClientBase' # flag to check if any additonal schemas are needed
+                -  $ref: '#/components/schemas/ClientBase' # flag to check if any additional schemas are needed
       responses:
         '200':
           description: OK
@@ -1492,7 +1491,7 @@ components:
             - $ref: '#/components/schemas/NameDataQuality_list'
         SSN:
           type: string
-          description: Social Security Number, potentially masked with 'x'
+          description: Social Security Number
           pattern: '^[0-9]{9}$'
         SSNDataQuality:
           type: integer
@@ -1678,8 +1677,8 @@ components:
           #     - "1994"
         SSN:
           type: string
-          description: Social Security Number, should be formatted as 4 characters representing the last 4 digit
-          pattern: '^[0-9]{4}$'
+          description: Social Security Number
+          pattern: '^[0-9]{9}$'
 
     ClientSummaryResponse:
       description: |
@@ -1716,7 +1715,7 @@ components:
         SSN:
           type: string
           description: Social Security Number, should be formatted as 4 characters representing the last 4 digit
-          pattern: '^[0-9]{4}$'
+          pattern: '^[0-9]{9}$'
 
     EnrollmentBase:
       type: object
