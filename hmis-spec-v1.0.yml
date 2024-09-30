@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: HMIS API
   description: API for accessing HMIS data
-  version: "v1.0b11"
+  version: "v1.0b12"
 tags:
   - name: Authentication
     description: |
@@ -31,6 +31,7 @@ tags:
 
           Authorization: Bearer <your access token>
           x-api-key: <your api key>
+  # TODO: Review the response and request descriptions in the section below:
   - name: Concepts
     description: |
       # Api Calls 
@@ -46,130 +47,106 @@ tags:
       |---------|------------------------------------------------------------------------------------------------|
       | GET     | Used for retrieving resources                                                                  |
       | POST    | Used for creating resources                                                                    |
-      | PUT     | Used for changing or replacing resources and queries that contain PII or sensitive information |
+      | PATCH     | Used for changing or replacing resources and queries that contain PII or sensitive information |
       | DELETE  | Used for removing resources                                                                    |
       | OPTIONS | Can be issued against any resource to request CORS support                                     |
-      ## Responses
+  #     ## Responses
 
-      The HMIS API will return JSON in the response body.
-      ### Response status codes
+  #     The HMIS API will return JSON in the response body.
+  #     ### Response status codes
 
-      | Status Code | Description                                                                                                                                                                         | Methods               |
-      |-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------|
-      | 200         | OK - The request has succeeded. The user can read the result of the request in the body and the headers of the response.                                                          | all                   |
-      | 201         | Created - The request has been fulfilled and resulted in a new resource being created.                                                                                              | `POST` `PUT`          |
-      | 202         | Accepted - The request has been accepted for processing, but the processing has not been completed..                                                                                | `POST` `PUT` `DELETE` |
-      | 204         | No content - Request is processed successfully but no response payload is returned.                                                                                                 | `PUT` `DELETE`        |
-      | 301         | Moved permanently - This request and all future requests should be directed to the response's given URI.                                                                            | all                   |
-      | 303         | See other - Response has a Location header with a URL to which the user should redirect.                                                                                          | `POST` `PUT` `DELETE` |
-      | 304         | Not modified - User has requested a resource that has not been modified since the last request.                                                                                   | `POST` `PUT` `DELETE` |
-      | 400         | Bad request - Error indicating that the server cannot process the request due to something that is perceived to be a user error (e.g. malformed request syntax, invalid request). | all                   |
-      | 401         | Unauthorized - Credentials are not valid for the target resource (user is denied server-authentication).                                                                          | all                   |
-      | 403         | Forbidden - Request is successfully understood but the user is not authorized to use or access this resource.                                                                         | all                   |
-      | 404         | Not found - Requested resource is not found.                                                                                                                                        | all                   |
-      | 405         | Method not allowed - HTTP method is not allowed for the request's URI.                                                                                                              | all                   |
-      | 406         | Not acceptable - Request has specified a desired type, format or content-type in its headers but server is not able to provide.                                                     | all                   |
-      | 408         | Request timeout - Server times out waiting for the resource.                                                                                                                        | all                   |
-      | 409         | Conflict - Request cannot be completed due to conflict of the target resource.                                                                                                      | `POST` `PUT` `DELETE` |
-      | 410         | Gone - Requested resource does not exist any longer.                                                                                                                                | all                   |
-      | 412         | Precondition failed - Specified client precondition(s), described in request-headers, cannot be met.                                                                                | all                   |
-      | 415         | Unsupported media type - Requested content-type is unknown to server.                                                                                                               | all                   |
-      | 423         | Locked - Requested resource is currently unavailable.                                                                                                                               | `PUT` `DELETE`        |
-      | 428         | Precondition required - User has not specified required precondition(s).                                                                                                          | all                   |
-      | 429         | Too many requests - User has exceeded rate limits and sent too many requests.                                                                                                     | all                   |
-      | 500         | Internal server error - Unexpected server execution resulting in a failure to respond successfully.                                                                                 | all                   |
-      | 501         | Not implemented - User has requested for functionality that the server has specified it's not able to fulfill.                                                                    | all                   |
-      | 503         | Service unavailable - Server is currently unable to fulfill request. User is suggested to try again later.                                                                        | all                   |
-      ### Error response
+  #     | Status Code | Description                                                                                                                                                                         | Methods               |
+  #     |-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------|
+  #     | 200         | OK - The request has succeeded. The user can read the result of the request in the body and the headers of the response.                                                          | all                   |
+  #     | 201         | Created - The request has been fulfilled and resulted in a new resource being created.                                                                                              | `POST` `PUT`          |
+  #     | 202         | Accepted - The request has been accepted for processing, but the processing has not been completed..                                                                                | `POST` `PUT` `DELETE` |
+  #     | 204         | No content - Request is processed successfully but no response payload is returned.                                                                                                 | `PUT` `DELETE`        |
+  #     | 301         | Moved permanently - This request and all future requests should be directed to the response's given URI.                                                                            | all                   |
+  #     | 303         | See other - Response has a Location header with a URL to which the user should redirect.                                                                                          | `POST` `PUT` `DELETE` |
+  #     | 304         | Not modified - User has requested a resource that has not been modified since the last request.                                                                                   | `POST` `PUT` `DELETE` |
+  #     | 400         | Bad request - Error indicating that the server cannot process the request due to something that is perceived to be a user error (e.g. malformed request syntax, invalid request). | all                   |
+  #     | 401         | Unauthorized - Credentials are not valid for the target resource (user is denied server-authentication).                                                                          | all                   |
+  #     | 403         | Forbidden - Request is successfully understood but the user is not authorized to use or access this resource.                                                                         | all                   |
+  #     | 404         | Not found - Requested resource is not found.                                                                                                                                        | all                   |
+  #     | 405         | Method not allowed - HTTP method is not allowed for the request's URI.                                                                                                              | all                   |
+  #     | 406         | Not acceptable - Request has specified a desired type, format or content-type in its headers but server is not able to provide.                                                     | all                   |
+  #     | 408         | Request timeout - Server times out waiting for the resource.                                                                                                                        | all                   |
+  #     | 409         | Conflict - Request cannot be completed due to conflict of the target resource.                                                                                                      | `POST` `PUT` `DELETE` |
+  #     | 410         | Gone - Requested resource does not exist any longer.                                                                                                                                | all                   |
+  #     | 412         | Precondition failed - Specified client precondition(s), described in request-headers, cannot be met.                                                                                | all                   |
+  #     | 415         | Unsupported media type - Requested content-type is unknown to server.                                                                                                               | all                   |
+  #     | 423         | Locked - Requested resource is currently unavailable.                                                                                                                               | `PUT` `DELETE`        |
+  #     | 428         | Precondition required - User has not specified required precondition(s).                                                                                                          | all                   |
+  #     | 429         | Too many requests - User has exceeded rate limits and sent too many requests.                                                                                                     | all                   |
+  #     | 500         | Internal server error - Unexpected server execution resulting in a failure to respond successfully.                                                                                 | all                   |
+  #     | 501         | Not implemented - User has requested for functionality that the server has specified it's not able to fulfill.                                                                    | all                   |
+  #     | 503         | Service unavailable - Server is currently unable to fulfill request. User is suggested to try again later.                                                                        | all                   |
+  #     ### Error response
 
-      The HMIS API uses a single response to describe an error. This error response can be detected by the returned status
-      code (`4XX` or `5XX`) and the `Content-Type` header which will have a value of `application/problem+json`.
+  #     The HMIS API uses a single response to describe an error. This error response can be detected by the returned status
+  #     code (`4XX` or `5XX`) and the `Content-Type` header which will have a value of `application/problem+json`.
 
-      The response itself will be a JSON structure according to [RFC-7807](https://www.rfc-editor.org/rfc/rfc7807). In general
-      this response looks like:
+  #     The response itself will be a JSON structure according to [RFC-7807](https://www.rfc-editor.org/rfc/rfc7807). In general
+  #     this response looks like:
 
-      ```json
-      {
-        "type": "about:blank",
-        "status": 403,
-        "title": "Forbidden",
-        "detail": "You don't have permission to access this resource."
-      }
-      ```
+  #     ```json
+  #     {
+  #       "type": "about:blank",
+  #       "status": 403,
+  #       "title": "Forbidden",
+  #       "detail": "You don't have permission to access this resource."
+  #     }
+  #     ```
 
-      - The `status` property contains the status code from the response.
-      - The `title` property contains short a human-readable summary of the occurred problem.
-      - The `detail` property contains a detailed human-readable description of the occurred problem and usually provides more
-        insight into the resolution (if any).
-      - The `type` property describes the _type_ of problem and can be used as a discriminator for problem variants with
-        additional properties. Type `about:blank` is the default and will only contain the aforementioned properties.
+  #     - The `status` property contains the status code from the response.
+  #     - The `title` property contains short a human-readable summary of the occurred problem.
+  #     - The `detail` property contains a detailed human-readable description of the occurred problem and usually provides more
+  #       insight into the resolution (if any).
+  #     - The `type` property describes the _type_ of problem and can be used as a discriminator for problem variants with
+  #       additional properties. Type `about:blank` is the default and will only contain the aforementioned properties.
 
-      **Example of a non-default problem type**
+  #     **Example of a non-default problem type**
 
-      ```json5
-      {
-        msg: "SSN is invalid",
-        error_code: "MISSING_SSN"
+  #     ```json5
+  #     {
+  #       msg: "SSN is invalid",
+  #       error_code: "MISSING_SSN"
 
-      }
-      ```
+  #     }
+  #     ```
 
-      ---
-      > 
-      ### Note
-      > If a resource endpoint supports one or more of the problem types they will be documented as a possible response.
-      ---
-      ## Collection response
+  #     ---
+  #     > 
+  #     ### Note
+  #     > If a resource endpoint supports one or more of the problem types they will be documented as a possible response.
+  #     ---
+  #     ## Collection response
 
-      If the response is for a collection of resources its structure will always look like the following.
+  #     If the response is for a collection of resources its structure will always look like the following.
 
-      ```json5
-      {
-        "query": {
-          // applied query
-        },
-        "result": [
-          // 0 or more resources
-          {
-            "id": "Resource 1"
-          },
-          {
-            "id": "Resource 2"
-          }
-        ],
-        "total": 2
-      }
-      ```
+  #     ```json5
+  #     {
+  #       "query": {
+  #         // applied query
+  #       },
+  #       "result": [
+  #         // 0 or more resources
+  #         {
+  #           "id": "Resource 1"
+  #         },
+  #         {
+  #           "id": "Resource 2"
+  #         }
+  #       ],
+  #       "total": 2
+  #     }
+  #     ```
 
-      - The `query` property will always contain the query parameters that have been applied to get the resulting resources.
-        These include all provided query parameters and those not provided, but with a default.
-      - The `result` property will contain a list of zero or more resources matching the executed query.
-      - The `total` property will contain the total number of resources matching provided query parameters.
+  #     - The `query` property will always contain the query parameters that have been applied to get the resulting resources.
+  #       These include all provided query parameters and those not provided, but with a default.
+  #     - The `result` property will contain a list of zero or more resources matching the executed query.
+  #     - The `total` property will contain the total number of resources matching provided query parameters.
 
-      ## Pagination
-
-      If a resource supports the `limit` and `offset` query parameters the collection response will only contain a subset of
-      the total available resources (a single page).
-
-      - The `limit` parameter can be used to control the maximum amount of resource returned per page.
-      - The `offset` parameter can be used to control the index of the first resource returned. E.g. `?offset=0&limit=25`
-        gives the first page of 25 resources. `?offset=25&limit=25` gives you the second page of 25 resources.
-
-      The response will always be a collection response in which the used (provided or default) values for `limit`
-      and `offset` are available in its `query` property. The `total` property provides the total amount of resources available in the system which gives you insight in the total number of "pages" that could be retrieved.
-
-      ```json5
-      {
-        "query": {
-          "limit": 25,
-          "offset": 0
-        },
-        "result": [
-          // resources for first "page".
-        ],
-        "total": 34
-      }
-      ```
   - name: CEParticipation
     description: Data related to CE Participations.
   - name: Clients
@@ -199,15 +176,7 @@ security:
 servers:
   - url: 'https://example.com/hmis/v1.0'
 paths:
-#NOTE v.1.0 includes the tables and paths for the following .csv files:
-# CEParticipation
-# Client
-# Enrollment
-# Exit 
-# Funder
-# Organization
-# Project
-# User
+
 
   /ceparticipation:
     post:
@@ -220,16 +189,43 @@ paths:
         content:
           application/json:
             schema:
-              allOf: 
-                - $ref: '#/components/schemas/CEParticipationBase'
-                - $ref: "#/components/schemas/BaseResponse"
+              anyOf: 
+                - $ref: '#/components/schemas/CEParticipationBase' #Flagging for review of the request body
       responses: 
-        '201':
-          description: CEParticipation successfully created
+        '200':
+          description: OK
         '400':
           description: Invalid input provided
+          content: 
+            application/json:
+              schema: 
+                type: string
+                description: Invalid input provided
   /ceparticipation/{CEParticipationID}:
-    put: 
+    get: 
+      tags:
+        - CEParticipation
+      summary: Get CE Participation Record by CE Participation ID
+      description: Get CE Participation Record by CE Participation ID
+      parameters: 
+        - name: CEParticipationID
+          in: path
+          required: true
+          schema: 
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  -  $ref:  "#/components/schemas/CEParticipationBase"
+                  -  $ref: "#/components/schemas/CEParticipationBaseAdditional" #This includes fields that aren't in Mockoon
+        '404':
+          description: CE Participation Record not found
+    patch: 
       tags:
         - CEParticipation
       summary: Update an existing record.
@@ -242,24 +238,34 @@ paths:
           schema:
             type: string
             maxLength: 32
-        - $ref: "#/components/parameters/LimitParam"
-        - $ref: "#/components/parameters/OffsetParam"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              allOf: 
-                - $ref: '#/components/schemas/CEParticipation'
-                - $ref: "#/components/schemas/BaseResponse"
+              anyOf: 
+                - $ref: "#/components/schemas/CEParticipationBase"
       responses:
         '200':
-          description: CEParticipation successfully updated
+          description: OK
         '404':
-          description: CEParticipation not found
+          description: CE Participation record not found
         '400':
           description: Invalid input provided
-
+          content: 
+            application/json:
+              schema:
+                oneOf:  
+                  - type: object
+                    properties:
+                      InvalidInput:
+                        type: string
+                        description: Invalid Input Provided
+                  - type: object
+                    properties:
+                      ProjectIDNotFound:
+                        type: string
+                        description: Project not found
     delete:
       tags:
         - CEParticipation
@@ -274,17 +280,22 @@ paths:
             type: string
             maxLength: 32
       responses:
-        '204':
-          description: Project successfully deleted
+        '200':
+          description: OK
         '404':
-          description: Project not found
+          description: CE Participation record not found
+          content: 
+            application/json:
+              schema:
+                type: string
+                description: CE Participation record not found
   /ceparticipationsummary/{ProjectID}:
     get: 
       tags: 
         -  CEParticipation
-      summary: Get a list of CEParticipation by ProjectID Information
+      summary: Get a list of CEParticipation by ProjectID.
       description: |
-        Get a list of Projects by partial Project Information. 
+        Get a list of Projects by by ProjectID.
       parameters: 
         - name: ProjectID
           in: path
@@ -293,12 +304,6 @@ paths:
           schema:
             type: string
             maxLength: 32
-        - name: CEParticipationSummary
-          in: query
-          schema: 
-            $ref: "#/components/schemas/CEParticipationQuery"
-        - $ref: "#/components/parameters/OffsetParam"
-        - $ref: "#/components/parameters/LimitParam"
       responses:
         '200':
           description: A list of CEParticipationIDs that match the query
@@ -306,16 +311,9 @@ paths:
             application/json:
               schema:
                 allOf: 
-                  - $ref: "#/components/schemas/CEParticipationSummaryResponse"
-                  - $ref: "#/components/schemas/BaseResponse"
+                  - $ref: "#/components/schemas/CEParticipationSummaryInfo"
         '404':
           description: Project not found
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: The request generated an error and could not process.
 
   /clients:
     post:
@@ -328,18 +326,27 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ClientBase'
+              anyOf: 
+                -  $ref: '#/components/schemas/ClientBase' # flag to check if any additonal schemas are needed
       responses:
         '200':
-          description: Successful response with client data
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Client'
-        '201':
-          description: Client successfully created
+          description: OK
         '400':
           description: Invalid input provided
+          content: 
+            application/json:
+              schema: 
+                oneOf: # Flag to check these response generate as expected
+                  - type: object
+                    properties:
+                      MissingInformationIncorrectDatatype:
+                        type: string
+                        description: Invalid input provided
+                  - type: object
+                    properties: 
+                      InvalidInputProvided:
+                        type: string
+                        description: Please set MiddleName equal to Test
   /clients/{PersonalID}:
     get:
       tags:
@@ -356,15 +363,21 @@ paths:
             maxLength: 32
       responses:
         '200':
-          description: Successful response with client data
+          description: Client Information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Client'
+                allOf: # Flagging that this puts the response out of order from Mockoon example.
+                  -  $ref: '#/components/schemas/ClientBase'
+                  -  $ref: "#/components/schemas/ClientBaseAdditional"
         '404':
           description: Client not found
-
-    put:
+          content:
+            application/json:
+              schema: 
+                type: string
+                description: Client not found
+    patch:
       tags:
         - Clients
       summary: Update an existing client record.
@@ -382,15 +395,25 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ClientBase'
+              anyOf: 
+                -  $ref: "#/components/schemas/ClientBase"
       responses:
         '200':
-          description: Client successfully updated
+          description: OK
         '404':
           description: Client not found
+          content:
+            application/json:
+              schema: 
+                type: string
+                description: Client not found
         '400':
-          description: Invalid input provided
-
+          description: Missing Information or Incorrect DataType
+          content:
+            application/json:
+              schema: 
+                type: string
+                description: Invalid Input Provided                      
     delete:
       tags:
         - Clients
@@ -405,31 +428,30 @@ paths:
             type: string
             maxLength: 32
       responses:
-        '204':
-          description: Client successfully deleted
+        '200':
+          description: OK
         '404':
           description: Client not found
+          content:
+            application/json:
+              schema: 
+                type: string
+                description: Client not found
   /clientsummary:
-    post:
+    get:
       tags:
         - ClientSummary
-      summary: Request via POST a summary list of clients.
+      summary: Request a summary list of clients based on PII
       description: |
-        Get a list of clients by partial Personal Identifiable Information (PII). 
-        The request parameter are passed via the http body for security/privacy reasons. 
-        Putting PII in url parameter could in them ending up in logs.
-
-        The fields in the ClientSummary can be partial. e.g. Prefix of last name
-      parameters: 
-        - $ref: "#/components/parameters/LimitParam"
-        - $ref: "#/components/parameters/OffsetParam"
+        Get a list of clients by Personal Identifiable Information (PII). 
+        At least two of the following must be provided: 
+          FirstName, LastName, NameSuffix, DateOfBirth, and/or SSN. 
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ClientSummary'
-            
+              $ref: '#/components/schemas/ClientSummaryQuery'
       responses:
         '200':
           description: A list of clients that match the query
@@ -438,16 +460,9 @@ paths:
               schema:
                 type: array
                 allOf: 
-                  - $ref: '#/components/schemas/ClientSummaryResponse'
-                  - $ref: "#/components/schemas/BaseResponse"
+                  - $ref: '#/components/schemas/ClientSummaryResponse' #Flag that PersonalID was included in this response
         '404':
           description: Client not found
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: The request generated an error and could not process.
 
   /enrollments:
     post:
@@ -455,46 +470,18 @@ paths:
       description: Create a new enrollment record
       tags:
         - Enrollments
-      requestBody:
+      requestBody: # Update the schema for the request
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Enrollment'
-      responses:
-        '201':
-          description: Enrollment successfully created
-        '400':
-          description: Invalid input provided
-  /enrollmentsummary/{PersonalID}:
-    get:
-      tags: 
-        -  EnrollmentSummary
-      summary: Get enrollments by PersonalID
-      description: |
-        This gets enrollments by PersonalID. 
-        Commonly sorted alphabetically by ProjectName, EntryDate (most recent entry date at top), ExitDate (NULL exit date at top)
-      parameters:
-        - name: PersonalID
-          in: path
-          required: true
-          description: Unique identifier for a client
-          schema:
-            type: string
-            maxLength: 32
-        - $ref: '#/components/parameters/OffsetParam'
-        - $ref: '#/components/parameters/LimitParam'
+              anyOf: 
+                -  $ref: '#/components/schemas/EnrollmentBase'
       responses:
         '200':
-          description: A list of enrollments 
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/EnrollmentSummaryResponse'
-                  - $ref: "#/components/schemas/BaseResponse"
-        '404':
-          description: Enrollment not found
+          description: OK
+        '400':
+          description: Invalid input provided #Flag for content review
   /enrollments/{EnrollmentID}:
     get:
       tags:
@@ -509,22 +496,26 @@ paths:
           schema:
             type: string
             maxLength: 32
-        - $ref: "#/components/parameters/OffsetParam"
-        - $ref: "#/components/parameters/LimitParam"
+        # - $ref: "#/components/parameters/OffsetParam"
+        # - $ref: "#/components/parameters/LimitParam"
 
-      responses:
+      responses: # Flag for review. 
         '200':
           description: Successful response with enrollment data
           content:
             application/json:
               schema:
                 allOf: 
-                  - $ref: '#/components/schemas/Enrollment'
-                  - $ref: "#/components/schemas/BaseResponse"
+                  - $ref: '#/components/schemas/EnrollmentBase'
+                  - $ref: "#/components/schemas/EnrollmentAdditional"
         '404':
-          description: Enrollment not found
-
-    put:
+          description: EnrollmentID not found
+          content: 
+            application/json:
+              schema: 
+                type: string
+                description: Enrollment not found
+    patch:
       tags:
         - Enrollments
       summary: Update an existing enrollment record
@@ -542,15 +533,38 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Enrollment'
+              $ref: '#/components/schemas/EnrollmentBase'
       responses:
         '200':
           description: Enrollment successfully updated
         '404':
           description: Enrollment not found
+          content: 
+            application/json:
+              schema: 
+                type: string
+                description: Enrollment not found
         '400':
           description: Invalid input provided
-
+          content: 
+            application/json:
+              schema: 
+                oneOf: 
+                  - type: object
+                    properties:
+                      InvalidInput:
+                        type: string
+                        description: Invalid Input
+                  - type: object
+                    properties:
+                      ClientNotFound:
+                        type: string
+                        description: Client not found
+                  - type: object
+                    properties:
+                      ProjectNotFound:
+                        type: string
+                        description: Project not found
     delete:
       tags:
         - Enrollments
@@ -565,8 +579,41 @@ paths:
             type: string
             maxLength: 32
       responses:
-        '204':
-          description: Enrollment successfully deleted
+        '200':
+          description: OK
+        '404':
+          description: Enrollment not found
+          content: 
+            application/json:
+              schema: 
+                type: string
+                description: Enrollment not found
+  /enrollmentsummary/{PersonalID}:
+    get:
+      tags: 
+        -  EnrollmentSummary
+      summary: Get enrollments by PersonalID
+      description: |
+        This gets enrollments by PersonalID. 
+        Commonly sorted alphabetically by ProjectName, EntryDate (most recent entry date at top), ExitDate (NULL exit date at top)
+      parameters:
+        - name: PersonalID
+          in: path
+          required: true
+          description: Unique identifier for a client
+          schema:
+            type: string
+            maxLength: 32
+        # - $ref: '#/components/parameters/OffsetParam'
+        # - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: A list of enrollments 
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/EnrollmentSummaryInfo'
         '404':
           description: Enrollment not found
 
@@ -581,42 +628,39 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ExitBase'
-      responses:
-        '201':
-          description: Exit successfully created
-        '400':
-          description: Invalid input provided 
-  /exitsummary/{PersonalID}:
-    get:
-      tags: 
-        -  ExitSummary
-      summary: Get exits by PersonalID
-      description: |
-        This gets all the exits for a client by PersonalID. 
-      parameters:
-        - name: PersonalID
-          in: path
-          required: true
-          description: Unique identifier for a client
-          schema:
-            type: string
-            maxLength: 32
-        - $ref: '#/components/parameters/OffsetParam'
-        - $ref: '#/components/parameters/LimitParam'
+              anyOf: 
+              - $ref: '#/components/schemas/ExitBase' #Flag for review and adjustments
       responses:
         '200':
-          description: A list of exits 
-          content:
+          description: OK
+        '400':
+          description: Invalid input provided
+          content: 
             application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/ExitSummaryResponse'
-                  - $ref: "#/components/schemas/BaseResponse"
-        '404':
-          description: Exits not found
-  /exit/{ExitID}:
-    put:
+              schema: 
+                oneOf: 
+                  - type: object
+                    properties:
+                      InvalidInput:
+                        type: string
+                        description: Invalid Input provided
+                  - type: object
+                    properties:
+                      DestinationSubsidyMissing:
+                        type: string
+                        description: Invalid request - DestinationSubsidyMissing field is missing from request
+                  - type: object
+                    properties:
+                      OtherDestination:
+                        type: string
+                        description: OtherDestination field is missing from request
+                  - type: object
+                    properties:
+                      EnrollmentExit:
+                        type: string
+                        description: Enrollment already has an exit
+  /exit/{ExitID}: #Flag: should we add a get by ExitID and/or EnrollmentID?
+    patch:
       tags:
         - Exits
       summary: Update an existing Exit record
@@ -634,14 +678,49 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Exit'
+              anyOf: 
+                -  $ref: '#/components/schemas/ExitBase' #flag for review
       responses:
         '200':
-          description: Exit successfully updated
+          description: OK
         '404':
           description: Exit not found
+          content: 
+            application/json:
+              schema: 
+                type: string
+                description: Exit not found
         '400':
           description: Invalid input provided
+          content: 
+            application/json:
+              schema: 
+                oneOf: 
+                  - type: object
+                    properties:
+                      InvalidInput:
+                        type: string
+                        description: Invalid Input provided
+                  - type: object
+                    properties:
+                      DestinationSubsidyMissing:
+                        type: string
+                        description: Invalid request - DestinationSubsidyMissing field is missing from request
+                  - type: object
+                    properties:
+                      OtherDestination:
+                        type: string
+                        description: OtherDestination field is missing from request
+                  - type: object
+                    properties:
+                      ClientNotFound:
+                        type: string
+                        description: Client not found
+                  - type: object
+                    properties:
+                      EnrollmentNotFound:
+                        type: string
+                        description: Enrollment not found
     delete:
       tags:
         - Exits
@@ -656,10 +735,42 @@ paths:
             type: string
             maxLength: 32
       responses:
-        '204':
-          description: Enrollment successfully deleted
+        '200':
+          description: OK
         '404':
           description: Enrollment not found
+          content: 
+            application/json:
+              schema: 
+                type: string
+                description: ExitID is not found
+  /exitsummary/{PersonalID}:
+    get:
+      tags: 
+        -  ExitSummary
+      summary: Get exits by PersonalID
+      description: |
+        This gets all the exits for a client by PersonalID. 
+      parameters:
+        - name: PersonalID
+          in: path
+          required: true
+          description: Unique identifier for a client
+          schema:
+            type: string
+            maxLength: 32
+        # - $ref: '#/components/parameters/OffsetParam'
+        # - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: A list of exits 
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  -  $ref: '#/components/schemas/ExitSummaryInfo'
+        '404':
+          description: Exits not found
 
   /funders:
     post:
@@ -672,83 +783,116 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Funder'
-      responses:
-        '201':
-          description: Funder successfully created
-        '400':
-          description: Invalid input provided
-  /funders/{FunderId}:
-    get:
-      tags:
-        - Funders
-      summary: Get funder data by Funder ID
-      description: This gets funder data by Funder ID
-      parameters:
-        - name: FunderId
-          in: path
-          required: true
-          description: Unique identifier for a funder
-          schema:
-            type: string
-            maxLength: 32
-        - $ref: "#/components/parameters/OffsetParam"
-        - $ref: "#/components/parameters/LimitParam"
+              anyOf: 
+                -  $ref: '#/components/schemas/FunderBase'
       responses:
         '200':
-          description: Successful response with funder data
+          description: OK
+        '400':
+          description: Invalid input provided
+          content: 
+            application/json:
+              schema: 
+                type: string
+                description: Invalid input provided
+  /funders/{FunderID}:
+    get:
+        tags:
+          - Funders
+        summary: Get funder data by Funder ID
+        description: This gets funder data by Funder ID
+        parameters:
+          - name: FunderID
+            in: path
+            required: true
+            description: Unique identifier for a funder
+            schema:
+              type: string
+              maxLength: 32
+        responses:
+          '200':
+            description: Successful response with funder data
+            content:
+              application/json:
+                schema:
+                  allOf:
+                    -  $ref: '#/components/schemas/FunderBase'
+                    -  $ref: "#/components/schemas/FunderBaseAdditional"
+          '404':
+            description: Funder not found
+            content:
+              application/json:
+                schema: 
+                  type: string
+                  description: Funder not found
+    patch:
+        tags:
+          - Funders
+        summary: Update an existing funder record
+        description: Update an existing funder record
+        parameters:
+          - name: FunderID
+            in: path
+            required: true
+            description: Unique identifier for the funder to update
+            schema:
+              type: string
+              maxLength: 32
+        requestBody:
+          required: true
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Funder'
-        '404':
-          description: Funder not found
-
-    put:
-      tags:
-        - Funders
-      summary: Update an existing funder record
-      description: Update an existing funder record
-      parameters:
-        - name: FunderId
-          in: path
-          required: true
-          description: Unique identifier for the funder to update
-          schema:
-            type: string
-            maxLength: 32
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Funder'
-      responses:
-        '200':
-          description: Funder successfully updated
-        '404':
-          description: Funder not found
-        '400':
-          description: Invalid input provided
-
+                $ref: '#/components/schemas/FunderBase'
+        responses:
+          '200':
+            description: OK
+          '404':
+            description: Funder not found
+            content:
+              application/json:
+                schema: 
+                  type: string
+                  description: Funder not found
+          '400':
+            description: Invalid input provided
+            content:
+              application/json:
+                schema: 
+                  oneOf: 
+                  - type: object
+                    properties:
+                      ProjectNotFound:
+                        type: string
+                        description: Project not found
+                  - type: object
+                    properties:
+                      InvalidInputProvided:
+                        type: string
+                        description: Invalid input provided
     delete:
-      tags:
-        - Funders
-      summary: Delete a funder record
-      description: This marks a funder record as deleted
-      parameters:
-        - name: FunderId
-          in: path
-          required: true
-          description: Unique identifier for the funder to delete
-          schema:
-            type: string
-            maxLength: 32
-      responses:
-        '204':
-          description: Funder successfully deleted
-        '404':
-          description: Funder not found
+        tags:
+          - Funders
+        summary: Delete a funder record
+        description: This marks a funder record as deleted
+        parameters:
+          - name: FunderID
+            in: path
+            required: true
+            description: Unique identifier for the funder to delete
+            schema:
+              type: string
+              maxLength: 32
+        responses:
+          '200':
+            description: OK
+          '404':
+            description: Funder not found
+            content:
+              application/json:
+                schema: 
+                  type: string
+                  description: Funder not found
   /fundersummary/{ProjectID}:
     get:
       tags: 
@@ -767,8 +911,6 @@ paths:
           schema:
             type: string
             maxLength: 32
-        - $ref: '#/components/parameters/OffsetParam'
-        - $ref: '#/components/parameters/LimitParam'
       responses:
         '200':
           description: All clients, enrollments, and projects using a specific funding source 
@@ -776,10 +918,14 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/FunderSummaryResponse'
-                  - $ref: "#/components/schemas/BaseResponse"
+                  - $ref: '#/components/schemas/FunderSummaryInfo'
         '404':
-            description: FunderID not found
+            description: No records found #Flag to check description.
+            content: 
+              application/json:
+                schema: 
+                  type: string
+                  description: No records found
 
   /organizations:
     post:
@@ -792,12 +938,31 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Organization'
+              $ref: '#/components/schemas/OrganizationBase'
       responses:
-        '201':
-          description: Organization successfully created
+        '200':
+          description: OK
         '400':
           description: Invalid input provided
+          content: 
+            application/json:
+              schema: 
+                oneOf: 
+                  - type: object
+                    properties:
+                      InvalidInputProvided:
+                        type: string
+                        description: Invalid input provided
+                  - type: object
+                    properties:
+                      OrganizationCommonName:
+                        type: string
+                        description: Invalid input provided - OrganizationCommonName
+                  - type: object
+                    properties:
+                      DateDeleted:
+                        type: string
+                        description: Invalid input provided - DateDeleted
   /organizations/{OrganizationID}:
     get: 
       tags:
@@ -812,8 +977,6 @@ paths:
           schema:
             type: string
             maxLength: 32
-        - $ref: "#/components/parameters/OffsetParam"
-        - $ref: "#/components/parameters/LimitParam"
       responses:
         '200':
           description: Successful response with Organization data
@@ -821,11 +984,16 @@ paths:
             application/json:
               schema:
                 allOf: 
-                  - $ref: '#/components/schemas/Organization'
-                  - $ref: "#/components/schemas/BaseResponse"
+                  - $ref: '#/components/schemas/OrganizationBase'
+                  - $ref: "#/components/schemas/OrganizationBaseAdditional"
         '404':
           description: Organization not found
-    put:
+          content: 
+            application/json:
+              schema: 
+                type: string
+                description: Organization not found
+    patch:
       tags:
         - Organizations
       summary: Update an existing organization record
@@ -843,14 +1011,39 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Organization'
+              anyOf: 
+                -  $ref: '#/components/schemas/OrganizationBase'
       responses:
         '200':
-          description: Organization successfully updated
+          description: OK
         '404':
           description: Organization not found
+          content: 
+            application/json:
+              schema: 
+                type: string
+                description: Organization not found
         '400':
           description: Invalid input provided
+          content: 
+            application/json:
+              schema: 
+                oneOf: 
+                  - type: object
+                    properties:
+                      InvalidInputProvided:
+                        type: string
+                        description: Invalid input provided - OrganizationID, UserID, VictimServiceProvider, DateCreated, or DateUpdated
+                  - type: object
+                    properties:
+                      OrganizationName:
+                        type: string
+                        description: Invalid input provided - OrganizationName
+                  - type: object
+                    properties:
+                      OrganizationCommonName:
+                        type: string
+                        description: Invalid input provided - OrganizationCommonName
     delete:
       tags:
         - Organizations
@@ -865,24 +1058,27 @@ paths:
             type: string
             maxLength: 32
       responses:
-        '204':
-          description: Organization successfully deleted
+        '200':
+          description: OK
         '404':
           description: Organization not found
+          content: 
+            application/json:
+              schema: 
+                type: string
+                description: Organization not found
   /organizationsummary:
     get: 
       tags: 
         -  OrganizationSummary
-      summary: Get a list of Organizations by partial Organization name
+      summary: Get a list of Organizations by Organization name
       description: |
-        Get a list of Organizations by partial Organization name
+        Get a list of Organizations by Organization name
       parameters: 
         - in: query
           name: OrganizationSummaryQuery
           schema: 
             $ref: "#/components/schemas/OrganizationSummaryQuery"
-        - $ref: "#/components/parameters/OffsetParam"
-        - $ref: "#/components/parameters/LimitParam"
       responses:
         '200':
           description: A list of Organizations that match the query
@@ -893,15 +1089,13 @@ paths:
                 items:
                   allOf: 
                     - $ref: "#/components/schemas/OrganizationSummaryResponse"
-                    - $ref: "#/components/schemas/BaseResponse"
         '404':
-          description: Organizaiton not found
-        '400':
-          content:
+          description: Organization not found
+          content: 
             application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: The request generated an error and could not process.  
+              schema: 
+                type: string
+                description: Organizations not found
 
   /projects:
     post:
@@ -914,19 +1108,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProjectBase'
+              anyOf: 
+                -  $ref: '#/components/schemas/ProjectBase'
       responses:
         '200':
-          description: Successful response with project data
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Project'
-        '201':
-          description: Proejct successfully created
+          description: OK
         '400':
           description: Invalid input provided
-  /project/{ProjectID}:
+          content: 
+            application/json:
+              schema: 
+                type: string
+                description: Invalid input provided
+  /projects/{ProjectID}:
     get: 
       tags:
         - Project
@@ -940,8 +1134,6 @@ paths:
           schema:
             type: string
             maxLength: 32
-        - $ref: "#/components/parameters/OffsetParam"
-        - $ref: "#/components/parameters/LimitParam"
       responses:
         '200':
           description: Successful response with Project data
@@ -949,11 +1141,16 @@ paths:
             application/json:
               schema:
                 allOf: 
-                  - $ref: '#/components/schemas/Project'
-                  - $ref: "#/components/schemas/BaseResponse"
+                  - $ref: '#/components/schemas/ProjectBase'
+                  - $ref: "#/components/schemas/ProjectBaseAdditional"
         '404':
           description: Project not found
-    put:
+          content:
+            application/json:
+              schema: 
+                type: string
+                description: Project not found            
+    patch:
       tags:
         - Project
       summary: Update an existing client record.
@@ -971,14 +1168,34 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProjectBase'
+              anyOf: 
+                - $ref: '#/components/schemas/ProjectBase'
       responses:
         '200':
-          description: Project successfully updated
+          description: OK
         '404':
           description: Project not found
+          content: 
+            application/json:
+              schema: 
+                type: string
+                description: Project not found
         '400':
           description: Invalid input provided
+          content: 
+            application/json:
+              schema: 
+                oneOf: 
+                  - type: object
+                    properties: 
+                      InvalidInputProvided:
+                        type: string
+                        description: Invalid input provided
+                  - type: object
+                    properties:
+                      OrganizationNotFound:
+                        type: string
+                        description: Organization not found
     delete:
       tags:
         - Project
@@ -993,10 +1210,15 @@ paths:
             type: string
             maxLength: 32
       responses:
-        '204':
-          description: Project successfully deleted
+        '200':
+          description: OK
         '404':
           description: Project not found
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Project not found
   /projectsummary:
     get: 
       tags: 
@@ -1009,8 +1231,6 @@ paths:
           name: ProjectSummaryQuery
           schema: 
             $ref: "#/components/schemas/ProjectSummaryQuery"
-        - $ref: "#/components/parameters/OffsetParam"
-        - $ref: "#/components/parameters/LimitParam"
       responses:
         '200':
           description: A list of proejcts that match the query
@@ -1021,15 +1241,13 @@ paths:
                 items:
                   allOf: 
                     - $ref: "#/components/schemas/ProjectSummaryResponse"
-                    - $ref: "#/components/schemas/BaseResponse"
         '404':
-          description: Project not found
-        '400':
+          description: No records found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: The request generated an error and could not process.
+                type: string
+                description: No records found
 
   /users/{UserId}:
     get:
@@ -1045,8 +1263,6 @@ paths:
           schema:
             type: string
             maxLength: 32
-        - $ref: "#/components/parameters/OffsetParam"
-        - $ref: "#/components/parameters/LimitParam"
       responses:
         '200':
           description: Successful response with user data
@@ -1054,12 +1270,16 @@ paths:
             application/json:
               schema:
                 allOf: 
-                  - $ref: '#/components/schemas/User'
-                  - $ref: "#/components/schemas/BaseResponse"
+                  - $ref: '#/components/schemas/UserBase'
+                  - $ref: "#/components/schemas/UserBaseAdditional"
         '404':
           description: User not found
-
-    put:
+          content:
+            application/json:
+              schema: 
+                type: string
+                description: User not found
+    patch:
       tags:
         - Users
       summary: Update an existing user record
@@ -1077,15 +1297,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UserBase'
       responses:
         '200':
-          description: User successfully updated
+          description: OK
         '404':
           description: User not found
+          content: 
+            application/json:
+              schema: 
+                type: string
+                description: User not found
         '400':
           description: Invalid input provided
-
+          content: 
+            application/json:
+              schema: 
+                type: string
+                description: Invalid input provided
     delete:
       tags:
         - Users
@@ -1100,11 +1329,15 @@ paths:
             type: string
             maxLength: 32
       responses:
-        '204':
-          description: User successfully deleted
+        '200':
+          description: OK
         '404':
           description: User not found
-
+          content: 
+            application/json:
+              schema: 
+                type: string
+                description: User not found
 components: 
   # securitySchemes:
   #   oauth2:
@@ -1143,152 +1376,96 @@ components:
         default: 0
 
   schemas:
-# TODO:these are the tables to be included in v1.0
-# Change security - BasicAuth not recommended
-# CEParticipation - needs summary
-# Client - ready for review
-# Enrollment - ready for review
-# Exit - needs summary
-# Funder - needs base and summary
-# Organization - needs base and summary
-# Project - ready for review
-# User - needs base and summary
+
     CEParticipationBase:
       type: object
       properties:
         CEParticipationID:
           type: string
-          maxLength: 32
-          description: Unique identifier
-        ProjectID:
-          type: string
-          maxLength: 32
-          description: Must match a ProjectID in Projects
-        AccessPoint:
-          type: integer
-          description: Access point
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-        PreventionAssessment:
-          type: integer
-          description: Prevention assessment
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-        CrisisAssessment:
-          type: integer
-          description: Crisis assessment
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-        HousingAssessment:
-          type: integer
-          description: Housing assessment
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-        DirectServices:
-          type: integer
-          description: Direct services
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-        ReceivesReferrals:
-          type: integer
-          description: Receives referrals
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-        CeParticipationStatusStartDate:
-          type: string
-          format: date
-          description: CEParticipation status start date
-        CeParticipationStatusEndDate:
-          type: string
-          format: date
-          description: CEParticipation status end date
-
-    CEParticipation:
-      allOf: 
-        -  $ref: "#/components/schemas/CEParticipationBase"
-        -  type: object
-      properties:
-        CEParticipationID:
-          type: string
-          maxLength: 32
-          description: Unique identifier
-        DateCreated:
-          type: string
-          format: date-time
-          description: Date created
-        DateUpdated:
-          type: string
-          format: date-time
-          description: Date updated
-        UserId:
-          type: string
-          maxLength: 32
-          description: User ID
-
-    CEParticipationQuery:
-      description: |
-        This structure is used to query or return a subset of CEParticipartion fields.     
-      type: object
-      properties:
-        CEParticipationID:
-          type: string
-          maxLength: 32
-          description: Unique identifier
-        ProjectID:
-          type: string
-          maxLength: 32
-          description: Must match a ProjectID in Projects
-        AccessPoint:
-          type: integer
-          description: Access point
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-        DirectServices:
-          type: integer
-          description: Direct services
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-        ReceivesReferrals:
-          type: integer
-          description: Receives referrals
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-        CeParticipationStatusStartDate:
-          type: string
-          format: date
-          description: CEParticipation status start date
-        CeParticipationStatusEndDate:
-          type: string
-          format: date
-          description: CEParticipation status end date
-    
-    CEParticipationSummary:
-      allOf:
-        - $ref: "#/components/schemas/CEParticipationQuery"
-        - type: object
-      properties:
-        CEParticipationID:
-          type: string
           description: Unique identifier for the CEParticipation status
+          maxLength: 32      
+        ProjectID:
+          type: string
           maxLength: 32
-      required: 
-        - CEParticipationID
-        - ProjectID
-        - CeParticipationStatusStartDate
-        - CeParticipationStatusEndDate
+          description: Must match a ProjectID in Projects
+        AccessPoint:
+          type: integer
+          description: Access point
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        DirectServices:
+          type: integer
+          description: Direct services
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        ReceivesReferrals:
+          type: integer
+          description: Receives referrals
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        CeParticipationStatusStartDate:
+          type: string
+          format: date
+          description: CEParticipation status start date
+        CeParticipationStatusEndDate:
+          type: string
+          format: date
+          description: CEParticipation status end date
 
-    CEParticipationSummaryResponse:
+    CEParticipationBaseAdditional:
+        type: object
+        properties:
+          PreventionAssessment:
+            type: integer
+            description: Prevention assessment
+            oneOf:
+              - $ref: '#/components/schemas/NoYes_list'
+          CrisisAssessment:
+            type: integer
+            description: Crisis assessment
+            oneOf:
+              - $ref: '#/components/schemas/NoYes_list'
+          HousingAssessment:
+            type: integer
+            description: Housing assessment
+            oneOf:
+              - $ref: '#/components/schemas/NoYes_list'
+          CEParticipationID:
+            type: string
+            maxLength: 32
+            description: Unique identifier
+          DateCreated:
+            type: string
+            format: date-time
+            description: Date created
+          DateUpdated:
+            type: string
+            format: date-time
+            description: Date updated
+          UserId:
+            type: string
+            maxLength: 32
+            description: User ID
+
+    CEParticipationSummaryInfo:
       type: object
       properties:
-        query:
-          type: object
-        result:
-          type: array
-          items: 
-            $ref: "#/components/schemas/CEParticipationSummary"
-        total:
-          type: integer
-
+        CEParticipationID:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        ProjectID:
+          type: string
+          maxLength: 32
+          description: Must match a ProjectID in Projects
+        CeParticipationStatusStartDate:
+          type: string
+          format: date
+          description: CEParticipation status start date
+        CeParticipationStatusEndDate:
+          type: string
+          format: date
+          description: CEParticipation status end date
 
     ClientBase:
       type: object
@@ -1313,15 +1490,15 @@ components:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NameDataQuality_list'
-        SocialSecurityNumber:
+        SSN:
           type: string
           description: Social Security Number, potentially masked with 'x'
           pattern: '^[0-9]{9}$'
-        SocialSecurityNumberDataQuality:
+        SSNDataQuality:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/SocialSecurityNumberDataQuality_list'
-        DateOfBirth:
+            - $ref: '#/components/schemas/SSNDataQuality_list'
+        DateOfBirth: # Flagging this as a potential change to DOB
           type: string
           description: Date of birth of the client
           format: date
@@ -1451,17 +1628,12 @@ components:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/DischargeStatus_list'
-    Client:
-      allOf: 
-        -  $ref: '#/components/schemas/ClientBase'
-        -  type: object
+    ClientBaseAdditional:
+      type: object
       properties:
         PersonalID:
           type: string
           description: Unique identifier for the client
-          maxLength: 32
-        UserId:
-          type: string
           maxLength: 32
         DateCreated:
           type: string
@@ -1469,14 +1641,17 @@ components:
         DateUpdated:
           type: string
           format: date-time
+        UserId:
+          type: string
+          maxLength: 32
         DateDeleted:
           type: string
           format: date-time
-  
+
     ClientSummaryQuery:
       description: |
         This structure is used to query or return a subset of client fields. 
-        For queries, the PersonalID field is not required but is returned in ClientSummaryResponses
+        For queries, the PersonalID field is not required but is returned in ClientSummaryResponse
       type: object
       properties:
         FirstName:
@@ -1501,48 +1676,51 @@ components:
           #     - "1994-11-05"
           #     - "1994-11"
           #     - "1994"
-        SocialSecurityNumber:
+        SSN:
           type: string
           description: Social Security Number, should be formatted as 4 characters representing the last 4 digit
           pattern: '^[0-9]{4}$'
 
-    ClientSummary:
-      allOf: 
-        -  $ref: '#/components/schemas/ClientSummaryQuery'
-        -  type: object
+    ClientSummaryResponse:
+      description: |
+        This returns the PII from clients that match to identify the correct client. 
+        PersonalID is included in this response.
+      type: object
       properties:
         PersonalID:
           type: string
           description: Unique identifier for the client
           maxLength: 32
-
-    ClientSummaryResponse:
-      type: object
-      properties: 
-        query:
-          type: object
-        result:
-          type: array
-          items: 
-            $ref: "#/components/schemas/ClientSummary"
-            required: 
-              - PersonalID  
-        total:
-          type: integer
-        
+        FirstName:
+          type: string
+          description: First name of the client (for Query optional and may be a prefix partial)
+          maxLength: 50
+        LastName:
+          type: string
+          description: Last name of the client (for Query optional and may be a prefix partial)
+          maxLength: 50
+        NameSuffix:
+          type: string
+          description: Suffix of the client's name (for Query optional and may be a prefix partial)
+          maxLength: 50
+        DateOfBirth:
+          type: string
+          format: date
+          description: Optional date of birth of client. A date in ISO 8601 format. The year month + day is optional.
+          # todo: Figure out how to show multiple examples
+          # example:
+          #   oneOf:
+          #     - "1994-11-05"
+          #     - "1994-11"
+          #     - "1994"
+        SSN:
+          type: string
+          description: Social Security Number, should be formatted as 4 characters representing the last 4 digit
+          pattern: '^[0-9]{4}$'
 
     EnrollmentBase:
       type: object
       properties:
-        EnrollmentID:
-          type: string
-          maxLength: 32
-        PersonalID:
-          type: string
-          maxLength: 32
-        ProjectID:
-          type: string
-          maxLength: 32
         EntryDate:
           type: string
           format: date
@@ -1756,7 +1934,7 @@ components:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes_list'
-        coCPrioritized:
+        CoCPrioritized:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes_list'
@@ -1774,14 +1952,17 @@ components:
           type: string
           maxLength: 100
 
-    Enrollment:
-      allOf: 
-        -  $ref: '#/components/schemas/EnrollmentBase'
-        -  type: object
+    EnrollmentAdditional:
+      type: object
       properties:
         EnrollmentID:
           type: string
-          description: Unique identifier for the enrollment record
+          maxLength: 32
+        PersonalID:
+          type: string
+          maxLength: 32
+        ProjectID:
+          type: string
           maxLength: 32
         DateCreated:
           type: string
@@ -1789,38 +1970,34 @@ components:
         DateUpdated:
           type: string
           format: date-time
+        UserId:
+          type: string
+          maxLength: 32
         DateDeleted:
           type: string
           format: date-time
-      required:
-      - EnrollmentID
-
-    EnrollmentSummary:
+    EnrollmentSummaryInfo:
       type: object
-      properties: 
+      properties:
         PersonalID:
           type: string
-          description: Unique identifier for the client
           maxLength: 32
         EnrollmentID:
           type: string
-          description: Unique identifier for an enrollment
           maxLength: 32
         ProjectID:
           type: string
-          description: Unique identifier for project
           maxLength: 32
         ProjectName:
           type: string
           maxLength: 200
-          description: ProjectName comes from the Project table
         ProjectCommonName:
           type: string
           maxLength: 200
         ProjectType:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/ProjectType_list'
+            - $ref: '#/components/schemas/ProjectType_list'    
         EntryDate:
           type: string
           format: date
@@ -1828,33 +2005,18 @@ components:
           type: string
           format: date
 
-    EnrollmentSummaryResponse:
-      type: object
-      properties: 
-        query:
-          type: object
-        result:
-          type: array
-          items: 
-            $ref: "#/components/schemas/EnrollmentSummary"
-        total:
-          type: integer
+    EnrollmentRequestBody: #Flag for review. May not be needed
+      anyOf: 
+        -   $ref: "#/components/schemas/EnrollmentBase"
+        -   type: object
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
 
     ExitBase:
       type: object
       properties:
-        ExitID:
-          type: string
-          maxLength: 32
-          description: Unique identifier
-        EnrollmentID:
-          type: string
-          maxLength: 32
-          description: Enrollment Id
-        PersonalID:
-          type: string
-          maxLength: 32
-          description: Personal Id
         ExitDate:
           type: string
           format: date
@@ -1997,11 +2159,8 @@ components:
           type: integer
           description: Case management exit reason
           $ref: '#/components/schemas/CMExitReason_list'
-
-    Exit:
-      allOf: 
-        -  $ref: "#/components/schemas/ExitBase"
-        -  type: object
+    ExitBaseAdditional:
+      type: object
       properties:
         ExitID:
           type: string
@@ -2011,6 +2170,10 @@ components:
           type: string
           maxLength: 32
           description: Enrollment Id
+        PersonalID:
+          type: string
+          maxLength: 32
+          description: Personal Id
         DateCreated:
           type: string
           format: date-time
@@ -2028,52 +2191,44 @@ components:
           format: date-time
           description: Date deleted
 
-    ExitSummary:
+      # ExitBaseRequestBody:
+      #   type: object
+      #   properties:
+
+    ExitSummaryInfo:
       type: object
       properties:
         ExitID:
           type: string
           maxLength: 32
           description: Unique identifier
+        PersonalID:
+          type: string
+          maxLength: 32
+          description: Personal Id
         EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment Id
-        PersonalID:
-          type: string
-          description: Unique identifier for the client
-          maxLength: 32
         EntryDate:
           type: string
           format: date
         ExitDate:
           type: string
           format: date
-
-    ExitSummaryResponse:
-      type: object
-      properties: 
-        query:
-          type: object
-        result:
-          type: array
-          items: 
-            $ref: "#/components/schemas/ExitSummary"
-        total:
+        Destination:
           type: integer
+          description: Destination
+          $ref: '#/components/schemas/LivingSituation_list'
 
     FunderBase:
       type: object
       properties:
-        FunderId:
-          type: string
-          maxLength: 32
-          description: Unique identifier
         ProjectID:
           type: string
           maxLength: 32
           description: Must match a record in Project
-        FundingSource:
+        Funder:
           type: integer
           description: Funding source identifier
           oneOf:
@@ -2094,13 +2249,9 @@ components:
           type: string
           format: date
           description: End date
-
-
-    Funder:
-      allOf: 
-        - $ref: "#/components/schemas/FunderBase"
-        - type: object
-      properties:
+    FunderBaseAdditional:
+      type: object
+      properties: 
         FunderId:
           type: string
           maxLength: 32
@@ -2113,24 +2264,22 @@ components:
           type: string
           format: date-time
           description: Date updated
+        UserId:
+          type: string
+          maxLength: 32
+          description: User I
         DateDeleted:
           type: string
           format: date-time
           description: Date deleted
-        UserId:
-          type: string
-          maxLength: 32
-          description: User ID
-
-    FunderSummary:
+    FunderSummaryInfo:
       type: object
-      description: This is to retrieve a subset of funder information
-      properties:
+      properties: 
         FunderId:
           type: string
           maxLength: 32
           description: Unique identifier
-        FundingSource:
+        Funder:
           type: integer
           description: Funding source identifier
           oneOf:
@@ -2143,18 +2292,6 @@ components:
           type: string
           maxLength: 32
           description: Must match a record in Project
-
-    FunderSummaryResponse:
-      type: object
-      properties: 
-        query:
-          type: object
-        result:
-          type: array
-          items: 
-            $ref: "#/components/schemas/FunderSummary"
-        total:
-          type: integer
 
     OrganizationBase:
       type: object
@@ -2173,14 +2310,10 @@ components:
         OrganizationCommonName:
           type: string
           maxLength: 200
-      required:
-        - OrganizationID
-
-    Organization:
-      allOf: 
-        -  $ref: "#/components/schemas/OrganizationBase"
+    OrganizationBaseAdditional:
+      type: object
       properties: 
-        UserId:
+        OrganizationID:
           type: string
           maxLength: 32
         DateCreated:
@@ -2189,59 +2322,44 @@ components:
         DateUpdated:
           type: string
           format: date-time
+        UserId:
+          type: string
+          maxLength: 32
         DateDeleted:
           type: string
           format: date-time
 
     OrganizationSummaryQuery:
-        description: |
-          This structure is used to query or return a subset of OrganizationIds 
-          when the OrganizationID is unknown.
-        type: object
-        properties:
-          OrganizationName:
-            description: Organization name (for Query optional and may be a prefix partial)
-            type: string
-            maxLength: 200
-          OrganizationCommonName:
-            description: Organization common name (for Query optional and may be a prefix partial)
-            type: string
-            maxLength: 200
+      type: object
+      properties:
+        OrganizationName:
+          description: Organization name (for Query optional and may be a prefix partial)
+          type: string
+          maxLength: 200
+        OrganizationCommonName:
+          description: Organization common name (for Query optional and may be a prefix partial)
+          type: string
+          maxLength: 200
 
-    OrganizationSummary:
-      allOf: 
-        - $ref: "#/components/schemas/OrganizationSummaryQuery"
-        - type: object
+    OrganizationSummaryResponse:
+      type: object
       properties:
         OrganizationID:
           type: string
           maxLength: 32
-      required: 
-        - OrganizationID
-        - OrgnaizationName
-        - OrganizationCommonName
-  
-    OrganizationSummaryResponse:
-      type: object
-      properties: 
-        query:
-          type: object
-        result:
-          type: array
-          items: 
-            $ref: "#/components/schemas/OrganizationSummary"
-        total:
-          type: integer
+        OrganizationName:
+          description: Organization name
+          type: string
+          maxLength: 200
+        OrganizationCommonName:
+          description: Organization common name
+          type: string
+          maxLength: 200
+
 
     ProjectBase:
       type: object
       properties:
-        ProjectID:
-          type: string
-          maxLength: 32
-        OrganizationID:
-          type: string
-          maxLength: 32
         ProjectName:
           type: string
           maxLength: 200
@@ -2284,15 +2402,14 @@ components:
             - $ref: '#/components/schemas/HOPWAMedAssistedLivingFacNum_list'
         PITCount:
           type: integer
-      required:
-        - ProjectID
 
-    Project:
-      allOf:
-        - $ref: "#/components/schemas/ProjectBase"
-        - type: object
+    ProjectBaseAdditional:
+      type: object
       properties: 
         ProjectID:
+          type: string
+          maxLength: 32
+        OrganizationID:
           type: string
           maxLength: 32
         DateCreated:
@@ -2307,12 +2424,22 @@ components:
         DateDeleted:
           type: string
           format: date-time
-      required:
-        - ProjectID
 
     ProjectSummaryQuery:
-      description: |
-        This structure is used to query or return a subset of ProjectIDs when the ProjectID is unknown.
+      type: object
+      properties: 
+        OrganizationID:
+          type: string
+          maxLength: 32
+        OrganizationName:
+          type: string
+          maxLength: 200
+        ProjectType:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/ProjectType_list'
+
+    ProjectSummaryResponse:
       type: object
       properties:
         ProjectID:
@@ -2325,9 +2452,6 @@ components:
         OrganizationID:
           type: string
           maxLength: 32
-        OrganizationName:
-          type: string
-          maxLength: 200
         ProjectName:
           type: string
           maxLength: 200
@@ -2340,65 +2464,39 @@ components:
         OperatingEndDate:
           type: string
           format: date
-
-    ProjectSummary:
-      allOf: 
-        -  $ref: "#/components/schemas/ProjectSummaryQuery"
-        - type: object
-      properties: 
-        ProjectID:
-          type: string
-          maxLength: 32
-      required: 
-        - ProjectID
-        - ProjectName
-        - ProjectCommonName
-        - OperatingStartDate
-        - OperatingEndDate
-        - OrganizationID
-
-    ProjectSummaryResponse:
-      type: object
-      properties: 
-        query:
-          type: object
-        result:
-          type: array
-          items: 
-            $ref: "#/components/schemas/ProjectSummary"
-        total:
+        ContinuumProject:
           type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
 
     UserBase:
+        type: object
+        properties:
+          UserFirstName:
+            type: string
+            maxLength: 50
+          UserLastName:
+            type: string
+            maxLength: 50
+          UserPhone:
+            type: string
+            pattern: '^[2-9][0-9]{2}[2-9][0-9]{2}[0-9]{4}$'
+            maxLength: 10
+          UserExtension:
+            type: string
+            pattern: '^[0-9]{1,5}$'
+            maxLength: 5
+          UserEmail:
+            type: string
+            format: email
+            maxLength: 320
+
+    UserBaseAdditional:
       type: object
       properties:
         UserId:
           type: string
           maxLength: 32
-        UserFirstName:
-          type: string
-          maxLength: 50
-        UserLastName:
-          type: string
-          maxLength: 50
-        UserPhone:
-          type: string
-          pattern: '^[2-9][0-9]{2}[2-9][0-9]{2}[0-9]{4}$'
-          maxLength: 10
-        UserExtension:
-          type: string
-          pattern: '^[0-9]{1,5}$'
-          maxLength: 5
-        UserEmail:
-          type: string
-          format: email
-          maxLength: 320
-      required:
-        - UserId
-
-    User:
-      type: object
-      properties:
         DateCreated:
           type: string
           format: date-time
@@ -2408,9 +2506,7 @@ components:
         DateDeleted:
           type: string
           format: date-time
-
-
-
+            
 # Quality Response lists
 
     NameDataQuality_list:
@@ -2433,7 +2529,7 @@ components:
           const: 99
           description: "Data not collected"
 
-    SocialSecurityNumberDataQuality_list:
+    SSNDataQuality_list:
       type: integer
       description: "Indicates the data quality of the reported Social Security Number."
       oneOf:
@@ -2473,7 +2569,8 @@ components:
         - title: "DATA_NOT_COLLECTED"
           const: 99
           description: "Data not collected"
-  
+
+
 
 
 
