@@ -260,6 +260,7 @@ paths:
                       InvalidInput:
                         type: string
                         description: Invalid Input Provided
+                        example: "{\"message\": \"This is a JSON string response\"}"
                   - type: object
                     properties:
                       ProjectIDNotFound:
