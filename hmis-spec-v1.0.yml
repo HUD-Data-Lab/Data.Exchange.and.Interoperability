@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: HMIS API
   description: API for accessing HMIS data
-  version: "v1.0b12"
+  version: "v1.0b13"
 tags:
   - name: Authentication
     description: |
@@ -170,7 +170,7 @@ tags:
   - name: ProjectSummary
     description: Summary of data related to Projects.
   - name: Users
-    description: Users are used to represent the individuals who have access to the system. Each user has a unique UserId.
+    description: Users are used to represent the individuals who have access to the system. Each user has a unique UserID.
 security: 
   - oauth2: [] #TODO define the Oauth2 security schema
 servers:
@@ -188,8 +188,7 @@ paths:
           application/json:
             schema:
               anyOf: 
-                - $ref: '#/components/schemas/CEParticipationBase' #Flagging for review of the request body
-                - $ref: "#/components/schemas/CEParticipationBaseAdditional"
+                - $ref: '#/components/schemas/CEParticipationBase'
       responses: 
         '200':
           description: OK
@@ -220,8 +219,9 @@ paths:
             application/json:
               schema:
                 allOf: 
-                  -  $ref:  "#/components/schemas/CEParticipationBase"
-                  -  $ref: "#/components/schemas/CEParticipationBaseAdditional"
+                  - $ref: "#/components/schemas/CEParticipationUniqueID"
+                  - $ref:  "#/components/schemas/CEParticipationBase" # Flagging for review. Compare to sandbox response
+                  - $ref: "#/components/schemas/CEParticipationBaseMetadata"
         '404':
           description: CE Participation Record not found
     patch: 
@@ -326,7 +326,7 @@ paths:
           application/json:
             schema:
               anyOf: 
-                -  $ref: '#/components/schemas/ClientBase' # flag to check if any additional schemas are needed
+                - $ref: "#/components/schemas/ClientBase"
       responses:
         '200':
           description: OK
@@ -335,7 +335,7 @@ paths:
           content: 
             application/json:
               schema: 
-                oneOf: # Flag to check these response generate as expected
+                oneOf: # Flag to check these response generate as expected. The description should be the response body of each error
                   - type: object
                     properties:
                       MissingInformationIncorrectDatatype:
@@ -366,9 +366,10 @@ paths:
           content:
             application/json:
               schema:
-                allOf: # Flagging that this puts the response out of order from Mockoon example.
-                  -  $ref: '#/components/schemas/ClientBase'
-                  -  $ref: "#/components/schemas/ClientBaseAdditional"
+                allOf:
+                  - $ref: "#/components/schemas/ClientUniqueId"
+                  - $ref: '#/components/schemas/ClientBase'
+                  - $ref: "#/components/schemas/ClientBaseMetadata"
         '404':
           description: Client not found
           content:
@@ -444,7 +445,7 @@ paths:
       description: |
         Get a list of clients by Personal Identifiable Information (PII). 
         At least two of the following must be provided: 
-          FirstName, LastName, NameSuffix, DateOfBirth, and/or SSN. 
+          FirstName, LastName, NameSuffix, DOB, and/or SSN. 
       requestBody:
         required: true
         content:
@@ -459,7 +460,7 @@ paths:
               schema:
                 type: array
                 allOf: 
-                  - $ref: '#/components/schemas/ClientSummaryResponse' #Flag that PersonalID was included in this response
+                  - $ref: '#/components/schemas/ClientSummaryResponse' #Flagging that PersonalID is included in this schema, but not the mockoon response
         '404':
           description: Client not found
 
@@ -469,13 +470,13 @@ paths:
       description: Create a new enrollment record
       tags:
         - Enrollments
-      requestBody: # Update the schema for the request
+      requestBody:
         required: true
         content:
           application/json:
             schema:
               anyOf: 
-                -  $ref: '#/components/schemas/EnrollmentBase'
+                -  $ref: '#/components/schemas/EnrollmentBase' #flagging need to include PersonalID and 
       responses:
         '200':
           description: OK
@@ -495,8 +496,6 @@ paths:
           schema:
             type: string
             maxLength: 32
-        # - $ref: "#/components/parameters/OffsetParam"
-        # - $ref: "#/components/parameters/LimitParam"
 
       responses: # Flag for review. 
         '200':
@@ -505,8 +504,9 @@ paths:
             application/json:
               schema:
                 allOf: 
-                  - $ref: '#/components/schemas/EnrollmentBase'
-                  - $ref: "#/components/schemas/EnrollmentAdditional"
+                  - $ref: "#/components/schemas/EnrollmentUniqueId"
+                  - $ref: "#/components/schemas/EnrollmentBase"
+                  - $ref: "#/components/schemas/EnrollmentMetadata"
         '404':
           description: EnrollmentID not found
           content: 
@@ -532,7 +532,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EnrollmentBase'
+              anyOf: 
+                - type: object
+                  properties: 
+                    EnrollmentID: #Flag for review if Enrollment PATCH request should include EnrollmentID and PersonalID
+                      type: string
+                      maxLength: 32
+                    PersonalID:
+                      type: string
+                      maxLength: 32
+                - $ref: '#/components/schemas/EnrollmentBase'
       responses:
         '200':
           description: Enrollment successfully updated
@@ -603,8 +612,6 @@ paths:
           schema:
             type: string
             maxLength: 32
-        # - $ref: '#/components/parameters/OffsetParam'
-        # - $ref: '#/components/parameters/LimitParam'
       responses:
         '200':
           description: A list of enrollments 
@@ -628,7 +635,7 @@ paths:
           application/json:
             schema:
               anyOf: 
-              - $ref: '#/components/schemas/ExitBase' #Flag for review and adjustments
+              - $ref: '#/components/schemas/ExitBase'
       responses:
         '200':
           description: OK
@@ -658,7 +665,7 @@ paths:
                       EnrollmentExit:
                         type: string
                         description: Enrollment already has an exit
-  /exit/{ExitID}: #Flag: should we add a get by ExitID and/or EnrollmentID?
+  /exit/{ExitID}: #Flag: should we add a GET by ExitID and/or EnrollmentID?
     patch:
       tags:
         - Exits
@@ -678,7 +685,17 @@ paths:
           application/json:
             schema:
               anyOf: 
-                -  $ref: '#/components/schemas/ExitBase' #flag for review
+                - type: object #Flag for review: EnrollmentID and PersonalID are needed for Exit Patch
+                  properties:
+                    EnrollmentID:
+                      type: string
+                      maxLength: 32
+                - type: object
+                  properties:
+                    PersonalID:
+                      type: string
+                      maxLength: 32
+                - $ref: '#/components/schemas/ExitBase'
       responses:
         '200':
           description: OK
@@ -758,8 +775,6 @@ paths:
           schema:
             type: string
             maxLength: 32
-        # - $ref: '#/components/parameters/OffsetParam'
-        # - $ref: '#/components/parameters/LimitParam'
       responses:
         '200':
           description: A list of exits 
@@ -815,8 +830,9 @@ paths:
               application/json:
                 schema:
                   allOf:
-                    -  $ref: '#/components/schemas/FunderBase'
-                    -  $ref: "#/components/schemas/FunderBaseAdditional"
+                    - $ref: "#/components/schemas/FunderUniqueID"
+                    - $ref: "#/components/schemas/FunderBase"
+                    - $ref: "#/components/schemas/FunderBaseMetadata"
           '404':
             description: Funder not found
             content:
@@ -842,7 +858,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FunderBase'
+                anyOf: 
+                  - $ref: "#/components/schemas/FunderUniqueID"
+                  - $ref: '#/components/schemas/FunderBase'
         responses:
           '200':
             description: OK
@@ -919,7 +937,7 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/FunderSummaryInfo'
         '404':
-            description: No records found #Flag to check description.
+            description: No records found #Flag to check description. Should match the response in mockoon.
             content: 
               application/json:
                 schema: 
@@ -983,8 +1001,9 @@ paths:
             application/json:
               schema:
                 allOf: 
-                  - $ref: '#/components/schemas/OrganizationBase'
-                  - $ref: "#/components/schemas/OrganizationBaseAdditional"
+                  - $ref: "#/components/schemas/OrganizationUniqueID"
+                  - $ref: "#/components/schemas/OrganizationBase"
+                  - $ref: "#/components/schemas/OrganizationBaseMetadata"
         '404':
           description: Organization not found
           content: 
@@ -1011,7 +1030,8 @@ paths:
           application/json:
             schema:
               anyOf: 
-                -  $ref: '#/components/schemas/OrganizationBase'
+                - $ref: "#/components/schemas/OrganizationUniqueID"
+                - $ref: "#/components/schemas/OrganizationBase"
       responses:
         '200':
           description: OK
@@ -1140,8 +1160,9 @@ paths:
             application/json:
               schema:
                 allOf: 
+                  - $ref: "#/components/schemas/ProjectUniqueID"
                   - $ref: '#/components/schemas/ProjectBase'
-                  - $ref: "#/components/schemas/ProjectBaseAdditional"
+                  - $ref: "#/components/schemas/ProjectBaseMetadata"
         '404':
           description: Project not found
           content:
@@ -1168,6 +1189,7 @@ paths:
           application/json:
             schema:
               anyOf: 
+                - $ref: "#/components/schemas/ProjectUniqueID" #Flag for review to confirm OrganizationID and ProjectID are required for Project Patch
                 - $ref: '#/components/schemas/ProjectBase'
       responses:
         '200':
@@ -1232,7 +1254,7 @@ paths:
             $ref: "#/components/schemas/ProjectSummaryQuery"
       responses:
         '200':
-          description: A list of proejcts that match the query
+          description: A list of projects that match the query
           content:
             application/json:
               schema:
@@ -1248,14 +1270,14 @@ paths:
                 type: string
                 description: No records found
 
-  /users/{UserId}:
+  /users/{UserID}:
     get:
       tags:
         - Users
-      summary: Get user data by their UserId
-      description: This gets user data by their UserId
+      summary: Get user data by their UserID
+      description: This gets user data by their UserID
       parameters:
-        - name: UserId
+        - name: UserID
           in: path
           required: true
           description: Unique identifier for a user
@@ -1269,8 +1291,9 @@ paths:
             application/json:
               schema:
                 allOf: 
-                  - $ref: '#/components/schemas/UserBase'
-                  - $ref: "#/components/schemas/UserBaseAdditional"
+                  - $ref: "#/components/schemas/UserUniqueID"
+                  - $ref: "#/components/schemas/UserBase"
+                  - $ref: "#/components/schemas/UserBaseMetadata"
         '404':
           description: User not found
           content:
@@ -1284,7 +1307,7 @@ paths:
       summary: Update an existing user record
       description: Update an existing user record
       parameters:
-        - name: UserId
+        - name: UserID
           in: path
           required: true
           description: Unique identifier for the user to update
@@ -1320,7 +1343,7 @@ paths:
       summary: Delete a user record
       description: This marks a user record as deleted
       parameters:
-        - name: UserId
+        - name: UserID
           in: path
           required: true
           description: Unique identifier for the user to delete
@@ -1375,14 +1398,83 @@ components:
         default: 0
 
   schemas:
-
-    CEParticipationBase:
+    CEParticipationUniqueID:
       type: object
-      properties:
+      properties: 
         CEParticipationID:
           type: string
           description: Unique identifier for the CEParticipation status
           maxLength: 32      
+        ProjectID:
+          type: string
+          maxLength: 32
+          description: Must match a ProjectID in Projects
+
+    CEParticipationBase:
+      type: object
+      properties:
+        AccessPoint:
+          type: integer
+          description: Access point
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        PreventionAssessment:
+          type: integer
+          description: Prevention assessment
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        CrisisAssessment:
+          type: integer
+          description: Crisis assessment
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        HousingAssessment:
+          type: integer
+          description: Housing assessment
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        DirectServices:
+          type: integer
+          description: Direct services
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        ReceivesReferrals:
+          type: integer
+          description: Receives referrals
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        CeParticipationStatusStartDate:
+          type: string
+          format: date
+          description: CEParticipation status start date
+        CeParticipationStatusEndDate:
+          type: string
+          format: date
+          description: CEParticipation status end date
+
+    CEParticipationBaseMetadata:
+        type: object
+        properties:
+          DateCreated:
+            type: string
+            format: date-time
+            description: Date created
+          DateUpdated:
+            type: string
+            format: date-time
+            description: Date updated
+          UserID:
+            type: string
+            maxLength: 32
+            description: User ID
+
+    CEParticipationSummaryInfo:
+      type: object
+      properties:
+        CEParticipationID:
+          type: string
+          maxLength: 32
+          description: Unique identifier
         ProjectID:
           type: string
           maxLength: 32
@@ -1411,60 +1503,15 @@ components:
           format: date
           description: CEParticipation status end date
 
-    CEParticipationBaseAdditional:
-        type: object
-        properties:
-          PreventionAssessment:
-            type: integer
-            description: Prevention assessment
-            oneOf:
-              - $ref: '#/components/schemas/NoYes_list'
-          CrisisAssessment:
-            type: integer
-            description: Crisis assessment
-            oneOf:
-              - $ref: '#/components/schemas/NoYes_list'
-          HousingAssessment:
-            type: integer
-            description: Housing assessment
-            oneOf:
-              - $ref: '#/components/schemas/NoYes_list'
-          CEParticipationID:
-            type: string
-            maxLength: 32
-            description: Unique identifier
-          DateCreated:
-            type: string
-            format: date-time
-            description: Date created
-          DateUpdated:
-            type: string
-            format: date-time
-            description: Date updated
-          UserId:
-            type: string
-            maxLength: 32
-            description: User ID
 
-    CEParticipationSummaryInfo:
+
+    ClientUniqueId:
       type: object
       properties:
-        CEParticipationID:
+        PersonalID:
           type: string
+          description: Unique identifier for the client
           maxLength: 32
-          description: Unique identifier
-        ProjectID:
-          type: string
-          maxLength: 32
-          description: Must match a ProjectID in Projects
-        CeParticipationStatusStartDate:
-          type: string
-          format: date
-          description: CEParticipation status start date
-        CeParticipationStatusEndDate:
-          type: string
-          format: date
-          description: CEParticipation status end date
 
     ClientBase:
       type: object
@@ -1497,15 +1544,15 @@ components:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/SSNDataQuality_list'
-        DateOfBirth: # Flagging this as a potential change to DOB
+        DOB:
           type: string
           description: Date of birth of the client
           format: date
-        DateOfBirthDataQuality:
+        DOBDataQuality:
           type: integer
           oneOf:
-            - $ref: '#/components/schemas/DateOfBirthDataQuality_list'
-        AmIndAkNative:
+            - $ref: '#/components/schemas/DOBDataQuality_list'
+        AmIndAKNative:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes_list'
@@ -1525,7 +1572,7 @@ components:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes_list'
-        NativeHiPacific:
+        NativeHIPacific:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes_list'
@@ -1627,20 +1674,16 @@ components:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/DischargeStatus_list'
-    ClientBaseAdditional:
+    ClientBaseMetadata:
       type: object
       properties:
-        PersonalID:
-          type: string
-          description: Unique identifier for the client
-          maxLength: 32
         DateCreated:
           type: string
           format: date-time
         DateUpdated:
           type: string
           format: date-time
-        UserId:
+        UserID:
           type: string
           maxLength: 32
         DateDeleted:
@@ -1665,19 +1708,13 @@ components:
           type: string
           description: Suffix of the client's name (for Query optional and may be a prefix partial)
           maxLength: 50
-        DateOfBirth:
+        DOB:
           type: string
           format: date
-          description: Optional date of birth of client. A date in ISO 8601 format. The year month + day is optional.
-          # todo: Figure out how to show multiple examples
-          # example:
-          #   oneOf:
-          #     - "1994-11-05"
-          #     - "1994-11"
-          #     - "1994"
+          description: Optional date of birth of client. A date in ISO 8601 format (yyyy-mm-dd) #Flag to confirm format example in description
         SSN:
           type: string
-          description: Social Security Number
+          description: Social Security Number #flagging to confirm description and pattern
           pattern: '^[0-9]{9}$'
 
     ClientSummaryResponse:
@@ -1702,20 +1739,28 @@ components:
           type: string
           description: Suffix of the client's name (for Query optional and may be a prefix partial)
           maxLength: 50
-        DateOfBirth:
+        DOB:
           type: string
           format: date
-          description: Optional date of birth of client. A date in ISO 8601 format. The year month + day is optional.
-          # todo: Figure out how to show multiple examples
-          # example:
-          #   oneOf:
-          #     - "1994-11-05"
-          #     - "1994-11"
-          #     - "1994"
+          description: Optional date of birth of client. A date in ISO 8601 format (yyyy-mm-dd) #Flag to confirm format example in description
         SSN:
           type: string
-          description: Social Security Number, should be formatted as 4 characters representing the last 4 digit
+          description: Social Security Number #flagging to confirm description
           pattern: '^[0-9]{9}$'
+
+
+    EnrollmentUniqueId:
+      type: object
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+        PersonalID:
+          type: string
+          maxLength: 32
+        ProjectID:
+          type: string
+          maxLength: 32
 
     EnrollmentBase:
       type: object
@@ -1951,25 +1996,16 @@ components:
           type: string
           maxLength: 100
 
-    EnrollmentAdditional:
+    EnrollmentMetadata:
       type: object
       properties:
-        EnrollmentID:
-          type: string
-          maxLength: 32
-        PersonalID:
-          type: string
-          maxLength: 32
-        ProjectID:
-          type: string
-          maxLength: 32
         DateCreated:
           type: string
           format: date-time
         DateUpdated:
           type: string
           format: date-time
-        UserId:
+        UserID:
           type: string
           maxLength: 32
         DateDeleted:
@@ -2012,6 +2048,22 @@ components:
         EnrollmentID:
           type: string
           maxLength: 32
+
+    ExitUniqueID:
+      type: object
+      properties: 
+        ExitID:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          description: Enrollment Id
+        PersonalID:
+          type: string
+          maxLength: 32
+          description: Personal Id
 
     ExitBase:
       type: object
@@ -2158,21 +2210,9 @@ components:
           type: integer
           description: Case management exit reason
           $ref: '#/components/schemas/CMExitReason_list'
-    ExitBaseAdditional:
+    ExitBaseMetadata:
       type: object
       properties:
-        ExitID:
-          type: string
-          maxLength: 32
-          description: Unique identifier
-        EnrollmentID:
-          type: string
-          maxLength: 32
-          description: Enrollment Id
-        PersonalID:
-          type: string
-          maxLength: 32
-          description: Personal Id
         DateCreated:
           type: string
           format: date-time
@@ -2181,7 +2221,7 @@ components:
           type: string
           format: date-time
           description: Date updated
-        UserId:
+        UserID:
           type: string
           maxLength: 32
           description: User ID
@@ -2220,13 +2260,21 @@ components:
           description: Destination
           $ref: '#/components/schemas/LivingSituation_list'
 
-    FunderBase:
+    FunderUniqueID:
       type: object
-      properties:
+      properties: 
+        FunderId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
         ProjectID:
           type: string
           maxLength: 32
           description: Must match a record in Project
+    
+    FunderBase:
+      type: object
+      properties:
         Funder:
           type: integer
           description: Funding source identifier
@@ -2248,13 +2296,9 @@ components:
           type: string
           format: date
           description: End date
-    FunderBaseAdditional:
+    FunderBaseMetadata:
       type: object
       properties: 
-        FunderId:
-          type: string
-          maxLength: 32
-          description: Unique identifier
         DateCreated:
           type: string
           format: date-time
@@ -2263,7 +2307,7 @@ components:
           type: string
           format: date-time
           description: Date updated
-        UserId:
+        UserID:
           type: string
           maxLength: 32
           description: User I
@@ -2292,12 +2336,16 @@ components:
           maxLength: 32
           description: Must match a record in Project
 
-    OrganizationBase:
+    OrganizationUniqueID:
       type: object
       properties:
         OrganizationID:
           type: string
           maxLength: 32
+    
+    OrganizationBase:
+      type: object
+      properties:
         OrganizationName:
           type: string
           maxLength: 200
@@ -2309,19 +2357,16 @@ components:
         OrganizationCommonName:
           type: string
           maxLength: 200
-    OrganizationBaseAdditional:
+    OrganizationBaseMetadata:
       type: object
       properties: 
-        OrganizationID:
-          type: string
-          maxLength: 32
         DateCreated:
           type: string
           format: date-time
         DateUpdated:
           type: string
           format: date-time
-        UserId:
+        UserID:
           type: string
           maxLength: 32
         DateDeleted:
@@ -2355,6 +2400,15 @@ components:
           type: string
           maxLength: 200
 
+    ProjectUniqueID:
+      type: object
+      properties:
+        ProjectID:
+          type: string
+          maxLength: 32
+        OrganizationID:
+          type: string
+          maxLength: 32
 
     ProjectBase:
       type: object
@@ -2402,22 +2456,16 @@ components:
         PITCount:
           type: integer
 
-    ProjectBaseAdditional:
+    ProjectBaseMetadata:
       type: object
       properties: 
-        ProjectID:
-          type: string
-          maxLength: 32
-        OrganizationID:
-          type: string
-          maxLength: 32
         DateCreated:
           type: string
           format: date-time
         DateUpdated:
           type: string
           format: date-time
-        UserId:
+        UserID:
           type: string
           maxLength: 32
         DateDeleted:
@@ -2451,6 +2499,9 @@ components:
         OrganizationID:
           type: string
           maxLength: 32
+        OrganizationName:
+          type: string
+          maxLength: 200
         ProjectName:
           type: string
           maxLength: 200
@@ -2463,10 +2514,14 @@ components:
         OperatingEndDate:
           type: string
           format: date
-        ContinuumProject:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
+
+
+    UserUniqueID:
+      type: object
+      properties:
+        UserID:
+          type: string
+          maxLength: 32
 
     UserBase:
         type: object
@@ -2490,12 +2545,9 @@ components:
             format: email
             maxLength: 320
 
-    UserBaseAdditional:
+    UserBaseMetadata:
       type: object
       properties:
-        UserId:
-          type: string
-          maxLength: 32
         DateCreated:
           type: string
           format: date-time
@@ -2549,7 +2601,7 @@ components:
           description: "Data not collected"
 
 
-    DateOfBirthDataQuality_list:
+    DOBDataQuality_list:
       type: integer
       description: "Indicates the data quality of the reported date of birth."
       oneOf:
