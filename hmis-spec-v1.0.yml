@@ -35,7 +35,7 @@ tags:
   - name: Concepts
     description: |
       # Api Calls 
-      The HMIS API is a RESTFul API with different endpoints returning JSON data defined by HUD.
+      The HMIS API is a RESTFul API with different endpoints returning data defined by HUD in JSON format.
       ## Base URL 
       The base address of the HMIS API will be the same across endpoints and will be provided by your HMIS.
       ## Requests
