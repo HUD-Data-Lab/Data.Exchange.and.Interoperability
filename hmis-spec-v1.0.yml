@@ -2593,7 +2593,7 @@ components:
           description: "Approximate or partial date of birth reported"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesnt know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -4145,7 +4145,7 @@ components:
     MissingDataQuality_list:
       type: integer
       description: |
-        Factored out the [Client Doesn't Know], [Client perfers not to answer], and [data not collected]
+        Factored out the [Client Doesn't Know], [Client prefers not to answer], and [data not collected]
         The intention is to limit the number of lists that we define throughout the API reference.
       oneOf: 
         - title: "CLIENT_DOESNT_KNOW"
