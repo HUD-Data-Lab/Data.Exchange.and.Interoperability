@@ -35,7 +35,7 @@ tags:
   - name: Concepts
     description: |
       # Api Calls 
-      The HMIS API is a RESTFul API with different endpoints returning JSON data defined by HUD.
+      The HMIS API is a RESTFul API with different endpoints returning data defined by HUD in JSON format.
       ## Base URL 
       The base address of the HMIS API will be the same across endpoints and will be provided by your HMIS.
       ## Requests
@@ -1678,15 +1678,15 @@ components:
       properties:
         FirstName:
           type: string
-          description: First name of the client (for Query optional and may be a prefix partial)
+          description: First name of the client (optional for query)
           maxLength: 50
         LastName:
           type: string
-          description: Last name of the client (for Query optional and may be a prefix partial)
+          description: Last name of the client (optional for query)
           maxLength: 50
         NameSuffix:
           type: string
-          description: Suffix of the client's name (for Query optional and may be a prefix partial)
+          description: Suffix of the client's name (optional for query)
           maxLength: 50
         DOB:
           type: string
@@ -1709,15 +1709,15 @@ components:
           maxLength: 32
         FirstName:
           type: string
-          description: First name of the client (for Query optional and may be a prefix partial)
+          description: First name of the client (optional for query)
           maxLength: 50
         LastName:
           type: string
-          description: Last name of the client (for Query optional and may be a prefix partial)
+          description: Last name of the client (optional for query)
           maxLength: 50
         NameSuffix:
           type: string
-          description: Suffix of the client's name (for Query optional and may be a prefix partial)
+          description: Suffix of the client's name (optional for query)
           maxLength: 50
         DOB:
           type: string
@@ -2357,11 +2357,11 @@ components:
       type: object
       properties:
         OrganizationName:
-          description: Organization name (for Query optional and may be a prefix partial)
+          description: Organization name (optional for query)
           type: string
           maxLength: 200
         OrganizationCommonName:
-          description: Organization common name (for Query optional and may be a prefix partial)
+          description: Organization common name (optional for query)
           type: string
           maxLength: 200
 
@@ -2593,7 +2593,7 @@ components:
           description: "Approximate or partial date of birth reported"
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client doesnt know"
+          description: "Client doesn't know"
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
           description: "Client prefers not to answer"
@@ -4145,7 +4145,7 @@ components:
     MissingDataQuality_list:
       type: integer
       description: |
-        Factored out the [Client Doesn't Know], [Client perfers not to answer], and [data not collected]
+        Factored out the [Client Doesn't Know], [Client prefers not to answer], and [data not collected]
         The intention is to limit the number of lists that we define throughout the API reference.
       oneOf: 
         - title: "CLIENT_DOESNT_KNOW"
