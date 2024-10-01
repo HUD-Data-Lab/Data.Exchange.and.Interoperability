@@ -195,10 +195,10 @@ paths:
         '400':
           description: Invalid input provided
           content: 
-            application/json:
+            text/plain:
               schema: 
                 type: string
-                description: Invalid input provided
+                example: "Invalid input provided"
   /ceparticipation/{CEParticipationID}: #Flag to review the GET.
     get:
       tags:
