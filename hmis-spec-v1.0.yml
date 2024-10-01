@@ -179,7 +179,7 @@ paths:
               schema:
                 allOf: 
                   - $ref: "#/components/schemas/CEParticipationUniqueID"
-                  - $ref:  "#/components/schemas/CEParticipationBase" # Flagging for review. Compare to sandbox response
+                  - $ref:  "#/components/schemas/CEParticipationBase"
                   - $ref: "#/components/schemas/CEParticipationBaseMetadata"
         '404':
           description: CE Participation Record not found
@@ -309,7 +309,7 @@ paths:
           content: 
             text/plain:
               schema: 
-                oneOf: # Flag to check these response generate as expected. The description should be the response body of each error
+                oneOf:
                   - type: object
                     properties:
                       MissingInformationIncorrectDatatype:
@@ -454,8 +454,16 @@ paths:
         content:
           application/json:
             schema:
-              anyOf: 
-                -  $ref: '#/components/schemas/EnrollmentBase' #flagging need to include PersonalID and 
+              anyOf:
+                - type: object
+                  properties: 
+                    PersonalID:
+                      type: string
+                      maxLength: 32
+                    ProjectID:
+                      type: string
+                      maxLength: 32
+                -  $ref: '#/components/schemas/EnrollmentBase'
       responses:
         '200':
           description: OK
@@ -1090,7 +1098,7 @@ paths:
         - in: query
           name: OrganizationSummaryQuery
           schema: 
-            $ref: "#/components/schemas/OrganizationSummaryQuery"
+            $ref: "#/components/schemas/OrganizationSummaryQuery" # Flag for review.
       responses:
         '200':
           description: A list of Organizations that match the query
