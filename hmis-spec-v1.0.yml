@@ -198,7 +198,7 @@ paths:
             text/plain:
               schema: 
                 type: string
-                example: "Invalid input provided"
+                example: Invalid input provided
   /ceparticipation/{CEParticipationID}: #Flag to review the GET.
     get:
       tags:
@@ -228,7 +228,7 @@ paths:
             text/plain:
               schema: 
                 type: string
-                example: "CE Participation Record not found"
+                example: CE Participation Record not found
     patch: 
       tags:
         - CEParticipation
@@ -254,23 +254,27 @@ paths:
           description: OK
         '404':
           description: CE Participation record not found
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: CE Participation Record not found
         '400':
           description: Invalid input provided
           content: 
-            application/json:
+            text/plain:
               schema:
                 oneOf:  
                   - type: object
                     properties:
                       InvalidInput:
                         type: string
-                        description: Invalid Input Provided
-                        example: "{\"message\": \"This is a JSON string response\"}"
+                        example: Invalid Input Provided
                   - type: object
                     properties:
                       ProjectIDNotFound:
                         type: string
-                        description: Project not found
+                        example: Project not found
     delete:
       tags:
         - CEParticipation
@@ -290,10 +294,10 @@ paths:
         '404':
           description: CE Participation record not found
           content: 
-            application/json:
-              schema:
+            text/plain:
+              schema: 
                 type: string
-                description: CE Participation record not found
+                example: CE Participation Record not found
   /ceparticipationsummary/{ProjectID}:
     get: 
       tags: 
@@ -319,6 +323,11 @@ paths:
                   - $ref: "#/components/schemas/CEParticipationSummaryInfo"
         '404':
           description: Project not found
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Project not found
 
   /clients:
     post:
@@ -339,7 +348,7 @@ paths:
         '400':
           description: Invalid input provided
           content: 
-            application/json:
+            text/plain:
               schema: 
                 oneOf: # Flag to check these response generate as expected. The description should be the response body of each error
                   - type: object
@@ -379,10 +388,10 @@ paths:
         '404':
           description: Client not found
           content:
-            application/json:
+            text/plain:
               schema: 
                 type: string
-                description: Client not found
+                example: Client not found
     patch:
       tags:
         - Clients
@@ -408,18 +417,18 @@ paths:
           description: OK
         '404':
           description: Client not found
-          content:
-            application/json:
+          content: 
+            text/plain:
               schema: 
                 type: string
-                description: Client not found
+                example: Client not found
         '400':
           description: Missing Information or Incorrect DataType
-          content:
-            application/json:
+          content: 
+            text/plain:
               schema: 
                 type: string
-                description: Invalid Input Provided                      
+                example: Invalid input provided                
     delete:
       tags:
         - Clients
@@ -438,11 +447,11 @@ paths:
           description: OK
         '404':
           description: Client not found
-          content:
-            application/json:
+          content: 
+            text/plain:
               schema: 
                 type: string
-                description: Client not found
+                example: client not found
   /clientsummary:
     get:
       tags:
@@ -469,6 +478,11 @@ paths:
                   - $ref: '#/components/schemas/ClientSummaryResponse' #Flagging that PersonalID is included in this schema, but not the mockoon response
         '404':
           description: Client not found
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Client not found
 
   /enrollments:
     post:
@@ -487,7 +501,12 @@ paths:
         '200':
           description: OK
         '400':
-          description: Invalid input provided #Flag for content review
+          description: Invalid input provided
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Invalid input provided
   /enrollments/{EnrollmentID}:
     get:
       tags:
@@ -516,10 +535,10 @@ paths:
         '404':
           description: EnrollmentID not found
           content: 
-            application/json:
+            text/plain:
               schema: 
                 type: string
-                description: Enrollment not found
+                example: Enrollment not found
     patch:
       tags:
         - Enrollments
@@ -554,14 +573,14 @@ paths:
         '404':
           description: Enrollment not found
           content: 
-            application/json:
+            text/plain:
               schema: 
                 type: string
-                description: Enrollment not found
+                example: Enrollment not found
         '400':
           description: Invalid input provided
           content: 
-            application/json:
+            text/plain:
               schema: 
                 oneOf: 
                   - type: object
@@ -598,10 +617,10 @@ paths:
         '404':
           description: Enrollment not found
           content: 
-            application/json:
+            text/plain:
               schema: 
                 type: string
-                description: Enrollment not found
+                example: Enrollment not found
   /enrollmentsummary/{PersonalID}:
     get:
       tags: 
@@ -628,6 +647,11 @@ paths:
                   - $ref: '#/components/schemas/EnrollmentSummaryInfo'
         '404':
           description: Enrollment not found
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Enrollment not found
 
   /exit:
     post: 
@@ -648,7 +672,7 @@ paths:
         '400':
           description: Invalid input provided
           content: 
-            application/json:
+            text/plain:
               schema: 
                 oneOf: 
                   - type: object
@@ -708,14 +732,14 @@ paths:
         '404':
           description: Exit not found
           content: 
-            application/json:
+            text/plain:
               schema: 
                 type: string
-                description: Exit not found
+                example: Exit not found
         '400':
           description: Invalid input provided
           content: 
-            application/json:
+            text/plain:
               schema: 
                 oneOf: 
                   - type: object
@@ -762,10 +786,10 @@ paths:
         '404':
           description: Enrollment not found
           content: 
-            application/json:
+            text/plain:
               schema: 
                 type: string
-                description: ExitID is not found
+                example: Enrollment not found
   /exitsummary/{PersonalID}:
     get:
       tags: 
@@ -791,6 +815,11 @@ paths:
                   -  $ref: '#/components/schemas/ExitSummaryInfo'
         '404':
           description: Exits not found
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Exits not found
 
   /funders:
     post:
@@ -811,10 +840,10 @@ paths:
         '400':
           description: Invalid input provided
           content: 
-            application/json:
+            text/plain:
               schema: 
                 type: string
-                description: Invalid input provided
+                example: Invalid input provided
   /funders/{FunderID}:
     get:
         tags:
@@ -841,11 +870,11 @@ paths:
                     - $ref: "#/components/schemas/FunderBaseMetadata"
           '404':
             description: Funder not found
-            content:
-              application/json:
+            content: 
+              text/plain:
                 schema: 
                   type: string
-                  description: Funder not found
+                  example: Funder not found
     patch:
         tags:
           - Funders
@@ -872,15 +901,15 @@ paths:
             description: OK
           '404':
             description: Funder not found
-            content:
-              application/json:
+            content: 
+              text/plain:
                 schema: 
                   type: string
-                  description: Funder not found
+                  example: Funder not found
           '400':
             description: Invalid input provided
             content:
-              application/json:
+              text/plain:
                 schema: 
                   oneOf: 
                   - type: object
@@ -911,11 +940,11 @@ paths:
             description: OK
           '404':
             description: Funder not found
-            content:
-              application/json:
+            content: 
+              text/plain:
                 schema: 
                   type: string
-                  description: Funder not found
+                  example: Funder not found
   /fundersummary/{ProjectID}:
     get:
       tags: 
@@ -945,10 +974,10 @@ paths:
         '404':
             description: No records found #Flag to check description. Should match the response in mockoon.
             content: 
-              application/json:
+              text/plain:
                 schema: 
                   type: string
-                  description: No records found
+                  example: No records found
 
   /organizations:
     post:
@@ -968,7 +997,7 @@ paths:
         '400':
           description: Invalid input provided
           content: 
-            application/json:
+            text/plain:
               schema: 
                 oneOf: 
                   - type: object
@@ -1013,10 +1042,10 @@ paths:
         '404':
           description: Organization not found
           content: 
-            application/json:
+            text/plain:
               schema: 
                 type: string
-                description: Organization not found
+                example: Organizations not found
     patch:
       tags:
         - Organizations
@@ -1044,14 +1073,14 @@ paths:
         '404':
           description: Organization not found
           content: 
-            application/json:
+            text/plain:
               schema: 
                 type: string
-                description: Organization not found
+                example: Organization not found
         '400':
           description: Invalid input provided
           content: 
-            application/json:
+            test/plain:
               schema: 
                 oneOf: 
                   - type: object
@@ -1088,10 +1117,10 @@ paths:
         '404':
           description: Organization not found
           content: 
-            application/json:
+            text/plain:
               schema: 
                 type: string
-                description: Organization not found
+                example: Organization not found
   /organizationsummary:
     get: 
       tags: 
@@ -1117,10 +1146,10 @@ paths:
         '404':
           description: Organization not found
           content: 
-            application/json:
+            text/plain:
               schema: 
                 type: string
-                description: Organizations not found
+                example: Organization not found
 
   /projects:
     post:
@@ -1141,10 +1170,10 @@ paths:
         '400':
           description: Invalid input provided
           content: 
-            application/json:
+            text/plain:
               schema: 
                 type: string
-                description: Invalid input provided
+                example: Invalid input provided
   /projects/{ProjectID}:
     get: 
       tags:
@@ -1171,11 +1200,11 @@ paths:
                   - $ref: "#/components/schemas/ProjectBaseMetadata"
         '404':
           description: Project not found
-          content:
-            application/json:
+          content: 
+            text/plain:
               schema: 
                 type: string
-                description: Project not found            
+                example: Project not found       
     patch:
       tags:
         - Project
@@ -1203,14 +1232,14 @@ paths:
         '404':
           description: Project not found
           content: 
-            application/json:
+            text/plain:
               schema: 
                 type: string
-                description: Project not found
+                example: Project not found
         '400':
           description: Invalid input provided
           content: 
-            application/json:
+            text/plain:
               schema: 
                 oneOf: 
                   - type: object
@@ -1241,11 +1270,11 @@ paths:
           description: OK
         '404':
           description: Project not found
-          content:
-            application/json:
-              schema:
+          content: 
+            text/plain:
+              schema: 
                 type: string
-                description: Project not found
+                example: Project not found
   /projectsummary:
     get: 
       tags: 
@@ -1270,11 +1299,11 @@ paths:
                     - $ref: "#/components/schemas/ProjectSummaryResponse"
         '404':
           description: No records found
-          content:
-            application/json:
-              schema:
+          content: 
+            text/plain:
+              schema: 
                 type: string
-                description: No records found
+                example: No records found
 
   /users/{UserID}:
     get:
@@ -1302,11 +1331,11 @@ paths:
                   - $ref: "#/components/schemas/UserBaseMetadata"
         '404':
           description: User not found
-          content:
-            application/json:
+          content: 
+            text/plain:
               schema: 
                 type: string
-                description: User not found
+                example: Project not found
     patch:
       tags:
         - Users
@@ -1332,17 +1361,17 @@ paths:
         '404':
           description: User not found
           content: 
-            application/json:
+            text/plain:
               schema: 
                 type: string
-                description: User not found
+                example: User not found
         '400':
           description: Invalid input provided
           content: 
-            application/json:
+            text/plain:
               schema: 
                 type: string
-                description: Invalid input provided
+                example: Invalid input provided
     delete:
       tags:
         - Users
@@ -1362,10 +1391,10 @@ paths:
         '404':
           description: User not found
           content: 
-            application/json:
+            text/plain:
               schema: 
                 type: string
-                description: User not found
+                example: User not found
 components: 
   # securitySchemes:
   #   oauth2:
