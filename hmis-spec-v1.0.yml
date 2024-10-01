@@ -47,106 +47,65 @@ tags:
       |---------|------------------------------------------------------------------------------------------------|
       | GET     | Used for retrieving resources                                                                  |
       | POST    | Used for creating resources                                                                    |
-      | PATCH     | Used for changing or replacing resources and queries that contain PII or sensitive information |
+      | PATCH   | Used for changing or replacing resources and queries                                           |
       | DELETE  | Used for removing resources                                                                    |
       | OPTIONS | Can be issued against any resource to request CORS support                                     |
-  #     ## Responses
+      
+      
+      ## Responses
 
-  #     The HMIS API will return JSON in the response body.
-  #     ### Response status codes
+      The HMIS API will return JSON or plain text in the response body.
+      ### Possible Response status codes
 
-  #     | Status Code | Description                                                                                                                                                                         | Methods               |
-  #     |-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------|
-  #     | 200         | OK - The request has succeeded. The user can read the result of the request in the body and the headers of the response.                                                          | all                   |
-  #     | 201         | Created - The request has been fulfilled and resulted in a new resource being created.                                                                                              | `POST` `PUT`          |
-  #     | 202         | Accepted - The request has been accepted for processing, but the processing has not been completed..                                                                                | `POST` `PUT` `DELETE` |
-  #     | 204         | No content - Request is processed successfully but no response payload is returned.                                                                                                 | `PUT` `DELETE`        |
-  #     | 301         | Moved permanently - This request and all future requests should be directed to the response's given URI.                                                                            | all                   |
-  #     | 303         | See other - Response has a Location header with a URL to which the user should redirect.                                                                                          | `POST` `PUT` `DELETE` |
-  #     | 304         | Not modified - User has requested a resource that has not been modified since the last request.                                                                                   | `POST` `PUT` `DELETE` |
-  #     | 400         | Bad request - Error indicating that the server cannot process the request due to something that is perceived to be a user error (e.g. malformed request syntax, invalid request). | all                   |
-  #     | 401         | Unauthorized - Credentials are not valid for the target resource (user is denied server-authentication).                                                                          | all                   |
-  #     | 403         | Forbidden - Request is successfully understood but the user is not authorized to use or access this resource.                                                                         | all                   |
-  #     | 404         | Not found - Requested resource is not found.                                                                                                                                        | all                   |
-  #     | 405         | Method not allowed - HTTP method is not allowed for the request's URI.                                                                                                              | all                   |
-  #     | 406         | Not acceptable - Request has specified a desired type, format or content-type in its headers but server is not able to provide.                                                     | all                   |
-  #     | 408         | Request timeout - Server times out waiting for the resource.                                                                                                                        | all                   |
-  #     | 409         | Conflict - Request cannot be completed due to conflict of the target resource.                                                                                                      | `POST` `PUT` `DELETE` |
-  #     | 410         | Gone - Requested resource does not exist any longer.                                                                                                                                | all                   |
-  #     | 412         | Precondition failed - Specified client precondition(s), described in request-headers, cannot be met.                                                                                | all                   |
-  #     | 415         | Unsupported media type - Requested content-type is unknown to server.                                                                                                               | all                   |
-  #     | 423         | Locked - Requested resource is currently unavailable.                                                                                                                               | `PUT` `DELETE`        |
-  #     | 428         | Precondition required - User has not specified required precondition(s).                                                                                                          | all                   |
-  #     | 429         | Too many requests - User has exceeded rate limits and sent too many requests.                                                                                                     | all                   |
-  #     | 500         | Internal server error - Unexpected server execution resulting in a failure to respond successfully.                                                                                 | all                   |
-  #     | 501         | Not implemented - User has requested for functionality that the server has specified it's not able to fulfill.                                                                    | all                   |
-  #     | 503         | Service unavailable - Server is currently unable to fulfill request. User is suggested to try again later.                                                                        | all                   |
-  #     ### Error response
+      | Status Code | Description                                                                                                                                                                         | Methods               |
+      |-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------|
+      | 200         | OK - The request has succeeded. The user can read the result of the request in the body and the headers of the response.                                                          | all                   |
+      | 201         | Created - The request has been fulfilled and resulted in a new resource being created.                                                                                              | `POST` `PUT`          |
+      | 202         | Accepted - The request has been accepted for processing, but the processing has not been completed..                                                                                | `POST` `PUT` `DELETE` |
+      | 204         | No content - Request is processed successfully but no response payload is returned.                                                                                                 | `PUT` `DELETE`        |
+      | 301         | Moved permanently - This request and all future requests should be directed to the response's given URI.                                                                            | all                   |
+      | 303         | See other - Response has a Location header with a URL to which the user should redirect.                                                                                          | `POST` `PUT` `DELETE` |
+      | 304         | Not modified - User has requested a resource that has not been modified since the last request.                                                                                   | `POST` `PUT` `DELETE` |
+      | 400         | Bad request - Error indicating that the server cannot process the request due to something that is perceived to be a user error (e.g. malformed request syntax, invalid request). | all                   |
+      | 401         | Unauthorized - Credentials are not valid for the target resource (user is denied server-authentication).                                                                          | all                   |
+      | 403         | Forbidden - Request is successfully understood but the user is not authorized to use or access this resource.                                                                         | all                   |
+      | 404         | Not found - Requested resource is not found.                                                                                                                                        | all                   |
+      | 405         | Method not allowed - HTTP method is not allowed for the request's URI.                                                                                                              | all                   |
+      | 406         | Not acceptable - Request has specified a desired type, format or content-type in its headers but server is not able to provide.                                                     | all                   |
+      | 408         | Request timeout - Server times out waiting for the resource.                                                                                                                        | all                   |
+      | 409         | Conflict - Request cannot be completed due to conflict of the target resource.                                                                                                      | `POST` `PUT` `DELETE` |
+      | 410         | Gone - Requested resource does not exist any longer.                                                                                                                                | all                   |
+      | 412         | Precondition failed - Specified client precondition(s), described in request-headers, cannot be met.                                                                                | all                   |
+      | 415         | Unsupported media type - Requested content-type is unknown to server.                                                                                                               | all                   |
+      | 423         | Locked - Requested resource is currently unavailable.                                                                                                                               | `PUT` `DELETE`        |
+      | 428         | Precondition required - User has not specified required precondition(s).                                                                                                          | all                   |
+      | 429         | Too many requests - User has exceeded rate limits and sent too many requests.                                                                                                     | all                   |
+      | 500         | Internal server error - Unexpected server execution resulting in a failure to respond successfully.                                                                                 | all                   |
+      | 501         | Not implemented - User has requested for functionality that the server has specified it's not able to fulfill.                                                                    | all                   |
+      | 503         | Service unavailable - Server is currently unable to fulfill request. User is suggested to try again later.                                                                        | all                   |
+      ### Error response
 
-  #     The HMIS API uses a single response to describe an error. This error response can be detected by the returned status
-  #     code (`4XX` or `5XX`) and the `Content-Type` header which will have a value of `application/problem+json`.
+      The HMIS API uses a single response to describe an error. This error response can be detected by the returned status
+      code (`4XX` or `5XX`). 
 
-  #     The response itself will be a JSON structure according to [RFC-7807](https://www.rfc-editor.org/rfc/rfc7807). In general
-  #     this response looks like:
+      The response itself will be a JSON structure or plain text. In general the response looks like:
 
-  #     ```json
-  #     {
-  #       "type": "about:blank",
-  #       "status": 403,
-  #       "title": "Forbidden",
-  #       "detail": "You don't have permission to access this resource."
-  #     }
-  #     ```
+      ```json
+      {
+        "Error message such as PersonalID not found"
+      }
+      ```
+      OR
 
-  #     - The `status` property contains the status code from the response.
-  #     - The `title` property contains short a human-readable summary of the occurred problem.
-  #     - The `detail` property contains a detailed human-readable description of the occurred problem and usually provides more
-  #       insight into the resolution (if any).
-  #     - The `type` property describes the _type_ of problem and can be used as a discriminator for problem variants with
-  #       additional properties. Type `about:blank` is the default and will only contain the aforementioned properties.
-
-  #     **Example of a non-default problem type**
-
-  #     ```json5
-  #     {
-  #       msg: "SSN is invalid",
-  #       error_code: "MISSING_SSN"
-
-  #     }
-  #     ```
-
-  #     ---
-  #     > 
-  #     ### Note
-  #     > If a resource endpoint supports one or more of the problem types they will be documented as a possible response.
-  #     ---
-  #     ## Collection response
-
-  #     If the response is for a collection of resources its structure will always look like the following.
-
-  #     ```json5
-  #     {
-  #       "query": {
-  #         // applied query
-  #       },
-  #       "result": [
-  #         // 0 or more resources
-  #         {
-  #           "id": "Resource 1"
-  #         },
-  #         {
-  #           "id": "Resource 2"
-  #         }
-  #       ],
-  #       "total": 2
-  #     }
-  #     ```
-
-  #     - The `query` property will always contain the query parameters that have been applied to get the resulting resources.
-  #       These include all provided query parameters and those not provided, but with a default.
-  #     - The `result` property will contain a list of zero or more resources matching the executed query.
-  #     - The `total` property will contain the total number of resources matching provided query parameters.
-
+      ```json
+      {
+        "PersonalID": "string",
+        "FirstName": "string",
+        "MiddleName": "string",
+        "LastName": "string",
+        "NameSuffix": "string"
+      }
+      ```
   - name: CEParticipation
     description: Data related to CE Participation.
   - name: Clients
@@ -199,7 +158,7 @@ paths:
               schema: 
                 type: string
                 example: Invalid input provided
-  /ceparticipation/{CEParticipationID}: #Flag to review the GET.
+  /ceparticipation/{CEParticipationID}: #Flag GET missing in mockoon
     get:
       tags:
         - CEParticipation
@@ -521,8 +480,7 @@ paths:
           schema:
             type: string
             maxLength: 32
-
-      responses: # Flag for review. 
+      responses:
         '200':
           description: Successful response with enrollment data
           content:
@@ -560,7 +518,7 @@ paths:
               anyOf: 
                 - type: object
                   properties: 
-                    EnrollmentID: #Flag for review if Enrollment PATCH request should include EnrollmentID and PersonalID
+                    EnrollmentID: #Flag for confirmation. Should Enrollment PATCH request include EnrollmentID and PersonalID
                       type: string
                       maxLength: 32
                     PersonalID:
@@ -715,7 +673,7 @@ paths:
           application/json:
             schema:
               anyOf: 
-                - type: object #Flag for review: EnrollmentID and PersonalID are needed for Exit Patch
+                - type: object #Flag for confirmation: EnrollmentID and PersonalID are needed for Exit Patch
                   properties:
                     EnrollmentID:
                       type: string
@@ -972,7 +930,7 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/FunderSummaryInfo'
         '404':
-            description: No records found #Flag to check description. Should match the response in mockoon.
+            description: No records found #Flag to check description with the description in mockoon.
             content: 
               text/plain:
                 schema: 
@@ -1411,27 +1369,6 @@ components:
   #         scopes:
   #           write:pets: modify pets in your account
   #           read:pets: read your pets
-  parameters:
-    LimitParam: 
-      in: query
-      name: limit
-      description: The numbers of items to return.
-      required: false
-      schema: 
-        type: integer
-        minimum: 1
-        maximum: 50
-        default: 20
-    OffsetParam:
-      in: query
-      name: offset
-      description: The number of items to skip before starting to collect the result set.
-      required: false
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
-
   schemas:
     CEParticipationUniqueID:
       type: object
@@ -2075,14 +2012,14 @@ components:
           type: string
           format: date
 
-    EnrollmentRequestBody: #Flag for review. May not be needed
-      anyOf: 
-        -   $ref: "#/components/schemas/EnrollmentBase"
-        -   type: object
-      properties:
-        EnrollmentID:
-          type: string
-          maxLength: 32
+    # EnrollmentRequestBody:
+    #   anyOf: 
+    #     -   $ref: "#/components/schemas/EnrollmentBase"
+    #     -   type: object
+    #   properties:
+    #     EnrollmentID:
+    #       type: string
+    #       maxLength: 32
 
     ExitUniqueID:
       type: object
@@ -4209,99 +4146,3 @@ components:
           const: 9
         - title: "DATA_NOT_COLLECTED"
           const: 99
-
-# Parameter Schemas
-
-# Commented out to test BaseResponse and create a general response format that includes pagination
-    # Pagination:
-    #   type: object
-    #   description: page info for paginated endpoints
-    #   properties:
-    #     total:
-    #       type: integer
-    #       description: total number of results for the query
-    #     limit:
-    #       type: integer
-    #     offset:
-    #       type: integer
-    #       description: the starting point for this
-    #     next:
-    #       description: |
-    #         fields for the next page, if any.
-    #         Null if this is the last page.
-    #       type: object
-    #       properties:
-    #         offset:
-    #           type: number
-    #           description: the offset for the next page
-    #         limit:
-    #           type: number
-    #           description: the same as the above limit, for consistency
-    #         url:
-    #           type: string
-    #           description: |
-    #             the assembled url for the next page,
-    #             with query parameters already included.
-    # PaginatedList:
-    #   type: object
-    #   properties:
-    #     items:
-    #       type: array
-    #       items:
-    #         type: object
-    #     pagination:
-    #       $ref: "#/components/schemas/Pagination"
-
-# Response Schemas
-    BaseResponse:
-      type: object
-      properties:
-        query:
-          type: object
-          properties:
-            limit:
-              type: integer
-              default: 25
-            offset:
-              type: integer
-              default: 0
-        total:
-          type: integer
-
-    BasePagination:
-      type: object
-      properties:
-        limit:
-          type: integer
-          default: 25
-        offset:
-          type: integer
-          default: 0
-
-# Error Response Schemas
-    ErrorCodes:
-      type: string
-      description: "Enumeration of all error conditions returned by queries."
-      oneOf:
-        - title: "TOO_MANY_RESULTS"
-          const: "TOO_MANY_RESULTS"
-          description: "The query would return too many responses. Be more specific with the query data or include pagination in request."
-
-    ErrorResponse:
-      description: An object that can optionally include information about the error.
-      properties:
-        msg:
-          description: A detailed error message.
-          title: Msg
-          type: string
-        error_code:
-          description: The short string of the error
-          title: Error Code
-          type: string
-          $ref: "#/components/schemas/ErrorCodes"
-      required:
-      - msg
-      - error_code
-      title: ErrorResponse
-      type: object
-
