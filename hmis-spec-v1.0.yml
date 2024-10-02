@@ -1400,12 +1400,12 @@ components:
     ClientSummaryQuery:
       name: ClientSummaryQuery
       description: |
-        This structure is used to query or return a subset of client fields. 
-        For queries, the PersonalID field is not required but is returned in ClientSummaryResponse
+        This structure is used to query or return a subset of client fields to identify PersonalID. 
       in: query
       required: true
       schema: 
         type: object
+        minProperties: 2
         properties:
           FirstName:
             type: string
