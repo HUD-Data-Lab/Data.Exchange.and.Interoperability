@@ -429,12 +429,8 @@ paths:
         Get a list of clients by Personal Identifiable Information (PII). 
         At least two of the following must be provided: 
           FirstName, LastName, NameSuffix, DOB, and/or SSN. 
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ClientSummaryQuery'
+      parameters: 
+        - $ref: '#/components/parameters/ClientSummaryQuery'
       responses:
         '200':
           description: A list of clients that match the query
@@ -1400,6 +1396,37 @@ components:
   #         scopes:
   #           write:pets: modify pets in your account
   #           read:pets: read your pets
+  parameters: 
+    ClientSummaryQuery:
+      name: ClientSummaryQuery
+      description: |
+        This structure is used to query or return a subset of client fields. 
+        For queries, the PersonalID field is not required but is returned in ClientSummaryResponse
+      in: query
+      required: true
+      schema: 
+        type: object
+        properties:
+          FirstName:
+            type: string
+            description: First name of the client (for Query optional and may be a prefix partial)
+            maxLength: 50
+          LastName:
+            type: string
+            description: Last name of the client (for Query optional and may be a prefix partial)
+            maxLength: 50
+          NameSuffix:
+            type: string
+            description: Suffix of the client's name (for Query optional and may be a prefix partial)
+            maxLength: 50
+          DOB:
+            type: string
+            format: date
+            description: Optional date of birth of client. A date in ISO 8601 format (yyyy-mm-dd)
+          SSN:
+            type: string
+            description: Social Security Number
+            pattern: '^[0-9]{9}$'
   schemas:
     CEParticipationPrimaryKey:
       type: object
@@ -1692,33 +1719,6 @@ components:
         DateDeleted:
           type: string
           format: date-time
-
-    ClientSummaryQuery:
-      description: |
-        This structure is used to query or return a subset of client fields. 
-        For queries, the PersonalID field is not required but is returned in ClientSummaryResponse
-      type: object
-      properties:
-        FirstName:
-          type: string
-          description: First name of the client (for Query optional and may be a prefix partial)
-          maxLength: 50
-        LastName:
-          type: string
-          description: Last name of the client (for Query optional and may be a prefix partial)
-          maxLength: 50
-        NameSuffix:
-          type: string
-          description: Suffix of the client's name (for Query optional and may be a prefix partial)
-          maxLength: 50
-        DOB:
-          type: string
-          format: date
-          description: Optional date of birth of client. A date in ISO 8601 format (yyyy-mm-dd)
-        SSN:
-          type: string
-          description: Social Security Number
-          pattern: '^[0-9]{9}$'
 
     ClientSummaryResponse:
       description: |
