@@ -1102,7 +1102,7 @@ paths:
         - in: query
           name: OrganizationSummaryQuery
           schema: 
-            $ref: "#/components/schemas/OrganizationSummaryQuery" # Flag for review.
+            $ref: "#/components/schemas/OrganizationSummaryQuery"
       responses:
         '200':
           description: A list of Organizations that match the query
@@ -1268,10 +1268,7 @@ paths:
       description: |
         Get a list of Projects by partial Project Information. 
       parameters: 
-        - in: query
-          name: ProjectSummaryQuery
-          schema: 
-            $ref: "#/components/schemas/ProjectSummaryQuery"
+        - $ref: "#/components/parameters/ProjectSummaryQuery"
       responses:
         '200':
           description: A list of projects that match the query
@@ -1427,6 +1424,28 @@ components:
             type: string
             description: Social Security Number
             pattern: '^[0-9]{9}$'
+
+
+    ProjectSummaryQuery:
+      name: ProjectSummaryQuery
+      description: Query parameters to retrieve list of Projects by limited project information
+      in: query
+      required: true
+      schema: 
+        type: object
+        properties: 
+          OrganizationID:
+            type: string
+            maxLength: 32
+          OrganizationName:
+            type: string
+            maxLength: 200
+          ProjectType:
+            type: integer
+            oneOf:
+              - $ref: '#/components/schemas/ProjectType_list'
+
+
   schemas:
     CEParticipationPrimaryKey:
       type: object
@@ -2475,20 +2494,6 @@ components:
         DateDeleted:
           type: string
           format: date-time
-
-    ProjectSummaryQuery:
-      type: object
-      properties: 
-        OrganizationID:
-          type: string
-          maxLength: 32
-        OrganizationName:
-          type: string
-          maxLength: 200
-        ProjectType:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/ProjectType_list'
 
     ProjectSummaryResponse:
       type: object
