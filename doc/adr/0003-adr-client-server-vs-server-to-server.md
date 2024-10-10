@@ -52,7 +52,7 @@ This option would allow an external system to connect to HMIS and provide users 
 - Good, because Client to Server APIs enable real-time access to data, allowing client applications to retrieve and display up-to-date information, which is crucial for decision-making and user experience.
 - Good, because Client to Server APIs streamline data exchange processes and enhance overall efficiency.
 - Good, because Client to Server APIs provide the flexibility to customize interactions and data exchanges to meet specific business needs and user requirements.
-- Good, because it allows for end-user interaction with the process, specifically record matching
+- Good, because it allows for end-user interaction with the process, specifically record matching, though record-matching could also be part of a server-to-server workflow.
 - Bad, because this specific approach it is not intended for bulk data import/export
 
 ### Start with a Server to Server API
