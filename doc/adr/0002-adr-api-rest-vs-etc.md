@@ -78,9 +78,7 @@ Common use cases: Mobile apps, single-page applications, complex data relationsh
 - Bad, because more complex query features, it can be harder to correctly enforce access permissions.
 
 ### FHIR
-HL7 and FHIR are specific to healthcare data exchange and interoperability. FHIR is the newer, more modern standard.
-
-HL7 is not very human readable, but FHIR improves when used with JSON responses.
+FHIR is a modern RESTful healthcare exchange standard.
 
 See: https://www.hl7.org/fhir/http.html
 
