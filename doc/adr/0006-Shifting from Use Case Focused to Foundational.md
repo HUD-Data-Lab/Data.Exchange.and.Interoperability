@@ -31,7 +31,7 @@ HUD HMIS API Reference is grouped by collections. These collections are 1:1 the 
 
 THe HUD Data Lab will manage a collection of use case resources. These resources will be the modified collections and new endpoints to address a variety of use cases. These are not required by the vendor to implement, but can easily be integrated into the reference if they choose. 
 
-The vendors will be required to implement the foundational endpoints. This would keep the API Reference as minimul as possible and allow a clear standardized baseline for external systems to expect from HMIS. 
+The vendors will be required to implement the foundational endpoints. This would keep the API Reference as minimal as possible and allow a clear standardized baseline for external systems to expect from HMIS. 
 
 The library of use cases is will be an open library. Communities and vendors can add to it and use it as a starting point. This would allow a level of customizability for each community.
 

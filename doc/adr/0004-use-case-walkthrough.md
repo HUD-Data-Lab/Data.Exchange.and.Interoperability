@@ -1,8 +1,8 @@
-# HMIS API Reference Walkthrough Guide for v1.0
+# HMIS API Reference Walkthrough Guide for v0.1.0
 
 - Status: draft
 - Deciders: ICF, HUD
-- Date last updated: 2024-09-26
+- Date last updated: 2024-10-18
 
 ## Context and Problem Statement
 
@@ -29,40 +29,32 @@ This walkthrough is meant to serve as a guide to show how the API can be used to
 NOTE: We are intentionally using POST for this search.
 
 ```yaml
- /clientsummary:
-    post:
+  /clientsummary:
+    get:
       tags:
         - ClientSummary
-      summary: Request via POST a summary list of clients.
+      summary: Request a summary list of clients based on PII
       description: |
-        Get a list of clients by partial Personal Identifiable Information (PII). 
-        The request parameter are passed via the http body for security/privacy reasons. 
-        Putting PII in url parameter could in them ending up in logs.
-
-        The fields in the ClientSummary can be partial. e.g. Prefix of last name
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ClientSummary'
+        Get a list of clients by Personal Identifiable Information (PII). 
+        At least two of the following must be provided: 
+          FirstName, LastName, NameSuffix, DOB, and/or SSN. 
+      parameters: 
+        - $ref: '#/components/parameters/ClientSummaryQuery'
       responses:
         '200':
           description: A list of clients that match the query
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ClientSummaryResponse'
+                allOf: 
+                  - $ref: '#/components/schemas/ClientSummaryResponse'
         '404':
           description: Client not found
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: The request generated an error and could not process.
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Client not found
 ```
 From the returned list of PersonalIDs the end user will select the correct PersonalID. Once the PersonalID is known then that can be used to return the rest of the client data.
 
@@ -85,14 +77,21 @@ From the returned list of PersonalIDs the end user will select the correct Perso
             maxLength: 32
       responses:
         '200':
-          description: Successful response with client data
+          description: Client Information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Client'
+                allOf:
+                  - $ref: "#/components/schemas/ClientPrimaryKey"
+                  - $ref: '#/components/schemas/ClientBase'
+                  - $ref: "#/components/schemas/ClientBaseMetadata"
         '404':
           description: Client not found
-```
+          content:
+            text/plain:
+              schema: 
+                type: string
+                example: Client not found
 
 
 # Workflow: Update/Create a client-level record
@@ -100,33 +99,37 @@ From the returned list of PersonalIDs the end user will select the correct Perso
 ## Use PersonalID to update a client-level record (If PersonalID is unknown use the workflow in "See if a person has a record in HMIS" to identify PersonalID)
 
 ```yaml  
-/clients/{PersonalID}:
-    patch:
+  /clients/{PersonalID}:
+    get:
       tags:
         - Clients
-      summary: Update an existing client record.
-      description: Update an existing client record.
+      summary: Get client data by their Personal Identifier
+      description: Get client data by their Personal Identifier
       parameters:
         - name: PersonalID
           in: path
           required: true
-          description: Unique identifier for the client to update
+          description: Unique identifier for a client
           schema:
             type: string
             maxLength: 32
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ClientBase'
       responses:
         '200':
-          description: Client successfully updated
+          description: Client Information
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ClientPrimaryKey"
+                  - $ref: '#/components/schemas/ClientBase'
+                  - $ref: "#/components/schemas/ClientBaseMetadata"
         '404':
           description: Client not found
-        '400':
-          description: Invalid input provided
+          content:
+            text/plain:
+              schema: 
+                type: string
+                example: Client not found
 ```
 ## Create a new client information 
 If the client is not in HMIS use this workflow to create a new client.
@@ -142,18 +145,27 @@ If the client is not in HMIS use this workflow to create a new client.
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ClientBase'
+              anyOf: 
+                - $ref: "#/components/schemas/ClientBase"
       responses:
         '200':
-          description: Successful response with client data
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Client'
-        '201':
-          description: Client successfully created
+          description: OK
         '400':
           description: Invalid input provided
+          content: 
+            text/plain:
+              schema: 
+                oneOf:
+                  - type: object
+                    properties:
+                      MissingInformationIncorrectDatatype:
+                        type: string
+                        description: Invalid input provided
+                  - type: object
+                    properties: 
+                      InvalidInputProvided:
+                        type: string
+                        description: Please set MiddleName equal to Test
 ```
 
 # Workflow: See if a person has any enrollments 
@@ -177,8 +189,6 @@ If the client is not in HMIS use this workflow to create a new client.
           schema:
             type: string
             maxLength: 32
-        - $ref: '#/components/parameters/OffsetParam'
-        - $ref: '#/components/parameters/LimitParam'
       responses:
         '200':
           description: A list of enrollments 
@@ -186,10 +196,14 @@ If the client is not in HMIS use this workflow to create a new client.
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/EnrollmentSummaryResponse'
-                  - $ref: '#/components/schemas/PaginatedList'
+                  - $ref: '#/components/schemas/EnrollmentSummaryInfo'
         '404':
           description: Enrollment not found
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Enrollment not found
 ```
 
 # Workflow: See if a person has been enrolled in a CE project
@@ -204,7 +218,6 @@ Under Discussion.
 Use the /enrollmentsummary/{PersonalID} endpoint to return a table of all enrollments the client has. This table includes project type.
 
 ```yaml
-/enrollmentsummary/{PersonalID}:
     get:
       tags: 
         -  EnrollmentSummary
@@ -220,8 +233,6 @@ Use the /enrollmentsummary/{PersonalID} endpoint to return a table of all enroll
           schema:
             type: string
             maxLength: 32
-        - $ref: '#/components/parameters/OffsetParam'
-        - $ref: '#/components/parameters/LimitParam'
       responses:
         '200':
           description: A list of enrollments 
@@ -229,8 +240,12 @@ Use the /enrollmentsummary/{PersonalID} endpoint to return a table of all enroll
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/EnrollmentSummaryResponse'
-                  - $ref: '#/components/schemas/PaginatedList'
+                  - $ref: '#/components/schemas/EnrollmentSummaryInfo'
         '404':
           description: Enrollment not found
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Enrollment not found
 ```

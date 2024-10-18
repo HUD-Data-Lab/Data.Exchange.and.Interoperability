@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: HMIS API
   description: API for accessing HMIS data
-  version: "v1.0b14"
+  version: "v0.1.0b15"
 tags:
   - name: Authentication
     description: |
@@ -133,7 +133,7 @@ tags:
 security: 
   - oauth2: [] #TODO define the Oauth2 security schema
 servers:
-  - url: 'https://example.com/hmis/v1.0'
+  - url: 'https://example.com/hmis/v0.1.0'
 paths:
   /ceparticipation:
     post:
@@ -1561,7 +1561,6 @@ components:
           type: string
           description: Unique identifier for the client
           maxLength: 32
-
     ClientBase:
       type: object
       properties:
@@ -1738,7 +1737,6 @@ components:
         DateDeleted:
           type: string
           format: date-time
-
     ClientSummaryResponse:
       description: |
         This returns the PII from clients that match to identify the correct client. 
@@ -1764,10 +1762,10 @@ components:
         DOB:
           type: string
           format: date
-          description: Optional date of birth of client. A date in ISO 8601 format (yyyy-mm-dd) #Flag to confirm format example in description
+          description: Optional date of birth of client. A date in ISO 8601 format (yyyy-mm-dd)
         SSN:
           type: string
-          description: Social Security Number #flagging to confirm description
+          description: Social Security Number
           pattern: '^[0-9]{9}$'
 
 

@@ -53,8 +53,8 @@ forward.
 - **Backwards compatibility**
 
   HMIS API libraries should strive to maintain the structure and meaning of existing
-  resources. Future changes should avoid incompatability with the existing
-  resources and should avoid breaking changes across prior verions of this 
+  resources. Future changes should avoid incompatibility with the existing
+  resources and should avoid breaking changes across prior versions of this 
   specification. When breaking changes are required they should be clearly tied to
   the guiding principles here and follow the guidelines for 
   (schema evolution)[#SCHEMA-EVOLUTION.md].
