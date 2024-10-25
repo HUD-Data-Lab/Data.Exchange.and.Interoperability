@@ -2,14 +2,14 @@
 
 - Status: proposed
 - Deciders: ICF, HUD
-- Date: 2024-08-29
+- Date last updated: 2024-10-25
 
 Technical Story: 
 [#18](https://github.com/HUD-Data-Lab/Data.Exchange.and.Interoperability/issues/18)
 
 
 ## Context and Problem Statement
-The HUD HMIS API Reference provides a standardized baseline of what external parties and users can expect from an HMIS API. USDS, HUD, and ICF intended to build the API around use cases to allow the API to address the needs of CoCs to exhange data. However, the API should also be as minimal as possible. THe HMIS Vendors have also flagged the potential challenge of having the HUD HMIS API try to create a new endpoint of every user scenario need. The challenge is, how do we address the user scenarios while also keeping the API as minimal as possible.
+The HUD HMIS API Reference provides a standardized baseline of what external parties and users can expect from an HMIS API. USDS, HUD, and ICF intended to build the API around use cases to allow the API to address the needs of CoCs to exchange data. However, the API should also be as minimal as possible. THe HMIS Vendors have also flagged the potential challenge of having the HUD HMIS API try to create a new endpoint of every user scenario need. The challenge is, how do we address the user scenarios while also keeping the API as minimal as possible.
 
 ## Decision Drivers
 
@@ -19,21 +19,21 @@ The HUD HMIS API Reference provides a standardized baseline of what external par
 
 ## Considered Options
 
-- [option 1]: Build the API based around a single use case to create a minimul viable product
-- [option 2]: Focus the api on being 1:1 to the csv with the additon of user scenarios
+- [option 1]: Build the API based around a single use case to create a minimal viable product
+- [option 2]: Focus the api on being 1:1 to the csv with the addition of user scenarios
 - [option 3]: Specify the foundational endpoints with a maintained library of use cases.
 
 ## Decision Outcome
 
 Chosen option: "[option 3]". 
 
-HUD HMIS API Reference is grouped by collections. These collections are 1:1 the HUD CSV file. These collections will make up the foundaton collection. The foundatonal endpoints are the endpoints that allow an external user to create, update, view, or delete any information from a foundation collection. This will be focused on the data elements themselves and less on a specifc use case.
+HUD HMIS API Reference is grouped by collections. These collections are 1:1 the HUD CSV file. These collections will make up the foundational collection. The foundational endpoints are the endpoints that allow an external user to create, update, view, or delete any information from a foundation collection. This will be focused on the data elements themselves and less on a specific use case.
 
 THe HUD Data Lab will manage a collection of use case resources. These resources will be the modified collections and new endpoints to address a variety of use cases. These are not required by the vendor to implement, but can easily be integrated into the reference if they choose. 
 
 The vendors will be required to implement the foundational endpoints. This would keep the API Reference as minimal as possible and allow a clear standardized baseline for external systems to expect from HMIS. 
 
-The library of use cases is will be an open library. Communities and vendors can add to it and use it as a starting point. This would allow a level of customizability for each community.
+The library of use cases is will be an open library. Communities and vendors can add to it and use it as a starting point. This would allow a level of flexibility for each community to create custom solutions.
 
 
 ### Example of a Foundation Resource: Client
