@@ -45,3 +45,4 @@ Each new version of the API Reference will include additional tables/files fo th
 || Inventory ||
 || ProjectCoC ||
 
+*This resource is prepared by technical assistance providers and intended only to provide guidance. The contents of this document, except when based on statutory or regulatory authority or law, do not have the force and effect of law and are not meant to bind the public in any way. This document is intended only to provide clarity to the public regarding existing requirements under the law or agency policies.*
