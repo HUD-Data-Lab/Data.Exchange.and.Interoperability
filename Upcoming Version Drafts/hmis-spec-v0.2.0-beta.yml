@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: HMIS API
   description: API for accessing HMIS data
-  version: "v0.1.0b15"
+  version: "v0.2.0b"
 tags:
   - name: Authentication
     description: #TODO maybe remove
@@ -114,6 +114,7 @@ security:
   - oauth2: [] #TODO define the Oauth2 security schema
 servers:
   - url: 'https://example.com/hmis/v0.1.0'
+
 paths:
   /ceparticipation:
     post:
@@ -132,7 +133,14 @@ paths:
                 - $ref: '#/components/schemas/CEParticipationBase'
       responses: 
         '200':
-          $ref: "#/components/responses/OK"
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: "#/components/schemas/CEParticipationPrimaryKey"
+                  - $ref:  "#/components/schemas/CEParticipationBase"
+                  - $ref: "#/components/schemas/CEParticipationBaseMetadata"
         '400':
           description: Invalid input provided
           content: 
@@ -249,8 +257,6 @@ paths:
     get: 
       tags: 
         -  CEParticipation
-        - Foundational
-        - v0.1.0
       summary: Get a list of CEParticipation by ProjectID.
       description: |
         Get a list of Projects by by ProjectID.
@@ -296,6 +302,13 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ClientPrimaryKey"
+                  - $ref: '#/components/schemas/ClientBase'
+                  - $ref: "#/components/schemas/ClientBaseMetadata"
         '400':
           description: Invalid input provided
           content: 
@@ -316,8 +329,6 @@ paths:
     get:
       tags:
         - Clients
-        - Foundational
-        - v0.1.0
       summary: Get client data by their Personal Identifier
       description: Get client data by their Personal Identifier
       parameters:
@@ -465,6 +476,13 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: "#/components/schemas/EnrollmentPrimaryKey"
+                  - $ref: "#/components/schemas/EnrollmentBase"
+                  - $ref: "#/components/schemas/EnrollmentMetadata"
         '400':
           description: Invalid input provided
           content: 
@@ -508,8 +526,6 @@ paths:
     patch:
       tags:
         - Enrollments
-        - Foundational
-        - v0.1.0
       summary: Update an existing enrollment record
       description: Update an existing enrollment record
       parameters:
@@ -635,6 +651,13 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: "#/components/schemas/ExitPrimaryKey"
+                  - $ref: "#/components/schemas/ExitBase"
+                  - $ref: "#/components/schemas/ExitBaseMetadata"
         '400':
           description: Invalid input provided
           content: 
@@ -785,9 +808,7 @@ paths:
   /exitsummary/{PersonalID}:
     get:
       tags: 
-        - ExitSummary
-        - Foundational
-        - v0.1.0
+        -  ExitSummary
       summary: Get exits by PersonalID
       description: |
         This gets all the exits for a client by PersonalID. 
@@ -833,6 +854,13 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/FunderPrimaryKey"
+                  - $ref: "#/components/schemas/FunderBase"
+                  - $ref: "#/components/schemas/FunderBaseMetadata"
         '400':
           description: Invalid input provided
           content: 
@@ -842,116 +870,116 @@ paths:
                 example: Invalid input provided
   /funders/{FunderID}:
     get:
-      tags:
-        - Funders
-        - Foundational
-        - v0.1.0
-      summary: Get funder data by Funder ID
-      description: This gets funder data by Funder ID
-      parameters:
-        - name: FunderID
-          in: path
+        tags:
+          - Funders
+          - Foundational
+          - v0.1.0
+        summary: Get funder data by Funder ID
+        description: This gets funder data by Funder ID
+        parameters:
+          - name: FunderID
+            in: path
+            required: true
+            description: Unique identifier for a funder
+            schema:
+              type: string
+              maxLength: 32
+        responses:
+          '200':
+            description: Successful response with funder data
+            content:
+              application/json:
+                schema:
+                  allOf:
+                    - $ref: "#/components/schemas/FunderPrimaryKey"
+                    - $ref: "#/components/schemas/FunderBase"
+                    - $ref: "#/components/schemas/FunderBaseMetadata"
+          '404':
+            description: Funder not found
+            content: 
+              text/plain:
+                schema: 
+                  type: string
+                  example: Funder not found
+    patch:
+        tags:
+          - Funders
+          - Foundational
+          - v0.1.0
+        summary: Update an existing funder record
+        description: Update an existing funder record
+        parameters:
+          - name: FunderID
+            in: path
+            required: true
+            description: Unique identifier for the funder to update
+            schema:
+              type: string
+              maxLength: 32
+        requestBody:
           required: true
-          description: Unique identifier for a funder
-          schema:
-            type: string
-            maxLength: 32
-      responses:
-        '200':
-          description: Successful response with funder data
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: "#/components/schemas/FunderPrimaryKey"
-                  - $ref: "#/components/schemas/FunderBase"
-                  - $ref: "#/components/schemas/FunderBaseMetadata"
-        '404':
-          description: Funder not found
-          content: 
-            text/plain:
-              schema: 
-                type: string
-                example: Funder not found
-    patch:
-      tags:
-        - Funders
-        - Foundational
-        - v0.1.0
-      summary: Update an existing funder record
-      description: Update an existing funder record
-      parameters:
-        - name: FunderID
-          in: path
-          required: true
-          description: Unique identifier for the funder to update
-          schema:
-            type: string
-            maxLength: 32
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              anyOf: 
-                - $ref: '#/components/schemas/FunderBase'
-      responses:
-        '200':
-          description: OK
-        '404':
-          description: Funder not found
-          content: 
-            text/plain:
-              schema: 
-                type: string
-                example: Funder not found
-        '400':
-          description: Invalid input provided
-          content:
-            text/plain:
-              schema: 
-                oneOf: 
-                - type: object
-                  properties:
-                    ProjectNotFound:
-                      type: string
-                      description: Project not found
-                - type: object
-                  properties:
-                    InvalidInputProvided:
-                      type: string
-                      description: Invalid input provided
+                anyOf: 
+                  - $ref: '#/components/schemas/FunderBase'
+        responses:
+          '200':
+            description: OK
+          '404':
+            description: Funder not found
+            content: 
+              text/plain:
+                schema: 
+                  type: string
+                  example: Funder not found
+          '400':
+            description: Invalid input provided
+            content:
+              text/plain:
+                schema: 
+                  oneOf: 
+                  - type: object
+                    properties:
+                      ProjectNotFound:
+                        type: string
+                        description: Project not found
+                  - type: object
+                    properties:
+                      InvalidInputProvided:
+                        type: string
+                        description: Invalid input provided
     delete:
-      tags:
-        - Funders
-        - Foundational
-        - v0.1.0
-      summary: Delete a funder record
-      description: This marks a funder record as deleted
-      parameters:
-        - name: FunderID
-          in: path
-          required: true
-          description: Unique identifier for the funder to delete
-          schema:
-            type: string
-            maxLength: 32
-      responses:
-        '200':
-          description: OK
-        '404':
-          description: Funder not found
-          content: 
-            text/plain:
-              schema: 
-                type: string
-                example: Funder not found
+        tags:
+          - Funders
+          - Foundational
+          - v0.1.0
+        summary: Delete a funder record
+        description: This marks a funder record as deleted
+        parameters:
+          - name: FunderID
+            in: path
+            required: true
+            description: Unique identifier for the funder to delete
+            schema:
+              type: string
+              maxLength: 32
+        responses:
+          '200':
+            description: OK
+          '404':
+            description: Funder not found
+            content: 
+              text/plain:
+                schema: 
+                  type: string
+                  example: Funder not found
   /fundersummary/{ProjectID}:
     get:
       tags: 
-        - FunderSummary
-        - Foundational
-        - v0.1.0
+        -  FunderSummary
+          - Foundational
+          - v0.1.0
       summary: |
         Get Funder information by ProjectID. 
       description: |
@@ -997,6 +1025,13 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: "#/components/schemas/OrganizationPrimaryKey"
+                  - $ref: "#/components/schemas/OrganizationBase"
+                  - $ref: "#/components/schemas/OrganizationBaseMetadata"
         '400':
           description: Invalid input provided
           content: 
@@ -1022,8 +1057,8 @@ paths:
     get: 
       tags:
         - Organizations
-        - Foundational
-        - v0.1.0
+          - Foundational
+          - v0.1.0
       summary: Get Organization data by the Organization Identifier
       description: Get Organization data by the Organization Identifier
       parameters:
@@ -1054,6 +1089,8 @@ paths:
     patch:
       tags:
         - Organizations
+          - Foundational
+          - v0.1.0
       summary: Update an existing organization record
       description: Update an existing organization record
       parameters:
@@ -1105,8 +1142,8 @@ paths:
     delete:
       tags:
         - Organizations
-        - Foundational
-        - v0.1.0
+          - Foundational
+          - v0.1.0
       summary: Delete an organization record
       description: This deletes an organization record
       parameters:
@@ -1130,9 +1167,9 @@ paths:
   /organizationsummary:
     get: 
       tags: 
-        - OrganizationSummary
-        - Foundational
-        - v0.1.0
+        -  OrganizationSummary
+          - Foundational
+          - v0.1.0
       summary: Get a list of Organizations by Organization name
       description: |
         Get a list of Organizations by Organization name
@@ -1177,6 +1214,13 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: "#/components/schemas/ProjectPrimaryKey"
+                  - $ref: '#/components/schemas/ProjectBase'
+                  - $ref: "#/components/schemas/ProjectBaseMetadata"
         '400':
           description: Invalid input provided
           content: 
@@ -1188,8 +1232,8 @@ paths:
     get: 
       tags:
         - Project
-        - Foundational
-        - v0.1.0
+          - Foundational
+          - v0.1.0
       summary: Get Project data by the Project Identifier
       description: Get Project data by the Project Identifier
       parameters:
@@ -1236,8 +1280,8 @@ paths:
     patch:
       tags:
         - Project
-        - Foundational
-        - v0.1.0
+          - Foundational
+          - v0.1.0
       summary: Update an existing client record.
       description: Update an existing client record.
       parameters:
@@ -1309,9 +1353,9 @@ paths:
   /projectsummary:
     get: 
       tags: 
-        - ProjectSummary
-        - Foundational
-        - v0.1.0
+        -  ProjectSummary
+          - Foundational
+          - v0.1.0
       summary: Get a list of Projects by partial Project Information
       description: |
         Get a list of Projects by partial Project Information. 
@@ -1431,12 +1475,13 @@ paths:
               schema: 
                 type: string
                 example: User not found
+
   /currentlivingsituation:
     post:
       tags: 
         - CurrentLivingSituation
         - Foundational
-        - v0.1.0
+        - v0.2.0
       summary: Create a new CurrentLivingSituation record
       description: Create a new CurrentLivingSituation record
       requestBody:

@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: HMIS API
   description: API for accessing HMIS data
-  version: "v0.1.0b15"
+  version: "v0.1.0b16"
 tags:
   - name: Authentication
     description: |
@@ -151,6 +151,13 @@ paths:
       responses: 
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: "#/components/schemas/CEParticipationPrimaryKey"
+                  - $ref:  "#/components/schemas/CEParticipationBase"
+                  - $ref: "#/components/schemas/CEParticipationBaseMetadata"
         '400':
           description: Invalid input provided
           content: 
@@ -304,6 +311,13 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ClientPrimaryKey"
+                  - $ref: '#/components/schemas/ClientBase'
+                  - $ref: "#/components/schemas/ClientBaseMetadata"
         '400':
           description: Invalid input provided
           content: 
@@ -463,6 +477,13 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: "#/components/schemas/EnrollmentPrimaryKey"
+                  - $ref: "#/components/schemas/EnrollmentBase"
+                  - $ref: "#/components/schemas/EnrollmentMetadata"
         '400':
           description: Invalid input provided
           content: 
@@ -623,6 +644,13 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: "#/components/schemas/ExitPrimaryKey"
+                  - $ref: "#/components/schemas/ExitBase"
+                  - $ref: "#/components/schemas/ExitBaseMetadata"
         '400':
           description: Invalid input provided
           content: 
@@ -811,6 +839,13 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/FunderPrimaryKey"
+                  - $ref: "#/components/schemas/FunderBase"
+                  - $ref: "#/components/schemas/FunderBaseMetadata"
         '400':
           description: Invalid input provided
           content: 
@@ -965,6 +1000,13 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: "#/components/schemas/OrganizationPrimaryKey"
+                  - $ref: "#/components/schemas/OrganizationBase"
+                  - $ref: "#/components/schemas/OrganizationBaseMetadata"
         '400':
           description: Invalid input provided
           content: 
@@ -1137,6 +1179,13 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: "#/components/schemas/ProjectPrimaryKey"
+                  - $ref: '#/components/schemas/ProjectBase'
+                  - $ref: "#/components/schemas/ProjectBaseMetadata"
         '400':
           description: Invalid input provided
           content: 
