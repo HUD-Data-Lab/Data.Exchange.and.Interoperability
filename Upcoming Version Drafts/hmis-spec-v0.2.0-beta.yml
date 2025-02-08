@@ -104,7 +104,15 @@ tags:
     description: Summary of data related to Projects.
   - name: Users
     description: Users are used to represent the individuals who have access to the system. Each user has a unique UserID.
+  - name: AssessmentResults
+    description: Data related the the results of assessment questions defined in AssessmentQuestion.
   - name: v0.1.0
+    description: The version that the endpoint was originally added into the API reference.
+  - name: v0.2.0
+    description: The version that the endpoint was originally added into the API reference.
+  - name: v0.3.0
+    description: The version that the endpoint was originally added into the API reference.
+  - name: v0.4.0
     description: The version that the endpoint was originally added into the API reference.
   - name: Foundational
     description: These are the endpoints that are required by HMIS vendors to be implemented.
@@ -118,6 +126,7 @@ servers:
 paths:
   /ceparticipation:
     post:
+      operationId: postCEparticipation
       summary: Create a new CEParticipation record
       description: Create a new CEParticipation record
       tags:
@@ -150,6 +159,7 @@ paths:
                 example: Invalid input provided
   /ceparticipation/{CEParticipationID}:
     get:
+      operationId: getCEParticipationbyID
       tags:
         - CEParticipation
         - Foundational
@@ -181,6 +191,7 @@ paths:
                 type: string
                 example: CE Participation Record not found
     patch: 
+      operationId: patchCEparticipationbyID
       tags:
         - CEParticipation
         - Foundational
@@ -228,33 +239,9 @@ paths:
                       ProjectIDNotFound:
                         type: string
                         example: Project not found
-    delete:
-      tags:
-        - CEParticipation
-        - Foundational
-        - v0.1.0
-      summary: Delete a Project record
-      description: This marks the Project record as deleted
-      parameters:
-        - name: CEParticipationID
-          in: path
-          required: true
-          description: Unique identifier for the Project to delete
-          schema:
-            type: string
-            maxLength: 32
-      responses:
-        '200':
-          description: OK
-        '404':
-          description: CE Participation record not found
-          content: 
-            text/plain:
-              schema: 
-                type: string
-                example: CE Participation Record not found
   /ceparticipationsummary/{ProjectID}:
     get: 
+      operationId: getceparticipationsummary
       tags: 
         -  CEParticipation
       summary: Get a list of CEParticipation by ProjectID.
@@ -286,6 +273,7 @@ paths:
 
   /clients:
     post:
+      operationId: postClients
       summary: Create a new client record
       description: This creates a new client record
       tags:
@@ -327,6 +315,7 @@ paths:
                         description: Please set MiddleName equal to Test
   /clients/{PersonalID}:
     get:
+      operationId: getClientsbyID
       tags:
         - Clients
       summary: Get client data by their Personal Identifier
@@ -357,6 +346,7 @@ paths:
                 type: string
                 example: Client not found
     patch:
+      operationId: patchClientsbyID
       tags:
         - Clients
         - Foundational
@@ -404,33 +394,10 @@ paths:
                       MiddleNameEqualsTest:
                         type: string
                         description: PLease set MiddleName equal to test 
-    delete:
-      tags:
-        - Clients
-        - Foundational
-        - v0.1.0
-      summary: Delete a client record
-      description: This marks the client record as deleted
-      parameters:
-        - name: PersonalID
-          in: path
-          required: true
-          description: Unique identifier for the client to delete
-          schema:
-            type: string
-            maxLength: 32
-      responses:
-        '200':
-          description: OK
-        '404':
-          description: Client not found
-          content: 
-            text/plain:
-              schema: 
-                type: string
-                example: client not found
+
   /clientsummary:
     get:
+      operationId: getClientSummary
       tags:
         - ClientSummary
         - Foundational
@@ -460,6 +427,7 @@ paths:
 
   /enrollments:
     post:
+      operationId: postEnrollments
       tags: 
         - Enrollments          
         - Foundational
@@ -492,6 +460,7 @@ paths:
                 example: Invalid input provided
   /enrollments/{EnrollmentID}:
     get:
+      operationId: getEnrollmentsbyID
       tags:
         - Enrollments
         - Foundational
@@ -524,6 +493,7 @@ paths:
                 type: string
                 example: Enrollment not found
     patch:
+      operationId: patchEnrollmentsbyID
       tags:
         - Enrollments
       summary: Update an existing enrollment record
@@ -574,33 +544,9 @@ paths:
                       ProjectNotFound:
                         type: string
                         description: Project not found
-    delete:
-      tags:
-        - Enrollments
-        - Foundational
-        - v0.1.0
-      summary: Delete an enrollment record
-      description: This deletes an enrollment record
-      parameters:
-        - name: EnrollmentID
-          in: path
-          required: true
-          description: Unique identifier for the enrollment to delete
-          schema:
-            type: string
-            maxLength: 32
-      responses:
-        '200':
-          description: OK
-        '404':
-          description: Enrollment not found
-          content: 
-            text/plain:
-              schema: 
-                type: string
-                example: Enrollment not found
   /enrollmentsummary/{PersonalID}:
     get:
+      operationId: getEnrollmentSummary
       tags: 
         -  EnrollmentSummary
         - Foundational
@@ -634,7 +580,8 @@ paths:
                 example: Enrollment not found
 
   /exit:
-    post: 
+    post:
+      operationId: postExit
       tags: 
         -  Exits
         - Foundational
@@ -686,6 +633,7 @@ paths:
                         description: Enrollment already has an exit
   /exit/{ExitID}:
     get:
+      operationId: getExitbyID
       tags:
         - Exits
         - Foundational
@@ -718,6 +666,7 @@ paths:
                 type: string
                 example: Exit not found
     patch:
+      operationId: patchExitbyID
       tags:
         - Exits
         - Foundational
@@ -780,33 +729,9 @@ paths:
                       EnrollmentNotFound:
                         type: string
                         description: Enrollment not found
-    delete:
-      tags:
-        - Exits
-        - Foundational
-        - v0.1.0
-      summary: Delete an enrollment record
-      description: This deletes an enrollment record
-      parameters:
-        - name: ExitID
-          in: path
-          required: true
-          description: Unique identifier for the enrollment to delete
-          schema:
-            type: string
-            maxLength: 32
-      responses:
-        '200':
-          description: OK
-        '404':
-          description: Enrollment not found
-          content: 
-            text/plain:
-              schema: 
-                type: string
-                example: Enrollment not found
   /exitsummary/{PersonalID}:
     get:
+      operationId: getExitSummary
       tags: 
         -  ExitSummary
       summary: Get exits by PersonalID
@@ -838,6 +763,7 @@ paths:
 
   /funders:
     post:
+      operationId: postFunders
       tags: 
         - Funders
         - Foundational
@@ -870,110 +796,87 @@ paths:
                 example: Invalid input provided
   /funders/{FunderID}:
     get:
-        tags:
-          - Funders
-          - Foundational
-          - v0.1.0
-        summary: Get funder data by Funder ID
-        description: This gets funder data by Funder ID
-        parameters:
-          - name: FunderID
-            in: path
-            required: true
-            description: Unique identifier for a funder
-            schema:
-              type: string
-              maxLength: 32
-        responses:
-          '200':
-            description: Successful response with funder data
-            content:
-              application/json:
-                schema:
-                  allOf:
-                    - $ref: "#/components/schemas/FunderPrimaryKey"
-                    - $ref: "#/components/schemas/FunderBase"
-                    - $ref: "#/components/schemas/FunderBaseMetadata"
-          '404':
-            description: Funder not found
-            content: 
-              text/plain:
-                schema: 
-                  type: string
-                  example: Funder not found
-    patch:
-        tags:
-          - Funders
-          - Foundational
-          - v0.1.0
-        summary: Update an existing funder record
-        description: Update an existing funder record
-        parameters:
-          - name: FunderID
-            in: path
-            required: true
-            description: Unique identifier for the funder to update
-            schema:
-              type: string
-              maxLength: 32
-        requestBody:
+      operationId: getFundersbyID
+      tags:
+        - Funders
+        - Foundational
+        - v0.1.0
+      summary: Get funder data by Funder ID
+      description: This gets funder data by Funder ID
+      parameters:
+        - name: FunderID
+          in: path
           required: true
+          description: Unique identifier for a funder
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with funder data
           content:
             application/json:
               schema:
-                anyOf: 
-                  - $ref: '#/components/schemas/FunderBase'
-        responses:
-          '200':
-            description: OK
-          '404':
-            description: Funder not found
-            content: 
-              text/plain:
-                schema: 
-                  type: string
-                  example: Funder not found
-          '400':
-            description: Invalid input provided
-            content:
-              text/plain:
-                schema: 
-                  oneOf: 
-                  - type: object
-                    properties:
-                      ProjectNotFound:
-                        type: string
-                        description: Project not found
-                  - type: object
-                    properties:
-                      InvalidInputProvided:
-                        type: string
-                        description: Invalid input provided
-    delete:
-        tags:
-          - Funders
-          - Foundational
-          - v0.1.0
-        summary: Delete a funder record
-        description: This marks a funder record as deleted
-        parameters:
-          - name: FunderID
-            in: path
-            required: true
-            description: Unique identifier for the funder to delete
+                allOf:
+                  - $ref: "#/components/schemas/FunderPrimaryKey"
+                  - $ref: "#/components/schemas/FunderBase"
+                  - $ref: "#/components/schemas/FunderBaseMetadata"
+        '404':
+          description: Funder not found
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Funder not found
+    patch:
+      operationId: patchFunderbyID
+      tags:
+        - Funders
+        - Foundational
+        - v0.1.0
+      summary: Update an existing funder record
+      description: Update an existing funder record
+      parameters:
+        - name: FunderID
+          in: path
+          required: true
+          description: Unique identifier for the funder to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
             schema:
-              type: string
-              maxLength: 32
-        responses:
-          '200':
-            description: OK
-          '404':
-            description: Funder not found
-            content: 
-              text/plain:
-                schema: 
-                  type: string
-                  example: Funder not found
+              anyOf: 
+                - $ref: '#/components/schemas/FunderBase'
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Funder not found
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Funder not found
+        '400':
+          description: Invalid input provided
+          content:
+            text/plain:
+              schema: 
+                oneOf: 
+                - type: object
+                  properties:
+                    ProjectNotFound:
+                      type: string
+                      description: Project not found
+                - type: object
+                  properties:
+                    InvalidInputProvided:
+                      type: string
+                      description: Invalid input provided
   /fundersummary/{ProjectID}:
     get:
       tags: 
@@ -1411,7 +1314,7 @@ paths:
             text/plain:
               schema: 
                 type: string
-                example: Project not found
+                example: User not found
     patch:
       tags:
         - Users
@@ -2330,6 +2233,865 @@ paths:
               schema: 
                 type: string
                 example: YouthEducationStatus record not found
+
+  /assessment:
+    post:
+      summary: Create a new Assessment record
+      description: Create a new Assessment record
+      tags:
+        - Assessments
+        - Foundational
+        - v0.3.0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssessmentBase'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/AssessmentPrimaryKey"
+                  - $ref: '#/components/schemas/AssessmentBase'
+                  - $ref: "#/components/schemas/AssessmentBaseMetaData"
+        '400':
+          description: Invalid input provided
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Invalid input provided
+  /assessment/{AssessmentID}:
+    get:
+      tags:
+        - Assessments
+        - Foundational
+        - v0.3.0
+      summary: Get Assessment data by Assessment ID
+      description: Get Assessment data by Assessment ID
+      parameters:
+        - name: AssessmentID
+          in: path
+          required: true
+          description: Unique identifier for an Assessment record
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with Assessment data
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: "#/components/schemas/AssessmentPrimaryKey"
+                  - $ref: '#/components/schemas/AssessmentBase'
+                  - $ref: "#/components/schemas/AssessmentBaseMetaData"
+        '404':
+          description: Assessment not found
+
+    patch:
+      tags:
+        - Assessments        
+        - Foundational
+        - v0.3.0
+      summary: Update an existing Assessment record
+      description: Update an existing Assessment record
+      parameters:
+        - name: AssessmentID
+          in: path
+          required: true
+          description: Unique identifier for the Assessment to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssessmentBase'
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Assessment not found
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Assessment Record not found
+        '400':
+          description: Invalid input provided
+          content: 
+            text/plain:
+              schema:
+                oneOf:  
+                  - type: object
+                    properties:
+                      InvalidInput:
+                        type: string
+                        example: Invalid Input Provided
+                  - type: object
+                    properties:
+                      AssessmentIDNotFound:
+                        type: string
+                        example: AssessmentID not found
+
+  /assessmentquestions:
+    post:
+      summary: Create a new AssessmentQuestion record
+      description: Create a new AssessmentQuestion record
+      tags:
+        - AssessmentQuestions
+        - Foundational
+        - v0.3.0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssessmentQuestionsBase'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/AssessmentQuestionsPrimaryKey"
+                  - $ref: '#/components/schemas/AssessmentQuestionsBase'
+                  - $ref: "#/components/schemas/AssessmentQuestionsBaseMetaData"
+        '400':
+          description: Invalid input provided
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Invalid input provided
+  /assessmentquestions/{AssessmentQuestionID}:
+    get:
+      tags:
+        - AssessmentQuestions
+        - Foundational
+        - v0.3.0
+      summary: Get AssessmentQuestion data by AssessmentQuestion ID
+      description: Get AssessmentQuestion data by AssessmentQuestion ID
+      parameters:
+        - name: AssessmentQuestionID
+          in: path
+          required: true
+          description: Unique identifier for an AssessmentQuestion record
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/AssessmentQuestionsPrimaryKey"
+                  - $ref: '#/components/schemas/AssessmentQuestionsBase'
+                  - $ref: "#/components/schemas/AssessmentQuestionsBaseMetaData"
+        '404':
+          description: AssessmentQuestion not found
+
+    patch:
+      tags:
+        - AssessmentQuestions
+        - Foundational
+        - v0.3.0
+      summary: Update an existing AssessmentQuestion record
+      description: Update an existing AssessmentQuestion record
+      parameters:
+        - name: AssessmentQuestionID
+          in: path
+          required: true
+          description: Unique identifier for the AssessmentQuestion to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssessmentQuestionsBase'
+      responses:
+        '200':
+          description: AssessmentQuestion successfully updated
+        '400':
+          description: Invalid input provided
+          content: 
+            text/plain:
+              schema:
+                oneOf:  
+                  - type: object
+                    properties:
+                      InvalidInput:
+                        type: string
+                        example: Invalid Input Provided
+                  - type: object
+                    properties:
+                      AssessmentIDNotFound:
+                        type: string
+                        example: AssessmentID not found
+
+  /assessmentresults:
+    post: 
+      summary: Create a new result record from AssessmentQuestions
+      description: Create a new result record from AssessmentQuestions
+      tags:
+        - AssessmentResults
+        - Foundational
+        - v0.3.0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssessmentResultsBase'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/AssessmentResultsPrimaryKey"
+                  - $ref: '#/components/schemas/AssessmentResultsBase'
+                  - $ref: "#/components/schemas/AssessmentResultsBaseMetaData"
+        '400':
+          description: Invalid input provided
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Invalid input provided
+  /assessmentresults/{AssessmentResultsID}:
+    get:
+      tags:
+        - AssessmentResults
+        - Foundational
+        - v0.3.0
+      summary: Get AssessmentResult data by AssessmentResult ID
+      description: Get AssessmentResult data by AssessmentResult ID
+      parameters:
+        - name: AssessmentResultsID
+          in: path
+          required: true
+          description: Unique identifier for an AssessmentResult record
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/AssessmentResultsPrimaryKey"
+                  - $ref: '#/components/schemas/AssessmentResultsBase'
+                  - $ref: "#/components/schemas/AssessmentResultsBaseMetaData"
+        '404':
+          description: AssessmentResult not found
+
+    patch:
+      tags:
+        - AssessmentResults
+        - Foundational
+        - v0.3.0
+      summary: Update an existing AssessmentResult record
+      description: Update an existing AssessmentResult record
+      parameters:
+        - name: AssessmentResultsID
+          in: path
+          required: true
+          description: Unique identifier for the AssessmentResult to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssessmentResultsBase'
+      responses:
+        '200':
+          description: AssessmentResult successfully updated
+        '400':
+          description: Invalid input provided
+          content: 
+            text/plain:
+              schema:
+                oneOf:  
+                  - type: object
+                    properties:
+                      InvalidInput:
+                        type: string
+                        example: Invalid Input Provided
+                  - type: object
+                    properties:
+                      AssessmentIDNotFound:
+                        type: string
+                        example: AssessmentResultID not found
+
+  /event:
+    post:
+      summary: Create a new Event record
+      description: This creates a new Event record
+      tags:
+        - Event
+        - Foundational
+        - v0.3.0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventBase'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/EventPrimaryKey"
+                  - $ref: '#/components/schemas/EventBase'
+                  - $ref: "#/components/schemas/EventBaseMetaData"
+        '400':
+          description: Invalid input provided
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Invalid input provided
+  /events/{EventID}:
+    get:
+      tags:
+        - Event
+        - Foundational
+        - v0.3.0
+      summary: Get Event data by Event ID
+      description: This gets Event data by Event ID
+      parameters:
+        - name: EventID
+          in: path
+          required: true
+          description: Unique identifier for an Event record
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with Event data
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/EventPrimaryKey"
+                  - $ref: '#/components/schemas/EventBase'
+                  - $ref: "#/components/schemas/EventBaseMetaData"
+        '404':
+          description: Event not found
+
+    patch:
+      tags:
+        - Event
+        - Foundational
+        - v0.3.0
+      summary: Update an existing Event record
+      description: Update an existing Event record
+      parameters:
+        - name: EventID
+          in: path
+          required: true
+          description: Unique identifier for the Event to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventBase'
+      responses:
+        '200':
+          description: Event successfully updated
+        '400':
+          description: Invalid input provided
+          content: 
+            text/plain:
+              schema:
+                oneOf:  
+                  - type: object
+                    properties:
+                      InvalidInput:
+                        type: string
+                        example: Invalid Input Provided
+                  - type: object
+                    properties:
+                      AssessmentIDNotFound:
+                        type: string
+                        example: EventID not found
+
+  /affiliation:
+      post:
+        summary: Create a new Affiliation record
+        description: Create a new Affiliation record
+        tags:
+          - Affiliation
+          - Foundational
+          - v0.4.0
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AffiliationBase'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  allOf:
+                    - $ref: "#/components/schemas/AffiliationPrimaryKey"
+                    - $ref: '#/components/schemas/AffiliationBase'
+                    - $ref: "#/components/schemas/AffiliationBaseMetaData"
+          '400':
+            description: Invalid input provided
+            content: 
+              text/plain:
+                schema: 
+                  type: string
+                  example: Invalid input provided
+  /affiliation/{AffiliationID}:
+    get: 
+      summary: Get Affiliation data by Affiliation ID
+      description: Get Affiliation data by Affiliation ID
+      tags:
+        - Affiliation
+        - Foundational
+        - v0.4.0
+      parameters:
+        - name: AffiliationID
+          in: path
+          required: true
+          description: Unique identifier for an Affiliation
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with Affiliation data
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: '#/components/schemas/AffiliationPrimaryKey'  
+                  - $ref: '#/components/schemas/AffiliationBase'
+                  - $ref: '#/components/schemas/AffiliationBaseMetaData'
+        '404':
+          description: AffiliationID not found
+          content:
+            text/plain:
+              schema: 
+                type: string
+                example: AffiliationID not found
+    patch:
+      tags:
+        - Affiliation
+        - Foundational
+        - v0.4.0
+      summary: Update an existing Affiliation record
+      description: Update an existing Affiliation record
+      parameters:
+        - name: AffiliationID
+          in: path
+          required: true
+          description: Unique identifier for the Affiliation to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AffiliationBase'
+      responses:
+        '200':
+          description: Affiliation successfully updated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/AffiliationPrimaryKey'
+                  - $ref: '#/components/schemas/AffiliationBase'
+                  - $ref: '#/components/schemas/AffiliationBaseMetaData'
+        '404':
+          description: Affiliation not found
+          content:
+            text/plain:
+              schema: 
+                type: string
+                example: AffiliationID not found 
+        '400':
+          description: Invalid input provided
+          content:
+            text/plain:
+              schema: 
+                type: string
+                example: Invalid input provided
+
+# /export:
+#  /export/{ExportID} <- Flagging this section for discussion and guidance
+
+  /hmisparticipation:
+    post: 
+      summary: Create a new HMISParticipation record
+      description: Create a new HMISParticipation record
+      tags:
+        - HMISParticipation
+        - Foundational
+        - v0.4.0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HMISParticipationBase'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/HMISParticipationPrimaryKey"
+                  - $ref: '#/components/schemas/HMISParticipationBase'
+                  - $ref: "#/components/schemas/HMISParticipationBaseMetaData"
+        '400':
+          description: Invalid input provided
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Invalid input provided
+  /hmisparticipation/{HMISParticipationID}:
+    get:
+      tags:
+        - HMISParticipation
+        - Foundational
+        - v0.4.0
+      summary: Get HMISParticipation data by HMISParticipation ID
+      description: Get HMISParticipation data by HMISParticipation ID
+      parameters:
+        - name: HMISParticipationID
+          in: path
+          required: true
+          description: Unique identifier for an HMISParticipation
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with HMISParticipation data
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  -  $ref: '#/components/schemas/HMISParticipationPrimaryKey'
+                  -  $ref: '#/components/schemas/HMISParticipationBase'
+                  -  $ref: '#/components/schemas/HMISParticipationBaseMetaData'
+        '404':
+          description: HMISParticipation not found
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: HMISParticipationID not found
+
+    patch:
+      tags:
+        - HMISParticipation
+        - Foundational
+        - v0.4.0
+      summary: Update an existing HMISParticipation record
+      description: Update an existing HMISParticipation record
+      parameters:
+        - name: HMISParticipationID
+          in: path
+          required: true
+          description: Unique identifier for the HMISParticipation to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HMISParticipationBase'
+      responses:
+        '200':
+          description: OK
+          content: 
+            application/json:
+              schema: 
+                allOf: 
+                  -  $ref: "#/components/schemas/HMISParticipationPrimaryKey"
+                  -  $ref: "#/components/schemas/HMISParticipationBase"
+                  -  $ref: "#/components/schemas/HMISParticipationBaseMetaData"
+        '404':
+          description: HMISParticipationID not found
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: HMISParticipationID not found
+        '400':
+          description: Invalid input provided
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Invalid input provided
+
+  /inventory:
+    post: 
+      summary: Create a new Inventory record
+      description: Use this to create a new Inventory record
+      tags:
+        - Inventory
+        - Foundational
+        - v0.4.0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryBase'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/InventoryPrimaryKey"
+                  - $ref: '#/components/schemas/InventoryBase'
+                  - $ref: "#/components/schemas/InventoryBaseMetaData"
+        '400':
+          description: Invalid input provided
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Invalid input provided
+  /inventory/{InventoryID}:
+    get:
+      tags:
+        - Inventory
+        - Foundational
+        - v0.4.0
+      summary: Get Inventory data by Inventory ID
+      description: Get Inventory data by Inventory ID
+      parameters:
+        - name: InventoryID
+          in: path
+          required: true
+          description: Unique identifier for an Inventory record
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Successful response with Inventory data
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: "#/components/schemas/InventoryPrimaryKey"
+                  - $ref: '#/components/schemas/InventoryBase'
+                  - $ref: "#/components/schemas/InventoryBaseMetaData"
+        '404':
+          description: InventoryID not found
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: InventoryID not found
+    patch:
+      tags:
+        - Inventory
+        - Foundational
+        - v0.4.0
+      summary: Update an existing Inventory record
+      description: Update an existing Inventory record
+      parameters:
+        - name: InventoryID
+          in: path
+          required: true
+          description: Unique identifier for the Inventory record to update
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryBase'
+      responses:
+        '200':
+          description: OK
+          content: 
+            application/json:
+              schema: 
+                allOf: 
+                  - $ref: "#/components/schemas/InventoryPrimaryKey"
+                  - $ref: '#/components/schemas/InventoryBase'
+                  - $ref: "#/components/schemas/InventoryBaseMetaData"
+        '404':
+          description: InventoryID not found
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: InventoryID not found
+        '400':
+          description: Invalid input provided
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Invalid input provided
+
+  /projectcoc:
+    post:              
+      summary: Create a new ProjectCoC record
+      description: Create a new ProjectCoC record
+      tags:
+        - ProjectCoC
+        - Foundational
+        - v0.4.0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCoCBase'
+      responses:
+        '200':
+          description: OK
+          content: 
+            application/json:
+              schema: 
+                allOf: 
+                  -  $ref: "#/components/schemas/ProjectCoCPrimaryKey"
+                  -  $ref: "#/components/schemas/ProjectCoCBase"
+                  -  $ref: "#/components/schemas/ProjectCoCBaseMetaData"     
+        '400':
+          description: Invalid input provided
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Invalid input provided
+
+  /projectcoc/{ProjectCoCID}:
+    get:
+      summary: Get ProjectCoC data by ProjectCoC ID
+      description: Get ProjectCoC data by ProjectCoC ID
+      tags:
+        - ProjectCoC
+        - Foundational
+        - v0.4.0
+      parameters: 
+        - name: ProjectCoCID
+          in: path
+          required: true
+          description: Unique identifier for a ProjectCoC
+          schema:
+            type: string
+            maxLength: 32
+      responses: 
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  -  $ref: "#/components/schemas/ProjectCoCPrimaryKey"
+                  -  $ref: "#/components/schemas/ProjectCoCBase"
+                  -  $ref: "#/components/schemas/ProjectCoCBaseMetaData"    
+        '404':
+          description: ProjectCoCID not found
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: ProjectCoCID not found
+    patch: 
+      summary: Update an existing ProjectCoC record
+      description: Update an existing ProjectCoC record
+      tags:
+        - ProjectCoC
+        - Foundational
+        - v0.4.0
+      parameters: 
+        - name: ProjectCoCID
+          in: path
+          required: true
+          description: Unique identifier for a ProjectCoC
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCoCBase'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  -  $ref: "#/components/schemas/ProjectCoCPrimaryKey"
+                  -  $ref: "#/components/schemas/ProjectCoCBase"
+                  -  $ref: "#/components/schemas/ProjectCoCBaseMetaData"  
+        '404':
+          description: ProjectCoCID not found
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: ProjectCoCID not found
+        '400':
+          description: Invalid input provided
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Invalid input provided
+
+
+
 
 components: 
   # securitySchemes:
@@ -4329,6 +5091,500 @@ components:
           format: date-time
           description: Date deleted
 
+
+    AssessmentPrimaryKey:
+      type: object
+      properties: 
+        AssessmentID:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+
+    AssessmentBase:
+      type: object
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          description: Enrollment Id
+        PersonalID:
+          type: string
+          maxLength: 32
+          description: Personal Id
+        AssessmentDate:
+          type: string
+          format: date
+          description: Assessment date
+        AssessmentLocation:
+          type: string
+          maxLength: 250
+          description: Assessment location
+        AssessmentType:
+          type: integer
+          description: Assessment type
+          $ref: '#/components/schemas/AssessmentType'
+        AssessmentLevel:
+          type: integer
+          description: Assessment level
+          $ref: '#/components/schemas/AssessmentLevel'
+        PrioritizationStatus:
+          type: integer
+          description: Prioritization status
+          $ref: '#/components/schemas/PrioritizationStatus'
+
+    AssessmentBaseMetaData:
+      type: object
+      properties:          
+        DateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        DateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        UserId:
+          type: string
+          maxLength: 32
+          description: User ID
+        DateDeleted:
+          type: string
+          format: date-time
+          description: Date deleted
+
+    AssessmentQuestionsPrimaryKey:
+      type: object
+      properties:
+        AssessmentQuestionID:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+          
+    AssessmentQuestionsBase:
+      type: object
+      properties:
+        AassessmentID:
+          type: string
+          maxLength: 32
+          description: Assessment ID
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          description: Enrollment ID
+        PersonalID:
+          type: string
+          maxLength: 32
+          description: Personal ID
+        AssessmentQuestionGroup:
+          type: string
+          maxLength: 250
+          description: Assessment question group (locally determined)
+        AssessmentQuestionOrder:
+          type: integer
+          description: Assessment question order (locally determined)
+        AssessmentQuestion:
+          type: string
+          maxLength: 250
+          description: Assessment question (cannot be null if AssessmentQuestions.csv is populated)
+        AssessmentAnswer:
+          type: string
+          maxLength: 500
+          description: Assessment answer (locally determined)
+
+
+    AssessmentQuestionsBaseMetaData:
+      type: object
+      properties:
+        DateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        DateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        UserId:
+          type: string
+          maxLength: 32
+          description: User ID
+        DateDeleted:
+          type: string
+          format: date-time
+          description: Date deleted
+
+
+    AssessmentResultsPrimaryKey:
+        type: object
+        properties:
+          AssessmentResultID:
+            type: string
+            maxLength: 32
+            description: Unique Identifier
+
+    AssessmentResultsBase:
+        type: object
+        properties:
+          AssessmentID:
+            type: string
+            maxLength: 32
+            description: Unique identifier
+          EnrollmentID:
+            type: string
+            maxLength: 32
+            description: Enrollment Id
+          PersonalID:
+            type: string
+            maxLength: 32
+            description: Personal Id
+          AssessmentResultType:
+            type: string
+            maxLength: 250
+          AssessmentResult:
+            type: string
+            maxLength: 250
+
+    AssessmentResultsBaseMetaData:
+      type: object
+      properties:
+        DateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        DateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        UserId:
+          type: string
+          maxLength: 32
+          description: User ID
+        DateDeleted:
+          type: string
+          format: date-time
+          description: Date deleted
+
+
+    EventPrimaryKey:
+      type: object
+      properties:
+        EventID:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+
+    EventBase:
+      type: object
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          description: Enrollment Id
+        PersonalID:
+          type: string
+          maxLength: 32
+          description: Personal Id
+        EventDate:
+          type: string
+          format: date
+          description: Event date
+        Event:
+          type: integer
+          description: Event type
+          $ref: '#/components/schemas/Referral_list'
+        ProbSolDivRRResult:
+          type: integer
+          description: Problem-solving/diversion/rapid resolution result
+          $ref: '#/components/schemas/NoYesMissing_list'
+        ReferralCaseManageAfter:
+          type: integer
+          description: Referral for case management after event
+          $ref: '#/components/schemas/NoYesMissing_list'
+        LocationCrisisOrPHHousing:
+          type: string
+          maxLength: 250
+          description: Location of crisis or permanent housing
+        ReferralResult:
+          type: integer
+          description: Referral result
+          $ref: '#/components/schemas/ReferralResult_list'
+        ResultDate:
+          type: string
+          format: date
+          description: Result date (if ReferralResult is not null)
+
+    EventBaseMetaData:
+      type: object
+      properties:
+        DateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        DateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        UserId:
+          type: string
+          maxLength: 32
+          description: User ID
+        DateDeleted:
+          type: string
+          format: date-time
+          description: Date deleted
+
+
+    AffiliationPrimaryKey:
+      type: object
+      properties:
+        AffiliationID:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+
+    AffiliationBase:
+      type: object
+      properties:
+        ProjectID:
+          type: string
+          maxLength: 32
+          description: Must match a ProjectID in Project where (ProjectType = 6) or (ProjectType = 13 and RRHSubType = 1)
+        ResProjectID:
+          type: string
+          maxLength: 32
+          description: Must match a record in Project where ProjectType = 0, 1, 2, 3, 8, 9, 10, or 13. If ProjectType = 13, RRHSubType must be 2.
+
+    AffiliationBaseMetaData:
+      type: object
+      properties:
+        DateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        DateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        UserId:
+          type: string
+          maxLength: 32
+          description: User Id
+        DateDeleted:
+          type: string
+          format: date-time
+          description: Date deleted
+
+
+    HMISParticipationPrimaryKey:
+      type: object
+      properties:
+        HMISParticipationID:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+
+    HMISParticipationBase:
+      type: object
+      properties:
+        ProjectID:
+          type: string
+          maxLength: 32
+          description: Must match a ProjectID in Projects
+        HMISParticipationType:
+          type: integer
+          description: HMISParticipationType
+          oneOf:
+            - $ref: '#/components/schemas/HMISParticipationType'
+        HmisParticipationStatusStartDate:
+          type: string
+          format: date
+          description: HMISParticipation status start date
+        HmisParticipationStatusEndDate:
+          type: string
+          format: date
+          description: HMISParticipation status end date
+    
+    HMISParticipationBaseMetaData:
+      type: object
+      properties:
+        DateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        DateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        UserId:
+          type: string
+          maxLength: 32
+          description: User Id
+        DateDeleted:
+          type: string
+          format: date-time
+          description: Date deleted
+
+    InventoryPrimaryKey:
+        type: object
+        properties:
+          InventoryID:
+            type: string
+            maxLength: 32
+            description: Unique identifier
+
+    InventoryBase:
+        type: object
+        properties:
+          ProjectID:
+            type: string
+            maxLength: 32
+            description: Must match a ProjectId in ProjectCoC.csv
+          CoCCode:
+            type: string
+            maxLength: 6
+            description: Must match a CoCCode in ProjectCoC.csv for the same ProjectID
+          HouseholdType:
+            type: integer
+            description: Household type
+            oneOf:
+              - $ref: '#/components/schemas/HouseholdType'
+          Availability:
+            type: integer
+            description: Availability status
+            oneOf:
+              - $ref: '#/components/schemas/Availability'
+          UnitInventory:
+            type: integer
+            description: Unit inventory
+          BedInventory:
+            type: integer
+            description: Bed inventory
+          CHVetBedInventory:
+            type: integer
+            description: Chronic homeless veteran bed inventory
+          YouthVetBedInventory:
+            type: integer
+            description: Youth veteran bed inventory
+          VetBedInventory:
+            type: integer
+            description: Veteran bed inventory
+          CHYouthBedInventory:
+            type: integer
+            description: Chronic homeless youth bed inventory
+          YouthBedInventory:
+            type: integer
+            description: Youth bed inventory
+          CHBedInventory:
+            type: integer
+            description: Chronic homeless bed inventory
+          OtherBedInventory:
+            type: integer
+            description: Other bed inventory
+          ESBedType:
+            type: integer
+            description: Emergency shelter bed type
+            oneOf:
+              - $ref: '#/components/schemas/BedType'
+          InventoryStartDate:
+            type: string
+            format: date
+            description: Inventory start date
+          InventoryEndDate:
+            type: string
+            format: date
+            description: Inventory end date
+
+    InventoryBaseMetaData:
+        type: object
+        properties:
+          DateCreated:
+            type: string
+            format: date-time
+            description: Date created
+          DateUpdated:
+            type: string
+            format: date-time
+            description: Date updated
+          UserId:
+            type: string
+            maxLength: 32
+            description: User ID
+          DateDeleted:
+            type: string
+            format: date-time
+            description: Date deleted
+
+    ProjectCoCPrimaryKey:
+      type: object
+      properties:
+        projectCoCId:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+
+    ProjectCoCBase:
+      type: object
+      properties:
+        ProjectID:
+          type: string
+          maxLength: 32
+          description: Must match a ProjectID in Project
+        CoCCode:
+          type: string
+          maxLength: 6
+          pattern: '^[a-zA-Z]{2}-[0-9]{3}$'
+          description: Two letters, a dash, and 3 numbers
+        Geocode3:
+          type: string
+          maxLength: 6
+          pattern: '^[0-9]{6}$'
+          description: Limited to six digits
+        Address1:
+          type: string
+          maxLength: 100
+        Address2:
+          type: string
+          maxLength: 100
+        City:
+          type: string
+          maxLength: 50
+        State:
+          type: string
+          maxLength: 2
+          pattern: '^[a-zA-Z]{2}$'
+          description: Limited to USPS-defined two-letter abbreviations
+        Zip:
+          type: string
+          maxLength: 5
+          pattern: '^[0-9]{5}$'
+          description: Limited to five digits
+        GeographyType:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/GeographyType'
+
+    ProjectCoCBaseMetaData:
+      type: object
+      properties:
+        DateCreated:
+          type: string
+          format: date-time
+          description: Date created
+        DateUpdated:
+          type: string
+          format: date-time
+          description: Date updated
+        UserId:
+          type: string
+          maxLength: 32
+          description: User Id
+        DateDeleted:
+          type: string
+          format: date-time
+          description: Date deleted
+
+
+
+
 # Response lists
     LastGradeCompleted_list:
       type: integer
@@ -5037,6 +6293,115 @@ components:
         - title: "DATA_NOT_COLLECTED"
           const: 99
           description: "Data not collected"
+
+    AssessmentType:
+      type: integer
+      description: "Type of assessment conducted."
+      oneOf:
+        - title: "PHONE"
+          const: 1
+          description: "Phone"
+        - title: "VIRTUAL"
+          const: 2
+          description: "Virtual"
+        - title: "IN_PERSON"
+          const: 3
+          description: "In Person"
+
+    AssessmentLevel:
+      type: integer
+      description: "Level of assessment for housing needs."
+      oneOf:
+        - title: "CRISIS_NEEDS_ASSESSMENT"
+          const: 1
+          description: "Crisis Needs Assessment"
+        - title: "HOUSING_NEEDS_ASSESSMENT"
+          const: 2
+          description: "Housing Needs Assessment"
+
+    PrioritizationStatus:
+      type: integer
+      description: "Status in the prioritization list for housing."
+      oneOf:
+        - title: "PLACED_ON_PRIORITIZATION_LIST"
+          const: 1
+          description: "Placed on prioritization list"
+        - title: "NOT_PLACED_ON_PRIORITIZATION_LIST"
+          const: 2
+          description: "Not placed on prioritization list"
+
+    HMISParticipationType:
+      type: integer
+      description: "Level of participation in the CoC's HMIS or VSP's comparable database by the project."
+      oneOf:
+        - title: "NOT_PARTICIPATING"
+          const: 0
+          description: "No persons in this project have data collected in the CoC's HMIS or by VSP in a comparable database."
+        - title: "HMIS_PARTICIPATING"
+          const: 1
+          description: "All persons in this project have data collected in the CoC's HMIS."
+        - title: "COMPARABLE_DATABASE_PARTICIPATING"
+          const: 2
+          description: "All persons in this project have data collected in a VSP comparable database"
+
+    HouseholdType:
+      type: integer
+      description: "Defines the type of households served by the project."
+      oneOf:
+        - title: "HOUSEHOLDS_WITHOUT_CHILDREN"
+          const: 1
+          description: "Households without children"
+        - title: "HOUSEHOLDS_WITH_AT_LEAST_ONE_ADULT_AND_ONE_CHILD"
+          const: 3
+          description: "Households with at least one adult and one child"
+        - title: "HOUSEHOLDS_WITH_ONLY_CHILDREN"
+          const: 4
+          description: "Households with only children"
+
+    Availability:
+      type: integer
+      description: "Availability status of the housing project's accommodations."
+      oneOf:
+        - title: "YEAR_ROUND"
+          const: 1
+          description: "Available year-round"
+        - title: "SEASONAL"
+          const: 2
+          description: "Seasonally available"
+        - title: "OVERFLOW"
+          const: 3
+          description: "Overflow accommodations"
+
+    BedType:
+      type: integer
+      description: "Specifies the type of beds available in the housing project."
+      oneOf:
+        - title: "FACILITY_BASED_BEDS"
+          const: 1
+          description: "Facility-based beds"
+        - title: "VOUCHER_BEDS"
+          const: 2
+          description: "Voucher beds"
+        - title: "OTHER_BEDS"
+          const: 3
+          description: "Other types of beds"
+
+    GeographyType:
+      type: integer
+      description: "Specifies the geographical setting of the project."
+      oneOf:
+        - title: "URBAN"
+          const: 1
+          description: "Urban area"
+        - title: "SUBURBAN"
+          const: 2
+          description: "Suburban area"
+        - title: "RURAL"
+          const: 3
+          description: "Rural area"
+        - title: "UNKNOWN_DATA_NOT_COLLECTED"
+          const: 99
+          description: "Unknown or data not collected"
 
 
 # Quality Response lists
@@ -6737,6 +8102,99 @@ components:
         - title: "DATA_NOT_COLLECTED"
           const: 99
           description: "Data not collected"
+
+
+    Referral_list:
+      type: integer
+      description: "Type of Event or referral action taken."
+      oneOf:
+        - title: "REFERRAL_TO_PREVENTION_ASSISTANCE_PROJECT"
+          const: 1
+          description: "Referral to Prevention Assistance project"
+        - title: "PROBLEM_SOLVING_DIVERSION_RAPID_RESOLUTION"
+          const: 2
+          description: "Problem Solving/Diversion/Rapid Resolution intervention or service"
+        - title: "REFERRAL_TO_SCHEDULED_CRISIS_NEEDS_ASSESSMENT"
+          const: 3
+          description: "Referral to scheduled Coordinated Entry Crisis Needs Assessment"
+        - title: "REFERRAL_TO_SCHEDULED_HOUSING_NEEDS_ASSESSMENT"
+          const: 4
+          description: "Referral to scheduled Coordinated Entry Housing Needs Assessment"
+        - title: "REFERRAL_TO_POST_PLACEMENT_FOLLOW_UP_CASE_MANAGEMENT"
+          const: 5
+          description: "Referral to Post-placement/ follow-up case management"
+        - title: "REFERRAL_TO_STREET_OUTREACH_PROJECT"
+          const: 6
+          description: "Referral to Street Outreach project or services"
+        - title: "REFERRAL_TO_HOUSING_NAVIGATION_PROJECT"
+          const: 7
+          description: "Referral to Housing Navigation project or services"
+        - title: "REFERRAL_TO_NON_CONTINUUM_SERVICES_INELIGIBLE"
+          const: 8
+          description: "Referral to Non-continuum services: Ineligible for continuum services"
+        - title: "REFERRAL_TO_NON_CONTINUUM_SERVICES_NO_Availability"
+          const: 9
+          description: "Referral to Non-continuum services: No Availability in continuum services"
+        - title: "REFERRAL_TO_EMERGENCY_SHELTER_BED_OPENING"
+          const: 10
+          description: "Referral to Emergency Shelter bed opening"
+        - title: "REFERRAL_TO_TRANSITIONAL_HOUSING_BED_OPENING"
+          const: 11
+          description: "Referral to Transitional Housing bed/unit opening"
+        - title: "REFERRAL_TO_JOINT_TH_RRH_PROJECT_OPENING"
+          const: 12
+          description: "Referral to Joint TH-RRH project/unit/resource opening"
+        - title: "REFERRAL_TO_RRH_PROJECT_RESOURCE_OPENING"
+          const: 13
+          description: "Referral to RRH project resource opening"
+        - title: "REFERRAL_TO_PSH_PROJECT_RESOURCE_OPENING"
+          const: 14
+          description: "Referral to PSH project resource opening"
+        - title: "REFERRAL_TO_OTHER_PH_PROJECT_RESOURCE_OPENING"
+          const: 15
+          description: "Referral to Other PH project/unit/resource opening"
+        - title: "REFERRAL_TO_EMERGENCY_ASSISTANCE"
+          const: 16
+          description: "Referral to emergency assistance/flex fund/furniture assistance"
+        - title: "REFERRAL_TO_HOUSING_STABILITY_VOUCHER"
+          const: 18
+          description: "Referral to a Housing Stability Voucher"
+
+    ReferralResult_list:
+      type: integer
+      description: "Outcome of the referral process."
+      oneOf:
+        - title: "SUCCESSFUL_REFERRAL_CLIENT_ACCEPTED"
+          const: 1
+          description: "Successful referral: client accepted"
+        - title: "UNSUCCESSFUL_REFERRAL_CLIENT_REJECTED"
+          const: 2
+          description: "Unsuccessful referral: client rejected"
+        - title: "UNSUCCESSFUL_REFERRAL_PROVIDER_REJECTED"
+          const: 3
+          description: "Unsuccessful referral: provider rejected"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Response Lists II
 
     NoYes_list:
