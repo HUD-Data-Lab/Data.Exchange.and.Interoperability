@@ -214,7 +214,7 @@ Under Discussion.
 2. Create new endpoint at the client level (/CEparticpationExample/{PersonalID}) that returns a yes/no. Add a query to the GET and a yes/no response.
 
 # Workflow: See if a person is or has been enrolled in a specific project type (ES, PSH, etc.) 
- 
+
 Use the /enrollmentsummary/{PersonalID} endpoint to return a table of all enrollments the client has. This table includes project type.
 
 ```yaml
@@ -249,3 +249,14 @@ Use the /enrollmentsummary/{PersonalID} endpoint to return a table of all enroll
                 type: string
                 example: Enrollment not found
 ```
+# HMIS API Conformance
+
+## Base Scenarios
+
+Scenario: Determine if a client exists in another system.
+Requested Payload:
+Expected Response (Client Found):
+Expected Response (No Match Found):
+Expected Response (Multiple Matches):
+
+Checklist for vendors:

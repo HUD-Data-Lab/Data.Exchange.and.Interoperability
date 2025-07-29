@@ -3371,44 +3371,8 @@ components:
           type: integer
           description: non-null only if all other race fields are 0 (UNKNOWN)
           oneOf:
-            - $ref: '#/components/schemas/RaceGenderNone_list'
+            - $ref: '#/components/schemas/None_list'
         AdditionalRaceEthnicity:
-          type: string
-          maxLength: 100
-        Woman:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-        Man:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-        NonBinary:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-        CulturallySpecific:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-        Transgender:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-        Questioning:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-        DifferentIdentity:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-        GenderNone:
-          type: integer
-          description: Non-null only if all other gender fields = 0
-          oneOf:
-            - $ref: '#/components/schemas/RaceGenderNone_list'
-        DifferentIdentityText:
           type: string
           maxLength: 100
         VeteranStatus:
@@ -3619,10 +3583,6 @@ components:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
-        SexualOrientation:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/SexualOrientation_list'
         FormerWardChildWelfare:
           type: integer
           oneOf:
@@ -7276,39 +7236,7 @@ components:
         - title: "DATA_NOT_COLLECTED"
           const: 99
           description: "Data not collected"
-
-    SexualOrientation_list:
-      type: integer
-      description: "Sexual orientation of the client."
-      oneOf:
-        - title: "HETEROSEXUAL"
-          const: 1
-          description: "Heterosexual"
-        - title: "GAY"
-          const: 2
-          description: "Gay"
-        - title: "LESBIAN"
-          const: 3
-          description: "Lesbian"
-        - title: "BISEXUAL"
-          const: 4
-          description: "Bisexual"
-        - title: "QUESTIONING_UNSURE"
-          const: 5
-          description: "Questioning / unsure"
-        - title: "OTHER"
-          const: 6
-          description: "Other"
-        - title: "CLIENT_DOESNT_KNOW"
-          const: 8
-          description: "Client doesn't know"
-        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
-          const: 9
-          description: "Client prefers not to answer"
-        - title: "DATA_NOT_COLLECTED"
-          const: 99
-          description: "Data not collected"
-
+  
     RHYNumberofYears_list:
       type: integer
       description: "Years formerly a ward of Child Welfare or Foster Care Agency."
@@ -8242,7 +8170,7 @@ components:
           const: 99
           description: "Data not collected."
 
-    RaceGenderNone_list:
+    None_list:
       type: integer
       description: "Indicates if race or gender data is not specified."
       oneOf:
