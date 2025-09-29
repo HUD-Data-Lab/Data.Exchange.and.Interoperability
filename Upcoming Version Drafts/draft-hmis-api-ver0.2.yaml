@@ -1,0 +1,780 @@
+openapi: 3.1.1
+info:
+  title: HMIS API - Baseline Specification
+  description: |
+    Standardized baseline API for HMIS data exchange. This specification defines the minimum 
+    format requirements for interoperability between HMIS vendors and external systems.
+    
+    Vendors maintain flexibility in internal implementation, security schemas, and business logic
+    while ensuring consistent data exchange patterns.
+  version: "v0.2.0"
+  contact:
+    name: HUD Data Lab
+    url: https://github.com/HUD-Data-Lab/Data.Exchange.and.Interoperability
+
+tags:
+  - name: Authentication
+    description: |
+     ## Prerequisites
+      To make use of this API you need to have an API key, User Id and User Secret.
+      With those credentials you can request a token which you will need to access this API's resources.
+      
+      ## Retrieving a token
+      To retrieve a token you need to make a POST request to your HMIS OAuth2 endpoint.
+      Response body:
+      ```json
+      {
+        "access_token": "eyJraWQ.........",
+        "expires_in": 3600,
+        "token_type": "Bearer"
+      }
+      ```
+      
+      ## Using your token
+      To make use of your access token you need to add the following headers to your requests:
+      ```
+      Authorization: Bearer <your access token>
+      x-api-key: <your api key>
+      ```
+
+  - name: Concepts
+    description: |
+      # API Baseline Functionality
+      The API is a RESTful API with standardized endpoints returning data defined by HUD in JSON format.
+      
+      ## API Specification
+      This API specification serves as a **translation layer** between HMIS vendors and external systems.
+      Vendors maintain their own:
+      - Internal table structures and database schemas
+      - Security and authentication mechanisms
+      - Business logic and validation rules
+      - Custom data elements beyond HUD requirements
+      
+      The API standard defines:
+      - Consistent request/response formats
+      - Standard HTTP methods and status codes
+      - Baseline resource collections (Client, Enrollment, Project, etc.)
+      - Common search and filter parameters
+      
+      ## Base URL 
+      The base address of the HMIS API will be provided by your HMIS vendor and follows the pattern:
+      ```
+      https://{server}/{path}/api/v{version}/
+      ```
+      
+      ## Requests
+      Resources are accessed via standard HTTP requests in UTF-8 format. The HMIS API uses:
+
+      | Method  | Action                                                                    |
+      |---------|---------------------------------------------------------------------------|
+      | GET     | Retrieve resources                                                        |
+      | POST    | Create resources                                                          |
+      | PATCH   | Partial update of resources (optional vendor support)                     |
+      | PUT     | Replace resources (optional vendor support)                               |
+      | DELETE  | Remove resources (optional vendor support per business rules)             |
+      | OPTIONS | CORS support                                                              |
+      
+      ## Responses
+      The HMIS API returns JSON or plain text in the response body.
+      
+      ### Standard Response Status Codes
+
+      | Status Code | Description                                                               | Methods               |
+      |-------------|--------------------------------------------------------------------------|-----------------------|
+      | 200         | OK - Request succeeded                                                    | GET, PATCH, PUT       |
+      | 201         | Created - Resource successfully created                                   | POST                  |
+      | 204         | No Content - Request succeeded with no response body                      | DELETE                |
+      | 400         | Bad Request - Invalid syntax or validation failure                        | All                   |
+      | 401         | Unauthorized - Authentication required                                    | All                   |
+      | 403         | Forbidden - Access denied                                                 | All                   |
+      | 404         | Not Found - Resource does not exist                                       | GET, PATCH, PUT, DELETE|
+      | 409         | Conflict - Version conflict or business rule violation                    | POST, PATCH, PUT      |
+      | 422         | Unprocessable Entity - Valid request but business rule violations         | POST, PATCH, PUT      |
+      | 500         | Internal Server Error - Unexpected server error                           | All                   |
+
+  - name: Client
+    description: Client resources represent individuals receiving services. Each client has a unique PersonalID.
+    
+  - name: Enrollment
+    description: Enrollment resources track client participation in projects. Links clients to projects via EnrollmentID.
+    
+  - name: EnrollmentSummary
+    description: Summary views of enrollment data for efficient querying across date ranges and projects.
+    
+  - name: Project
+    description: Projects represent service delivery programs. Each project has a unique ProjectID and belongs to one Organization.
+
+  - name: Organization
+    description: Organizations are the entities that operate projects. Each has a unique OrganizationID.
+
+security: 
+  - oauth2: []
+
+servers:
+  - url: 'https://example.com/hmis/v0.2.0'
+    description: Example HMIS vendor endpoint
+
+paths:
+  # ============================================================================
+  # BASELINE SCENARIO 1: Service History Retrieval
+  # Purpose: Retrieve client service history by date range, filterable by project type or funder
+  # ============================================================================
+  
+  /enrollmentsummary/{PersonalID}:
+    get:
+      tags:
+        - EnrollmentSummary
+      summary: Get service history for a client by PersonalID
+      description: |
+        **Baseline Scenario 1: Service History Retrieval**
+        
+        Retrieve all enrollment records for a specific client, optionally filtered by:
+        - Date range (entry date, exit date)
+        - Project type
+        - Funding source
+        
+        This endpoint supports the common use case of reviewing a client's service history
+        across multiple projects and programs to avoid duplication and coordinate care.
+        
+        **HUD Business Logic (Vendor-Implemented):**
+        - Deduplication logic
+        - ROI/consent verification before returning data
+        - Data visibility based on user permissions
+      operationId: getServiceHistoryByPersonalID
+      parameters:
+        - name: PersonalID
+          in: path
+          required: true
+          description: Unique identifier for the client
+          schema:
+            type: string
+            maxLength: 32
+        - name: startDate
+          in: query
+          required: false
+          description: Filter enrollments with EntryDate on or after this date (ISO 8601 format)
+          schema:
+            type: string
+            format: date
+            example: "2024-01-01"
+        - name: endDate
+          in: query
+          required: false
+          description: Filter enrollments with EntryDate on or before this date (ISO 8601 format)
+          schema:
+            type: string
+            format: date
+            example: "2024-12-31"
+        - name: projectType
+          in: query
+          required: false
+          description: Filter by project type code (see HMIS Data Standards)
+          schema:
+            type: integer
+            example: 1
+        - name: funder
+          in: query
+          required: false
+          description: Filter by funding source code
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Successful response with enrollment summary
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  PersonalID:
+                    type: string
+                    maxLength: 32
+                  enrollments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EnrollmentSummaryInfo'
+              example:
+                PersonalID: "ABC123"
+                enrollments:
+                  - EnrollmentID: "E001"
+                    ProjectID: "P456"
+                    ProjectName: "Emergency Shelter A"
+                    ProjectType: 1
+                    EntryDate: "2024-01-15"
+                    ExitDate: "2024-03-20"
+                    FunderCode: 1
+                  - EnrollmentID: "E002"
+                    ProjectID: "P789"
+                    ProjectName: "Transitional Housing B"
+                    ProjectType: 2
+                    EntryDate: "2024-03-25"
+                    ExitDate: null
+                    FunderCode: 3
+        '400':
+          description: Invalid query parameters
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Invalid date format. Use ISO 8601 (YYYY-MM-DD)"
+        '404':
+          description: PersonalID not found or no enrollments match criteria
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "No enrollment records found for PersonalID"
+
+  # ============================================================================
+  # BASELINE SCENARIO 2: Personal ID Identification
+  # Purpose: Search for and identify clients using various identifiers
+  # ============================================================================
+  
+  /clientsummary:
+    get:
+      tags:
+        - Client
+      summary: Search for clients by identifying information
+      description: |
+        **Baseline Scenario 2: Personal ID Identification**
+        
+        Search for client records using various identifying criteria:
+        - Name (first, last, partial matches)
+        - Date of birth
+        - Social Security Number (last 4 digits)
+        - Alternative identifiers
+        
+        This supports workflows where the PersonalID is unknown but other identifying
+        information is available. Returns a list of potential matches for review.
+        
+        **Business Rules (Vendor-Implemented):**
+        - Client matching algorithms
+        - Fuzzy matching logic
+        - Privacy controls on search results
+        - De-duplication rules
+      operationId: searchClients
+      parameters:
+        - name: firstName
+          in: query
+          required: false
+          description: Client's first name (supports partial matching)
+          schema:
+            type: string
+            maxLength: 50
+        - name: lastName
+          in: query
+          required: false
+          description: Client's last name (supports partial matching)
+          schema:
+            type: string
+            maxLength: 50
+        - name: dob
+          in: query
+          required: false
+          description: Date of birth (ISO 8601 format)
+          schema:
+            type: string
+            format: date
+            example: "1985-06-15"
+        - name: ssnLast4
+          in: query
+          required: false
+          description: Last 4 digits of Social Security Number
+          schema:
+            type: string
+            pattern: '^[0-9]{4}$'
+            example: "1234"
+      responses:
+        '200':
+          description: List of matching clients
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  matches:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ClientSummaryInfo'
+                  totalCount:
+                    type: integer
+                    description: Total number of matches found
+              example:
+                totalCount: 2
+                matches:
+                  - PersonalID: "ABC123"
+                    FirstName: "John"
+                    LastName: "Doe"
+                    DOB: "1985-06-15"
+                    SSNLast4: "1234"
+                    MatchScore: 0.95
+                  - PersonalID: "DEF456"
+                    FirstName: "John"
+                    LastName: "Doeman"
+                    DOB: "1985-06-14"
+                    SSNLast4: "1234"
+                    MatchScore: 0.78
+        '400':
+          description: Invalid search parameters
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "At least one search parameter is required"
+        '404':
+          description: No matches found
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "No clients found matching search criteria"
+
+  # ============================================================================
+  # BASELINE SCENARIO 3: Project Type and Enrollment Validation
+  # Purpose: Verify project enrollment eligibility and retrieve project details
+  # ============================================================================
+  
+  /project/{ProjectID}/eligibility:
+    post:
+      tags:
+        - Project
+      summary: Validate client eligibility for project enrollment
+      description: |
+        **Baseline Scenario 3: Project Type and Enrollment Validation**
+        
+        Check if a client meets eligibility requirements for enrollment in a specific project.
+        Returns eligibility status and reasons for any failures.
+        
+        Common eligibility checks:
+        - Veteran status for veteran-specific programs (SSVF)
+        - Age requirements (youth programs, elder programs)
+        - Income limits for income-restricted programs
+        - Family composition requirements
+        - Geographic/CoC requirements
+        
+        **Business Rules (Vendor-Implemented):**
+        - Project-specific eligibility logic
+        - Program rule enforcement
+        - Custom validation rules per funding source
+      operationId: checkProjectEligibility
+      parameters:
+        - name: ProjectID
+          in: path
+          required: true
+          description: Unique identifier for the project
+          schema:
+            type: string
+            maxLength: 32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - PersonalID
+              properties:
+                PersonalID:
+                  type: string
+                  maxLength: 32
+                  description: Client to check eligibility for
+                EntryDate:
+                  type: string
+                  format: date
+                  description: Proposed enrollment date (optional, defaults to today)
+            example:
+              PersonalID: "ABC123"
+              EntryDate: "2025-02-01"
+      responses:
+        '200':
+          description: Eligibility check complete
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  PersonalID:
+                    type: string
+                    maxLength: 32
+                  ProjectID:
+                    type: string
+                    maxLength: 32
+                  eligible:
+                    type: boolean
+                    description: Whether client is eligible for enrollment
+                  reasons:
+                    type: array
+                    description: List of reasons if not eligible, or confirming factors if eligible
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                          description: Machine-readable reason code
+                        message:
+                          type: string
+                          description: Human-readable explanation
+                        severity:
+                          type: string
+                          enum: [error, warning, info]
+                  projectDetails:
+                    type: object
+                    properties:
+                      ProjectName:
+                        type: string
+                      ProjectType:
+                        type: integer
+                      RequiresVeteranStatus:
+                        type: boolean
+                      AgeRestrictions:
+                        type: string
+              example:
+                PersonalID: "ABC123"
+                ProjectID: "P456"
+                eligible: false
+                reasons:
+                  - code: "VETERAN_STATUS_REQUIRED"
+                    message: "Client veteran status is 'No' but project requires veteran status"
+                    severity: "error"
+                  - code: "INCOME_LIMIT_EXCEEDED"
+                    message: "Client income exceeds program maximum"
+                    severity: "error"
+                projectDetails:
+                  ProjectName: "SSVF Rapid Rehousing"
+                  ProjectType: 13
+                  RequiresVeteranStatus: true
+                  AgeRestrictions: "18+"
+        '400':
+          description: Invalid request format
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "PersonalID is required"
+        '404':
+          description: Project or client not found
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "ProjectID not found"
+
+  # ============================================================================
+  # EXISTING ENDPOINTS (from v0.1.0) - maintained for backward compatibility
+  # ============================================================================
+
+  /client:
+    post:
+      tags:
+        - Client
+      summary: Create a new client record
+      description: Create a new client record in the system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientBase'
+      responses:
+        '201':
+          description: Client created successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ClientPrimaryKey'
+                  - $ref: '#/components/schemas/ClientBase'
+                  - $ref: '#/components/schemas/ClientBaseMetadata'
+        '400':
+          description: Invalid input provided
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Invalid input provided"
+
+  /client/{PersonalID}:
+    get:
+      tags:
+        - Client
+      summary: Get client by PersonalID
+      description: Retrieve detailed client information by their unique PersonalID
+      parameters:
+        - name: PersonalID
+          in: path
+          required: true
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Client found
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ClientPrimaryKey'
+                  - $ref: '#/components/schemas/ClientBase'
+                  - $ref: '#/components/schemas/ClientBaseMetadata'
+        '404':
+          description: Client not found
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Client not found"
+
+  /enrollment/{EnrollmentID}:
+    get:
+      tags:
+        - Enrollment
+      summary: Get enrollment by EnrollmentID
+      description: Retrieve detailed enrollment information
+      parameters:
+        - name: EnrollmentID
+          in: path
+          required: true
+          schema:
+            type: string
+            maxLength: 32
+      responses:
+        '200':
+          description: Enrollment found
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/EnrollmentPrimaryKey'
+                  - $ref: '#/components/schemas/EnrollmentBase'
+                  - $ref: '#/components/schemas/EnrollmentMetadata'
+        '404':
+          description: Enrollment not found
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Enrollment not found"
+
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth2 authentication (vendor-specific implementation)
+      flows:
+        clientCredentials:
+          tokenUrl: https://example.com/oauth/token
+          scopes:
+            read: Read access to HMIS data
+            write: Write access to HMIS data
+
+  schemas:
+    # ========================================================================
+    # Client Schemas
+    # ========================================================================
+    
+    ClientPrimaryKey:
+      type: object
+      properties:
+        PersonalID:
+          type: string
+          description: Unique identifier for the client
+          maxLength: 32
+
+    ClientBase:
+      type: object
+      properties:
+        FirstName:
+          type: string
+          maxLength: 50
+        MiddleName:
+          type: string
+          maxLength: 50
+        LastName:
+          type: string
+          maxLength: 50
+        NameSuffix:
+          type: string
+          maxLength: 50
+        NameDataQuality:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NameDataQuality_list'
+        SSN:
+          type: string
+          description: Social Security Number (9 digits)
+          pattern: '^[0-9]{9}$'
+        SSNDataQuality:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/SSNDataQuality_list'
+        DOB:
+          type: string
+          format: date
+          description: Date of birth
+        DOBDataQuality:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/DOBDataQuality_list'
+        VeteranStatus:
+          type: integer
+          description: Veteran status (0=No, 1=Yes, 8=Client doesn't know, 9=Client prefers not to answer, 99=Data not collected)
+
+    ClientBaseMetadata:
+      type: object
+      properties:
+        DateCreated:
+          type: string
+          format: date-time
+        DateUpdated:
+          type: string
+          format: date-time
+        UserID:
+          type: string
+          maxLength: 32
+
+    ClientSummaryInfo:
+      type: object
+      description: Summary information for client search results
+      properties:
+        PersonalID:
+          type: string
+          maxLength: 32
+        FirstName:
+          type: string
+          maxLength: 50
+        LastName:
+          type: string
+          maxLength: 50
+        DOB:
+          type: string
+          format: date
+        SSNLast4:
+          type: string
+          pattern: '^[0-9]{4}$'
+        MatchScore:
+          type: number
+          format: float
+          description: Confidence score for match (0.0 to 1.0, vendor-specific algorithm)
+          minimum: 0
+          maximum: 1
+
+    # ========================================================================
+    # Enrollment Schemas
+    # ========================================================================
+    
+    EnrollmentPrimaryKey:
+      type: object
+      properties:
+        EnrollmentID:
+          type: string
+          description: Unique identifier for the enrollment
+          maxLength: 32
+
+    EnrollmentBase:
+      type: object
+      properties:
+        PersonalID:
+          type: string
+          maxLength: 32
+          description: Reference to Client
+        ProjectID:
+          type: string
+          maxLength: 32
+          description: Reference to Project
+        EntryDate:
+          type: string
+          format: date
+          description: Date client entered project
+        HouseholdID:
+          type: string
+          maxLength: 32
+          description: Groups related enrollments
+        RelationshipToHoH:
+          type: integer
+          description: Relationship to Head of Household
+
+    EnrollmentMetadata:
+      type: object
+      properties:
+        DateCreated:
+          type: string
+          format: date-time
+        DateUpdated:
+          type: string
+          format: date-time
+        UserID:
+          type: string
+          maxLength: 32
+
+    EnrollmentSummaryInfo:
+      type: object
+      description: Summary information for service history queries
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+        ProjectID:
+          type: string
+          maxLength: 32
+        ProjectName:
+          type: string
+          description: Human-readable project name
+        ProjectType:
+          type: integer
+          description: Project type code per HMIS Data Standards
+        EntryDate:
+          type: string
+          format: date
+        ExitDate:
+          type: string
+          format: date
+          nullable: true
+          description: Null if enrollment is active
+        FunderCode:
+          type: integer
+          description: Primary funder for this enrollment
+
+    # ========================================================================
+    # Data Quality Lists (per HMIS Data Standards)
+    # ========================================================================
+    
+    NameDataQuality_list:
+      type: integer
+      enum: [1, 2, 8, 9, 99]
+      description: |
+        1 = Full name reported
+        2 = Partial, street name, or code name reported
+        8 = Client doesn't know
+        9 = Client prefers not to answer
+        99 = Data not collected
+
+    SSNDataQuality_list:
+      type: integer
+      enum: [1, 2, 8, 9, 99]
+      description: |
+        1 = Full SSN reported
+        2 = Approximate or partial SSN reported
+        8 = Client doesn't know
+        9 = Client prefers not to answer
+        99 = Data not collected
+
+    DOBDataQuality_list:
+      type: integer
+      enum: [1, 2, 8, 9, 99]
+      description: |
+        1 = Full DOB reported
+        2 = Approximate or partial DOB reported
+        8 = Client doesn't know
+        9 = Client prefers not to answer
+        99 = Data not collected
+
+    NoYes_list:
+      type: integer
+      enum: [0, 1, 8, 9, 99]
+      description: |
+        0 = No
+        1 = Yes
+        8 = Client doesn't know
+        9 = Client prefers not to answer
+        99 = Data not collected
