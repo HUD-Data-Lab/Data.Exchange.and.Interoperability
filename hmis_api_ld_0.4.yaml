@@ -27,686 +27,389 @@ servers:
   - url: http://localhost:3000/api/v1
     description: HMIS API Sandbox
 
-tags:
-  - name: Authorization
-    description: Authorization and access control error responses
+security: 
+  -  BasicAuth: []
 
 components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+
   schemas:
-    # ==================================================================
-    # Core Error Response Schema
-    # ==================================================================
-    AuthorizationError:
+    clientPrimaryKey: #Can these be parsed in with the JSON-LD -> Python process? 
       type: object
-      description: |
-        Structured error response for authorization failures.
-        
-        **Vendor Implementation:**
-        - REQUIRED: status, code, message, timestamp
-        - OPTIONAL: All semantic fields (@context, @type, @id)
-        
-        **Parsing Modes:**
-        - Plain JSON: Ignore @ prefixed fields
-        - JSON-LD: Process full semantic context
-      
-      x-jsonld-context: https://hud.gov/hmis/context/FY26HMIS_Authorization_Context_v1.jsonld
-      x-jsonld-type: hmis:AuthorizationError
-      x-hud-requirement: 2004 HMIS Technical Standards Section 4.3
-      
-      required:
-        - status
-        - code
-        - message
-        - timestamp
-      
       properties:
-        '@context':
+        PersonalID:
           type: string
-          format: uri
-          default: https://hud.gov/hmis/context/FY26HMIS_Authorization_Context_v1.jsonld
-          description: JSON-LD context for semantic processing (optional for vendors)
-          x-vendor-note: Can be ignored if parsing as plain JSON
-          x-semantic-purpose: Maps fields to RDF URIs for interoperability
-        
-        '@type':
+          description: Unique identifier for the client
+          maxLength: 32
+    clientBase:
+      type: object
+      properties: 
+        FirstName:
           type: string
-          default: AuthorizationError
-          description: RDF type from HMIS ontology (optional for vendors)
-          x-vendor-note: Can be ignored if parsing as plain JSON
-          x-semantic-uri: hmis:AuthorizationError
-        
-        '@id':
+          description: First name of the client
+          maxLength: 50
+        MiddleName:
           type: string
-          format: uri
-          pattern: '^urn:hmis:error:[a-z-]+:[0-9a-f-]+$'
-          example: urn:hmis:error:invalid-roi:12345
-          description: Unique identifier for this error instance (optional)
-          x-vendor-note: Useful for error tracking/analytics
-          x-semantic-purpose: Enables querying specific error instances
-        
-        status:
+          description: Middle name of the client
+          maxLength: 50
+        LastName:
+          type: string
+          description: Last name of the client
+          maxLength: 50
+        NameSuffix:
+          type: string
+          description: Suffix of the client's name
+          maxLength: 50
+        NameDataQuality:
           type: integer
-          enum: [401, 403, 404]
-          description: HTTP status code
-          example: 403
-          x-semantic-uri: schema:httpStatusCodeValue
-          x-hud-requirement: Standard HTTP semantics
-        
-        code:
+          oneOf:
+            - $ref: '#/components/schemas/NameDataQuality_list' 
+        SSN:
           type: string
-          enum:
-            - AUTHENTICATION_REQUIRED
-            - INSUFFICIENT_AUTHORIZATION
-            - INVALID_ROI
-            - RESOURCE_ACCESS_DENIED
-          description: Machine-readable error code for programmatic handling
-          example: INVALID_ROI
-          x-semantic-uri: hmis:errorCode
-        
-        message:
+          description: Social Security Number
+          pattern: '^[0-9]{9}$'
+        SSNDataQuality:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/SSNDataQuality_list'
+        DOB:
           type: string
-          maxLength: 500
-          description: Human-readable error message
-          example: Access denied - No valid ROI covers requested data
-          x-semantic-uri: schema:description
-        
-        timestamp:
+          description: Date of birth of the client
+          format: date
+        DOBDataQuality:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/DOBDataQuality_list'
+        AmIndAKNative:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        Asian:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        BlackAfAmerican:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        HispanicLatinaeo:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        MidEastNAfrican:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        NativeHIPacific:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        White:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        RaceNone:
+          type: integer
+          description: non-null only if all other race fields are 0 (UNKNOWN)
+          oneOf:
+            - $ref: '#/components/schemas/RaceGenderNone_list'
+        AdditionalRaceEthnicity:
+          type: string
+          maxLength: 100
+        Woman:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        Man:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        NonBinary:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        CulturallySpecific:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        Transgender:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        Questioning:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        DifferentIdentity:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        GenderNone:
+          type: integer
+          description: Non-null only if all other gender fields = 0
+          oneOf:
+            - $ref: '#/components/schemas/RaceGenderNone_list'
+        DifferentIdentityText:
+          type: string
+          maxLength: 100
+        VeteranStatus:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        YearEnteredService:
+          type: string
+          pattern: '^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$'
+        YearSeparated:
+          type: string
+          pattern: '^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$'
+        WorldWarII:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        KoreanWar:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        VietnamWar:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        DesertStorm:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        AfghanistanOEF:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        IraqOIF:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        IraqOND:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        OtherTheater:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        MilitaryBranch:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/MilitaryBranch_list'
+        DischargeStatus:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/DischargeStatus_list'        
+    clientMetaData:
+      type: object
+      properties:
+        DateCreated:
           type: string
           format: date-time
-          description: Error occurrence timestamp (ISO 8601)
-          example: '2025-10-21T14:30:00Z'
-          x-semantic-uri: schema:dateCreated
-        
-        failureReason:
+        DateUpdated:
           type: string
-          maxLength: 1000
-          description: Detailed explanation of why authorization failed
-          example: No active ROI exists for cross-organization data sharing
-          x-semantic-uri: hmis:failureReason
-          x-hud-requirement: 2004 Technical Standards Section 4.2 (for ROI failures)
-        
-        affectedResource:
-          $ref: '#/components/schemas/ResourceReference'
-          description: The resource that could not be accessed
-          x-semantic-uri: hmis:affectedResource
-        
-        requestingOrganization:
-          $ref: '#/components/schemas/OrganizationReference'
-          description: Organization making the request (for cross-org scenarios)
-          x-semantic-uri: hmis:requestingOrganization
-          x-hud-requirement: 2004 Technical Standards Section 4.2
-        
-        owningOrganization:
-          $ref: '#/components/schemas/OrganizationReference'
-          description: Organization that owns the resource
-          x-semantic-uri: hmis:owningOrganization
-          x-hud-requirement: 2004 Technical Standards Section 4.2
-        
-        violatedRequirement:
-          $ref: '#/components/schemas/HUDRequirement'
-          description: The HUD requirement that was violated
-          x-semantic-uri: hmis:violatedRequirement
-        
-        userRole:
-          type: string
-          description: Role of the requesting user (when applicable)
-          example: read-only
-          x-semantic-uri: hmis:userRole
-          x-hud-requirement: 2004 Technical Standards Section 4.3.1
-        
-        requiredPermission:
-          type: string
-          description: Permission required to access the resource
-          example: client-update
-          x-semantic-uri: hmis:requiredPermission
-        
-        actionableSteps:
-          type: array
-          items:
-            type: string
-          maxItems: 5
-          description: Steps vendors/users can take to resolve the error
-          example:
-            - Verify client has signed ROI authorizing data sharing
-            - Check ROI effective dates cover requested period
-          x-semantic-uri: hmis:actionableSteps
-          x-vendor-note: Helpful for end-user error messages
-        
-        # Future extensibility hooks (reserved, not currently used)
-        'hmis:capability':
-          type: object
-          description: |
-            RESERVED FOR FUTURE USE: Capability-based security metadata.
-            This field is not currently populated but reserved for future 
-            capability-based authorization models.
-          x-future-feature: true
-          x-vendor-note: Vendors may ignore this field
-          $ref: '#/components/schemas/CapabilityScope'
-        
-        'hmis:effect':
-          type: object
-          description: |
-            RESERVED FOR FUTURE USE: Authorization effect metadata.
-            This field is not currently populated but reserved for future 
-            effect tracking and audit capabilities.
-          x-future-feature: true
-          x-vendor-note: Vendors may ignore this field
-          $ref: '#/components/schemas/Effect'
-    
-    # ==================================================================
-    # Supporting Schemas
-    # ==================================================================
-    ResourceReference:
-      type: object
-      description: Reference to an HMIS resource
-      x-jsonld-type: true
-      required:
-        - '@type'
-      properties:
-        '@type':
-          type: string
-          enum: [Client, Project, Organization, Enrollment, Exit, Service]
-          description: Type of resource from HMIS ontology
-          x-semantic-uri: rdf:type
-        '@id':
-          type: string
-          format: uri
-          description: URI for the resource (semantic web identifier)
-          example: http://hmis.example.org/clients/456
-          x-semantic-purpose: Enables resource dereferencing
-        personalID:
+          format: date-time
+        UserID:
           type: string
           maxLength: 32
-          description: Client identifier (for Client resources)
-          x-semantic-uri: hmis:personalID
-          x-hud-requirement: FY 2026 Data Standards 3.01
-        projectID:
+        DateDeleted:
           type: string
-          maxLength: 32
-          description: Project identifier (for Project resources)
-          x-semantic-uri: hmis:projectID
-          x-hud-requirement: FY 2026 Data Standards 2.02
-        organizationID:
-          type: string
-          maxLength: 32
-          description: Organization identifier (for Organization resources)
-          x-semantic-uri: hmis:organizationID
-          x-hud-requirement: FY 2026 Data Standards 2.01
-        enrollmentID:
-          type: string
-          maxLength: 32
-          description: Enrollment identifier (for Enrollment resources)
-          x-semantic-uri: hmis:enrollmentID
-          x-hud-requirement: FY 2026 Data Standards 3.10
-    
-    OrganizationReference:
-      type: object
-      description: Reference to an HMIS organization
-      x-jsonld-type: hmis:Organization
-      required:
-        - '@type'
-        - organizationID
-      properties:
-        '@type':
-          type: string
-          default: Organization
-          x-semantic-uri: hmis:Organization
-        '@id':
-          type: string
-          format: uri
-          example: http://hmis.example.org/organizations/org-123
-        organizationID:
-          type: string
-          maxLength: 32
-          x-semantic-uri: hmis:organizationID
-          x-hud-requirement: FY 2026 Data Standards 2.01
-        organizationName:
-          type: string
-          maxLength: 200
-          description: Organization name (optional, for display)
-          example: Downtown Shelter Services
-    
-    HUDRequirement:
-      type: object
-      description: Reference to a HUD regulatory requirement
-      x-jsonld-type: hmis:HUDRequirement
-      required:
-        - requirementType
-        - description
-        - citation
-      properties:
-        '@type':
-          type: string
-          default: HUDRequirement
-          x-semantic-uri: hmis:HUDRequirement
-        requirementType:
-          type: string
-          enum:
-            - USER_AUTHENTICATION
-            - ACCESS_CONTROL
-            - ROI_VALIDATION
-            - PRIVACY_PROTECTION
-            - DATA_SECURITY
-          description: Category of HUD requirement
-          x-semantic-uri: hmis:requirementType
-        description:
-          type: string
-          maxLength: 500
-          description: Human-readable description of the requirement
-          example: Cross-organization data sharing requires valid Release of Information
-          x-semantic-uri: schema:description
-        citation:
-          $ref: '#/components/schemas/Citation'
-    
-    Citation:
-      type: object
-      description: Citation to a HUD standard or regulation
-      x-jsonld-type: schema:Citation
-      required:
-        - document
-        - section
-      properties:
-        '@type':
-          type: string
-          default: Citation
-          x-semantic-uri: schema:Citation
-        document:
-          type: string
-          description: Name of the source document
-          example: 2004 HMIS Data and Technical Standards
-          x-semantic-uri: schema:isPartOf
-        section:
-          type: string
-          description: Section number or reference within document
-          example: Section 4.2
-          x-semantic-uri: schema:pagination
-        title:
-          type: string
-          description: Title of the section (optional)
-          example: Privacy Standards
-        url:
-          type: string
-          format: uri
-          description: URL to the source document
-          example: https://www.hudexchange.info/resources/documents/2004-HMIS-Data-and-Technical-Standards.pdf
-          x-semantic-uri: schema:url
-    
-    # ==================================================================
-    # Future Extensibility Schemas (Reserved)
-    # ==================================================================
-    CapabilityScope:
-      type: object
-      description: |
-        RESERVED FOR FUTURE USE: Capability-based security scope.
-        Not currently implemented.
-      x-future-feature: true
-      x-jsonld-type: hmis:CapabilityScope
-      properties:
-        '@type':
-          type: string
-          default: CapabilityScope
-        scope:
-          type: string
-          description: Capability scope (e.g., read:client-data)
-          x-semantic-uri: hmis:scope
-        token:
-          type: string
-          format: uri
-          description: Capability token identifier
-          x-semantic-uri: hmis:token
-        resource:
-          type: string
-          format: uri
-          description: Resource the capability applies to
-          x-semantic-uri: hmis:capabilityResource
-        actions:
-          type: array
-          items:
-            type: string
-          description: Allowed actions (read, write, delete, etc.)
-          x-semantic-uri: hmis:capabilityActions
-    
-    Effect:
-      type: object
-      description: |
-        RESERVED FOR FUTURE USE: Authorization effect metadata.
-        Not currently implemented.
-      x-future-feature: true
-      x-jsonld-type: hmis:Effect
-      properties:
-        '@type':
-          type: string
-          default: Effect
-        kind:
-          type: string
-          description: Type of effect (e.g., authorization-denied, access-granted)
-          x-semantic-uri: hmis:effectKind
-        target:
-          type: string
-          format: uri
-          description: Resource affected by this effect
-          x-semantic-uri: hmis:effectTarget
-        propagation:
-          type: string
-          enum: [immediate, deferred, cascading]
-          description: How the effect propagates
-          x-semantic-uri: hmis:effectPropagation
-
-  # ==================================================================
-  # Response Definitions by Scenario
-  # ==================================================================
-  
-  responses:
-    Unauthorized401:
-      description: |
-        Authentication Required (401)
-        
-        **Scenario:** User credentials are missing, invalid, or expired.
-        
-        **HUD Requirement:** 2004 HMIS Technical Standards Section 4.3.2
-        requires username and password authentication.
-      content:
-        application/ld+json:
-          schema:
-            $ref: '#/components/schemas/AuthorizationError'
-          examples:
-            expiredToken:
-              summary: Expired authentication token
-              value:
-                '@context': https://hud.gov/hmis/context/FY26HMIS_Authorization_Context_v1.jsonld
-                '@type': AuthorizationError
-                '@id': urn:hmis:error:auth-required:a1b2c3
-                status: 401
-                code: AUTHENTICATION_REQUIRED
-                message: Authentication credentials are missing or invalid
-                timestamp: '2025-10-21T14:30:00Z'
-                failureReason: Token has expired or is invalid
-                violatedRequirement:
-                  '@type': HUDRequirement
-                  requirementType: USER_AUTHENTICATION
-                  description: HMIS systems must secure with username and password authentication
-                  citation:
-                    document: 2004 HMIS Technical Standards
-                    section: '4.3.2'
-                    title: Application Security - User Authentication
-                    url: https://www.hudexchange.info/resource/1318/
-                actionableSteps:
-                  - Re-authenticate with valid credentials
-                  - Check token expiration time
-            
-            missingCredentials:
-              summary: Missing authentication credentials
-              value:
-                status: 401
-                code: AUTHENTICATION_REQUIRED
-                message: Authentication credentials are required
-                timestamp: '2025-10-21T14:31:00Z'
-                failureReason: No authentication token provided
-                actionableSteps:
-                  - Include Authorization header with valid token
-    
-    Forbidden403_InsufficientPermissions:
-      description: |
-        Insufficient Permissions (403)
-        
-        **Scenario:** User is authenticated but lacks permission for the 
-        requested operation.
-        
-        **HUD Requirement:** 2004 HMIS Technical Standards Section 4.3.1
-        (System Security - Access Control)
-      content:
-        application/ld+json:
-          schema:
-            $ref: '#/components/schemas/AuthorizationError'
-          examples:
-            readOnlyUser:
-              summary: Read-only user attempts to modify data
-              value:
-                '@context': https://hud.gov/hmis/context/FY26HMIS_Authorization_Context_v1.jsonld
-                '@type': AuthorizationError
-                '@id': urn:hmis:error:insufficient-auth:d4e5f6
-                status: 403
-                code: INSUFFICIENT_AUTHORIZATION
-                message: User lacks permission to modify this resource
-                timestamp: '2025-10-21T14:32:00Z'
-                affectedResource:
-                  '@type': Client
-                  '@id': http://hmis.example.org/clients/123
-                  personalID: '123'
-                userRole: read-only
-                requiredPermission: client-update
-                failureReason: User role does not permit modifications
-                violatedRequirement:
-                  requirementType: ACCESS_CONTROL
-                  description: Users must have appropriate permissions for data modification
-                  citation:
-                    document: 2004 HMIS Technical Standards
-                    section: '4.3.1'
-                    title: System Security
-                    url: https://www.hudexchange.info/resource/1318/
-                actionableSteps:
-                  - Request write permissions from system administrator
-                  - Verify user role in HMIS
-            
-            projectAccessDenied:
-              summary: User lacks access to project data
-              value:
-                status: 403
-                code: INSUFFICIENT_AUTHORIZATION
-                message: User does not have access to this project
-                timestamp: '2025-10-21T14:33:00Z'
-                affectedResource:
-                  '@type': Project
-                  projectID: '789'
-                failureReason: User is not associated with the requested project
-                violatedRequirement:
-                  requirementType: ACCESS_CONTROL
-                  description: Users may only access data for projects they are associated with
-                  citation:
-                    document: FY 2026 HMIS Data Standards
-                    section: '5.03'
-                    title: Data Collection Stage
-    
-    Forbidden403_InvalidROI:
-      description: |
-        Invalid Release of Information (403)
-        
-        **Scenario:** Cross-organization data request without valid ROI.
-        
-        **HUD Requirement:** 2004 HMIS Technical Standards Section 4.2
-        (Privacy Standards)
-      content:
-        application/ld+json:
-          schema:
-            $ref: '#/components/schemas/AuthorizationError'
-          examples:
-            noActiveROI:
-              summary: No active ROI exists
-              value:
-                '@context': https://hud.gov/hmis/context/FY26HMIS_Authorization_Context_v1.jsonld
-                '@type': AuthorizationError
-                '@id': urn:hmis:error:invalid-roi:g7h8i9
-                status: 403
-                code: INVALID_ROI
-                message: Access denied - No valid ROI covers requested data
-                timestamp: '2025-10-21T14:34:00Z'
-                affectedResource:
-                  '@type': Client
-                  '@id': http://hmis.example.org/clients/456
-                  personalID: '456'
-                requestingOrganization:
-                  '@type': Organization
-                  '@id': http://hmis.example.org/organizations/org-123
-                  organizationID: org-123
-                  organizationName: Downtown Shelter Services
-                owningOrganization:
-                  '@type': Organization
-                  '@id': http://hmis.example.org/organizations/org-789
-                  organizationID: org-789
-                  organizationName: Eastside Services
-                failureReason: No active ROI exists for cross-organization data sharing
-                violatedRequirement:
-                  requirementType: ROI_VALIDATION
-                  description: Cross-organization data sharing requires valid Release of Information
-                  citation:
-                    document: 2004 HMIS Technical Standards
-                    section: '4.2'
-                    title: Privacy Standards
-                    url: https://www.hudexchange.info/resource/1318/
-                actionableSteps:
-                  - Verify client has signed ROI authorizing data sharing
-                  - Check ROI effective dates cover requested period
-                  - Ensure ROI includes specific data elements being requested
-            
-            expiredROI:
-              summary: ROI has expired
-              value:
-                status: 403
-                code: INVALID_ROI
-                message: ROI has expired
-                timestamp: '2025-10-21T14:35:00Z'
-                affectedResource:
-                  '@type': Client
-                  personalID: '789'
-                requestingOrganization:
-                  organizationID: org-456
-                owningOrganization:
-                  organizationID: org-101
-                failureReason: ROI expired on 2024-12-31, current request date is 2025-10-21
-                violatedRequirement:
-                  requirementType: ROI_VALIDATION
-                  citation:
-                    document: 2004 HMIS Technical Standards
-                    section: '4.2'
-                actionableSteps:
-                  - Obtain new ROI from client
-                  - Update ROI effective dates in HMIS
-    
-    Forbidden403_ResourceAccessDenied:
-      description: |
-        Resource Access Denied (403 vs 404)
-        
-        **Scenario:** Resource exists but user should not know about it.
-        
-        **Security Note:** Returning 404 may reveal information about 
-        resource existence. Use 403 when denying access to existing resources.
-        
-        **HUD Requirement:** 2004 HMIS Technical Standards Section 4.3
-        (Security Standards)
-      content:
-        application/ld+json:
-          schema:
-            $ref: '#/components/schemas/AuthorizationError'
-          examples:
-            hiddenResource:
-              summary: Resource exists but access denied for security
-              value:
-                '@context': https://hud.gov/hmis/context/FY26HMIS_Authorization_Context_v1.jsonld
-                '@type': AuthorizationError
-                '@id': urn:hmis:error:access-denied:j0k1l2
-                status: 403
-                code: RESOURCE_ACCESS_DENIED
-                message: Access to this resource is denied
-                timestamp: '2025-10-21T14:36:00Z'
-                failureReason: User lacks permission for this resource
-                violatedRequirement:
-                  requirementType: ACCESS_CONTROL
-                  description: Users may only access resources within their permission scope
-                  citation:
-                    document: 2004 HMIS Technical Standards
-                    section: '4.3'
-                    title: Security Standards
-                    url: https://www.hudexchange.info/resource/1318/
-                actionableSteps:
-                  - Verify resource identifier is correct
-                  - Contact system administrator if access is needed
-    
-    NotFound404:
-      description: |
-        Resource Not Found (404)
-        
-        **When to use:** Resource genuinely does not exist AND user has 
-        permission to know this (e.g., searching within their own organization).
-        
-        **When NOT to use:** Resource exists but user lacks permission 
-        (use 403 instead).
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 404
-              message:
-                type: string
-                example: Client not found
-          examples:
-            clientNotFound:
-              summary: Client does not exist
-              value:
-                status: 404
-                message: Client not found
-                timestamp: '2025-10-21T14:37:00Z'
-
-# ==================================================================
-# Example Paths (for documentation)
-# ==================================================================
-
+          format: date-time
 paths:
-  /clients/{personalID}:
-    get:
-      summary: Get client by ID
-      description: Retrieve client information by Personal ID
-      tags:
-        - Clients
-      parameters:
-        - name: personalID
-          in: path
-          required: true
-          schema:
-            type: string
-            maxLength: 32
-      responses:
-        '200':
-          description: Client found
-          content:
-            application/json:
-              schema:
-                type: object
-        '401':
-          $ref: '#/components/responses/Unauthorized401'
-        '403':
-          oneOf:
-            - $ref: '#/components/responses/Forbidden403_InsufficientPermissions'
-            - $ref: '#/components/responses/Forbidden403_InvalidROI'
-            - $ref: '#/components/responses/Forbidden403_ResourceAccessDenied'
-        '404':
-          $ref: '#/components/responses/NotFound404'
-    
-    patch:
-      summary: Update client
-      description: Update an existing client record
-      tags:
-        - Clients
-      parameters:
-        - name: personalID
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
+
+  # ============================================================================
+  # BASELINE SCENARIO: Generate a new client record
+  # Purpose:
+  # ============================================================================
+  /client/search:
+    post: # this was a recommended approach to project personal identifying information from urls and the logs. Not quite sure how it will work. This seems counter intuitive to me - Grant 10/24
+      operationId: clientSearch
+      summary: Search for clients by identifying information using POST
+      description: |  
+        Search for client records using various identifying criteria:
+        - Name (first, last, partial matches)
+        - Date of birth
+        - Social Security Number (last 4 digits)
+      requestBody: 
         required: true
-        content:
+        content: 
           application/json:
             schema:
               type: object
+              properties:
+                PersonalID:
+                  type: string
+                  maxLength: 32
+                FirstName:
+                  type: string
+                  description: First name of the client (for Query optional and may be a prefix partial)
+                  maxLength: 50
+                LastName:
+                  type: string
+                  description: Last name of the client (for Query optional and may be a prefix partial)
+                  maxLength: 50
+                DOB:
+                  type: string
+                  format: date
+                  description: Optional date of birth of client. A date in ISO 8601 format (yyyy-mm-dd)
+                SSN:
+                  type: string
+                  description: Social Security Number
+                  pattern: '^[0-9]{9}$'
       responses:
         '200':
-          description: Client updated successfully
-        '401':
-          $ref: '#/components/responses/Unauthorized401'
-        '403':
-          $ref: '#/components/responses/Forbidden403_InsufficientPermissions'
+          description: A list of clients that match the query
+          content:
+            application/json:
+              schema:
+                type: array
+                properties:
+                  PersonalID:
+                    type: string
+                    maxLength: 32
+                  FirstName:
+                    type: string
+                    description: First name of the client (for Query optional and may be a prefix partial)
+                    maxLength: 50
+                  LastName:
+                    type: string
+                    description: Last name of the client (for Query optional and may be a prefix partial)
+                    maxLength: 50
+                  DOB:
+                    type: string
+                    format: date
+                    description: Optional date of birth of client. A date in ISO 8601 format (yyyy-mm-dd)
+                  SSN:
+                    type: string
+                    description: Social Security Number
+                    pattern: '^[0-9]{9}$'
         '404':
-          $ref: '#/components/responses/NotFound404'
+          description: Client not found
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Client not found
+
+
+
+
+
+      responses:
+        '200':
+          description: A list of clients that match the query
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClientSearchResponse'
+        '404':
+          description: Client not found
+          content: 
+            text/plain:
+              schema: 
+                type: string
+                example: Client not found
+
+  # ============================================================================
+  # BASELINE SCENARIO: Generate a new client record
+  # Purpose:
+  # ============================================================================
+  /client:
+    post: 
+      operationId: postClient
+      summary: Create a new client record
+      description: This creates a new client record
+      requestBody: 
+        content: 
+          application/json: #does this work? I want this to be any of the clientBase schema. We may want to consider making this more flexible. It was mentioned that some CoCs will require different elements to be included.
+            $ref: "#/components/schemas/clientBase"
+      responses: 
+        '200':
+          description: OK
+          content: 
+            application/json:
+              schema: 
+                allOf: 
+                  - $ref: "#/components/schemas/clientPrimaryKey"
+                  - $ref: "#/components/schemas/clientBase"
+                  - $ref: "#/components/schemas/clientMetadata" # this ref seems to off for some reason. Not sure what the fix is.
+        '400':
+          description: Invalid input provided
+          content: 
+            application/json:
+              schema: 
+                oneOf:
+                  - type: object
+                    properties:
+                      missingInformationIncorrectDatatype: #this may not be enough or relevant. The intention was to flag when the datatype being entered is incorrect
+                        type: string
+                        description: Invalid input provided
+                  - type: object
+                    properties: 
+                      invalidInputProvided:
+                        type: string
+                        description: Please set MiddleName equal to Test
+
+  # ============================================================================
+  # BASELINE SCENARIO: Generate a list of all client records in a project
+  # Purpose:
+  # ============================================================================
+  /clientinproject:
+    get: 
+      operationId: clientListByProjectID
+      summary: Get list of clients by project or project using projectID
+      description: Get list of clients by project or project using projectID
+      parameters:
+        - name: ProjectID
+          in: query
+          required: false
+          description: One or more project ids to filter clients
+          style: form
+          explode: true
+          schema: 
+              type: array
+              items:
+                type: string
+                maxLength: 32 
+              responses:
+                '200':
+                  description: A list of clients and any unmatched project IDs
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        properties:
+                          matchedClients:
+                            type: array
+                            items:
+                              $ref: "#/components/schemas/clientBase"
+                            description: List of clients associated with the provided project IDs
+                          unmatchedProjectIDs:
+                            type: array
+                            items:
+                              type: string
+                              maxLength: 32
+                            description: List of project IDs that did not match any clients
+                        required: 
+                          - matchedClients
+                          - unmatchedProjectIDs
+                '404':
+                    description: No matching project IDs found
+                    content:
+                      application/json:
+                        schema:
+                          type: object
+                          properties:
+                            unmatchedProjectIDs:
+                              type: array
+                              items:
+                                type: string
+                                maxLength: 32
+                              description: All provided project IDs were unmatched
