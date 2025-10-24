@@ -9,7 +9,7 @@ info:
     to bridge familiar developer tooling with semantic web capabilities.
   
   x-jsonld-context: https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld
-  x-HMIS Regulation:
+  x-HMIS-Regulation:
     - name: FY 2026 HMIS Data Standards
       url: https://www.hudexchange.info/resource/3824/hmis-data-dictionary/
       regulation: Data collection and implementation guidance
@@ -395,6 +395,7 @@ components:
   # ==================================================================
   # Response Definitions by Scenario
   # ==================================================================
+  
   responses:
     Unauthorized401:
       description: |
@@ -651,6 +652,7 @@ components:
 # ==================================================================
 # Example Paths (for documentation)
 # ==================================================================
+
 paths:
   /clients/{personalID}:
     get:
