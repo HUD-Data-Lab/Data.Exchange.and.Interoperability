@@ -1,33 +1,35 @@
-openapi: 3.1.0
+openapi: 3.1.1
 info:
-  title: HMIS API - Authorization and Access Control
+  title: HMIS API Sandbox Specifications
   version: 1.0.0
   description: |
-    Authorization error responses for HMIS API, fully compliant with 
-    2004 HMIS Technical Standards (Sections 4.2, 4.3) and FY 2026 
-    HMIS Data Standards.
+    HMIS API Sandbox request, response, and error responses for each scenario in the HMIS API Reference Guide.
     
     This specification uses YAML-LD (YAML with Linked Data extensions) 
     to bridge familiar developer tooling with semantic web capabilities.
   
-  x-jsonld-context: https://hud.gov/hmis/context/FY26HMIS_Authorization_Context_v1.jsonld
-  x-standards-compliance:
-    - name: 2004 HMIS Technical Standards
-      url: https://www.hudexchange.info/resource/1318/
-      sections: [4.2, 4.3.1, 4.3.2]
+  x-jsonld-context: https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld
+  x-HMIS Regulation:
     - name: FY 2026 HMIS Data Standards
-      sections: [5.03]
+      url: https://www.hudexchange.info/resource/3824/hmis-data-dictionary/
+      regulation: Data collection and implementation guidance
+    - name: 2004 Data and Technical Standards Notice
+      url: https://www.hudexchange.info/resource/1318/2004-hmis-data-and-technical-standards-final-notice/
+      regulation: Privacy and Security Standards
+    - name: Coordinated Entry Management and Data Guide
+      url: https://www.hudexchange.info/resource/5758/coordinated-entry-management-and-data-guide/
+      regulation: Guidance on Privacy and Security Standards including allowable uses and disclosures
+    - name: CoC Program Interim Rule
+      url: https://www.hudexchange.info/resource/2033/hearth-coc-program-interim-rule/
+      regulation: Procedures and Policies needed to designate and operate an HMIS, ensuring HMIS compliance, and maintaining a Privacy Plan, Security Plan, and Data Quality Plan
 
 servers:
-  - url: https://api.hmis.example.org/v1
-    description: Production API
   - url: http://localhost:3000/api/v1
-    description: Local Mockoon server
+    description: HMIS API Sandbox
 
 tags:
   - name: Authorization
     description: Authorization and access control error responses
-    x-hud-requirement: 2004 Technical Standards Section 4.3
 
 components:
   schemas:
