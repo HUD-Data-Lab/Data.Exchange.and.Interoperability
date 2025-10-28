@@ -22,7 +22,7 @@ The format of these should match the HUD data standards, each field is allowed t
 
 Use the following response HTTP codes:
 - 200: Return a list of potential matches. Data fields to return include: PersonalID, FirstName, LastName, Date of Birth, Social Security number.
-- 404; Return the message "Client not found".
+- 404: Return the message "Client not found".
 
 ## Generate a new client record
 

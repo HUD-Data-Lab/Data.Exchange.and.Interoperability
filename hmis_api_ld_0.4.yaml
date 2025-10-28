@@ -119,9 +119,11 @@ paths:
       description: This creates a new client record
       requestBody: 
         content:
-          application/json: #does this work? I want this to be any of the clientBase schema. We may want to consider making this more flexible. It was mentioned that some CoCs will require different elements to be included.
+          application/json:
             schema:
-              $ref: "#/components/schemas/clientBase"
+              anyOf: 
+                -  $ref: "#/components/schemas/clientBase"
+                -  $ref: "#/components/schemas/clientMetaData"
       responses: 
         '200':
           description: OK
@@ -400,6 +402,7 @@ components:
           type: string
           format: date-time
 
+          
 # Response Lists
 
     NameDataQuality_list:
