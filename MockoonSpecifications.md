@@ -15,7 +15,7 @@ There will be 12 key baseline scenarios in this API mockup. These are:
 11. Determine a person’s services (historical and ongoing)
 12. Authentication
 
-## Search for a client record by identifying information
+## 1. Search for a client record by identifying information
 
 ### Request
 Use any of the following to make the request:
@@ -33,7 +33,7 @@ Use the following response HTTP codes:
 - 200: Return a list of potential matches. Data fields to return include: PersonalID, FirstName, LastName, Date of Birth, Social Security number.
 - 404: Return the message "Client not found".
 
-## Generate a new client record
+## 2. Generate a new client record
 
 ### Request
 
@@ -45,7 +45,7 @@ Use the following response HTTP codes:
 - 200: Return a full list of all the client's data (clientPrimaryKey, ClientBase, and clientMetaData)
 - 400: If an incorrect data type or missing information that would stop this record from being created return the message, "Invalid input provided".
 
-## Generate a list of all client records in a project
+## 3. Generate a list of all client records in a project
 
 ### Request
 Use the following to make the request:
