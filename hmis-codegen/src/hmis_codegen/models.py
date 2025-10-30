@@ -185,7 +185,7 @@ class OpenAPISpec(BaseModel):
 
 class OWLClass(BaseModel):
     """OWL class from ontology"""
-    uri: HttpUrl
+    uri: str
     label: str
     description: Optional[str] = None
     properties: List[str] = Field(default_factory=list)
@@ -193,10 +193,10 @@ class OWLClass(BaseModel):
 
 class OWLProperty(BaseModel):
     """OWL property from ontology"""
-    uri: HttpUrl
+    uri: str
     label: str
-    domain: Optional[HttpUrl] = None
-    range: Optional[HttpUrl] = None
+    domain: Optional[str] = None
+    range: Optional[str] = None
     cardinality: Optional[str] = None
 
 
