@@ -43,7 +43,7 @@ class Generator:
             for prop in schema.properties:
                 if prop.semantic.semantic_uri:
                     # Map OpenAPI field name to ontology property
-                    local_name = prop.semantic.semantic_uri.split('#')[-1]
+                    local_name = str(prop.semantic.semantic_uri).split('#')[-1]
                     context[prop.name] = local_name
         
         return template.render(
