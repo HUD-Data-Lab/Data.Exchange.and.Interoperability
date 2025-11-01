@@ -29,7 +29,7 @@ ENV/
 env/
 
 # Generated outputs
-generated/
+# generated/
 *.wasm
 pkg/
 

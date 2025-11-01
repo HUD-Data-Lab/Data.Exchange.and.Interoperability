@@ -43,7 +43,7 @@ class Generator:
             for prop in schema.properties:
                 if prop.semantic.semantic_uri:
                     # Map OpenAPI field name to ontology property
-                    local_name = prop.semantic.semantic_uri.split('#')[-1]
+                    local_name = str(prop.semantic.semantic_uri).split('#')[-1]
                     context[prop.name] = local_name
         
         return template.render(
@@ -54,7 +54,7 @@ class Generator:
     
     def generate_openapi_yaml(self, spec: OpenAPISpec) -> str:
         """Generate enhanced OpenAPI YAML (with or without semantic annotations)"""
-        template = self.env.get_template('openapi.yaml.j2')
+        template = self.env.get_template('openapi_yaml.j2')
         return template.render(spec=spec)
     
     def generate_mockoon_config(self, spec: OpenAPISpec) -> str:
@@ -81,12 +81,12 @@ class Generator:
     
     def generate_effect_handlers(self, handlers: list[EffectHandler]) -> str:
         """Generate Python effect handler interfaces"""
-        template = self.env.get_template('effect_handlers.py.j2')
+        template = self.env.get_template('effect_handlers.j2')
         return template.render(handlers=handlers)
     
     def generate_effect_mocks(self, handlers: list[EffectHandler]) -> str:
         """Generate mock effect handlers for testing"""
-        template = self.env.get_template('effect_mocks.py.j2')
+        template = self.env.get_template('effect_mocks.j2')
         return template.render(handlers=handlers)
     
     def _build_mockoon_responses(self, operation) -> list:

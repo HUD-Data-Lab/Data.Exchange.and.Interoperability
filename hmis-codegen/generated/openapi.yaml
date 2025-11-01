@@ -1,0 +1,297 @@
+openapi: 3.1.1
+info:
+  title: HMIS API Sandbox Specifications
+  version: 1.0.0
+  description: |
+    HMIS API Sandbox request, response, and error responses for each scenario in the HMIS API Reference Guide.
+
+    This specification uses YAML-LD (YAML with Linked Data extensions) 
+    to bridge familiar developer tooling with semantic web capabilities.
+
+    YAML-LD is inspired by JSON-LD-Star and Jelly-RDF but designed specifically for 
+    API specifications - providing semantic richness without format complexity.
+
+  
+  x-jsonld-context: https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld
+  
+  x-HMIS-Regulation:
+    - name: FY 2026 HMIS Data Standards
+      url: https://www.hudexchange.info/resource/3824/hmis-data-dictionary/
+      regulation: Data collection and implementation guidance
+    - name: 2004 Data and Technical Standards Notice
+      url: https://www.hudexchange.info/resource/1318/2004-hmis-data-and-technical-standards-final-notice/
+      regulation: Privacy and Security Standards
+    - name: Coordinated Entry Management and Data Guide
+      url: https://www.hudexchange.info/resource/5758/coordinated-entry-management-and-data-guide/
+      regulation: Guidance on Privacy and Security Standards including allowable uses and disclosures
+    - name: CoC Program Interim Rule
+      url: https://www.hudexchange.info/resource/2033/hearth-coc-program-interim-rule/
+      regulation: Procedures and Policies needed to designate and operate an HMIS, ensuring HMIS compliance, and maintaining a Privacy Plan, Security Plan, and Data Quality Plan
+
+servers:
+  - url: http://localhost:3000/api/v1
+    description: HMIS API Sandbox (Mockoon Reference Implementation)
+
+components:
+  schemas:
+    clientPrimaryKey:
+      type: object
+      description: Unique identifier for Client resource
+      x-jsonld-type: hmis:ClientIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#ClientIdentifier
+      
+      properties:
+        PersonalID:
+          type: string
+          description: Unique identifier for the client
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+          x-hud-data-element: "Universal Data Element"
+    clientBase:
+      type: object
+      description: Core Client demographic and identifying information
+      x-jsonld-type: hmis:Client
+      x-semantic-uri: http://hmis.hud.gov/ontology#Client
+      x-hud-csv-table: Client.csv
+      
+      properties:
+        FirstName:
+          type: string
+          description: First name of the client
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFirstName
+          x-hud-data-element: "3.01"
+        MiddleName:
+          type: string
+          description: Middle name of the client
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMiddleName
+          x-hud-data-element: "3.01"
+        LastName:
+          type: string
+          description: Last name of the client
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLastName
+          x-hud-data-element: "3.01"
+        NameSuffix:
+          type: string
+          description: Suffix of the client's name
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNameSuffix
+          x-hud-data-element: "3.01"
+        NameDataQuality:
+          type: integer
+          description: Data quality indicator for name fields
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNameDataQuality
+          x-hud-data-element: "3.01"
+        SSN:
+          type: string
+          description: Social Security Number
+          pattern: ^[0-9]{9}$
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSSN
+          x-hud-data-element: "3.02"
+          x-pii: true
+        SSNDataQuality:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSSNDataQuality
+          x-hud-data-element: "3.02"
+        DOB:
+          type: string
+          format: date
+          description: Date of birth of the client
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfBirth
+          x-hud-data-element: "3.03"
+          x-pii: true
+        DOBDataQuality:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDOBDataQuality
+          x-hud-data-element: "3.03"
+        AmIndAKNative:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAmIndAKNative
+          x-hud-data-element: "3.04"
+        Asian:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAsian
+          x-hud-data-element: "3.04"
+        BlackAfAmerican:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasBlackAfAmerican
+          x-hud-data-element: "3.04"
+        HispanicLatinaeo:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHispanicLatinaeo
+          x-hud-data-element: "3.04"
+        MidEastNAfrican:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMidEastNAfrican
+          x-hud-data-element: "3.04"
+        NativeHIPacific:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNativeHIPacific
+          x-hud-data-element: "3.04"
+        White:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWhite
+          x-hud-data-element: "3.04"
+        RaceNone:
+          type: integer
+          description: Non-null only if all other race fields are 0 (UNKNOWN)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasRaceNone
+          x-hud-data-element: "3.04"
+        AdditionalRaceEthnicity:
+          type: string
+          maxLength: 100
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAdditionalRaceEthnicity
+          x-hud-data-element: "3.04"
+        Woman:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWoman
+          x-hud-data-element: "3.06"
+        Man:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMan
+          x-hud-data-element: "3.06"
+        NonBinary:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNonBinary
+          x-hud-data-element: "3.06"
+        CulturallySpecific:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCulturallySpecific
+          x-hud-data-element: "3.06"
+        Transgender:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTransgender
+          x-hud-data-element: "3.06"
+        Questioning:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasQuestioning
+          x-hud-data-element: "3.06"
+        DifferentIdentity:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDifferentIdentity
+          x-hud-data-element: "3.06"
+        GenderNone:
+          type: integer
+          description: Non-null only if all other gender fields = 0
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasGenderNone
+          x-hud-data-element: "3.06"
+        DifferentIdentityText:
+          type: string
+          maxLength: 100
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDifferentIdentityText
+          x-hud-data-element: "3.06"
+        VeteranStatus:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVeteranStatus
+          x-hud-data-element: "3.07"
+        YearEnteredService:
+          type: string
+          pattern: ^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasYearEnteredService
+          x-hud-data-element: "3.07"
+        YearSeparated:
+          type: string
+          pattern: ^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasYearSeparated
+          x-hud-data-element: "3.07"
+        WorldWarII:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWorldWarII
+          x-hud-data-element: "3.07"
+        KoreanWar:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasKoreanWar
+          x-hud-data-element: "3.07"
+        VietnamWar:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVietnamWar
+          x-hud-data-element: "3.07"
+        DesertStorm:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDesertStorm
+          x-hud-data-element: "3.07"
+        AfghanistanOEF:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAfghanistanOEF
+          x-hud-data-element: "3.07"
+        IraqOIF:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIraqOIF
+          x-hud-data-element: "3.07"
+        IraqOND:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIraqOND
+          x-hud-data-element: "3.07"
+        OtherTheater:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherTheater
+          x-hud-data-element: "3.07"
+        MilitaryBranch:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMilitaryBranch
+          x-hud-data-element: "3.07"
+        DischargeStatus:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDischargeStatus
+          x-hud-data-element: "3.07"
+    clientMetaData:
+      type: object
+      description: Audit and versioning metadata for Client records
+      x-jsonld-type: prov:Entity
+      x-semantic-uri: http://www.w3.org/ns/prov#Entity
+      
+      properties:
+        DateCreated:
+          type: string
+          format: date-time
+          x-semantic-uri: http://purl.org/dc/terms/created
+        DateUpdated:
+          type: string
+          format: date-time
+          x-semantic-uri: http://purl.org/dc/terms/modified
+        UserID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://www.w3.org/ns/prov#wasAttributedTo
+        DateDeleted:
+          type: string
+          format: date-time
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateDeleted
+
+paths:
+  /client/search:
+    post:
+      operationId: clientSearch
+      summary: Search for clients by identifying information using POST
+      description: |
+        Search for client records using various identifying criteria:
+        - Name (first, last, partial matches)
+        - Date of birth
+        - Social Security Number
+
+        This endpoint uses POST to protect PII from URL logging (security best practice).
+
+      
+      
+      
+      x-effects:
+        - effect: AuthorizationCheck
+          handler: hmis:checkSearchPermission
+          description: Verifies user authorized to search client records
+          signature: "userID: ID → AuthResult"
+          resumable: true
+        - effect: DatabaseRead
+          handler: hmis:searchClients
+          description: Searches clients by identifying criteria
+          signature: "query: SearchQuery → List[Client]"
+          resumable: true
+        - effect: AuditLog
+          handler: hmis:logClientSearch
+          description: Records search operation (without exposing PII)
+          signature: "event: SearchEvent → Unit"
+          resumable: false
+          provenance-type: prov:Search
+      
+      responses:

@@ -1162,43 +1162,43 @@ x-effect-system:
 # - Dependent types (Research): Encode HUD business rules in type system
 # - Linear types (Research): Ensure single-use tokens (consent, ROI)
 # - Session types (Research): Protocol verification for multi-step workflows
-                    PersonalID:
-                      type: string
-                      maxLength: 32
-                      x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+#                    PersonalID:
+#                      type: string
+#                      maxLength: 32
+#                      x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+#                      
+#                    FirstName:
+#                      type: string
+#                      maxLength: 50
+        #               x-semantic-uri: http://hmis.hud.gov/ontology#hasFirstName
                       
-                    FirstName:
-                      type: string
-                      maxLength: 50
-                      x-semantic-uri: http://hmis.hud.gov/ontology#hasFirstName
+        #             LastName:
+        #               type: string
+        #               maxLength: 50
+        #               x-semantic-uri: http://hmis.hud.gov/ontology#hasLastName
                       
-                    LastName:
-                      type: string
-                      maxLength: 50
-                      x-semantic-uri: http://hmis.hud.gov/ontology#hasLastName
+        #             DOB:
+        #               type: string
+        #               format: date
+        #               x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfBirth
                       
-                    DOB:
-                      type: string
-                      format: date
-                      x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfBirth
-                      
-                    SSN:
-                      type: string
-                      pattern: '^[0-9]{9}$'
-                      x-semantic-uri: http://hmis.hud.gov/ontology#hasSSN
+        #             SSN:
+        #               type: string
+        #               pattern: '^[0-9]{9}$'
+        #               x-semantic-uri: http://hmis.hud.gov/ontology#hasSSN
               
-              # SEMANTIC ANNOTATION: Optional JSON-LD framing for RDF consumers
-              x-jsonld-frame:
-                "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
-                "@type": "hmis:ClientSearchResult"
+        #       # SEMANTIC ANNOTATION: Optional JSON-LD framing for RDF consumers
+        #       x-jsonld-frame:
+        #         "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
+        #         "@type": "hmis:ClientSearchResult"
         
-        '404':
-          description: Client not found
-          content: 
-            text/plain:
-              schema: 
-                type: string
-                example: Client not found
+        # '404':
+        #   description: Client not found
+        #   content: 
+        #     text/plain:
+        #       schema: 
+        #         type: string
+        #         example: Client not found
 
   # ==========================================================================
   # BASELINE SCENARIO 2: Generate a new client record

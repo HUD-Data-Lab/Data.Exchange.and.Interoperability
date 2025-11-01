@@ -1,0 +1,118 @@
+openapi: 3.1.1
+info:
+  title: {{ spec.title }}
+  version: {{ spec.version }}
+  description: |
+    {{ spec.description | indent(4) }}
+  
+  x-jsonld-context: {{ spec.jsonld_context_url }}
+  
+  x-HMIS-Regulation:
+    {% for reg in spec.regulations %}
+    - name: {{ reg.name }}
+      url: {{ reg.url }}
+      regulation: {{ reg.regulation }}
+    {% endfor %}
+
+servers:
+  {% for server in spec.servers %}
+  - url: {{ server.url }}
+    description: {{ server.description }}
+  {% endfor %}
+
+components:
+  schemas:
+    {% for schema in spec.schemas %}
+    {{ schema.name }}:
+      type: {{ schema.type }}
+      {% if schema.description %}
+      description: {{ schema.description }}
+      {% endif %}
+      {% if schema.semantic.jsonld_type %}
+      x-jsonld-type: {{ schema.semantic.jsonld_type }}
+      {% endif %}
+      {% if schema.semantic.semantic_uri %}
+      x-semantic-uri: {{ schema.semantic.semantic_uri }}
+      {% endif %}
+      {% if schema.hud_csv_table %}
+      x-hud-csv-table: {{ schema.hud_csv_table }}
+      {% endif %}
+      
+      properties:
+        {% for prop in schema.properties %}
+        {{ prop.name }}:
+          type: {{ prop.type }}
+          {% if prop.format %}
+          format: {{ prop.format }}
+          {% endif %}
+          {% if prop.description %}
+          description: {{ prop.description }}
+          {% endif %}
+          {% if prop.max_length %}
+          maxLength: {{ prop.max_length }}
+          {% endif %}
+          {% if prop.pattern %}
+          pattern: {{ prop.pattern }}
+          {% endif %}
+          {% if prop.semantic.semantic_uri %}
+          x-semantic-uri: {{ prop.semantic.semantic_uri }}
+          {% endif %}
+          {% if prop.semantic.hud_data_element %}
+          x-hud-data-element: "{{ prop.semantic.hud_data_element }}"
+          {% endif %}
+          {% if prop.semantic.pii %}
+          x-pii: {{ prop.semantic.pii | lower }}
+          {% endif %}
+        {% endfor %}
+    {% endfor %}
+
+paths:
+  {% for operation in spec.operations %}
+  {{ operation.path }}:
+    {{ operation.method }}:
+      operationId: {{ operation.operation_id }}
+      summary: {{ operation.summary }}
+      description: |
+        {{ operation.description | indent(8) }}
+      
+      {% if operation.metadata.workflow_step %}
+      x-workflow-step: {{ operation.metadata.workflow_step }}
+      {% endif %}
+      
+      {% if operation.metadata.required_by_policy %}
+      x-required-by-policy:
+        {% for policy in operation.metadata.required_by_policy %}
+        - {{ policy }}
+        {% endfor %}
+      {% endif %}
+      
+      {% if operation.effects %}
+      x-effects:
+        {% for effect in operation.effects %}
+        - effect: {{ effect.name }}
+          handler: {{ effect.handler }}
+          description: {{ effect.description }}
+          signature: "{{ effect.signature }}"
+          resumable: {{ effect.resumable | lower }}
+          {% if effect.required_by %}
+          required-by: {{ effect.required_by }}
+          {% endif %}
+          {% if effect.provenance %}
+          provenance: {{ effect.provenance }}
+          {% endif %}
+          {% if effect.provenance_type %}
+          provenance-type: {{ effect.provenance_type }}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      
+      responses:
+        {% for status, schema_name in operation.response_schemas.items() %}
+        '{{ status }}':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/{{ schema_name }}'
+        {% endfor %}
+  {% endfor %}

@@ -1,0 +1,88 @@
+{
+  "uuid": "hmis-api-sandbox-specifications-env",
+  "lastMigration": 32,
+  "name": "HMIS API Sandbox Specifications Sandbox",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3000,
+  "hostname": "localhost",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "route-clientSearch",
+      "type": "http",
+      "documentation": "Search for client records using various identifying criteria:
+- Name (first, last, partial matches)
+- Date of birth
+- Social Security Number
+
+This endpoint uses POST to protect PII from URL logging (security best practice).
+",
+      "method": "POST",
+      "endpoint": "/client/search",
+      "responses": [
+        {
+          "uuid": "response-clientSearch-200",
+          "body": "{\"status\": \"success\"}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id"
+        }      ],
+      "enabled": true,
+      "responseMode": null
+    }  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "route-clientSearch"
+    }  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "*"
+    }
+  ],
+  "proxyReqHeaders": [],
+  "proxyResHeaders": [],
+  "data": []
+}

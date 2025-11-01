@@ -13,8 +13,8 @@ from pydantic import BaseModel, Field, HttpUrl
 
 class EffectSignature(BaseModel):
     """Type signature for an effect operation"""
-    params: List[str]  # e.g., ["clientID: ID", "purpose: Purpose"]
-    return_type: str   # e.g., "ConsentStatus"
+    params: List[str]
+    return_type: str
     
     def __str__(self) -> str:
         return f"{', '.join(self.params)} → {self.return_type}"
@@ -28,7 +28,6 @@ class Effect(BaseModel):
     signature: str = Field(description="Effect type signature")
     resumable: bool = Field(default=True, description="Can computation resume after effect?")
     
-    # Optional metadata
     required_by: Optional[str] = Field(None, description="Policy requirement")
     provenance: Optional[HttpUrl] = Field(None, description="PROV-O URI")
     provenance_type: Optional[str] = Field(None, description="PROV-O type (e.g., prov:Create)")
@@ -36,7 +35,6 @@ class Effect(BaseModel):
     
     def parse_signature(self) -> EffectSignature:
         """Parse string signature into structured form"""
-        # Simple parser: "param1: Type1, param2: Type2 → ReturnType"
         if "→" in self.signature:
             params_str, return_type = self.signature.split("→")
             params = [p.strip() for p in params_str.split(",")]
@@ -54,7 +52,7 @@ class EffectHandler(BaseModel):
     def to_python_protocol(self) -> str:
         """Generate Python Protocol class"""
         params = ", ".join([
-            f"{p.split(':')[0].strip()}: Any"  # Simplified type
+            f"{p.split(':')[0].strip()}: Any"
             for p in self.signature.params
         ])
         
@@ -93,13 +91,14 @@ class SchemaProperty(BaseModel):
     max_length: Optional[int] = None
     pattern: Optional[str] = None
     
-    # Semantic annotations
     semantic: SemanticAnnotation = Field(default_factory=SemanticAnnotation)
     
-    # HUD-specific metadata
     hud_reference: Optional[Dict[str, str]] = Field(None, alias="x-hud-reference")
     conditional: Optional[str] = Field(None, alias="x-conditional")
     business_rule: Optional[str] = Field(None, alias="x-business-rule")
+
+    class Config:
+        populate_by_name = True
 
 
 class APISchema(BaseModel):
@@ -109,9 +108,11 @@ class APISchema(BaseModel):
     description: Optional[str] = None
     properties: List[SchemaProperty] = Field(default_factory=list)
     
-    # Semantic annotations
     semantic: SemanticAnnotation = Field(default_factory=SemanticAnnotation)
     hud_csv_table: Optional[str] = Field(None, alias="x-hud-csv-table")
+
+    class Config:
+        populate_by_name = True
 
 
 # ============= Operation Models =============
@@ -123,6 +124,9 @@ class OperationMetadata(BaseModel):
     data_governance: Optional[Dict[str, str]] = Field(None, alias="x-data-governance")
     use_cases: List[str] = Field(default_factory=list, alias="x-use-cases")
 
+    class Config:
+        populate_by_name = True
+
 
 class APIOperation(BaseModel):
     """OpenAPI operation (GET, POST, etc.)"""
@@ -132,15 +136,11 @@ class APIOperation(BaseModel):
     summary: str
     description: str
     
-    # Effect annotations (experimental)
     effects: List[Effect] = Field(default_factory=list)
-    
-    # Semantic metadata
     metadata: OperationMetadata = Field(default_factory=OperationMetadata)
     
-    # Request/response schemas
     request_schema: Optional[str] = None
-    response_schemas: Dict[str, str] = Field(default_factory=dict)  # status code -> schema name
+    response_schemas: Dict[str, str] = Field(default_factory=dict)
 
 
 # ============= Top-level Spec Models =============
@@ -164,28 +164,24 @@ class OpenAPISpec(BaseModel):
     version: str
     description: str
     
-    # Semantic web integration
     jsonld_context_url: HttpUrl = Field(alias="x-jsonld-context")
     regulations: List[RegulationReference] = Field(alias="x-HMIS-Regulation")
     
-    # Server configuration
     servers: List[ServerConfig]
-    
-    # Components
     schemas: List[APISchema]
-    
-    # Operations
     operations: List[APIOperation]
     
-    # Effect system (experimental)
     effect_system: Optional[Dict[str, Any]] = Field(None, alias="x-effect-system")
+    
+    class Config:
+        populate_by_name = True
 
 
 # ============= Ontology Models =============
 
 class OWLClass(BaseModel):
     """OWL class from ontology"""
-    uri: HttpUrl
+    uri: str
     label: str
     description: Optional[str] = None
     properties: List[str] = Field(default_factory=list)
@@ -193,10 +189,10 @@ class OWLClass(BaseModel):
 
 class OWLProperty(BaseModel):
     """OWL property from ontology"""
-    uri: HttpUrl
+    uri: str
     label: str
-    domain: Optional[HttpUrl] = None
-    range: Optional[HttpUrl] = None
+    domain: Optional[str] = None
+    range: Optional[str] = None
     cardinality: Optional[str] = None
 
 
