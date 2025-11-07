@@ -1,0 +1,747 @@
+# FHIR R4 Integration for HMIS
+# Complete mapping including semantic extensions, effect handlers, and technical standards compliance
+# Version 1.0 - Maps HUD HMIS (FY2026 Data Standards + 2004 Technical Standards) to FHIR R4
+
+version: "1.0"
+hmis_spec_version: "0.5"
+fhir_version: "4.0.1"
+hud_technical_standards: "2004"
+
+# ============================================================================
+# PART 1: CORE RESOURCE MAPPINGS (with Semantic Extensions)
+# ============================================================================
+
+resource_mappings:
+  
+  # Client → Patient (with full semantic annotations)
+  Client:
+    fhir_resource: Patient
+    fhir_profile: http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient
+    ontology_class: http://hmis.hud.gov/ontology#Client
+    description: "HMIS Client maps to FHIR Patient resource"
+    hud_data_element: "3.01-3.07"
+    
+    semantic_extensions:
+      - extension_url: http://hmis.hud.gov/fhir/extensions/hud-data-element
+        value: "3.01-3.07"
+        description: "Links to HUD Universal Data Elements"
+      
+      - extension_url: http://hmis.hud.gov/fhir/extensions/ontology-class
+        value: http://hmis.hud.gov/ontology#Client
+        description: "Links to HMIS ontology class"
+      
+      - extension_url: http://hmis.hud.gov/fhir/extensions/technical-standard
+        value: "4.2.1 Collection Limitation"
+        description: "Subject to HUD privacy standards for data collection"
+    
+    field_mappings:
+      PersonalID:
+        fhir_path: Patient.identifier[0]
+        fhir_system: http://hmis.hud.gov/identifiers/PersonalID
+        ontology_property: http://hmis.hud.gov/ontology#hasPersonalID
+        transform: identifier
+        hud_data_element: "3.20"
+        technical_standard: "5.08"
+        
+        semantic_annotation:
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+          x-hud-element: "3.20"
+          x-technical-standard: "5.08"
+        
+        privacy_controls:
+          collection_consent: inferred
+          retention_period: "7 years after last service"
+          disclosure_restriction: "minimum necessary"
+      
+      FirstName:
+        fhir_path: Patient.name[0].given[0]
+        ontology_property: http://hmis.hud.gov/ontology#hasFirstName
+        transform: direct
+        hud_data_element: "3.01"
+        
+        semantic_annotation:
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFirstName
+          x-hud-element: "3.01"
+        
+        privacy_controls:
+          collection_consent: inferred
+          data_quality_requirement: "relevant and accurate"
+          disclosure_restriction: "service provision only"
+      
+      SSN:
+        fhir_path: Patient.identifier[1]
+        fhir_system: http://hl7.org/fhir/sid/us-ssn
+        ontology_property: http://hmis.hud.gov/ontology#hasSSN
+        transform: identifier
+        hud_data_element: "3.05"
+        
+        semantic_annotation:
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSSN
+          x-hud-element: "3.05"
+          x-sensitive: true
+        
+        privacy_controls:
+          collection_consent: explicit
+          encryption_required: true
+          disclosure_restriction: "authorized purposes only"
+          audit_trail_required: true
+      
+      DOB:
+        fhir_path: Patient.birthDate
+        ontology_property: http://hmis.hud.gov/ontology#hasDateOfBirth
+        transform: date_format
+        hud_data_element: "3.03"
+        
+        semantic_annotation:
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfBirth
+          x-hud-element: "3.03"
+        
+        privacy_controls:
+          collection_consent: inferred
+          data_quality_requirement: "accurate to month/year minimum"
+      
+      VeteranStatus:
+        fhir_path: Patient.extension[veteranStatus]
+        fhir_url: http://hl7.org/fhir/us/military-service/StructureDefinition/military-service-episode
+        ontology_property: http://hmis.hud.gov/ontology#hasVeteranStatus
+        transform: extension_boolean
+        hud_data_element: "3.07"
+        
+        semantic_annotation:
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVeteranStatus
+          x-hud-element: "3.07"
+        
+        value_map:
+          0: false
+          1: true
+          8: null
+          9: null
+          99: null
+  
+  # Organization → Organization
+  Organization:
+    fhir_resource: Organization
+    fhir_profile: http://hl7.org/fhir/StructureDefinition/Organization
+    ontology_class: http://hmis.hud.gov/ontology#Organization
+    description: "HMIS Organization maps to FHIR Organization"
+    hud_data_element: "2.01"
+    
+    semantic_extensions:
+      - extension_url: http://hmis.hud.gov/fhir/extensions/hud-data-element
+        value: "2.01"
+      
+      - extension_url: http://hmis.hud.gov/fhir/extensions/ontology-class
+        value: http://hmis.hud.gov/ontology#Organization
+    
+    field_mappings:
+      OrganizationID:
+        fhir_path: Organization.identifier[0]
+        fhir_system: http://hmis.hud.gov/identifiers/OrganizationID
+        ontology_property: http://hmis.hud.gov/ontology#hasOrganizationID
+        transform: identifier
+        hud_data_element: "2.01"
+        technical_standard: "5.01"
+        
+        semantic_annotation:
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOrganizationID
+          x-hud-element: "2.01"
+          x-technical-standard: "5.01"
+  
+  # Project → HealthcareService
+  Project:
+    fhir_resource: HealthcareService
+    fhir_profile: http://hl7.org/fhir/StructureDefinition/HealthcareService
+    ontology_class: http://hmis.hud.gov/ontology#Project
+    description: "HMIS Project maps to FHIR HealthcareService"
+    hud_data_element: "2.02"
+    
+    semantic_extensions:
+      - extension_url: http://hmis.hud.gov/fhir/extensions/hud-data-element
+        value: "2.02"
+      
+      - extension_url: http://hmis.hud.gov/fhir/extensions/ontology-class
+        value: http://hmis.hud.gov/ontology#Project
+      
+      - extension_url: http://hmis.hud.gov/fhir/extensions/hmis-participation
+        value_reference: HMISParticipation
+        description: "Links to HMIS Participation Status (2.08)"
+    
+    field_mappings:
+      ProjectID:
+        fhir_path: HealthcareService.identifier[0]
+        fhir_system: http://hmis.hud.gov/identifiers/ProjectID
+        ontology_property: http://hmis.hud.gov/ontology#hasProjectID
+        transform: identifier
+        hud_data_element: "2.02"
+        technical_standard: "5.05"
+        
+        semantic_annotation:
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+          x-hud-element: "2.02"
+          x-technical-standard: "5.05"
+      
+      ProjectType:
+        fhir_path: HealthcareService.type[0]
+        fhir_system: http://hmis.hud.gov/codesystems/project-type
+        ontology_property: http://hmis.hud.gov/ontology#hasProjectType
+        transform: codeable_concept
+        hud_data_element: "2.02.6"
+        
+        semantic_annotation:
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectType
+          x-hud-element: "2.02.6"
+        
+        value_map:
+          1: emergency-shelter
+          2: transitional-housing
+          3: psh
+          4: street-outreach
+          6: services-only
+          13: ph-rapid-rehousing
+  
+  # Enrollment → EpisodeOfCare
+  Enrollment:
+    fhir_resource: EpisodeOfCare
+    fhir_profile: http://hl7.org/fhir/StructureDefinition/EpisodeOfCare
+    ontology_class: http://hmis.hud.gov/ontology#Enrollment
+    description: "HMIS Enrollment maps to FHIR EpisodeOfCare"
+    hud_data_element: "3.10"
+    
+    semantic_extensions:
+      - extension_url: http://hmis.hud.gov/fhir/extensions/hud-data-element
+        value: "3.10"
+      
+      - extension_url: http://hmis.hud.gov/fhir/extensions/ontology-class
+        value: http://hmis.hud.gov/ontology#Enrollment
+      
+      - extension_url: http://hmis.hud.gov/fhir/extensions/roi-status
+        value_reference: Consent
+        description: "Links to Release of Information (ROI) consent"
+    
+    field_mappings:
+      EnrollmentID:
+        fhir_path: EpisodeOfCare.identifier[0]
+        fhir_system: http://hmis.hud.gov/identifiers/EnrollmentID
+        ontology_property: http://hmis.hud.gov/ontology#hasEnrollmentID
+        transform: identifier
+        hud_data_element: "3.10"
+        technical_standard: "5.06"
+        
+        semantic_annotation:
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+          x-hud-element: "3.10"
+          x-technical-standard: "5.06"
+        
+        privacy_controls:
+          roi_required: true
+          consent_verification: "before data sharing"
+
+# ============================================================================
+# PART 2: PRIVACY & SECURITY MAPPINGS (HUD Technical Standards → FHIR)
+# ============================================================================
+
+privacy_security_mappings:
+  
+  # HUD 4.2.1 Collection Limitation → FHIR Consent Resource
+  collection_limitation:
+    hud_standard: "4.2.1"
+    fhir_resource: Consent
+    fhir_profile: http://hl7.org/fhir/StructureDefinition/Consent
+    
+    description: "CHO may collect PPI only when appropriate, with knowledge or consent of individual"
+    
+    consent_types:
+      inferred:
+        fhir_status: active
+        fhir_scope: patient-privacy
+        fhir_category: http://terminology.hl7.org/CodeSystem/v3-ActCode#INFA
+        description: "Consent inferred from circumstances of collection (HUD allows)"
+      
+      explicit:
+        fhir_status: active
+        fhir_scope: patient-privacy
+        fhir_category: http://terminology.hl7.org/CodeSystem/v3-ActCode#INFASO
+        description: "Explicit oral or written consent (additional protection)"
+    
+    effect_handler: validate_collection_consent
+  
+  # HUD 4.2.3 Purpose Specification → FHIR Consent.provision
+  purpose_specification:
+    hud_standard: "4.2.3"
+    fhir_resource: Consent
+    fhir_element: provision
+    
+    description: "CHO must specify purposes for collecting PPI and describe all uses/disclosures"
+    
+    allowable_purposes:
+      - code: TREAT
+        display: "Provide or coordinate services to individual"
+        fhir_purpose: http://terminology.hl7.org/CodeSystem/v3-ActReason#TREAT
+      
+      - code: HPAYMT
+        display: "Payment or reimbursement for services"
+        fhir_purpose: http://terminology.hl7.org/CodeSystem/v3-ActReason#HPAYMT
+      
+      - code: HOPERAT
+        display: "Administrative functions (legal, audit, personnel)"
+        fhir_purpose: http://terminology.hl7.org/CodeSystem/v3-ActReason#HOPERAT
+      
+      - code: HRESCH
+        display: "Research (de-identified PPI)"
+        fhir_purpose: http://terminology.hl7.org/CodeSystem/v3-ActReason#HRESCH
+    
+    effect_handler: validate_purpose_disclosure
+  
+  # HUD 4.2.5 Access and Correction → FHIR AuditEvent
+  access_correction:
+    hud_standard: "4.2.5"
+    fhir_resource: AuditEvent
+    fhir_profile: http://hl7.org/fhir/StructureDefinition/AuditEvent
+    
+    description: "Individual has right to access and request correction of PPI"
+    
+    audit_requirements:
+      - action: READ
+        description: "Client access to own information"
+        fhir_action: R
+      
+      - action: UPDATE
+        description: "Correction request"
+        fhir_action: U
+      
+      - action: DELETE
+        description: "Request to restrict disclosure"
+        fhir_action: D
+    
+    effect_handler: validate_access_rights
+  
+  # HUD Data Retention → FHIR Provenance
+  data_retention:
+    hud_standard: "4.2.3 (7-year retention)"
+    fhir_resource: Provenance
+    fhir_profile: http://hl7.org/fhir/StructureDefinition/Provenance
+    
+    description: "PPI retained for 7 years after last service, then destroyed"
+    
+    retention_rules:
+      standard_retention: "7 years"
+      destruction_method: "secure destruction per 4.3"
+      exceptions:
+        - "Required by law to retain longer"
+        - "Active legal proceedings"
+    
+    effect_handler: validate_retention_compliance
+
+# ============================================================================
+# PART 3: EFFECT HANDLERS (Technical Standards Validation)
+# ============================================================================
+
+effect_handlers:
+  
+  validate_collection_consent:
+    description: "Validates consent exists before collecting PPI (HUD 4.2.1)"
+    hud_standard: "4.2.1 Collection Limitation"
+    fhir_resources: [Patient, Consent]
+    
+    validation_rules:
+      - rule: "Consent must exist (inferred or explicit)"
+        check: "Consent.status == 'active'"
+        error: "No active consent for data collection"
+      
+      - rule: "Collection purpose must be specified"
+        check: "Consent.provision.purpose is not empty"
+        error: "Collection purpose not specified in consent"
+      
+      - rule: "Privacy notice provided (signage at intake)"
+        check: "Patient.extension[privacyNoticeProvided] == true"
+        error: "Privacy notice not documented"
+    
+    effect_handler_code: |
+      def validate_collection_consent(patient_id: str, consent_id: str) -> bool:
+          consent = fhir_client.get_consent(consent_id)
+          
+          if consent.status != 'active':
+              raise ValidationError("No active consent for data collection")
+          
+          if not consent.provision or not consent.provision.purpose:
+              raise ValidationError("Collection purpose not specified")
+          
+          # Check privacy notice documented
+          patient = fhir_client.get_patient(patient_id)
+          privacy_notice_ext = patient.get_extension(
+              'http://hmis.hud.gov/fhir/extensions/privacy-notice-provided'
+          )
+          
+          if not privacy_notice_ext or not privacy_notice_ext.valueBoolean:
+              raise ValidationError("Privacy notice not documented")
+          
+          return True
+  
+  validate_purpose_disclosure:
+    description: "Validates disclosure is for allowable purpose (HUD 4.2.3)"
+    hud_standard: "4.2.3 Purpose Specification and Use Limitation"
+    fhir_resources: [Consent, AuditEvent]
+    
+    validation_rules:
+      - rule: "Disclosure purpose must be specified in consent"
+        check: "requested_purpose in Consent.provision.purpose"
+        error: "Disclosure purpose not authorized by consent"
+      
+      - rule: "Use must be compatible with collection purpose"
+        check: "is_compatible(collection_purpose, use_purpose)"
+        error: "Use incompatible with collection purpose"
+      
+      - rule: "Minimum necessary standard applied"
+        check: "disclosed_fields <= necessary_fields"
+        error: "Disclosure exceeds minimum necessary"
+    
+    effect_handler_code: |
+      def validate_purpose_disclosure(
+          consent_id: str, 
+          requested_purpose: str,
+          requested_fields: list
+      ) -> bool:
+          consent = fhir_client.get_consent(consent_id)
+          
+          # Check purpose is authorized
+          authorized_purposes = [p.code for p in consent.provision.purpose]
+          if requested_purpose not in authorized_purposes:
+              raise ValidationError(f"Purpose {requested_purpose} not authorized")
+          
+          # Check minimum necessary
+          necessary_fields = determine_minimum_necessary(requested_purpose)
+          if not set(requested_fields).issubset(set(necessary_fields)):
+              raise ValidationError("Disclosure exceeds minimum necessary")
+          
+          # Log audit event
+          audit_event = create_audit_event(
+              action='DISCLOSE',
+              patient=consent.patient,
+              purpose=requested_purpose,
+              fields=requested_fields
+          )
+          fhir_client.create_audit_event(audit_event)
+          
+          return True
+  
+  validate_roi_active:
+    description: "Validates ROI (Release of Information) is active before data sharing"
+    hud_standard: "4.2.3 Use Limitation"
+    fhir_resources: [Consent]
+    
+    validation_rules:
+      - rule: "ROI consent must exist"
+        check: "Consent exists with category='ROI'"
+        error: "No ROI consent found"
+      
+      - rule: "ROI must be active"
+        check: "Consent.status == 'active'"
+        error: "ROI consent is not active (expired or revoked)"
+      
+      - rule: "ROI must cover requested date range"
+        check: "request_date within Consent.provision.period"
+        error: "ROI does not cover requested date range"
+      
+      - rule: "ROI must authorize recipient"
+        check: "recipient in Consent.provision.actor"
+        error: "Recipient not authorized in ROI"
+    
+    effect_handler_code: |
+      def validate_roi_active(
+          patient_id: str,
+          recipient_org: str,
+          request_date: datetime
+      ) -> bool:
+          # Find ROI consent for this patient
+          consents = fhir_client.search_consent(
+              patient=patient_id,
+              category='http://hmis.hud.gov/codesystems/consent-type|ROI'
+          )
+          
+          if not consents:
+              raise ValidationError("No ROI consent found for patient")
+          
+          active_roi = None
+          for consent in consents:
+              if consent.status == 'active':
+                  period = consent.provision.period
+                  if period.start <= request_date <= period.end:
+                      # Check recipient authorized
+                      actors = [a.reference.reference for a in consent.provision.actor]
+                      if f"Organization/{recipient_org}" in actors:
+                          active_roi = consent
+                          break
+          
+          if not active_roi:
+              raise ValidationError("No active ROI covering this request")
+          
+          return True
+  
+  validate_access_rights:
+    description: "Validates individual's right to access their own data (HUD 4.2.5)"
+    hud_standard: "4.2.5 Individual Participation (Access and Correction)"
+    fhir_resources: [Patient, AuditEvent]
+    
+    validation_rules:
+      - rule: "Individual can access their own PPI"
+        check: "requester_id == patient_id OR requester is authorized"
+        error: "Requester not authorized to access this data"
+      
+      - rule: "Access denial must have valid reason"
+        check: "denial_reason in ['safety_risk', 'legal_proceeding', 'research']"
+        error: "Invalid reason for access denial"
+      
+      - rule: "Access must be logged"
+        check: "AuditEvent created for access"
+        error: "Access not logged in audit trail"
+    
+    effect_handler_code: |
+      def validate_access_rights(
+          patient_id: str,
+          requester_id: str,
+          requested_resources: list
+      ) -> bool:
+          # Check if requester is the patient themselves
+          if requester_id == patient_id:
+              authorized = True
+          else:
+              # Check if requester has authorized relationship
+              authorized = check_authorized_relationship(requester_id, patient_id)
+          
+          if not authorized:
+              raise ValidationError("Requester not authorized to access this data")
+          
+          # Create audit log
+          audit_event = AuditEvent(
+              type=AuditEventType.access,
+              action=AuditEventAction.read,
+              recorded=datetime.now(),
+              agent=[
+                  AuditEventAgent(
+                      who=Reference(reference=f"Patient/{requester_id}"),
+                      requestor=True
+                  )
+              ],
+              entity=[
+                  AuditEventEntity(
+                      what=Reference(reference=f"Patient/{patient_id}"),
+                      role=AuditEventEntityRole.patient
+                  )
+              ]
+          )
+          fhir_client.create_audit_event(audit_event)
+          
+          return True
+  
+  validate_retention_compliance:
+    description: "Validates data retention/destruction per 7-year rule (HUD Technical Standards)"
+    hud_standard: "4.2.3 (Retention), 5.2.1 (CoC Storage Requirements)"
+    fhir_resources: [Provenance]
+    
+    validation_rules:
+      - rule: "Data retained for 7 years after last service"
+        check: "current_date <= last_service_date + 7 years"
+        error: "Data exceeds retention period, must be destroyed"
+      
+      - rule: "Destruction method must be secure"
+        check: "destruction_method in ['shred', 'degauss', 'incinerate']"
+        error: "Invalid destruction method"
+      
+      - rule: "Destruction must be logged"
+        check: "Provenance.activity == 'DELETE'"
+        error: "Data destruction not logged"
+    
+    effect_handler_code: |
+      def validate_retention_compliance(
+          resource_id: str,
+          resource_type: str,
+          last_service_date: datetime
+      ) -> dict:
+          current_date = datetime.now()
+          retention_end = last_service_date + timedelta(days=365*7)
+          
+          if current_date > retention_end:
+              return {
+                  'compliant': False,
+                  'action_required': 'DESTROY',
+                  'reason': 'Data exceeds 7-year retention period',
+                  'retention_end': retention_end
+              }
+          
+          days_until_destruction = (retention_end - current_date).days
+          
+          return {
+              'compliant': True,
+              'action_required': 'NONE' if days_until_destruction > 365 else 'NOTIFY',
+              'days_until_destruction': days_until_destruction,
+              'retention_end': retention_end
+          }
+
+# ============================================================================
+# PART 4: FHIR SECURITY IMPLEMENTATION (OAuth 2.0 / SMART on FHIR)
+# ============================================================================
+
+fhir_security:
+  
+  # OAuth 2.0 Scopes mapped to HUD purposes
+  oauth_scopes:
+    description: "SMART on FHIR scopes aligned with HUD allowable uses (4.2.3)"
+    
+    scopes:
+      # HUD Purpose: Provide or coordinate services
+      - scope: patient/*.read
+        hud_purpose: TREAT
+        description: "Read patient data for service coordination"
+      
+      - scope: patient/*.write
+        hud_purpose: TREAT
+        description: "Update patient data for service provision"
+      
+      # HUD Purpose: Administrative functions
+      - scope: system/*.read
+        hud_purpose: HOPERAT
+        description: "System-level read for reporting/admin"
+      
+      # HUD Purpose: Research (de-identified)
+      - scope: system/*.read?_elements=id,gender,age
+        hud_purpose: HRESCH
+        description: "De-identified data for research"
+  
+  # SMART App Launch Context
+  smart_launch:
+    description: "SMART on FHIR app launch with HUD context"
+    
+    launch_parameters:
+      - parameter: patient
+        description: "Patient context (PersonalID)"
+      
+      - parameter: encounter
+        description: "Episode context (EnrollmentID)"
+      
+      - parameter: hmis_project
+        description: "Project context (ProjectID)"
+        fhir_extension: http://hmis.hud.gov/fhir/extensions/project-context
+
+# ============================================================================
+# PART 5: MEDICAID BILLING SCENARIO (Complete Example)
+# ============================================================================
+
+medicaid_scenarios:
+  
+  eligibility_verification:
+    description: "Submit client data for Medicaid eligibility verification"
+    hud_use_case: "Payment/reimbursement for services (4.2.3)"
+    
+    required_resources:
+      - resource: Patient
+        hud_elements: ["3.01-3.07"]
+        privacy_check: validate_collection_consent
+      
+      - resource: EpisodeOfCare
+        hud_elements: ["3.10"]
+        privacy_check: validate_roi_active
+      
+      - resource: Coverage
+        hud_elements: ["4.03"]
+        privacy_check: validate_purpose_disclosure
+      
+      - resource: Condition
+        hud_elements: ["4.05"]
+        privacy_check: validate_purpose_disclosure
+    
+    effect_handlers:
+      - validate_collection_consent
+      - validate_roi_active
+      - validate_purpose_disclosure
+    
+    fhir_bundle_structure:
+      resourceType: Bundle
+      type: transaction
+      entry:
+        - fullUrl: "urn:uuid:patient-001"
+          resource:
+            resourceType: Patient
+            # ... Patient fields from Client mapping
+          request:
+            method: POST
+            url: Patient
+        
+        - fullUrl: "urn:uuid:episode-001"
+          resource:
+            resourceType: EpisodeOfCare
+            # ... EpisodeOfCare fields from Enrollment mapping
+          request:
+            method: POST
+            url: EpisodeOfCare
+        
+        - fullUrl: "urn:uuid:coverage-001"
+          resource:
+            resourceType: Coverage
+            # ... Coverage from HealthInsurance
+          request:
+            method: POST
+            url: Coverage
+
+# ============================================================================
+# PART 6: TRANSFORMATION FUNCTIONS
+# ============================================================================
+
+transformations:
+  
+  identifier:
+    description: "Convert HMIS ID to FHIR Identifier with HUD metadata"
+    python_function: |
+      def transform(value, system, hud_element=None, technical_standard=None):
+          identifier = {
+              "system": system,
+              "value": str(value)
+          }
+          
+          # Add HUD data element extension
+          if hud_element:
+              identifier['extension'] = [{
+                  "url": "http://hmis.hud.gov/fhir/extensions/hud-data-element",
+                  "valueString": hud_element
+              }]
+          
+          return identifier
+  
+  extension_with_provenance:
+    description: "Create FHIR extension with HUD provenance"
+    python_function: |
+      def transform(value, url, hud_standard, ontology_uri=None):
+          extension = {
+              "url": url,
+              "valueString": str(value)
+          }
+          
+          # Add provenance sub-extension
+          extension['extension'] = [
+              {
+                  "url": "hud-technical-standard",
+                  "valueString": hud_standard
+              }
+          ]
+          
+          if ontology_uri:
+              extension['extension'].append({
+                  "url": "ontology-property",
+                  "valueUri": ontology_uri
+              })
+          
+          return extension
+
+# ============================================================================
+# METADATA
+# ============================================================================
+
+metadata:
+  generated: "2025-11-07"
+  maintainer: "ICF Data Lab - HMIS API Team"
+  hud_standards_compliance:
+    - "FY2026 HMIS Data Standards Manual"
+    - "2004 HMIS Data and Technical Standards (Privacy/Security)"
+  fhir_compliance:
+    - "FHIR R4 (v4.0.1)"
+    - "US Core Implementation Guide v3.1.1"
+    - "SMART App Launch Framework v1.0.0"
