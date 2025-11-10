@@ -201,3 +201,104 @@ class OntologyModel(BaseModel):
     classes: List[OWLClass]
     properties: List[OWLProperty]
     namespace: str
+
+# ============= FHIR Mapping Models =============
+
+class FHIRMapping(BaseModel):
+    """FHIR resource mapping metadata"""
+    fhir_resource: str = Field(..., description="FHIR resource type (e.g., Patient)")
+    fhir_profile: Optional[HttpUrl] = Field(None, description="FHIR profile URL")
+    ontology_class: Optional[HttpUrl] = Field(None, description="Ontology class URI")
+    hud_data_element: Optional[str] = Field(None, description="HUD data element reference")
+    
+    class Config:
+        populate_by_name = True
+
+
+class FHIRFieldMapping(BaseModel):
+    """FHIR field-level mapping with privacy controls"""
+    fhir_path: str = Field(..., description="FHIR path (e.g., Patient.name[0].given[0])")
+    fhir_type: Optional[str] = Field(None, description="FHIR data type")
+    fhir_system: Optional[HttpUrl] = Field(None, description="FHIR identifier system")
+    fhir_url: Optional[HttpUrl] = Field(None, description="FHIR extension URL")
+    ontology_property: Optional[HttpUrl] = Field(None, description="Ontology property URI")
+    transform: str = Field(default="direct", description="Transformation type")
+    hud_data_element: Optional[str] = Field(None, description="HUD data element")
+    technical_standard: Optional[str] = Field(None, description="HUD Technical Standard reference")
+    
+    # Privacy controls (HUD 2004 Technical Standards)
+    collection_consent: Optional[str] = Field(None, description="Consent type: inferred|explicit")
+    retention_period: Optional[str] = Field(None, description="Data retention period")
+    disclosure_restriction: Optional[str] = Field(None, description="Disclosure restrictions")
+    encryption_required: Optional[bool] = Field(None, description="Encryption required")
+    audit_trail_required: Optional[bool] = Field(None, description="Audit trail required")
+    
+    class Config:
+        populate_by_name = True
+
+
+class FHIRResourceMapping(BaseModel):
+    """Complete FHIR resource mapping"""
+    hmis_resource: str
+    fhir_resource: str
+    fhir_profile: Optional[HttpUrl] = None
+    ontology_class: Optional[HttpUrl] = None
+    field_mappings: Dict[str, FHIRFieldMapping]
+    
+    # Semantic extensions
+    semantic_extensions: List[Dict[str, str]] = Field(default_factory=list)
+    
+    # Effect handlers for this resource
+    effect_handlers: List[str] = Field(default_factory=list)
+
+
+class FHIRMappingsFile(BaseModel):
+    """Complete FHIR mappings file structure"""
+    version: str
+    hmis_spec_version: str
+    fhir_version: str
+    hud_technical_standards: str
+    
+    resource_mappings: Dict[str, FHIRResourceMapping]
+    privacy_security_mappings: Dict[str, Any]
+    effect_handlers: Dict[str, Any]
+    transformations: Dict[str, Any]
+    medicaid_scenarios: Optional[Dict[str, Any]] = None
+
+
+# Update SchemaProperty to include FHIR mapping
+class SchemaProperty(BaseModel):
+    """OpenAPI schema property with semantic annotations"""
+    name: str
+    type: str
+    format: Optional[str] = None
+    description: Optional[str] = None
+    max_length: Optional[int] = None
+    pattern: Optional[str] = None
+    
+    # Semantic annotations
+    semantic: SemanticAnnotation = Field(default_factory=SemanticAnnotation)
+    
+    # FHIR mapping (new)
+    fhir_mapping: Optional[FHIRFieldMapping] = Field(None, alias="x-fhir-mapping")
+    
+    # HUD-specific metadata
+    hud_reference: Optional[Dict[str, str]] = Field(None, alias="x-hud-reference")
+    conditional: Optional[str] = Field(None, alias="x-conditional")
+    business_rule: Optional[str] = Field(None, alias="x-business-rule")
+
+
+# Update APISchema to include FHIR mapping
+class APISchema(BaseModel):
+    """OpenAPI schema component with semantic annotations"""
+    name: str
+    type: Literal["object", "array", "string", "integer", "number", "boolean"]
+    description: Optional[str] = None
+    properties: List[SchemaProperty] = Field(default_factory=list)
+    
+    # Semantic annotations
+    semantic: SemanticAnnotation = Field(default_factory=SemanticAnnotation)
+    hud_csv_table: Optional[str] = Field(None, alias="x-hud-csv-table")
+    
+    # FHIR mapping (new)
+    fhir_mapping: Optional[FHIRMapping] = Field(None, alias="x-fhir-mapping")
