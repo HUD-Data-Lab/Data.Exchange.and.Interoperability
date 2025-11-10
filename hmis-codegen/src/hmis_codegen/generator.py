@@ -123,3 +123,51 @@ class Generator:
     def _to_jsonld_term(semantic_uri: str) -> str:
         """Extract JSON-LD term from full URI"""
         return semantic_uri.split('#')[-1].split('/')[-1]
+
+def generate_fhir_transformer(
+    self,
+    spec: OpenAPISpec,
+    fhir_mappings: FHIRMappingsFile,
+    effect_handlers: List[EffectHandler]
+) -> str:
+    """Generate FHIR transformer with effect handlers"""
+    template = self.env.get_template('fhir_transformer.py.j2')
+    
+    # Prepare components with FHIR mappings
+    components = []
+    for schema in spec.schemas:
+        if schema.name in fhir_mappings.resource_mappings:
+            fhir_mapping = fhir_mappings.resource_mappings[schema.name]
+            components.append({
+                'name': schema.name,
+                'properties': self._prepare_fhir_properties(schema, fhir_mapping),
+                'fhir_mapping': fhir_mapping
+            })
+    
+    return template.render(
+        components=components,
+        effect_handlers=effect_handlers,
+        fhir_mappings=fhir_mappings,
+        spec_version=spec.version,
+        timestamp=datetime.now().isoformat()
+    )
+
+def _prepare_fhir_properties(
+    self,
+    schema: APISchema,
+    fhir_mapping: FHIRResourceMapping
+) -> List[Dict[str, Any]]:
+    """Prepare property data for FHIR template"""
+    properties = []
+    
+    for prop in schema.properties:
+        if prop.name in fhir_mapping.field_mappings:
+            field_mapping = fhir_mapping.field_mappings[prop.name]
+            properties.append({
+                'name': prop.name,
+                'type': prop.type,
+                'fhir_mapping': field_mapping,
+                'semantic': prop.semantic
+            })
+    
+    return properties
