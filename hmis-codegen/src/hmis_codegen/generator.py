@@ -171,3 +171,22 @@ def _prepare_fhir_properties(
             })
     
     return properties
+
+def generate_fhir_docs(
+    self,
+    spec: OpenAPISpec,
+    fhir_mappings: FHIRMappingsFile
+) -> str:
+    """Generate FHIR integration documentation"""
+    template = self.env.get_template('fhir_docs.md.j2')
+    
+    return template.render(
+        spec_version=spec.version,
+        fhir_version=fhir_mappings.fhir_version,
+        hud_technical_standards=fhir_mappings.hud_technical_standards,
+        resource_mappings=fhir_mappings.resource_mappings,
+        effect_handlers=fhir_mappings.effect_handlers,
+        transformations=fhir_mappings.transformations,
+        timestamp=datetime.now().isoformat(),
+        version="0.1.0"
+    )
