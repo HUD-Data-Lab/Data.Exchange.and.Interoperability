@@ -200,3 +200,58 @@ class YAMLLDParser:
             )
             for e in effects_data
         ]
+
+class FHIRMappingsParser:
+    """Parse separate FHIR mappings YAML file"""
+    
+    def __init__(self, mappings_path: Path):
+        with open(mappings_path, 'r') as f:
+            self.data = yaml.safe_load(f)
+    
+    def parse(self) -> FHIRMappingsFile:
+        """Parse FHIR mappings into structured model"""
+        resource_mappings = {}
+        
+        for hmis_name, mapping_data in self.data.get('resource_mappings', {}).items():
+            field_mappings = {}
+            
+            for field_name, field_data in mapping_data.get('field_mappings', {}).items():
+                privacy_controls = field_data.get('privacy_controls', {})
+                
+                field_mappings[field_name] = FHIRFieldMapping(
+                    fhir_path=field_data['fhir_path'],
+                    fhir_type=field_data.get('fhir_type'),
+                    fhir_system=field_data.get('fhir_system'),
+                    fhir_url=field_data.get('fhir_url'),
+                    ontology_property=field_data.get('ontology_property'),
+                    transform=field_data.get('transform', 'direct'),
+                    hud_data_element=field_data.get('hud_data_element'),
+                    technical_standard=field_data.get('technical_standard'),
+                    collection_consent=privacy_controls.get('collection_consent'),
+                    retention_period=privacy_controls.get('retention_period'),
+                    disclosure_restriction=privacy_controls.get('disclosure_restriction'),
+                    encryption_required=privacy_controls.get('encryption_required'),
+                    audit_trail_required=privacy_controls.get('audit_trail_required')
+                )
+            
+            resource_mappings[hmis_name] = FHIRResourceMapping(
+                hmis_resource=hmis_name,
+                fhir_resource=mapping_data['fhir_resource'],
+                fhir_profile=mapping_data.get('fhir_profile'),
+                ontology_class=mapping_data.get('ontology_class'),
+                field_mappings=field_mappings,
+                semantic_extensions=mapping_data.get('semantic_extensions', []),
+                effect_handlers=mapping_data.get('effect_handlers', [])
+            )
+        
+        return FHIRMappingsFile(
+            version=self.data['version'],
+            hmis_spec_version=self.data['hmis_spec_version'],
+            fhir_version=self.data['fhir_version'],
+            hud_technical_standards=self.data['hud_technical_standards'],
+            resource_mappings=resource_mappings,
+            privacy_security_mappings=self.data.get('privacy_security_mappings', {}),
+            effect_handlers=self.data.get('effect_handlers', {}),
+            transformations=self.data.get('transformations', {}),
+            medicaid_scenarios=self.data.get('medicaid_scenarios')
+        )
