@@ -520,3 +520,144 @@ def build_wasm(
     console.print()
     console.print("[dim]🧪 Experimental Phase 1 feature[/dim]")
 """
+
+# Add to cli.py after existing commands
+
+@app.command()
+def generate_fhir(
+    spec: Path = typer.Option(
+        ...,
+        "--spec",
+        "-s",
+        help="Path to YAML-LD API specification",
+        exists=True
+    ),
+    fhir_mappings: Path = typer.Option(
+        ...,
+        "--fhir-mappings",
+        "-f",
+        help="Path to FHIR mappings YAML file",
+        exists=True
+    ),
+    output_dir: Path = typer.Option(
+        Path("./generated/fhir"),
+        "--output-dir",
+        "-d",
+        help="Output directory for FHIR files"
+    )
+):
+    """
+    Generate FHIR integration files from mappings
+    
+    Examples:
+        hmis-codegen generate-fhir -s api.yaml -f fhir-mappings.yaml
+    """
+    console.print("[bold blue]FHIR Integration Generator[/bold blue]")
+    console.print(f"Spec: {spec}")
+    console.print(f"FHIR Mappings: {fhir_mappings}")
+    console.print()
+    
+    # Parse inputs
+    with console.status("[bold green]Parsing specification..."):
+        yaml_parser = YAMLLDParser(spec)
+        spec_model = yaml_parser.parse()
+    
+    with console.status("[bold green]Parsing FHIR mappings..."):
+        fhir_parser = FHIRMappingsParser(fhir_mappings)
+        fhir_model = fhir_parser.parse()
+        console.print(f"✓ Parsed {len(fhir_model.resource_mappings)} resource mappings")
+    
+    # Extract and load effect handlers
+    with console.status("[bold green]Processing effect handlers..."):
+        all_effects = [e for op in spec_model.operations for e in op.effects]
+        effect_system = EffectSystem(all_effects, fhir_model)
+        handlers = effect_system.generate_handlers()
+        console.print(f"✓ Loaded {len(handlers)} effect handlers (including FHIR)")
+    
+    # Generate outputs
+    output_dir.mkdir(parents=True, exist_ok=True)
+    templates_dir = Path(__file__).parent.parent.parent / "templates"
+    generator = Generator(templates_dir)
+    
+    console.print()
+    console.print("[bold green]Generating FHIR files...[/bold green]")
+    
+    # Generate FHIR transformer
+    with console.status("Generating FHIR transformer..."):
+        transformer_code = generator.generate_fhir_transformer(
+            spec_model,
+            fhir_model,
+            handlers
+        )
+        transformer_path = output_dir / "fhir_transformer.py"
+        transformer_path.write_text(transformer_code)
+        console.print(f"✓ Generated FHIR transformer: {transformer_path}")
+    
+    # Generate FHIR bundle template
+    with console.status("Generating FHIR bundle template..."):
+        bundle_template = generator.generate_fhir_bundle(fhir_model)
+        bundle_path = output_dir / "fhir_bundle_template.json"
+        bundle_path.write_text(bundle_template)
+        console.print(f"✓ Generated FHIR bundle template: {bundle_path}")
+    
+    # Generate FHIR documentation
+    with console.status("Generating FHIR documentation..."):
+        docs = generator.generate_fhir_docs(spec_model, fhir_model)
+        docs_path = output_dir / "FHIR_INTEGRATION.md"
+        docs_path.write_text(docs)
+        console.print(f"✓ Generated FHIR documentation: {docs_path}")
+    
+    console.print()
+    console.print("[bold green]✓ FHIR generation complete![/bold green]")
+    console.print()
+    console.print("[dim]Generated files:[/dim]")
+    console.print(f"  • {transformer_path}")
+    console.print(f"  • {bundle_path}")
+    console.print(f"  • {docs_path}")
+
+@app.command()
+def generate(
+    ontology: Path = typer.Option(..., "--ontology", "-o", exists=True),
+    spec: Path = typer.Option(..., "--spec", "-s", exists=True),
+    output_dir: Path = typer.Option(Path("./generated"), "--output-dir", "-d"),
+    format: str = typer.Option("all", "--format", "-f"),
+    fhir_mappings: Optional[Path] = typer.Option(
+        None,
+        "--fhir-mappings",
+        help="Optional FHIR mappings file for FHIR integration"
+    )
+):
+    """
+    Generate outputs from YAML-LD specification and ontology
+    
+    Examples:
+        # Generate all outputs
+        hmis-codegen generate -o ontology.jsonld -s api.yaml
+        
+        # Generate with FHIR integration
+        hmis-codegen generate -o ontology.jsonld -s api.yaml --fhir-mappings fhir-mappings.yaml
+    """
+    # ... existing code ...
+    
+    # Add FHIR generation if mappings provided
+    if fhir_mappings and format in ["all", "fhir"]:
+        with console.status("Generating FHIR integration..."):
+            fhir_parser = FHIRMappingsParser(fhir_mappings)
+            fhir_model = fhir_parser.parse()
+            
+            # Update effect system with FHIR handlers
+            effect_system = EffectSystem(all_effects, fhir_model)
+            handlers = effect_system.generate_handlers()
+            
+            # Generate FHIR files
+            fhir_dir = output_dir / "fhir"
+            fhir_dir.mkdir(exist_ok=True)
+            
+            transformer_code = generator.generate_fhir_transformer(
+                spec_model,
+                fhir_model,
+                handlers
+            )
+            (fhir_dir / "fhir_transformer.py").write_text(transformer_code)
+            
+            console.print(f"✓ Generated FHIR integration: {fhir_dir}")
