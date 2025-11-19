@@ -1,0 +1,50 @@
+{# templates/fhir_bundle.json.j2 #}
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "timestamp": "{{ timestamp }}",
+  "meta": {
+    "profile": ["http://hl7.org/fhir/StructureDefinition/Bundle"]
+  },
+  "entry": [
+    {% for component in components %}
+    {% if component.fhir_mapping %}
+    {
+      "fullUrl": "urn:uuid:{{ component.name | lower }}-example",
+      "resource": {
+        "resourceType": "{{ component.fhir_mapping.fhir_resource }}",
+        {% if component.fhir_mapping.fhir_profile %}
+        "meta": {
+          "profile": ["{{ component.fhir_mapping.fhir_profile }}"]
+        },
+        {% endif %}
+        "extension": [
+          {
+            "url": "http://hmis.hud.gov/fhir/extensions/ontology-class",
+            "valueUri": "{{ component.fhir_mapping.ontology_class }}"
+          },
+          {
+            "url": "http://hmis.hud.gov/fhir/extensions/hud-data-element",
+            "valueString": "{{ component.fhir_mapping.hud_data_element }}"
+          }
+        ],
+        "identifier": [
+          {% for prop_name, prop in component.properties.items() %}
+          {% if prop.fhir_mapping and prop.fhir_mapping.fhir_system %}
+          {
+            "system": "{{ prop.fhir_mapping.fhir_system }}",
+            "value": "{{ '{{' }} {{ prop_name }} {{ '}}' }}"
+          }{% if not loop.last %},{% endif %}
+          {% endif %}
+          {% endfor %}
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "{{ component.fhir_mapping.fhir_resource }}"
+      }
+    }{% if not loop.last %},{% endif %}
+    {% endif %}
+    {% endfor %}
+  ]
+}

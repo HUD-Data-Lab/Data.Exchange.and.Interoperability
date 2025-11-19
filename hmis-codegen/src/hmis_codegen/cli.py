@@ -15,7 +15,7 @@ from rich.console import Console
 from rich.table import Table
 from rich import print as rprint
 
-from .parser import OntologyParser, YAMLLDParser
+from .parser import OntologyParser, YAMLLDParser, FHIRMappingsParser
 from .generator import Generator
 from .effects import EffectSystem
 
@@ -53,7 +53,12 @@ def generate(
         "all",
         "--format",
         "-f",
-        help="Output format: all|context|openapi|mockoon|handlers|mocks"
+        help="Output format: all|context|openapi|mockoon|handlers|mocks|fhir"
+    ),
+    fhir_mappings: Optional[Path] = typer.Option(
+        None,
+        "--fhir-mappings",
+        help="Optional FHIR mappings file for FHIR integration"
     )
 ):
     """
@@ -65,6 +70,9 @@ def generate(
         
         # Generate only JSON-LD context
         hmis-codegen generate -o ontology.jsonld -s api.yaml -f context
+        
+        # Generate with FHIR integration
+        hmis-codegen generate -o ontology.jsonld -s api.yaml --fhir-mappings fhir-mappings.yaml
     """
     console.print("[bold blue]HMIS Code Generator[/bold blue]")
     console.print(f"Ontology: {ontology}")
@@ -85,9 +93,19 @@ def generate(
                      f"{len(spec_model.operations)} operations")
     
     # Extract and validate effects
+    all_effects = [e for op in spec_model.operations for e in op.effects]
+    
+    # Load FHIR mappings if provided
+    fhir_model = None
+    if fhir_mappings:
+        with console.status("[bold green]Parsing FHIR mappings..."):
+            fhir_parser = FHIRMappingsParser(fhir_mappings)
+            fhir_model = fhir_parser.parse()
+            console.print(f"✓ Parsed {len(fhir_model.resource_mappings)} FHIR resource mappings")
+    
+    # Process effect system
     with console.status("[bold green]Processing effect system..."):
-        all_effects = [e for op in spec_model.operations for e in op.effects]
-        effect_system = EffectSystem(all_effects)
+        effect_system = EffectSystem(all_effects, fhir_model)
         errors = effect_system.validate_effects(spec_model.operations)
         
         if errors:
@@ -149,6 +167,36 @@ def generate(
             generated_files.append(("Mock Handlers", mock_path))
             console.print(f"✓ Generated mock handlers: {mock_path}")
     
+    # FHIR generation if mappings provided
+    if fhir_mappings and format in ["all", "fhir"]:
+        with console.status("Generating FHIR integration..."):
+            fhir_dir = output_dir / "fhir"
+            fhir_dir.mkdir(exist_ok=True)
+            
+            # Generate FHIR transformer
+            transformer_code = generator.generate_fhir_transformer(
+                spec_model,
+                fhir_model,
+                handlers
+            )
+            transformer_path = fhir_dir / "fhir_transformer.py"
+            transformer_path.write_text(transformer_code)
+            generated_files.append(("FHIR Transformer", transformer_path))
+            
+            # Generate FHIR bundle template
+            bundle_code = generator.generate_fhir_bundle(fhir_model)
+            bundle_path = fhir_dir / "fhir_bundle_template.json"
+            bundle_path.write_text(bundle_code)
+            generated_files.append(("FHIR Bundle Template", bundle_path))
+            
+            # Generate FHIR documentation
+            docs = generator.generate_fhir_docs(spec_model, fhir_model)
+            docs_path = fhir_dir / "FHIR_INTEGRATION.md"
+            docs_path.write_text(docs)
+            generated_files.append(("FHIR Documentation", docs_path))
+            
+            console.print(f"✓ Generated FHIR integration: {fhir_dir}")
+    
     # Summary table
     console.print()
     table = Table(title="Generated Files", show_header=True, header_style="bold cyan")
@@ -161,6 +209,99 @@ def generate(
     console.print(table)
     console.print()
     console.print("[bold green]✓ Generation complete![/bold green]")
+
+
+@app.command()
+def generate_fhir(
+    spec: Path = typer.Option(
+        ...,
+        "--spec",
+        "-s",
+        help="Path to YAML-LD API specification",
+        exists=True
+    ),
+    fhir_mappings: Path = typer.Option(
+        ...,
+        "--fhir-mappings",
+        "-f",
+        help="Path to FHIR mappings YAML file",
+        exists=True
+    ),
+    output_dir: Path = typer.Option(
+        Path("./generated/fhir"),
+        "--output-dir",
+        "-d",
+        help="Output directory for FHIR files"
+    )
+):
+    """
+    Generate FHIR integration files from mappings
+    
+    Examples:
+        hmis-codegen generate-fhir -s api.yaml -f fhir-mappings.yaml
+    """
+    console.print("[bold blue]FHIR Integration Generator[/bold blue]")
+    console.print(f"Spec: {spec}")
+    console.print(f"FHIR Mappings: {fhir_mappings}")
+    console.print()
+    
+    # Parse inputs
+    with console.status("[bold green]Parsing specification..."):
+        yaml_parser = YAMLLDParser(spec)
+        spec_model = yaml_parser.parse()
+    
+    with console.status("[bold green]Parsing FHIR mappings..."):
+        fhir_parser = FHIRMappingsParser(fhir_mappings)
+        fhir_model = fhir_parser.parse()
+        console.print(f"✓ Parsed {len(fhir_model.resource_mappings)} resource mappings")
+    
+    # Extract and load effect handlers
+    with console.status("[bold green]Processing effect handlers..."):
+        all_effects = [e for op in spec_model.operations for e in op.effects]
+        effect_system = EffectSystem(all_effects, fhir_model)
+        handlers = effect_system.generate_handlers()
+        console.print(f"✓ Loaded {len(handlers)} effect handlers (including FHIR)")
+    
+    # Generate outputs
+    output_dir.mkdir(parents=True, exist_ok=True)
+    templates_dir = Path(__file__).parent.parent.parent / "templates"
+    generator = Generator(templates_dir)
+    
+    console.print()
+    console.print("[bold green]Generating FHIR files...[/bold green]")
+    
+    # Generate FHIR transformer
+    with console.status("Generating FHIR transformer..."):
+        transformer_code = generator.generate_fhir_transformer(
+            spec_model,
+            fhir_model,
+            handlers
+        )
+        transformer_path = output_dir / "fhir_transformer.py"
+        transformer_path.write_text(transformer_code)
+        console.print(f"✓ Generated FHIR transformer: {transformer_path}")
+    
+    # Generate FHIR bundle template
+    with console.status("Generating FHIR bundle template..."):
+        bundle_template = generator.generate_fhir_bundle(fhir_model)
+        bundle_path = output_dir / "fhir_bundle_template.json"
+        bundle_path.write_text(bundle_template)
+        console.print(f"✓ Generated FHIR bundle template: {bundle_path}")
+    
+    # Generate FHIR documentation
+    with console.status("Generating FHIR documentation..."):
+        docs = generator.generate_fhir_docs(spec_model, fhir_model)
+        docs_path = output_dir / "FHIR_INTEGRATION.md"
+        docs_path.write_text(docs)
+        console.print(f"✓ Generated FHIR documentation: {docs_path}")
+    
+    console.print()
+    console.print("[bold green]✓ FHIR generation complete![/bold green]")
+    console.print()
+    console.print("[dim]Generated files:[/dim]")
+    console.print(f"  • {transformer_path}")
+    console.print(f"  • {bundle_path}")
+    console.print(f"  • {docs_path}")
 
 
 @app.command()
@@ -245,7 +386,7 @@ def validate(
     
     # Display results
     if errors:
-        console.print("[bold red]❌ Validation failed[/bold red]")
+        console.print("[bold red]✗ Validation failed[/bold red]")
         console.print()
         console.print("[red]Errors:[/red]")
         for error in errors:
@@ -373,9 +514,10 @@ def extract(
         # Simple CSV output for properties
         import csv
         with open(output, 'w', newline='') as f:
-            writer = csv.DictWriter(f, fieldnames=mappings["properties"][0].keys())
-            writer.writeheader()
-            writer.writerows(mappings["properties"])
+            if mappings["properties"]:
+                writer = csv.DictWriter(f, fieldnames=mappings["properties"][0].keys())
+                writer.writeheader()
+                writer.writerows(mappings["properties"])
     
     console.print(f"✓ Extracted {len(mappings['schemas'])} schema mappings")
     console.print(f"✓ Extracted {len(mappings['properties'])} property mappings")
@@ -471,52 +613,3 @@ def info(
 
 if __name__ == "__main__":
     app()
-    """
-@app.command()
-def build_wasm(
-    ontology: Path = typer.Option(..., "--ontology", "-o"),
-    output: Path = typer.Option(Path("./hmis_validator.wasm"), "--output")
-):
-    '''
-    Build WASM validator module (Experimental - Phase 1)
-    
-    Requires: Rust toolchain + wasm-pack installed
-    '''
-    console.print("[bold blue]WASM Builder (Experimental)[/bold blue]")
-    
-    # Parse ontology
-    with console.status("Parsing ontology..."):
-        parser = OntologyParser(ontology)
-        ontology_model = parser.to_model()
-    
-    # Generate Rust code
-    with console.status("Generating Rust code..."):
-        codegen = WASMCodeGenerator()
-        rust_code = codegen.generate_type_inference(ontology_model)
-        
-        wasm_dir = Path(__file__).parent.parent.parent / "wasm"
-        (wasm_dir / "src" / "generated.rs").write_text(rust_code)
-    
-    # Compile WASM
-    with console.status("Compiling to WASM..."):
-        import subprocess
-        result = subprocess.run(
-            ["wasm-pack", "build", "--target", "web", "--release"],
-            cwd=wasm_dir,
-            capture_output=True
-        )
-        
-        if result.returncode != 0:
-            console.print("[red]Build failed:[/red]")
-            console.print(result.stderr.decode())
-            raise typer.Exit(1)
-    
-    # Copy output
-    wasm_file = wasm_dir / "pkg" / "hmis_validator_wasm.wasm"
-    shutil.copy(wasm_file, output)
-    
-    size_kb = output.stat().st_size // 1024
-    console.print(f"✓ WASM module: {output} ({size_kb} KB)")
-    console.print()
-    console.print("[dim]🧪 Experimental Phase 1 feature[/dim]")
-"""
