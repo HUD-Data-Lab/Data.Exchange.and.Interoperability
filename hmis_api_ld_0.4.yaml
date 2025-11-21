@@ -2,6 +2,9 @@ openapi: 3.1.1
 info:
   title: HMIS API Sandbox Specifications
   version: 1.0.0
+  license: 
+    name: The MIT License (MIT)
+    url: https://mit-license.org/
   description: |
     HMIS API Sandbox request, response, and error responses for each scenario in the HMIS API Reference Guide.
     
@@ -57,562 +60,11 @@ info:
     privacy-framework: "2004 HMIS Data and Technical Standards"
     consent-management: "Required for cross-organization data sharing (ROI)"
     allowable-disclosure: "CoC-level aggregated reporting, HUD reporting requirements"
-
 servers:
   - url: http://localhost:3000/api/v1
     description: HMIS API Sandbox (Mockoon Reference Implementation)
-
 security: 
   - BasicAuth: []
-
-components:
-  securitySchemes:
-    BasicAuth:
-      type: http
-      scheme: basic
-
-  schemas:
-    # ========================================================================
-    # CLIENT SCHEMAS - Semantic Annotations Enabled
-    # ========================================================================
-    
-    clientPrimaryKey:
-      type: object
-      description: Unique identifier for Client resource
-      
-      # SEMANTIC ANNOTATION: Maps to ontology identifier property
-      # Enables: The Python parser extracts this from owl:hasIdentifier in the ontology
-      # Answer to Grant's question: YES - this IS parsed from JSON-LD → Python process
-      x-jsonld-type: hmis:ClientIdentifier
-      x-semantic-uri: http://hmis.hud.gov/ontology#ClientIdentifier
-      
-      properties:
-        PersonalID:
-          type: string
-          description: Unique identifier for the client
-          maxLength: 32
-          
-          # SEMANTIC ANNOTATION: Links to ontology property
-          # Enables: JSON-LD frame generation, SPARQL query construction
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
-          x-hud-data-element: "Universal Data Element"
-          x-ontology-cardinality: "1..1"  # Required, exactly one
-    
-    clientBase:
-      type: object
-      description: Core Client demographic and identifying information
-      
-      # SEMANTIC ANNOTATION: Maps entire schema to ontology class
-      # Enables: Automated @context generation, RDF type assignment in responses
-      x-jsonld-type: hmis:Client
-      x-semantic-uri: http://hmis.hud.gov/ontology#Client
-      x-hud-csv-table: "Client.csv"
-      
-      properties: 
-        FirstName:
-          type: string
-          description: First name of the client
-          maxLength: 50
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasFirstName
-          x-hud-data-element: "3.01"
-          x-hud-reference:
-            standard: "FY 2026 HMIS Data Dictionary"
-            section: "3.01 Name"
-            url: "https://www.hudexchange.info/resource/3824/hmis-data-dictionary/"
-          
-        MiddleName:
-          type: string
-          description: Middle name of the client
-          maxLength: 50
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasMiddleName
-          x-hud-data-element: "3.01"
-          x-ontology-cardinality: "0..1"  # Optional
-          
-        LastName:
-          type: string
-          description: Last name of the client
-          maxLength: 50
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasLastName
-          x-hud-data-element: "3.01"
-          
-        NameSuffix:
-          type: string
-          description: Suffix of the client's name
-          maxLength: 50
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasNameSuffix
-          x-hud-data-element: "3.01"
-          x-ontology-cardinality: "0..1"
-          
-        NameDataQuality:
-          type: integer
-          description: Data quality indicator for name fields
-          oneOf:
-            - $ref: '#/components/schemas/NameDataQuality_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasNameDataQuality
-          x-hud-data-element: "3.01"
-          x-ontology-range: hmis:NameDataQualityType
-          
-        SSN:
-          type: string
-          description: Social Security Number
-          pattern: '^[0-9]{9}$'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasSSN
-          x-hud-data-element: "3.02"
-          x-pii: true  # Mark as personally identifiable information
-          x-encryption-required: true
-          
-        SSNDataQuality:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/SSNDataQuality_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasSSNDataQuality
-          x-hud-data-element: "3.02"
-          x-ontology-range: hmis:SSNDataQualityType
-          
-        DOB:
-          type: string
-          description: Date of birth of the client
-          format: date
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfBirth
-          x-hud-data-element: "3.03"
-          x-pii: true
-          
-        DOBDataQuality:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/DOBDataQuality_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasDOBDataQuality
-          x-hud-data-element: "3.03"
-          x-ontology-range: hmis:DOBDataQualityType
-        
-        # ===== RACE DATA ELEMENTS (3.04) =====
-        AmIndAKNative:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasAmIndAKNative
-          x-hud-data-element: "3.04"
-          x-ontology-range: hmis:NoYesType
-          
-        Asian:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasAsian
-          x-hud-data-element: "3.04"
-          
-        BlackAfAmerican:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasBlackAfAmerican
-          x-hud-data-element: "3.04"
-          
-        HispanicLatinaeo:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasHispanicLatinaeo
-          x-hud-data-element: "3.04"
-          
-        MidEastNAfrican:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasMidEastNAfrican
-          x-hud-data-element: "3.04"
-          
-        NativeHIPacific:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasNativeHIPacific
-          x-hud-data-element: "3.04"
-          
-        White:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasWhite
-          x-hud-data-element: "3.04"
-          
-        RaceNone:
-          type: integer
-          description: Non-null only if all other race fields are 0 (UNKNOWN)
-          oneOf:
-            - $ref: '#/components/schemas/RaceGenderNone_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasRaceNone
-          x-hud-data-element: "3.04"
-          x-business-rule: "Set only when all race fields = 0"
-          
-        AdditionalRaceEthnicity:
-          type: string
-          maxLength: 100
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasAdditionalRaceEthnicity
-          x-hud-data-element: "3.04"
-          x-ontology-cardinality: "0..1"
-        
-        # ===== GENDER DATA ELEMENTS (3.06) =====
-        Woman:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasWoman
-          x-hud-data-element: "3.06"
-          
-        Man:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasMan
-          x-hud-data-element: "3.06"
-          
-        NonBinary:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasNonBinary
-          x-hud-data-element: "3.06"
-          
-        CulturallySpecific:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasCulturallySpecific
-          x-hud-data-element: "3.06"
-          
-        Transgender:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasTransgender
-          x-hud-data-element: "3.06"
-          
-        Questioning:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasQuestioning
-          x-hud-data-element: "3.06"
-          
-        DifferentIdentity:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasDifferentIdentity
-          x-hud-data-element: "3.06"
-          
-        GenderNone:
-          type: integer
-          description: Non-null only if all other gender fields = 0
-          oneOf:
-            - $ref: '#/components/schemas/RaceGenderNone_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasGenderNone
-          x-hud-data-element: "3.06"
-          x-business-rule: "Set only when all gender fields = 0"
-          
-        DifferentIdentityText:
-          type: string
-          maxLength: 100
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasDifferentIdentityText
-          x-hud-data-element: "3.06"
-          x-ontology-cardinality: "0..1"
-        
-        # ===== VETERAN STATUS (3.07) =====
-        VeteranStatus:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasVeteranStatus
-          x-hud-data-element: "3.07"
-          x-hud-reference:
-            standard: "FY 2026 HMIS Data Dictionary"
-            section: "3.07 Veteran Status"
-            url: "https://www.hudexchange.info/resource/3824/hmis-data-dictionary/"
-          x-program-specific:
-            - SSVF
-            - GPD
-            - VASH
-          
-        YearEnteredService:
-          type: string
-          pattern: '^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasYearEnteredService
-          x-hud-data-element: "3.07"
-          x-conditional: "Required if VeteranStatus = Yes"
-          
-        YearSeparated:
-          type: string
-          pattern: '^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasYearSeparated
-          x-hud-data-element: "3.07"
-          x-conditional: "Required if VeteranStatus = Yes"
-          
-        WorldWarII:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasWorldWarII
-          x-hud-data-element: "3.07"
-          
-        KoreanWar:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasKoreanWar
-          x-hud-data-element: "3.07"
-          
-        VietnamWar:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasVietnamWar
-          x-hud-data-element: "3.07"
-          
-        DesertStorm:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasDesertStorm
-          x-hud-data-element: "3.07"
-          
-        AfghanistanOEF:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasAfghanistanOEF
-          x-hud-data-element: "3.07"
-          
-        IraqOIF:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasIraqOIF
-          x-hud-data-element: "3.07"
-          
-        IraqOND:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasIraqOND
-          x-hud-data-element: "3.07"
-          
-        OtherTheater:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherTheater
-          x-hud-data-element: "3.07"
-          
-        MilitaryBranch:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/MilitaryBranch_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasMilitaryBranch
-          x-hud-data-element: "3.07"
-          x-ontology-range: hmis:MilitaryBranchType
-          
-        DischargeStatus:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/DischargeStatus_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasDischargeStatus
-          x-hud-data-element: "3.07"
-          x-ontology-range: hmis:DischargeStatusType
-    
-    clientMetaData:
-      type: object
-      description: Audit and versioning metadata for Client records
-      
-      # SEMANTIC ANNOTATION: Provenance tracking aligned with PROV-O ontology
-      x-jsonld-type: prov:Entity
-      x-semantic-uri: http://www.w3.org/ns/prov#Entity
-      
-      properties:
-        DateCreated:
-          type: string
-          format: date-time
-          x-semantic-uri: http://purl.org/dc/terms/created
-          x-provenance: true
-          
-        DateUpdated:
-          type: string
-          format: date-time
-          x-semantic-uri: http://purl.org/dc/terms/modified
-          x-provenance: true
-          
-        UserID:
-          type: string
-          maxLength: 32
-          x-semantic-uri: http://www.w3.org/ns/prov#wasAttributedTo
-          x-provenance: true
-          
-        DateDeleted:
-          type: string
-          format: date-time
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateDeleted
-          x-soft-delete: true
-          x-provenance: true
-
-paths:
-  # ==========================================================================
-  # BASELINE SCENARIO 1: Search for existing client records
-  # Policy Trace: Prevent duplicate client records (2004 Standards 5.1.6)
-  # Workflow: Pre-intake verification
-  # ==========================================================================
-  /client/search:
-    post:
-      operationId: clientSearch
-      summary: Search for clients by identifying information using POST
-      description: |  
-        Search for client records using various identifying criteria:
-        - Name (first, last, partial matches)
-        - Date of birth
-        - Social Security Number
-        
-        This endpoint uses POST to protect PII from URL logging (security best practice).
-      
-      # SEMANTIC ANNOTATION: Documents workflow context
-      x-workflow-step: "client-search"
-      x-required-by-policy:
-        - "2004 HMIS Data Standards Section 5.1.6: Prevent duplicate client records"
-      x-privacy-consideration: "POST method protects PII from server logs"
-      
-      # EXPERIMENTAL: Algebraic effect annotations (Phase 1)
-      x-effects:
-        - effect: AuthorizationCheck
-          handler: hmis:checkSearchPermission
-          description: "Verifies user authorized to search client records"
-          signature: "userID: ID → AuthResult"
-          resumable: true
-          
-        - effect: DatabaseRead
-          handler: hmis:searchClients
-          description: "Searches clients by identifying criteria"
-          signature: "query: SearchQuery → List[Client]"
-          resumable: true
-          search-strategy: "Fuzzy matching on names, exact on SSN/DOB"
-          
-        - effect: AuditLog
-          handler: hmis:logClientSearch
-          description: "Records search operation (without exposing PII)"
-          signature: "event: SearchEvent → Unit"
-          resumable: false
-          provenance-type: "prov:Search"
-          privacy-note: "Logs search parameters, not results"
-      
-      requestBody: 
-        required: true
-        content: 
-          application/json:
-            schema:
-              type: object
-              x-jsonld-type: hmis:ClientSearchQuery
-              properties:
-                PersonalID:
-                  type: string
-                  maxLength: 32
-                  x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
-                  
-                FirstName:
-                  type: string
-                  description: First name of the client (for Query optional and may be a prefix partial)
-                  maxLength: 50
-                  x-semantic-uri: http://hmis.hud.gov/ontology#hasFirstName
-                  x-search-behavior: "prefix-match"
-                  
-                LastName:
-                  type: string
-                  description: Last name of the client (for Query optional and may be a prefix partial)
-                  maxLength: 50
-                  x-semantic-uri: http://hmis.hud.gov/ontology#hasLastName
-                  x-search-behavior: "prefix-match"
-                  
-                DOB:
-                  type: string
-                  format: date
-                  description: Optional date of birth of client. A date in ISO 8601 format (yyyy-mm-dd)
-                  x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfBirth
-                  x-search-behavior: "exact-match"
-                  
-                SSN:
-                  type: string
-                  description: Social Security Number
-                  pattern: '^[0-9]{9}$'
-                  x-semantic-uri: http://hmis.hud.gov/ontology#hasSSN
-                  x-search-behavior: "exact-match"
-                  x-pii: true
-      
-      responses:
-        '200':
-          description: A list of clients that match the query
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  x-jsonld-type: hmis:ClientSearchResult
-                  properties:
-                  matchedClients:
-                    type: array
-                    items:
-                      allOf:
-                        - $ref: "#/components/schemas/clientPrimaryKey"
-                        - $ref: "#/components/schemas/clientBase"
-                    description: List of clients associated with the provided project IDs
-                    x-semantic-uri: http://hmis.hud.gov/ontology#hasClient
-                    
-                  unmatchedProjectIDs:
-                    type: array
-                    items:
-                      type: string
-                      maxLength: 32
-                    description: List of project IDs that did not match any clients
-                    x-semantic-uri: http://hmis.hud.gov/ontology#hasUnmatchedProjectID
-                    
-                required: 
-                  - matchedClients
-                  - unmatchedProjectIDs
-              
-              # SEMANTIC ANNOTATION: Complex response with multiple entity types
-              x-jsonld-frame:
-                "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
-                "@type": "hmis:ProjectClientListResponse"
-                "matchedClients": {
-                  "@type": "hmis:Client"
-                }
-        
-        '404':
-          description: No matching project IDs found
-          content:
-            application/json:
-              schema:
-                type: object
-                x-jsonld-type: hmis:ProjectNotFoundError
-                properties:
-                  unmatchedProjectIDs:
-                    type: array
-                    items:
-                      type: string
-                      maxLength: 32
-                    description: All provided project IDs were unmatched
-                    x-semantic-uri: http://hmis.hud.gov/ontology#hasUnmatchedProjectID
-
-# ==============================================================================
-# EXPERIMENTAL EXTENSION: Algebraic Effect Handler Annotations (Phase 1)
-# ==============================================================================
-# Inspired by Frank, Koka, and algebraic effect systems research.
-# These annotations document computational effects for each operation,
-# enabling:
-#   1. Automated test harness generation (mock effect handlers)
-#   2. Effect composition reasoning (e.g., "Does this workflow require consent?")
-#   3. Provenance tracking (map effects to PROV-O activities)
-#   4. Phase 2 runtime: Actual effect handler implementation
-#
-# Phase 1 Status: EXPERIMENTAL - Documentary annotations only
-# For future phases, runtime effect handlers with resumable computations will be considered for implementation in the Python toolchain.
-
 x-effect-system:
   description: |
     HMIS API operations are annotated with algebraic effects they may perform.
@@ -627,105 +79,7 @@ x-effect-system:
   paradigm: "Algebraic effects with handlers"
   phase1-behavior: "Documentary annotations for tooling"
   phase2-behavior: "Runtime effect handlers with delimited continuations"
-  
-  # Core effect types in HMIS domain
-  effect-types:
-    - name: DatabaseRead
-      signature: "query: Query → Result"
-      description: "Read operation against HMIS database"
-      resumable: true
-      handler: "Database handler provides actual SQL execution"
-      
-    - name: DatabaseWrite
-      signature: "entity: Entity, data: Data → EntityID"
-      description: "Persist operation to HMIS database"
-      resumable: false
-      handler: "Database handler with transaction semantics"
-      
-    - name: ConsentCheck
-      signature: "clientID: ID, purpose: Purpose → ConsentStatus"
-      description: "Validate client consent for specific purpose"
-      resumable: true
-      handler: "Consent service checks ROI and consent records"
-      policy-uri: "http://hmis.hud.gov/policy#ConsentRequired"
-      
-    - name: ValidationCheck
-      signature: "data: Data, schema: Schema → ValidationResult"
-      description: "Validate data against HUD Data Standards"
-      resumable: true
-      handler: "SHACL validator with ontology reasoning"
-      
-    - name: AuditLog
-      signature: "event: Event → Unit"
-      description: "Record operation in immutable audit trail"
-      resumable: false
-      handler: "Append-only audit log service"
-      provenance: "http://www.w3.org/ns/prov#Activity"
-      
-    - name: AuthorizationCheck
-      signature: "user: UserID, resource: ResourceID, action: Action → Authorized"
-      description: "Check if user authorized for action on resource"
-      resumable: true
-      handler: "Policy engine evaluates RBAC/ABAC rules"
-      
-    - name: ExternalAPI
-      signature: "endpoint: URL, params: Params → Response"
-      description: "Call external service (e.g., SSN verification)"
-      resumable: true
-      handler: "HTTP client with retry/timeout semantics"
-      
-    - name: ValidationError
-      signature: "error: ErrorDetail → Never"
-      description: "Abort computation with validation error"
-      resumable: false
-      handler: "Error response generator"
-      
-    - name: BusinessRuleError
-      signature: "rule: Rule, violation: Detail → Never"
-      description: "Abort computation due to business rule violation"
-      resumable: false
-      handler: "Error response with policy traceability"
-
-  # Effect composition patterns
-  effect-patterns:
-    description: |
-      Effects compose naturally - an operation that calls sub-operations
-      inherits their effects. This enables modular reasoning about side effects.
-    
-    examples:
-      - name: "Client creation workflow"
-        effects: [ConsentCheck, ValidationCheck, DatabaseWrite, AuditLog]
-        composition: "Sequential effect execution with early termination on error"
-        
-      - name: "Client search with authorization"
-        effects: [AuthorizationCheck, DatabaseRead, AuditLog]
-        composition: "Authorization gates database access"
-        
-      - name: "Cross-organization data sharing"
-        effects: [AuthorizationCheck, ConsentCheck, DatabaseRead, AuditLog, ExternalAPI]
-        composition: "Multiple authorization layers before data access"
-
-  # Python toolchain integration
-  toolchain-integration:
-    parser: "Extract x-effects from operations → Effect AST"
-    generator: "Generate effect handler interfaces from Effect AST"
-    validator: "Ensure all effects have registered handlers"
-    test-harness: "Generate mock effect handlers for unit tests"
-    
-    example-output: |
-      # Generated Python effect handler interfaces:
-      
-      class DatabaseWriteHandler(Protocol):
-          def handle(self, entity: Entity, data: Dict) -> str:
-              '''Returns entity ID of created record'''
-              ...
-      
-      class ConsentCheckHandler(Protocol):
-          def handle(self, client_id: str, purpose: str) -> ConsentStatus:
-              '''Returns consent status for purpose'''
-              ...
-
-# ==============================================================================
+  # ==============================================================================
 # PHASE 2: FUTURE SEMANTIC EXTENSIONS
 # ==============================================================================
 # The sections below document planned semantic extensions for Phase 2.
@@ -1192,18 +546,237 @@ x-effect-system:
         #         "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
         #         "@type": "hmis:ClientSearchResult"
         
-        # '404':
-        #   description: Client not found
-        #   content: 
-        #     text/plain:
-        #       schema: 
-        #         type: string
-        #         example: Client not found
+  
+  # Core effect types in HMIS domain
+  effect-types:
+    - name: DatabaseRead
+      signature: "query: Query → Result"
+      description: "Read operation against HMIS database"
+      resumable: true
+      handler: "Database handler provides actual SQL execution"
+      
+    - name: DatabaseWrite
+      signature: "entity: Entity, data: Data → EntityID"
+      description: "Persist operation to HMIS database"
+      resumable: false
+      handler: "Database handler with transaction semantics"
+      
+    - name: ConsentCheck
+      signature: "clientID: ID, purpose: Purpose → ConsentStatus"
+      description: "Validate client consent for specific purpose"
+      resumable: true
+      handler: "Consent service checks ROI and consent records"
+      policy-uri: "http://hmis.hud.gov/policy#ConsentRequired"
+      
+    - name: ValidationCheck
+      signature: "data: Data, schema: Schema → ValidationResult"
+      description: "Validate data against HUD Data Standards"
+      resumable: true
+      handler: "SHACL validator with ontology reasoning"
+      
+    - name: AuditLog
+      signature: "event: Event → Unit"
+      description: "Record operation in immutable audit trail"
+      resumable: false
+      handler: "Append-only audit log service"
+      provenance: "http://www.w3.org/ns/prov#Activity"
+      
+    - name: AuthorizationCheck
+      signature: "user: UserID, resource: ResourceID, action: Action → Authorized"
+      description: "Check if user authorized for action on resource"
+      resumable: true
+      handler: "Policy engine evaluates RBAC/ABAC rules"
+      
+    - name: ExternalAPI
+      signature: "endpoint: URL, params: Params → Response"
+      description: "Call external service (e.g., SSN verification)"
+      resumable: true
+      handler: "HTTP client with retry/timeout semantics"
+      
+    - name: ValidationError
+      signature: "error: ErrorDetail → Never"
+      description: "Abort computation with validation error"
+      resumable: false
+      handler: "Error response generator"
+      
+    - name: BusinessRuleError
+      signature: "rule: Rule, violation: Detail → Never"
+      description: "Abort computation due to business rule violation"
+      resumable: false
+      handler: "Error response with policy traceability"
+
+  # Effect composition patterns
+  effect-patterns:
+    description: |
+      Effects compose naturally - an operation that calls sub-operations
+      inherits their effects. This enables modular reasoning about side effects.
+    
+    examples:
+      - name: "Client creation workflow"
+        effects: [ConsentCheck, ValidationCheck, DatabaseWrite, AuditLog]
+        composition: "Sequential effect execution with early termination on error"
+        
+      - name: "Client search with authorization"
+        effects: [AuthorizationCheck, DatabaseRead, AuditLog]
+        composition: "Authorization gates database access"
+        
+      - name: "Cross-organization data sharing"
+        effects: [AuthorizationCheck, ConsentCheck, DatabaseRead, AuditLog, ExternalAPI]
+        composition: "Multiple authorization layers before data access"
+
+  # Python toolchain integration
+  toolchain-integration:
+    parser: "Extract x-effects from operations → Effect AST"
+    generator: "Generate effect handler interfaces from Effect AST"
+    validator: "Ensure all effects have registered handlers"
+    test-harness: "Generate mock effect handlers for unit tests"
+    
+    example-output: |
+      # Generated Python effect handler interfaces:
+      
+      class DatabaseWriteHandler(Protocol):
+          def handle(self, entity: Entity, data: Dict) -> str:
+              '''Returns entity ID of created record'''
+              ...
+      
+      class ConsentCheckHandler(Protocol):
+          def handle(self, client_id: str, purpose: str) -> ConsentStatus:
+              '''Returns consent status for purpose'''
+              ...
+paths:
+  # ==========================================================================
+  # BASELINE SCENARIO 1: Search for a client record by identifying information 
+  # ==========================================================================
+  /client/search:
+    post:
+      operationId: clientSearch
+      summary: Search for clients by identifying information using POST
+      description: |  
+        Search for client records using various identifying criteria:
+        - Name (first, last, partial matches)
+        - Date of birth
+        - Social Security Number
+        This endpoint uses POST to protect PII from URL logging (security best practice).
+      x-workflow-step: "client-search"
+      x-required-by-policy:
+        - "2004 HMIS Data Standards Section 5.1.6: Prevent duplicate client records"
+      x-privacy-consideration: "POST method protects PII from server logs"
+      # EXPERIMENTAL: Algebraic effect annotations (Phase 1)
+      x-effects:
+        - effect: AuthorizationCheck
+          handler: hmis:checkSearchPermission
+          description: "Verifies user authorized to search client records"
+          signature: "userID: ID → AuthResult"
+          resumable: true
+          
+        - effect: DatabaseRead
+          handler: hmis:searchClients
+          description: "Searches clients by identifying criteria"
+          signature: "query: SearchQuery → List[Client]"
+          resumable: true
+          search-strategy: "Fuzzy matching on names, exact on SSN/DOB" #SSN can be a partial match
+          
+        - effect: AuditLog
+          handler: hmis:logClientSearch
+          description: "Records search operation (without exposing PII)"
+          signature: "event: SearchEvent → Unit"
+          resumable: false
+          provenance-type: "prov:Search"
+          privacy-note: "Logs search parameters, not results"
+      
+      requestBody: 
+        required: true
+        content: 
+          application/json:
+            schema:
+              type: object
+              x-jsonld-type: hmis:ClientSearchQuery
+              properties:
+                PersonalID:
+                  type: string
+                  maxLength: 32
+                  x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+                FirstName:
+                  type: string
+                  description: First name of the client (for Query optional and may be a prefix partial)
+                  maxLength: 50
+                  x-semantic-uri: http://hmis.hud.gov/ontology#hasFirstName
+                  x-search-behavior: "prefix-match"
+                LastName:
+                  type: string
+                  description: Last name of the client (for Query optional and may be a prefix partial)
+                  maxLength: 50
+                  x-semantic-uri: http://hmis.hud.gov/ontology#hasLastName
+                  x-search-behavior: "prefix-match"
+                DOB:
+                  type: string
+                  format: date
+                  description: Optional date of birth of client. A date in ISO 8601 format (yyyy-mm-dd)
+                  x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfBirth
+                  x-search-behavior: "exact-match"
+                SSN:
+                  type: string
+                  description: Social Security Number
+                  pattern: '^[0-9]{9}$'
+                  x-semantic-uri: http://hmis.hud.gov/ontology#hasSSN
+                  x-search-behavior: "partial-match" # This could be partial search (such as last 4 digits)
+                  x-pii: true
+      responses:
+        '200':
+          description: A list of clients that match the query
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  x-jsonld-type: hmis:ClientSearchResult
+                  properties:
+                    matchedClients:
+                      type: array
+                      items:
+                        allOf:
+                          - $ref: "#/components/schemas/clientPrimaryKey"
+                          - $ref: "#/components/schemas/clientBase"
+                      description: List of clients associated with the provided project IDs
+                      x-semantic-uri: http://hmis.hud.gov/ontology#hasClient
+              
+              # SEMANTIC ANNOTATION: Complex response with multiple entity types
+              x-jsonld-frame:
+                "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
+                "@type": "hmis:ProjectClientListResponse"
+                "matchedClients": {
+                  "@type": "hmis:Client"
+                }
+        '404':
+          description: No matching PersonalIDs found
+          content:
+            application/json:
+              schema:
+                type: object
+                x-jsonld-type: #NEED AN UPDATE HERE . Would this work? hmis:ProjectClientNotFoundError
+                properties:
+                  message:
+                    type: string
+                    example: PersonalID Not found
+                    x-semantic-uri: #NEED UPDATE HERE. 
+        '400':
+          description: Incorrect input provided
+          content:
+            application/json:
+              schema:
+                type: object
+                x-jsonld-type: #NEED AN UPDATE HERE . Would this work? hmis:ProjectClientNotFoundError
+                properties:
+                  message:
+                    type: string
+                    example: Invalid input provided for [enter data element with issue]
+                    x-semantic-uri: #NEED UPDATE HERE. 
 
   # ==========================================================================
   # BASELINE SCENARIO 2: Generate a new client record
-  # Policy Trace: Client data collection (2004 Standards 5.2.1)
-  # Workflow: Client intake/enrollment
+  # Policy Trace: FY2026 HMIS Data Standards Section
+  # Workflow: Client Profile Creation/Update 
   # ==========================================================================
   /client:
     post: 
@@ -1216,26 +789,15 @@ x-effect-system:
         Returns the complete client record including system-generated PersonalID.
       
       # SEMANTIC ANNOTATION: Documents workflow and compliance requirements
-      x-workflow-step: "client-intake"
-      x-required-by-policy:
-        - "2004 HMIS Data Standards Section 5.2.1: Client data must be collected"
-        - "CoC Program Interim Rule: HMIS participation required for HUD-funded projects"
+      x-workflow-step: "client-creation" #UPDATE NEEDED HERE
       x-data-governance:
         retention: "7 years (per 2004 Technical Standards Section 5.2.1)"
         consent-required: true
-        allowable-disclosure: "CoC-level aggregated reporting only"
       
       # EXPERIMENTAL: Effect annotations (Phase 1)
       # Documents what side effects this operation performs
       # Enables: Test generation, effect composition reasoning, provenance tracking
       x-effects:
-        - effect: ConsentCheck
-          handler: hmis:validateConsent
-          description: "Verifies client consent for data collection"
-          signature: "clientID: ID, purpose: Purpose → ConsentStatus"
-          resumable: true
-          required-by: "2004 HMIS Standards Section 4.2"
-          
         - effect: ValidationCheck
           handler: hmis:validateHUDStandards
           description: "Validates client data against HUD Data Standards"
@@ -1270,9 +832,6 @@ x-effect-system:
                 severity: "error"
               - rule: "SSN must be valid if SSNDataQuality = Full SSN reported"
                 severity: "error"
-              - rule: "Gender fields follow HUD multi-select logic"
-                severity: "warning"
-      
       responses: 
         '200':
           description: Client record created successfully
@@ -1290,7 +849,6 @@ x-effect-system:
                 "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
                 "@type": "hmis:Client"
                 "@id": "http://hmis.example.org/client/{PersonalID}"
-        
         '400':
           description: Invalid input provided
           content: 
@@ -1305,15 +863,14 @@ x-effect-system:
                         type: string
                         description: Invalid input provided - incorrect data type or missing required field
                         x-semantic-uri: http://hmis.hud.gov/errors#ValidationError
-                        
                   - type: object
-                    description: Business rule validation error
+                    description: Business rule validation error 
                     x-jsonld-type: hmis:BusinessRuleError
                     properties: 
                       invalidInputProvided:
                         type: string
                         description: Business rule violation (e.g., conditional field requirements)
-                        example: "VeteranStatus = Yes requires YearEnteredService"
+                        example: "VeteranStatus = Yes requires YearEnteredService" #We should approach this the other way around. If VeteranStatus = No then YearEnteredService is NULL. 
                         x-semantic-uri: http://hmis.hud.gov/errors#BusinessRuleError
               
               # SEMANTIC ANNOTATION: Error ontology for potential Phase 2 implementation
@@ -1324,14 +881,13 @@ x-effect-system:
                 # authorization-error: "Access control policy violation (ROI, consent)"
                 # policy-error: "Violates federal or CoC-specific requirements"
 
-paths:
   # ==========================================================================
   # BASELINE SCENARIO 3: Update an existing client record
   # Policy Trace: Data quality maintenance (2004 Standards 5.2.2)
   # Workflow: Client data correction, demographic updates
   # ==========================================================================
   /client/{PersonalID}:
-    put:
+    patch:
       operationId: updateClient
       summary: Update an existing client record
       description: |
@@ -1683,11 +1239,411 @@ paths:
                     example: "Client with PersonalID '{PersonalID}' not found"
                     x-semantic-uri: http://hmis.hud.gov/errors#NotFoundError
 
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+# ==============================================================================
+# EXPERIMENTAL EXTENSION: Algebraic Effect Handler Annotations (Phase 1)
+# ==============================================================================
+# Inspired by Frank, Koka, and algebraic effect systems research.
+# These annotations document computational effects for each operation,
+# enabling:
+#   1. Automated test harness generation (mock effect handlers)
+#   2. Effect composition reasoning (e.g., "Does this workflow require consent?")
+#   3. Provenance tracking (map effects to PROV-O activities)
+#   4. Phase 2 runtime: Actual effect handler implementation
+#
+# Phase 1 Status: EXPERIMENTAL - Documentary annotations only
+# For future phases, runtime effect handlers with resumable computations will be considered for implementation in the Python toolchain.
+
+
 # ==========================================================================
 # ADDITIONAL SCHEMA COMPONENTS FOR ENROLLMENT DATA
 # ==========================================================================
-components:
   schemas:
+    # ========================================================================
+    # CLIENT SCHEMAS - Semantic Annotations Enabled
+    # ========================================================================
+    
+    clientPrimaryKey:
+      type: object
+      description: Unique identifier for Client resource
+      # SEMANTIC ANNOTATION: Maps to ontology identifier property
+      # Enables: The Python parser extracts this from owl:hasIdentifier in the ontology
+      x-jsonld-type: hmis:ClientIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#ClientIdentifier
+      
+      properties:
+        PersonalID:
+          type: string
+          description: Unique identifier for the client
+          maxLength: 32
+          
+          # SEMANTIC ANNOTATION: Links to ontology property
+          # Enables: JSON-LD frame generation, SPARQL query construction
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+          x-hud-data-element: "Universal Data Element"
+          x-ontology-cardinality: "1..1"  # Required, exactly one
+    
+    clientBase:
+      type: object
+      description: Core Client demographic and identifying information
+      
+      # SEMANTIC ANNOTATION: Maps entire schema to ontology class
+      # Enables: Automated @context generation, RDF type assignment in responses
+      x-jsonld-type: hmis:Client
+      x-semantic-uri: http://hmis.hud.gov/ontology#Client
+      x-hud-csv-table: "Client.csv"
+      
+      properties: 
+        FirstName:
+          type: string
+          description: First name of the client
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFirstName
+          x-hud-data-element: "3.01"
+          x-hud-reference:
+            standard: "FY 2026 HMIS Data Dictionary"
+            section: "3.01 Name"
+            url: "https://www.hudexchange.info/resource/3824/hmis-data-dictionary/"
+          
+        MiddleName:
+          type: string
+          description: Middle name of the client
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMiddleName
+          x-hud-data-element: "3.01"
+          x-ontology-cardinality: "0..1"  # Optional
+          
+        LastName:
+          type: string
+          description: Last name of the client
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLastName
+          x-hud-data-element: "3.01"
+          
+        NameSuffix:
+          type: string
+          description: Suffix of the client's name
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNameSuffix
+          x-hud-data-element: "3.01"
+          x-ontology-cardinality: "0..1"
+          
+        NameDataQuality:
+          type: integer
+          description: Data quality indicator for name fields
+          oneOf:
+            - $ref: '#/components/schemas/NameDataQuality_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNameDataQuality
+          x-hud-data-element: "3.01"
+          x-ontology-range: hmis:NameDataQualityType
+          
+        SSN:
+          type: string
+          description: Social Security Number
+          pattern: '^[0-9]{9}$'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSSN
+          x-hud-data-element: "3.02"
+          x-pii: true  # Mark as personally identifiable information
+          x-encryption-required: true
+          
+        SSNDataQuality:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/SSNDataQuality_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSSNDataQuality
+          x-hud-data-element: "3.02"
+          x-ontology-range: hmis:SSNDataQualityType
+          
+        DOB:
+          type: string
+          description: Date of birth of the client
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfBirth
+          x-hud-data-element: "3.03"
+          x-pii: true
+          
+        DOBDataQuality:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/DOBDataQuality_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDOBDataQuality
+          x-hud-data-element: "3.03"
+          x-ontology-range: hmis:DOBDataQualityType
+        
+        # ===== RACE DATA ELEMENTS (3.04) =====
+        AmIndAKNative:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAmIndAKNative
+          x-hud-data-element: "3.04"
+          x-ontology-range: hmis:NoYesType
+          
+        Asian:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAsian
+          x-hud-data-element: "3.04"
+          
+        BlackAfAmerican:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasBlackAfAmerican
+          x-hud-data-element: "3.04"
+          
+        HispanicLatinaeo:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHispanicLatinaeo
+          x-hud-data-element: "3.04"
+          
+        MidEastNAfrican:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMidEastNAfrican
+          x-hud-data-element: "3.04"
+          
+        NativeHIPacific:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNativeHIPacific
+          x-hud-data-element: "3.04"
+          
+        White:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWhite
+          x-hud-data-element: "3.04"
+          
+        RaceNone:
+          type: integer
+          description: Non-null only if all other race fields are 0 (UNKNOWN)
+          oneOf:
+            - $ref: '#/components/schemas/RaceGenderNone_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasRaceNone
+          x-hud-data-element: "3.04"
+          x-business-rule: "Set only when all race fields = 0"
+          
+        AdditionalRaceEthnicity:
+          type: string
+          maxLength: 100
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAdditionalRaceEthnicity
+          x-hud-data-element: "3.04"
+          x-ontology-cardinality: "0..1"
+        
+        # ===== GENDER DATA ELEMENTS (3.06) =====
+        Woman:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWoman
+          x-hud-data-element: "3.06"
+          
+        Man:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMan
+          x-hud-data-element: "3.06"
+          
+        NonBinary:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNonBinary
+          x-hud-data-element: "3.06"
+          
+        CulturallySpecific:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCulturallySpecific
+          x-hud-data-element: "3.06"
+          
+        Transgender:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTransgender
+          x-hud-data-element: "3.06"
+          
+        Questioning:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasQuestioning
+          x-hud-data-element: "3.06"
+          
+        DifferentIdentity:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDifferentIdentity
+          x-hud-data-element: "3.06"
+          
+        GenderNone:
+          type: integer
+          description: Non-null only if all other gender fields = 0
+          oneOf:
+            - $ref: '#/components/schemas/RaceGenderNone_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasGenderNone
+          x-hud-data-element: "3.06"
+          x-business-rule: "Set only when all gender fields = 0"
+          
+        DifferentIdentityText:
+          type: string
+          maxLength: 100
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDifferentIdentityText
+          x-hud-data-element: "3.06"
+          x-ontology-cardinality: "0..1"
+        
+        # ===== VETERAN STATUS (3.07) =====
+        VeteranStatus:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVeteranStatus
+          x-hud-data-element: "3.07"
+          x-hud-reference:
+            standard: "FY 2026 HMIS Data Dictionary"
+            section: "3.07 Veteran Status"
+            url: "https://www.hudexchange.info/resource/3824/hmis-data-dictionary/"
+          x-program-specific:
+            - SSVF
+            - GPD
+            - VASH
+          
+        YearEnteredService:
+          type: string
+          pattern: '^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasYearEnteredService
+          x-hud-data-element: "3.07"
+          x-conditional: "Required if VeteranStatus = Yes"
+          
+        YearSeparated:
+          type: string
+          pattern: '^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasYearSeparated
+          x-hud-data-element: "3.07"
+          x-conditional: "Required if VeteranStatus = Yes"
+          
+        WorldWarII:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWorldWarII
+          x-hud-data-element: "3.07"
+          
+        KoreanWar:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasKoreanWar
+          x-hud-data-element: "3.07"
+          
+        VietnamWar:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVietnamWar
+          x-hud-data-element: "3.07"
+          
+        DesertStorm:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDesertStorm
+          x-hud-data-element: "3.07"
+          
+        AfghanistanOEF:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAfghanistanOEF
+          x-hud-data-element: "3.07"
+          
+        IraqOIF:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIraqOIF
+          x-hud-data-element: "3.07"
+          
+        IraqOND:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIraqOND
+          x-hud-data-element: "3.07"
+          
+        OtherTheater:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherTheater
+          x-hud-data-element: "3.07"
+          
+        MilitaryBranch:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/MilitaryBranch_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMilitaryBranch
+          x-hud-data-element: "3.07"
+          x-ontology-range: hmis:MilitaryBranchType
+          
+        DischargeStatus:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/DischargeStatus_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDischargeStatus
+          x-hud-data-element: "3.07"
+          x-ontology-range: hmis:DischargeStatusType
+    
+    clientMetaData:
+      type: object
+      description: Audit and versioning metadata for Client records
+      
+      # SEMANTIC ANNOTATION: Provenance tracking aligned with PROV-O ontology
+      x-jsonld-type: prov:Entity
+      x-semantic-uri: http://www.w3.org/ns/prov#Entity
+      
+      properties:
+        DateCreated:
+          type: string
+          format: date-time
+          x-semantic-uri: http://purl.org/dc/terms/created
+          x-provenance: true
+          
+        DateUpdated:
+          type: string
+          format: date-time
+          x-semantic-uri: http://purl.org/dc/terms/modified
+          x-provenance: true
+          
+        UserID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://www.w3.org/ns/prov#wasAttributedTo
+          x-provenance: true
+          
+        DateDeleted:
+          type: string
+          format: date-time
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateDeleted
+          x-soft-delete: true
+          x-provenance: true
+
+
     # Enrollment-related enumerations (to be extracted from ontology)
     RelationshipToHoH_list:
       type: integer
@@ -1715,3 +1671,78 @@ components:
         - value: 99
           label: "Data not collected"
           uri: http://hmis.hud.gov/ontology#DataNotCollected
+    NameDataQuality_list: # FLAG FOR EXTENSION NEEDED
+        type: integer
+        enum: [1, 2, 8, 9, 99]
+        description: |
+          1 - Full name reported
+          2 - Partial, street name, or code name reported
+          8 - Client doesn't know
+          9 - Client prefers not to answer
+          99 - Data not collected
+    SSNDataQuality_list: # FLAG FOR EXTENSION NEEDED
+      type: integer
+      enum: [1, 2, 8, 9, 99]
+      description: |
+        1 - Full SSN Reported
+        2 - Approximate or partial SSN reported
+        8 - Client doesn't know
+        9 - Client prefers not to answer
+        99 - Data not collected
+    DOBDataQuality_list: # FLAG FOR EXTENSION NEEDED
+      type: integer 
+      enum: [1, 2, 8, 9, 99]
+      description: |
+        1 - Full DOB reported
+        2 - Approximate or partial DOB reported
+        8 - Client doesn't know
+        9 - Client prefers not to answer
+        99 - Data not collected
+    NoYes_list: # FLAG FOR EXTENSION NEEDED
+      type: integer
+      enum: [0, 1]
+      description: |
+        0 - No
+        1 - Yes
+    RaceGenderNone_list: # FLAG FOR EXTENSION NEEDED
+      type: integer
+      enum: [8,9,99]
+      description: |
+        8 - Client doesn't know
+        9 - Client prefers not to answer
+        99 - Data not collected
+    NoYesReasonsForMissingData_list: # FLAG FOR EXTENSION NEEDED
+      type: integer
+      enum: [0, 1, 8, 9, 99]
+      description: |
+        0 - No
+        1 - Yes
+        8 - Client doesn't know
+        9 - Client prefers not to answer
+        99 - Data not collected
+    MilitaryBranch_list: # FLAG FOR EXTENSION NEEDED
+      type: integer
+      enum: [1, 2, 3, 4, 6, 7, 8, 9, 99]
+      description: |
+        1 - Army
+        2 - Air Force
+        3 - Navy
+        4 - Marines
+        6 - Coast Guard
+        7 - Space Force
+        8 - Client doesn't know
+        9 - Client prefers not to answer
+        99 - Data not collected
+    DischargeStatus_list: # FLAG FOR EXTENSION NEEDED
+      type: integer
+      enum: [1, 2, 4, 5, 6, 7, 8, 9, 99]
+      description: |
+        1 - Honorable
+        2 - General under honorable conditions
+        4 - Bad conduct
+        5 - Dishonorable
+        6 - Under other than honorable conditions (OTH)
+        7 - Uncharacterized
+        8 - Client doesn't know
+        9 - Client prefers not to answer
+        99 - Data not collected

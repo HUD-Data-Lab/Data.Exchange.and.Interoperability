@@ -4,16 +4,17 @@ There will be 12 key baseline scenarios in this API mockup. These are:
 
 1. Search for a client record by identifying information
 2. Generate a new client record
-3. Generate a list of all client records in a project
-4. Update an existing client's record
+3. Update an existing client's record
+4. Generate a list of all client records in a project
 5. Generate a list of enrollments related to a single client
 6. Generate a list of projects being funded by HUD: CoC Rapid Re-Housing
 7. Generate a list of projects with project type: Rapid Re-Housing
 8. Generate a list of clients being funded by HUD: CoC Rapid Re-Housing
 9. Generate a list of clients who are active in project type Rapid Re-Housing
-10. Set up a client “watch” for specific changes to their record
-11. Determine a person’s services (historical and ongoing)
-12. Authentication
+10. Identify if a client has had a change in the last 30 days. Changes may include new enrollments, new exit dates, new destinations, any updates to data elements collected at the client level (client.csv) 
+11. Comprehensive return of all a person’s services. Within a timeframe or all time (Pull everything connected to this client)
+12. FHIR
+13. Medicaid Billing
 
 ## 1. Search for a client record by identifying information
 
