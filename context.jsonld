@@ -1,0 +1,225 @@
+{
+  "@context": {
+    "@vocab": "http://hmis.hud.gov/ontology#",
+    "@version": 1.1,
+    
+    "comment": "Generated JSON-LD context for HMIS API v1.0.0",
+    "documentation": "https://github.com/HUD-Data-Lab/Data.Exchange.and.Interoperability",
+    
+    "hmis": "http://hmis.hud.gov/ontology#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dc": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    
+    "Client": "hmis:Client",
+    "Enrollment": "hmis:Enrollment",
+    "Project": "hmis:Project",
+    "Organization": "hmis:Organization",
+    
+    "PersonalID": {
+      "@id": "hmis:hasPersonalID",
+      "@type": "xsd:string"
+    },
+    "EnrollmentID": {
+      "@id": "hmis:hasEnrollmentID",
+      "@type": "xsd:string"
+    },
+    "ProjectID": {
+      "@id": "hmis:hasProjectID",
+      "@type": "xsd:string"
+    },
+    "OrganizationID": {
+      "@id": "hmis:hasOrganizationID",
+      "@type": "xsd:string"
+    },
+    
+    "FirstName": {
+      "@id": "hmis:hasFirstName",
+      "@type": "xsd:string"
+    },
+    "MiddleName": {
+      "@id": "hmis:hasMiddleName",
+      "@type": "xsd:string"
+    },
+    "LastName": {
+      "@id": "hmis:hasLastName",
+      "@type": "xsd:string"
+    },
+    "NameSuffix": {
+      "@id": "hmis:hasNameSuffix",
+      "@type": "xsd:string"
+    },
+    "NameDataQuality": {
+      "@id": "hmis:hasNameDataQuality",
+      "@type": "hmis:NameDataQualityType"
+    },
+    
+    "SSN": {
+      "@id": "hmis:hasSSN",
+      "@type": "xsd:string"
+    },
+    "SSNDataQuality": {
+      "@id": "hmis:hasSSNDataQuality",
+      "@type": "hmis:SSNDataQualityType"
+    },
+    
+    "DOB": {
+      "@id": "hmis:hasDateOfBirth",
+      "@type": "xsd:date"
+    },
+    "DOBDataQuality": {
+      "@id": "hmis:hasDOBDataQuality",
+      "@type": "hmis:DOBDataQualityType"
+    },
+    
+    "AmIndAKNative": {
+      "@id": "hmis:hasAmIndAKNative",
+      "@type": "hmis:NoYesType"
+    },
+    "Asian": {
+      "@id": "hmis:hasAsian",
+      "@type": "hmis:NoYesType"
+    },
+    "BlackAfAmerican": {
+      "@id": "hmis:hasBlackAfAmerican",
+      "@type": "hmis:NoYesType"
+    },
+    "HispanicLatinaeo": {
+      "@id": "hmis:hasHispanicLatinaeo",
+      "@type": "hmis:NoYesType"
+    },
+    "MidEastNAfrican": {
+      "@id": "hmis:hasMidEastNAfrican",
+      "@type": "hmis:NoYesType"
+    },
+    "NativeHIPacific": {
+      "@id": "hmis:hasNativeHIPacific",
+      "@type": "hmis:NoYesType"
+    },
+    "White": {
+      "@id": "hmis:hasWhite",
+      "@type": "hmis:NoYesType"
+    },
+    "RaceNone": {
+      "@id": "hmis:hasRaceNone",
+      "@type": "hmis:RaceGenderNoneType"
+    },
+    "AdditionalRaceEthnicity": {
+      "@id": "hmis:hasAdditionalRaceEthnicity",
+      "@type": "xsd:string"
+    },
+    
+    "Woman": {
+      "@id": "hmis:hasWoman",
+      "@type": "hmis:NoYesType"
+    },
+    "Man": {
+      "@id": "hmis:hasMan",
+      "@type": "hmis:NoYesType"
+    },
+    "NonBinary": {
+      "@id": "hmis:hasNonBinary",
+      "@type": "hmis:NoYesType"
+    },
+    "CulturallySpecific": {
+      "@id": "hmis:hasCulturallySpecific",
+      "@type": "hmis:NoYesType"
+    },
+    "Transgender": {
+      "@id": "hmis:hasTransgender",
+      "@type": "hmis:NoYesType"
+    },
+    "Questioning": {
+      "@id": "hmis:hasQuestioning",
+      "@type": "hmis:NoYesType"
+    },
+    "DifferentIdentity": {
+      "@id": "hmis:hasDifferentIdentity",
+      "@type": "hmis:NoYesType"
+    },
+    "GenderNone": {
+      "@id": "hmis:hasGenderNone",
+      "@type": "hmis:RaceGenderNoneType"
+    },
+    "DifferentIdentityText": {
+      "@id": "hmis:hasDifferentIdentityText",
+      "@type": "xsd:string"
+    },
+    
+    "VeteranStatus": {
+      "@id": "hmis:hasVeteranStatus",
+      "@type": "hmis:NoYesReasonsForMissingDataType"
+    },
+    "YearEnteredService": {
+      "@id": "hmis:hasYearEnteredService",
+      "@type": "xsd:gYear"
+    },
+    "YearSeparated": {
+      "@id": "hmis:hasYearSeparated",
+      "@type": "xsd:gYear"
+    },
+    "WorldWarII": {
+      "@id": "hmis:hasWorldWarII",
+      "@type": "hmis:NoYesReasonsForMissingDataType"
+    },
+    "KoreanWar": {
+      "@id": "hmis:hasKoreanWar",
+      "@type": "hmis:NoYesReasonsForMissingDataType"
+    },
+    "VietnamWar": {
+      "@id": "hmis:hasVietnamWar",
+      "@type": "hmis:NoYesReasonsForMissingDataType"
+    },
+    "DesertStorm": {
+      "@id": "hmis:hasDesertStorm",
+      "@type": "hmis:NoYesReasonsForMissingDataType"
+    },
+    "AfghanistanOEF": {
+      "@id": "hmis:hasAfghanistanOEF",
+      "@type": "hmis:NoYesReasonsForMissingDataType"
+    },
+    "IraqOIF": {
+      "@id": "hmis:hasIraqOIF",
+      "@type": "hmis:NoYesReasonsForMissingDataType"
+    },
+    "IraqOND": {
+      "@id": "hmis:hasIraqOND",
+      "@type": "hmis:NoYesReasonsForMissingDataType"
+    },
+    "OtherTheater": {
+      "@id": "hmis:hasOtherTheater",
+      "@type": "hmis:NoYesReasonsForMissingDataType"
+    },
+    "MilitaryBranch": {
+      "@id": "hmis:hasMilitaryBranch",
+      "@type": "hmis:MilitaryBranchType"
+    },
+    "DischargeStatus": {
+      "@id": "hmis:hasDischargeStatus",
+      "@type": "hmis:DischargeStatusType"
+    },
+    
+    "DateCreated": {
+      "@id": "dc:created",
+      "@type": "xsd:dateTime"
+    },
+    "DateUpdated": {
+      "@id": "dc:modified",
+      "@type": "xsd:dateTime"
+    },
+    "UserID": {
+      "@id": "prov:wasAttributedTo",
+      "@type": "xsd:string"
+    },
+    "DateDeleted": {
+      "@id": "hmis:hasDateDeleted",
+      "@type": "xsd:dateTime"
+    }
+  },
+  
+  "@id": "http://hmis.hud.gov/context/v1.jsonld",
+  "version": "1.0.0",
+  "generatedBy": "hmis-codegen Python toolchain",
+  "generatedFrom": "hmis_api_ld_0.4.yaml",
+  "ontologySource": "https://github.com/HUD-Data-Lab/HMIS-Logic-Model"
+}
