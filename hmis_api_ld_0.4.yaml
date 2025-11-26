@@ -57,9 +57,9 @@ info:
   # Data Governance and Compliance
   x-data-governance:
     retention-period: "7 years (per 2004 Technical Standards Section 5.2.1)"
-    privacy-framework: "2004 HMIS Data and Technical Standards"
-    consent-management: "Required for cross-organization data sharing (ROI)"
-    allowable-disclosure: "CoC-level aggregated reporting, HUD reporting requirements"
+    privacy-framework: "2004 HMIS Data and Technical Standards" #REVIEW if this is still the most current framework
+    consent-management: "Required for cross-organization data sharing (ROI)" #REVIEW is this recommending a specific consent approach? Or mentioning a requirement?
+    allowable-disclosure: "CoC-level aggregated reporting, HUD reporting requirements" #REVIEW there is an actual list of allowable disclosures. Is this intended to be that comprehensive list?
 servers:
   - url: http://localhost:3000/api/v1
     description: HMIS API Sandbox (Mockoon Reference Implementation)
@@ -562,10 +562,10 @@ x-effect-system:
       handler: "Database handler with transaction semantics"
       
     - name: ConsentCheck
-      signature: "clientID: ID, purpose: Purpose → ConsentStatus"
+      signature: "personalID: ID, purpose: Purpose → ConsentStatus" #REVIEW HMIS Data standards refers to the ID as PersonalID
       description: "Validate client consent for specific purpose"
       resumable: true
-      handler: "Consent service checks ROI and consent records"
+      handler: "Consent service checks consent records" #REVIEW - Removed ROI, but left consent records.
       policy-uri: "http://hmis.hud.gov/policy#ConsentRequired"
       
     - name: ValidationCheck
@@ -657,9 +657,7 @@ paths:
         - Date of birth
         - Social Security Number
         This endpoint uses POST to protect PII from URL logging (security best practice).
-      x-workflow-step: "client-search"
-      x-required-by-policy:
-        - "2004 HMIS Data Standards Section 5.1.6: Prevent duplicate client records"
+      x-workflow-step: "client-search" 
       x-privacy-consideration: "POST method protects PII from server logs"
       # EXPERIMENTAL: Algebraic effect annotations (Phase 1)
       x-effects:
@@ -674,7 +672,7 @@ paths:
           description: "Searches clients by identifying criteria"
           signature: "query: SearchQuery → List[Client]"
           resumable: true
-          search-strategy: "Fuzzy matching on names, exact on SSN/DOB" #SSN can be a partial match
+          search-strategy: "Fuzzy matching on names, SSN and DOB can be a partial match" #REVIEW SSN can be a partial match (last 4) and I think searching for DOB can just be the year.
           
         - effect: AuditLog
           handler: hmis:logClientSearch
@@ -719,7 +717,7 @@ paths:
                   description: Social Security Number
                   pattern: '^[0-9]{9}$'
                   x-semantic-uri: http://hmis.hud.gov/ontology#hasSSN
-                  x-search-behavior: "partial-match" # This could be partial search (such as last 4 digits)
+                  x-search-behavior: "partial-match" #REVIEW This could be partial search (such as last 4 digits) check if an UPDATE is needed
                   x-pii: true
       responses:
         '200':
@@ -754,7 +752,7 @@ paths:
             application/json:
               schema:
                 type: object
-                x-jsonld-type: #NEED AN UPDATE HERE . Would this work? hmis:ProjectClientNotFoundError
+                x-jsonld-type: #UPDATE Would this work? hmis:ProjectClientNotFoundError
                 properties:
                   message:
                     type: string
@@ -785,11 +783,11 @@ paths:
       description: |
         Creates a new client record in the HMIS.
         
-        Validates data quality requirements per HUD Data Standards.
+        Validates data quality requirements per HUD Data Standards. 
         Returns the complete client record including system-generated PersonalID.
       
       # SEMANTIC ANNOTATION: Documents workflow and compliance requirements
-      x-workflow-step: "client-creation" #UPDATE NEEDED HERE
+      x-workflow-step: "client-creation" #REVIEW UPDATE
       x-data-governance:
         retention: "7 years (per 2004 Technical Standards Section 5.2.1)"
         consent-required: true
@@ -870,7 +868,7 @@ paths:
                       invalidInputProvided:
                         type: string
                         description: Business rule violation (e.g., conditional field requirements)
-                        example: "VeteranStatus = Yes requires YearEnteredService" #We should approach this the other way around. If VeteranStatus = No then YearEnteredService is NULL. 
+                        example: "VeteranStatus = Yes requires YearEnteredService" #REVIEW We should approach this the other way around. If VeteranStatus = No then YearEnteredService is NULL. 
                         x-semantic-uri: http://hmis.hud.gov/errors#BusinessRuleError
               
               # SEMANTIC ANNOTATION: Error ontology for potential Phase 2 implementation
@@ -1016,11 +1014,139 @@ paths:
                     x-semantic-uri: http://hmis.hud.gov/errors#NotFoundError
 
   # ==========================================================================
+  # BASELINE SCENARIO 4: Generate a list of enrollments related to a single client
+  # Policy Trace: Client service history (CoC Program Interim Rule)
+  # Workflow: Case management, service coordination, longitudinal analysis
+  # ==========================================================================
+  /project/{ProjectID}/clients:
+    get: 
+      operationId: getClientsByProject
+      summary: Get all clients associated with a specific project
+      description: |
+        Returns a list of clients enrolled in the specified project.
+        
+        Supports filtering by date range.
+        Useful for project-level reporting and case management.
+      # SEMANTIC ANNOTATION: Workflow and policy context
+      x-workflow-step: "project-client-history"
+      
+      # EXPERIMENTAL: Algebraic effect annotations (Phase 1)
+      x-effects:
+        - effect: AuthorizationCheck
+          handler: hmis:checkClientEnrollmentAccess
+          description: "Verifies user authorized to view client enrollment history"
+          signature: "userID: ID, clientID: ID â†' AuthResult"
+          resumable: true
+          privacy-note: "May require client consent for cross-organization access"
+          
+        - effect: ConsentCheck
+          handler: hmis:validateEnrollmentConsent
+          description: "Validates consent for enrollment data access"
+          signature: "clientID: ID, purpose: Purpose â†' ConsentStatus"
+          resumable: true
+          required-by: "2004 HMIS Standards Section 4.2"
+          
+        - effect: DatabaseRead
+          handler: hmis:queryClientEnrollments
+          description: "Retrieves all enrollments for specified client"
+          signature: "clientID: ID, filters: EnrollmentFilters â†' List[Enrollment]"
+          resumable: true
+          query-optimization: "Indexed by PersonalID, EntryDate"
+          
+        - effect: AuditLog
+          handler: hmis:logEnrollmentQuery
+          description: "Records enrollment history access for compliance"
+          signature: "event: EnrollmentQueryEvent â†' Unit"
+          resumable: false
+          provenance-type: "prov:Read"
+          pii-access: true
+      parameters:
+        - name: ProjectID
+          in: path
+          required: false
+          description: Unique identifier of the project
+          schema:
+            type: string
+            maxLength: 32
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID #REVIEW check uri for accuracy
+            x-filter-type: "equal-to" #REVIEW check for accuracy
+
+        - name: entryDate
+          in: query
+          required: false
+          description: Filter enrollments with EntryDate on or after this date
+          schema:
+            type: string
+            format: date
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
+            x-filter-type: "greater-than-or-equal"
+        
+        - name: exitDate
+          in: query
+          required: false
+          description: Filter enrollments with EntryDate on or before this date
+          schema:
+            type: string
+            format: date
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasExitDate #REVIEW check uri for accuracy
+            x-filter-type: "less-than-or-equal"
+      responses:
+        '200':
+          description: List of clients associated with the specified project
+          content:
+            application/json:
+              schema:
+                type: object
+                x-jsonld-type: hmis:ProjectClientListResponse
+                properties:
+                  clients:
+                    type: array
+                    description: List of clients associated with the provided project IDs
+                    x-semantic-uri: http://hmis.hud.gov/ontology#hasClient
+                    items:
+                      allOf:
+                        - $ref: "#/components/schemas/clientPrimaryKey"
+                        - type: object
+                          properties:
+                            entryDate:
+                              type: string
+                              format: date
+                              description: Enrollment start date
+                              x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
+                            exitDate:
+                              type: string
+                              format: date
+                              description: Enrollment end date
+                              x-semantic-uri: http://hmis.hud.gov/ontology#hasExitDate
+                        - $ref: "#/components/schemas/clientBase"
+        '404':
+          description: Project not found
+          content:
+            application/json:
+              schema:
+                type: object
+                x-jsonld-type: hmis:ProjectNotFoundError
+                properties:
+                  error:
+                    type: string
+                    example: "Project with ProjectID '{ProjectID}' not found"
+                    x-semantic-uri: http://hmis.hud.gov/errors#NotFoundError
+              
+              # SEMANTIC ANNOTATION: Complex response with multiple entity types
+              x-jsonld-frame: #REVIEW this for accuracy
+                "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
+                "@type": "hmis:ProjectClientListResponse"
+                "clients": {
+                  "@type": "hmis:Client"
+                }
+
+  # ==========================================================================
   # BASELINE SCENARIO 5: Generate a list of enrollments related to a single client
   # Policy Trace: Client service history (CoC Program Interim Rule)
   # Workflow: Case management, service coordination, longitudinal analysis
   # ==========================================================================
-  /client/{PersonalID}/enrollments:
+  /client/{PersonalID}/enrollments: #REVIEW check this for accuracy. Updates response to just be an array of clients.
+
     get:
       operationId: getClientEnrollments
       summary: Get all enrollments for a specific client
@@ -1083,7 +1209,17 @@ paths:
             maxLength: 32
             x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
         
-        - name: startDate
+        - name: projectID
+          in: query
+          required: false
+          description: Unique identifier of the project
+          schema:
+            type: string
+            maxLength: 32
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID #REVIEW check uri for accuracy
+            x-filter-type: "equal-to" #REVIEW check for accuracy
+
+        - name: entryDate
           in: query
           required: false
           description: Filter enrollments with EntryDate on or after this date
@@ -1093,24 +1229,15 @@ paths:
             x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
             x-filter-type: "greater-than-or-equal"
         
-        - name: endDate
+        - name: exitDate
           in: query
           required: false
           description: Filter enrollments with EntryDate on or before this date
           schema:
             type: string
             format: date
-            x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasExitDate #REVIEW check uri for accuracy
             x-filter-type: "less-than-or-equal"
-        
-        - name: activeOnly
-          in: query
-          required: false
-          description: If true, return only active enrollments (no ExitDate)
-          schema:
-            type: boolean
-            default: false
-            x-semantic-uri: http://hmis.hud.gov/ontology#isActiveEnrollment
       
       responses:
         '200':
@@ -1121,22 +1248,6 @@ paths:
                 type: object
                 x-jsonld-type: hmis:ClientEnrollmentListResponse
                 properties:
-                  PersonalID:
-                    type: string
-                    maxLength: 32
-                    description: Client identifier for which enrollments are returned
-                    x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
-                  
-                  totalEnrollments:
-                    type: integer
-                    description: Total number of enrollments returned
-                    x-semantic-uri: http://hmis.hud.gov/ontology#hasTotalEnrollments
-                  
-                  activeEnrollments:
-                    type: integer
-                    description: Number of active enrollments (no ExitDate)
-                    x-semantic-uri: http://hmis.hud.gov/ontology#hasActiveEnrollments
-                  
                   enrollments:
                     type: array
                     description: List of enrollment records
@@ -1145,6 +1256,11 @@ paths:
                       type: object
                       x-jsonld-type: hmis:Enrollment
                       properties:
+                        PersonalID:
+                          type: string
+                          maxLength: 32
+                          description: Client identifier for which enrollments are returned
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
                         EnrollmentID:
                           type: string
                           maxLength: 32
@@ -1212,13 +1328,6 @@ paths:
                           format: date-time
                           x-semantic-uri: http://purl.org/dc/terms/modified
                           x-provenance: true
-                
-                required:
-                  - PersonalID
-                  - totalEnrollments
-                  - activeEnrollments
-                  - enrollments
-              
               x-jsonld-frame:
                 "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
                 "@type": "hmis:ClientEnrollmentListResponse"
