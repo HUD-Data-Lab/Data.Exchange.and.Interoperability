@@ -1,0 +1,2317 @@
+openapi: 3.1.1
+info:
+  title: HMIS API Sandbox Specifications
+  version: 1.0.0
+  license: 
+    name: The MIT License (MIT)
+    url: https://mit-license.org/
+  description: |
+    HMIS API Sandbox request, response, and error responses for each scenario in the HMIS API Reference Guide.
+    
+    This specification uses YAML-LD (YAML with Linked Data extensions) 
+    to bridge familiar developer tooling with semantic web capabilities.
+    
+    YAML-LD is inspired by JSON-LD-Star and Jelly-RDF but designed specifically for 
+    API specifications - providing semantic richness without format complexity.
+  
+  # ===== SEMANTIC WEB INTEGRATION =====
+  # Root-level JSON-LD context links entire API to HUD ontology
+  # Enables: Automated validation, policy traceability, vendor semantic adoption
+  x-jsonld-context: https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld
+  
+  # Policy compliance documentation with regulatory traceability
+  x-HMIS-Regulation:
+    - name: FY 2026 HMIS Data Standards
+      url: https://www.hudexchange.info/resource/3824/hmis-data-dictionary/
+      regulation: Data collection and implementation guidance
+    - name: 2004 Data and Technical Standards Notice
+      url: https://www.hudexchange.info/resource/1318/2004-hmis-data-and-technical-standards-final-notice/
+      regulation: Privacy and Security Standards
+    - name: Coordinated Entry Management and Data Guide
+      url: https://www.hudexchange.info/resource/5758/coordinated-entry-management-and-data-guide/
+      regulation: Guidance on Privacy and Security Standards including allowable uses and disclosures
+    - name: CoC Program Interim Rule
+      url: https://www.hudexchange.info/resource/2033/hearth-coc-program-interim-rule/
+      regulation: Procedures and Policies needed to designate and operate an HMIS, ensuring HMIS compliance, and maintaining a Privacy Plan, Security Plan, and Data Quality Plan
+  
+  # YAML-LD Semantic Integration Documentation
+  x-semantic-web-integration:
+    description: |
+      This API specification uses YAML-LD (YAML + Linked Data) extensions to maintain
+      alignment with the HUD ontology while preserving standard OpenAPI compatibility.
+      
+      Key Features:
+      1. Automated JSON-LD context generation (Python toolchain)
+      2. SHACL validation against HUD Data Standards
+      3. Policy traceability (API field → HUD regulation)
+      4. Vendor-optional semantic features (can ignore @context in responses)
+      5. Zero-drift ontology synchronization
+      
+      These x- extensions do NOT affect OpenAPI validation or standard API tooling.
+      Vendors can use this as a normal REST API without any RDF knowledge.
+    
+    ontology-source: https://github.com/HUD-Data-Lab/HMIS-Logic-Model
+    python-toolchain: https://github.com/HUD-Data-Lab/hmis-codegen
+    format-inspiration: "JSON-LD-Star, Jelly-RDF (simplified for OpenAPI)"
+    
+  # Data Governance and Compliance
+x-data-governance:
+    retention-period: "7 years (per 2004 Technical Standards Section 5.2.1)"
+    privacy-framework: "2004 HMIS Data and Technical Standards Notice (current baseline for HMIS privacy/security)"
+    consent-management: "Required for data sharing per 2004 Standards Section 4.2 - ROI required for cross-organization access"
+    allowable-disclosure: "Aggregated CoC-level reporting, HUD-required reporting, emergency/crisis situations per 2004 Standards Section 4.3"
+servers:
+  - url: http://localhost:3000/api/v1
+    description: HMIS API Sandbox (Mockoon Reference Implementation)
+security: 
+  - BasicAuth: []
+x-effect-system:
+  description: |
+    HMIS API operations are annotated with algebraic effects they may perform.
+    Effects make side effects explicit and composable.
+    
+    Phase 1 (Current): Effects are metadata for documentation and tooling
+    Phase 2 (Future): Effects become runtime handlers with resumable computations
+    
+    This design is inspired by Frank (Conor McBride, Sam Lindley) and modern
+    effect systems in functional programming languages.
+  
+  paradigm: "Algebraic effects with handlers"
+  phase1-behavior: "Documentary annotations for tooling"
+  phase2-behavior: "Runtime effect handlers with delimited continuations"
+  # ==============================================================================
+# PHASE 2: FUTURE SEMANTIC EXTENSIONS
+# ==============================================================================
+# The sections below document planned semantic extensions for Phase 2.
+# These are deferred to maintain focus on baseline scenarios while
+# preserving the architectural vision.
+
+# x-future-capability-model:
+#   description: |
+#     Phase 2 will explore capability-based authorization as an alternative
+#     to traditional RBAC. This requires significant distributed systems
+#     infrastructure and is deferred until cross-sector data interchange
+#     becomes a priority.
+#   
+#   motivation: |
+#     Capability-based security enables:
+#     - Unforgeable ROI tokens that can be delegated between organizations
+#     - Fine-grained, attenuated permissions (read-only, time-limited, etc.)
+#     - Instant revocation (delete capability = revoke access)
+#     - Audit trail built into capability model
+#   
+#   prerequisites:
+#     - Capability token service infrastructure
+#     - Single address space URL design (breaking change from hierarchical REST)
+#     - Vendor SDK for capability validation
+#     - CoC policy guidance on capability-based sharing
+#   
+#   research-foundation:
+#     - "Miller et al. (2003) - Capability Myths Demolished"
+#     - "Macaroons: Cookies with Contextual Caveats (Google, 2014)"
+#     - "Object Capabilities for Security (Mark Miller, E-Rights)"
+
+# x-future-error-ontology:
+#   description: |
+#     Comprehensive error classification system aligned with HUD policy.
+#     Phase 2 will include ROI violations, authorization failures, consent issues.
+#   
+#   error-types:
+#     - ValidationError:
+#         uri: http://hmis.hud.gov/errors#ValidationError
+#         description: Data fails HUD Data Standards validation
+#         examples:
+#           - Invalid SSN format
+#           - Missing required field
+#           - Data type mismatch
+#     
+#     - BusinessRuleError:
+#         uri: http://hmis.hud.gov/errors#BusinessRuleError
+#         description: Violates HUD program logic
+#         examples:
+#           - Exit date before entry date
+#           - Conditional field missing (e.g., VeteranStatus = Yes requires YearEnteredService)
+#           - Project type incompatible with funder requirements
+#     
+#     - AuthorizationError:
+#         uri: http://hmis.hud.gov/errors#AuthorizationError
+#         description: Access control policy violation
+#         subtypes:
+#           - ROIViolation: No valid Release of Information for cross-org access
+#           - ConsentExpired: Client consent has expired
+#           - InsufficientPermissions: User lacks required role/permissions
+#         examples:
+#           - Cross-organization data sharing without valid ROI
+#           - Accessing client data after consent expiration
+#           - User role does not permit data modification
+#     
+#     - PolicyError:
+#         uri: http://hmis.hud.gov/errors#PolicyError
+#         description: Violates federal or CoC-specific requirements
+#         examples:
+#           - Data collection violates CoC privacy plan
+#           - Disclosure not permitted under 2004 Standards
+#           - HMIS participation requirement not met
+
+# x-future-authorization-framework:
+#   description: |
+#     OAuth 2.0 + policy-aware authorization for HMIS API.
+#     Integrates with ROI management and consent tracking.
+#   
+#   components:
+#     - OAuth2:
+#         flows:
+#           - authorization_code: For user-delegated access
+#           - client_credentials: For system-to-system integration
+#         scopes:
+#           - "hmis:client:read": Read client demographic data
+#           - "hmis:client:write": Create/update client records
+#           - "hmis:enrollment:read": Read enrollment data
+#           - "hmis:enrollment:write": Create/update enrollments
+#           - "hmis:pii:read": Access PII (requires additional authorization)
+#     
+#     - PolicyEngine:
+#         description: Evaluates ROI, consent, and CoC-specific policies
+#         integration: "Validates access against RDF policy graph"
+#         ontology: http://hmis.hud.gov/policy#
+#         
+#     - ConsentManagement:
+#         description: Tracks client consent and ROI status
+#         integration: "Linked to client records via hasConsent property"
+#         ontology: http://hmis.hud.gov/consent#
+
+# x-future-jsonld-context-extensions:
+#   description: |
+#     Additional JSON-LD context mappings for advanced semantic use cases.
+#   
+#   contexts:
+#     - enrollment-context:
+#         uri: http://hmis.hud.gov/context/enrollment.jsonld
+#         description: Full enrollment data with project relationships
+#         
+#     - assessment-context:
+#         uri: http://hmis.hud.gov/context/assessment.jsonld
+#         description: Assessment and VI-SPDAT data
+#         
+#     - service-context:
+#         uri: http://hmis.hud.gov/context/service.jsonld
+#         description: Service transactions and referrals
+#         
+#     - reporting-context:
+#         uri: http://hmis.hud.gov/context/reporting.jsonld
+#         description: APR, CAPER, and SPM data aggregations
+
+# ==============================================================================
+# ENUMERATION SCHEMAS (Referenced by clientBase)
+# ==============================================================================
+# These should be extracted from the ontology in the Python toolchain.
+# Each enum maps to an rdf:type with skos:member instances.
+
+# Example semantic annotation pattern for enumerations:
+# 
+# NoYes_list:
+#   type: integer
+#   enum: [0, 1, 8, 9, 99]
+#   x-jsonld-type: hmis:NoYesType
+#   x-semantic-uri: http://hmis.hud.gov/ontology#NoYesType
+#   x-enum-members:
+#     - value: 0
+#       label: "No"
+#       uri: http://hmis.hud.gov/ontology#No
+#     - value: 1
+#       label: "Yes"
+#       uri: http://hmis.hud.gov/ontology#Yes
+#     - value: 8
+#       label: "Client doesn't know"
+#       uri: http://hmis.hud.gov/ontology#ClientDoesntKnow
+#     - value: 9
+#       label: "Client prefers not to answer"
+#       uri: http://hmis.hud.gov/ontology#ClientPrefersNotToAnswer
+#     - value: 99
+#       label: "Data not collected"
+#       uri: http://hmis.hud.gov/ontology#DataNotCollected
+
+# ==============================================================================
+# PYTHON TOOLCHAIN INTEGRATION: Effect Handler Code Generation
+# ==============================================================================
+# 
+# The hmis-codegen/ Python toolchain can generate effect handler interfaces
+# from the x-effects annotations. This enables:
+#   1. Type-safe effect handler implementations
+#   2. Automatic mock generation for unit tests
+#   3. Effect composition validation
+#   4. Runtime effect tracing (Phase 2)
+#
+# Example generated code:
+
+# === Generated from parser.py ===
+# 
+# from typing import Protocol, TypeVar, Generic
+# from dataclasses import dataclass
+# 
+# T = TypeVar('T')
+# 
+# @dataclass
+# class Effect(Generic[T]):
+#     '''Base class for all effects'''
+#     name: str
+#     handler: str
+#     resumable: bool
+# 
+# @dataclass
+# class ConsentCheckEffect(Effect[ConsentStatus]):
+#     client_id: str
+#     purpose: str
+#     
+# @dataclass
+# class DatabaseWriteEffect(Effect[str]):
+#     entity: str
+#     data: dict
+# 
+# @dataclass
+# class ValidationCheckEffect(Effect[ValidationResult]):
+#     data: dict
+#     schema: str
+# 
+# @dataclass
+# class AuditLogEffect(Effect[None]):
+#     event: dict
+#     provenance_type: str
+
+# === Generated effect handler interfaces ===
+#
+# class ConsentCheckHandler(Protocol):
+#     '''Handler for ConsentCheck effects
+#     
+#     Required by: 2004 HMIS Standards Section 4.2
+#     Signature: clientID: ID, purpose: Purpose → ConsentStatus
+#     '''
+#     def handle(self, client_id: str, purpose: str) -> ConsentStatus:
+#         ...
+# 
+# class DatabaseWriteHandler(Protocol):
+#     '''Handler for DatabaseWrite effects
+#     
+#     Signature: entity: Client, data: Data → PersonalID
+#     Transaction: true
+#     '''
+#     def handle(self, entity: str, data: dict) -> str:
+#         ...
+# 
+# class ValidationCheckHandler(Protocol):
+#     '''Handler for ValidationCheck effects
+#     
+#     Uses SHACL shapes from ontology for validation
+#     Signature: data: ClientData, schema: Schema → ValidationResult
+#     '''
+#     def handle(self, data: dict, schema: str) -> ValidationResult:
+#         ...
+# 
+# class AuditLogHandler(Protocol):
+#     '''Handler for AuditLog effects
+#     
+#     Provenance: http://www.w3.org/ns/prov#Activity
+#     Signature: event: ClientCreatedEvent → Unit
+#     '''
+#     def handle(self, event: dict) -> None:
+#         ...
+
+# === Generated mock handlers for testing ===
+#
+# class MockConsentCheckHandler:
+#     '''Mock consent checker for unit tests'''
+#     def __init__(self, default_result: ConsentStatus = ConsentStatus.GRANTED):
+#         self.default_result = default_result
+#         self.calls = []
+#     
+#     def handle(self, client_id: str, purpose: str) -> ConsentStatus:
+#         self.calls.append({'client_id': client_id, 'purpose': purpose})
+#         return self.default_result
+# 
+# class MockDatabaseWriteHandler:
+#     '''Mock database writer for unit tests'''
+#     def __init__(self):
+#         self.written_records = {}
+#     
+#     def handle(self, entity: str, data: dict) -> str:
+#         record_id = f"mock-{len(self.written_records)}"
+#         self.written_records[record_id] = {'entity': entity, 'data': data}
+#         return record_id
+
+# === Effect composition validator ===
+#
+# def validate_effect_composition(operation: dict, handlers: dict) -> List[str]:
+#     '''Validates that all effects in an operation have registered handlers'''
+#     errors = []
+#     effects = operation.get('x-effects', [])
+#     
+#     for effect in effects:
+#         effect_name = effect['effect']
+#         if effect_name not in handlers:
+#             errors.append(f"Missing handler for effect: {effect_name}")
+#         
+#         # Check effect dependencies
+#         if effect.get('requires'):
+#             # Validate that required effects appear before this one
+#             pass
+#     
+#     return errors
+
+# === Phase 2: Runtime effect execution ===
+#
+# class EffectInterpreter:
+#     '''
+#     Phase 2 implementation: Runtime effect handler execution
+#     Uses delimited continuations for resumable effects
+#     '''
+#     def __init__(self, handlers: Dict[str, Any]):
+#         self.handlers = handlers
+#         self.effect_trace = []
+#     
+#     def run(self, operation: Callable, *args, **kwargs):
+#         '''Execute operation with effect handling'''
+#         try:
+#             result = operation(*args, **kwargs)
+#             return result
+#         except EffectRequest as effect:
+#             # Handle the effect
+#             handler = self.handlers[effect.name]
+#             effect_result = handler.handle(*effect.args)
+#             
+#             # Record in trace
+#             self.effect_trace.append({
+#                 'effect': effect.name,
+#                 'args': effect.args,
+#                 'result': effect_result
+#             })
+#             
+#             # Resume computation if effect is resumable
+#             if effect.resumable:
+#                 return effect.continuation(effect_result)
+#             else:
+#                 return effect_result
+
+# ==============================================================================
+# PYTHON TOOLCHAIN INTEGRATION NOTES
+# ==============================================================================
+# 
+# This YAML-LD specification is designed to be consumed by the hmis-codegen/
+# Python toolchain for automated generation of:
+# 
+# 1. JSON-LD Contexts
+#    - Extract all x-semantic-uri values
+#    - Generate @context mappings (OpenAPI field → ontology property)
+#    - Output: context.jsonld file
+# 
+# 2. SHACL Validation Shapes
+#    - Extract x-hud-data-element references
+#    - Map to SHACL constraints in ontology
+#    - Generate validation rules for runtime checking
+#    - Output: shapes.ttl file
+# 
+# 3. Mockoon Configuration
+#    - Extract paths, operations, request/response schemas
+#    - Generate Mockoon environment JSON
+#    - Include example data from ontology instances
+#    - Output: mockoon-env.json file
+# 
+# 4. API Documentation
+#    - Extract x-workflow-step, x-required-by-policy annotations
+#    - Generate policy traceability matrix
+#    - Create vendor integration guide
+#    - Output: api-docs.md file
+# 
+# Toolchain Command Examples:
+# 
+#   # Generate all outputs from ontology + YAML-LD
+#   python -m hmis_codegen generate \
+#     --ontology ontology.jsonld \
+#     --spec hmis_api_ld_0.4.yaml \
+#     --output-dir ./generated
+# 
+#   # Generate only JSON-LD context
+#   python -m hmis_codegen generate \
+#     --ontology ontology.jsonld \
+#     --spec hmis_api_ld_0.4.yaml \
+#     --format context \
+#     --output ./context.jsonld
+# 
+#   # Validate YAML-LD against ontology
+#   python -m hmis_codegen validate \
+#     --ontology ontology.jsonld \
+#     --spec hmis_api_ld_0.4.yaml
+# 
+#   # Extract semantic mappings for debugging
+#   python -m hmis_codegen extract \
+#     --spec hmis_api_ld_0.4.yaml \
+#     --output semantic-mappings.json
+
+# ==============================================================================
+# ARCHITECTURAL DESIGN NOTES
+# ==============================================================================
+# 
+# YAML-LD Design Principles:
+# 
+# 1. Backward Compatibility
+#    - All x- extensions are OpenAPI-compliant
+#    - Standard API tools (Swagger, Postman) ignore semantic annotations
+#    - Vendors can use this as a normal REST API
+# 
+# 2. Semantic Richness Without Complexity
+#    - Inspired by JSON-LD-Star (quoted triples) and Jelly-RDF (binary efficiency)
+#    - Simplified for API specifications (no need for full RDF capabilities)
+#    - Focuses on ontology alignment, not arbitrary RDF graphs
+# 
+# 3. Single Source of Truth
+#    - Ontology (OWL/SHACL) is authoritative
+#    - YAML-LD references ontology URIs
+#    - Python toolchain maintains zero-drift synchronization
+# 
+# 4. Gradual Semantic Adoption
+#    - Level 0: Use API as plain REST (no RDF knowledge)
+#    - Level 1: Consume JSON-LD responses (optional @context)
+#    - Level 2: Validate against SHACL shapes
+#    - Level 3: SPARQL queries over API responses
+# 
+# 5. Policy Traceability
+#    - Every field traces to HUD Data Element (x-hud-data-element)
+#    - Every operation traces to policy requirement (x-required-by-policy)
+#    - Automated compliance checking via ontology reasoning
+# 
+# 6. Algebraic Effects (Experimental - Phase 1)
+#    - Document computational side effects explicitly
+#    - Enable effect composition reasoning
+#    - Generate type-safe handler interfaces
+#    - Prepare for Phase 2 runtime effect handlers
+#    - Inspired by Frank, Koka, and modern effect system research
+# 
+# YAML-LD vs. Alternatives:
+# 
+# - vs. Pure JSON-LD: YAML is more readable for developers, supports comments
+# - vs. RDF/Turtle: YAML is familiar to API developers, integrates with OpenAPI
+# - vs. GraphQL: REST + YAML-LD maintains RESTful simplicity with semantic power
+# - vs. JSON-LD-Star: YAML-LD focuses on API specs, not arbitrary quoted triples
+# - vs. Jelly-RDF: YAML-LD prioritizes readability over binary efficiency
+# 
+# Effect System Design:
+# 
+# - Inspired by programming language theory (algebraic effects with handlers)
+# - Phase 1: Documentary annotations for tooling and reasoning
+# - Phase 2: Runtime effect handlers with delimited continuations
+# - Benefits: Explicit side effects, composable operations, testability
+# - Difference from monads: Effects are open (extensible), handlers are modular
+# 
+# Integration with HUD Ecosystem:
+# 
+# - FY 2026 HMIS Data Standards → OWL Ontology → YAML-LD → Mockoon
+# - Policy documents → x-required-by-policy annotations → compliance matrix
+# - CSV specifications → ontology classes → OpenAPI schemas
+# - Vendor implementations → JSON-LD responses → CoC data warehouses
+# - Effect annotations → handler interfaces → test harnesses
+# 
+# Future Research Directions:
+# 
+# - Capability-based security (Phase 2+): For cross-sector data interchange
+# - Effect handlers at runtime (Phase 2): Resumable computations, delimited continuations
+# - Dependent types (Research): Encode HUD business rules in type system
+# - Linear types (Research): Ensure single-use tokens (consent, ROI)
+# - Session types (Research): Protocol verification for multi-step workflows
+#                    PersonalID:
+#                      type: string
+#                      maxLength: 32
+#                      x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+#                      
+#                    FirstName:
+#                      type: string
+#                      maxLength: 50
+        #               x-semantic-uri: http://hmis.hud.gov/ontology#hasFirstName
+                      
+        #             LastName:
+        #               type: string
+        #               maxLength: 50
+        #               x-semantic-uri: http://hmis.hud.gov/ontology#hasLastName
+                      
+        #             DOB:
+        #               type: string
+        #               format: date
+        #               x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfBirth
+                      
+        #             SSN:
+        #               type: string
+        #               pattern: '^[0-9]{9}$'
+        #               x-semantic-uri: http://hmis.hud.gov/ontology#hasSSN
+              
+        #       # SEMANTIC ANNOTATION: Optional JSON-LD framing for RDF consumers
+        #       x-jsonld-frame:
+        #         "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
+        #         "@type": "hmis:ClientSearchResult"
+        
+  
+  # Core effect types in HMIS domain
+  effect-types:
+    - name: DatabaseRead
+      signature: "query: Query → Result"
+      description: "Read operation against HMIS database"
+      resumable: true
+      handler: "Database handler provides actual SQL execution"
+      
+    - name: DatabaseWrite
+      signature: "entity: Entity, data: Data → EntityID"
+      description: "Persist operation to HMIS database"
+      resumable: false
+      handler: "Database handler with transaction semantics"
+      
+    - name: ConsentCheck
+      signature: "PersonalID: PersonalID, purpose: Purpose → ConsentStatus" 
+      description: "Validate client consent for specific purpose"
+      resumable: true
+      handler: "Consent service checks consent records" 
+      policy-uri: "http://hmis.hud.gov/policy#ConsentRequired"
+      
+    - name: ValidationCheck
+      signature: "data: Data, schema: Schema → ValidationResult"
+      description: "Validate data against HUD Data Standards"
+      resumable: true
+      handler: "SHACL validator with ontology reasoning"
+      
+    - name: AuditLog
+      signature: "event: Event → Unit"
+      description: "Record operation in immutable audit trail"
+      resumable: false
+      handler: "Append-only audit log service"
+      provenance: "http://www.w3.org/ns/prov#Activity"
+      
+    - name: AuthorizationCheck
+      signature: "user: UserID, resource: ResourceID, action: Action → Authorized"
+      description: "Check if user authorized for action on resource"
+      resumable: true
+      handler: "Policy engine evaluates RBAC/ABAC rules"
+      
+    - name: ExternalAPI
+      signature: "endpoint: URL, params: Params → Response"
+      description: "Call external service (e.g., SSN verification)"
+      resumable: true
+      handler: "HTTP client with retry/timeout semantics"
+      
+    - name: ValidationError
+      signature: "error: ErrorDetail → Never"
+      description: "Abort computation with validation error"
+      resumable: false
+      handler: "Error response generator"
+      
+    - name: BusinessRuleError
+      signature: "rule: Rule, violation: Detail → Never"
+      description: "Abort computation due to business rule violation"
+      resumable: false
+      handler: "Error response with policy traceability"
+
+  # Effect composition patterns
+  effect-patterns:
+    description: |
+      Effects compose naturally - an operation that calls sub-operations
+      inherits their effects. This enables modular reasoning about side effects.
+    
+    examples:
+      - name: "Client creation workflow"
+        effects: [ConsentCheck, ValidationCheck, DatabaseWrite, AuditLog]
+        composition: "Sequential effect execution with early termination on error"
+        
+      - name: "Client search with authorization"
+        effects: [AuthorizationCheck, DatabaseRead, AuditLog]
+        composition: "Authorization gates database access"
+        
+      - name: "Cross-organization data sharing"
+        effects: [AuthorizationCheck, ConsentCheck, DatabaseRead, AuditLog, ExternalAPI]
+        composition: "Multiple authorization layers before data access"
+
+  # Python toolchain integration
+  toolchain-integration:
+    parser: "Extract x-effects from operations → Effect AST"
+    generator: "Generate effect handler interfaces from Effect AST"
+    validator: "Ensure all effects have registered handlers"
+    test-harness: "Generate mock effect handlers for unit tests"
+    
+    example-output: |
+      # Generated Python effect handler interfaces:
+      
+      class DatabaseWriteHandler(Protocol):
+          def handle(self, entity: Entity, data: Dict) -> str:
+              '''Returns entity ID of created record'''
+              ...
+      
+      class ConsentCheckHandler(Protocol):
+          def handle(self, client_id: str, purpose: str) -> ConsentStatus:
+              '''Returns consent status for purpose'''
+              ...
+paths:
+  # ==========================================================================
+  # BASELINE SCENARIO 1: Search for a client record by identifying information 
+  # ==========================================================================
+  /client/search:
+    post:
+      operationId: clientSearch
+      summary: Search for clients by identifying information using POST
+      description: |  
+        Search for client records using various identifying criteria:
+        - Name (first, last, partial matches)
+        - Date of birth
+        - Social Security Number
+        This endpoint uses POST to protect PII from URL logging (security best practice).
+      x-workflow-step: "client-search" 
+      x-privacy-consideration: "POST method protects PII from server logs"
+      # EXPERIMENTAL: Algebraic effect annotations (Phase 1)
+      x-effects:
+        - effect: AuthorizationCheck
+          handler: hmis:checkSearchPermission
+          description: "Verifies user authorized to search client records"
+          signature: "userID: ID → AuthResult"
+          resumable: true
+          
+        - effect: DatabaseRead
+          handler: hmis:searchClients
+          description: "Searches clients by identifying criteria"
+          signature: "query: SearchQuery → List[Client]"
+          resumable: true
+          search-strategy: "Fuzzy matching on names, SSN and DOB can be a partial match. SSN can be last four digits, DOB can be the year"
+          
+        - effect: AuditLog
+          handler: hmis:logClientSearch
+          description: "Records search operation (without exposing PII)"
+          signature: "event: SearchEvent → Unit"
+          resumable: false
+          provenance-type: "prov:Search"
+          privacy-note: "Logs search parameters, not results"
+      
+      requestBody: 
+        required: true
+        content: 
+          application/json:
+            schema:
+              type: object
+              x-jsonld-type: hmis:ClientSearchQuery
+              properties:
+                PersonalID:
+                  type: string
+                  maxLength: 32
+                  x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+                FirstName:
+                  type: string
+                  description: First name of the client (for Query optional and may be a prefix partial)
+                  maxLength: 50
+                  x-semantic-uri: http://hmis.hud.gov/ontology#hasFirstName
+                  x-search-behavior: "prefix-match"
+                LastName:
+                  type: string
+                  description: Last name of the client (for Query optional and may be a prefix partial)
+                  maxLength: 50
+                  x-semantic-uri: http://hmis.hud.gov/ontology#hasLastName
+                  x-search-behavior: "prefix-match"
+                DOB:
+                  type: string
+                  format: date
+                  description: Optional date of birth of client. A date in ISO 8601 format (yyyy-mm-dd)
+                  x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfBirth
+                  x-search-behavior: "exact-match"
+                SSN:
+                  type: string
+                  description: Social Security Number
+                  pattern: '^[0-9]{9}$'
+                  x-semantic-uri: http://hmis.hud.gov/ontology#hasSSN
+                  x-search-behavior: "partial-match"
+                  x-pii: true
+      responses:
+        '200':
+          description: A list of clients that match the query
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  x-jsonld-type: hmis:ClientSearchResult
+                  properties:
+                    matchedClients:
+                      type: array
+                      items:
+                        allOf:
+                          - $ref: "#/components/schemas/clientPrimaryKey"
+                          - $ref: "#/components/schemas/clientBase"
+                      description: List of clients associated with the provided project IDs
+                      x-semantic-uri: http://hmis.hud.gov/ontology#hasClient
+              
+              # SEMANTIC ANNOTATION: Complex response with multiple entity types
+              x-jsonld-frame:
+                "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
+                "@type": "hmis:ProjectClientListResponse"
+                "matchedClients": {
+                  "@type": "hmis:Client"
+                }
+        '404':
+          description: No matching PersonalIDs found
+          content:
+            application/json:
+              schema:
+                type: object
+                x-jsonld-type: #UPDATE Would this work? hmis:ProjectClientNotFoundError
+                properties:
+                  message:
+                    type: string
+                    example: PersonalID Not found
+                    x-semantic-uri: #NEED UPDATE HERE. 
+        '400':
+          description: Incorrect input provided
+          content:
+            application/json:
+              schema:
+                type: object
+                x-jsonld-type: #NEED AN UPDATE HERE . Would this work? hmis:ProjectClientNotFoundError
+                properties:
+                  message:
+                    type: string
+                    example: Invalid input provided for [enter data element with issue]
+                    x-semantic-uri: #NEED UPDATE HERE. 
+
+  # ==========================================================================
+  # BASELINE SCENARIO 2: Generate a new client record
+  # Policy Trace: FY2026 HMIS Data Standards Section
+  # Workflow: Client Profile Creation/Update 
+  # ==========================================================================
+  /client:
+    post: 
+      operationId: postClient
+      summary: Create a new client record
+      description: |
+        Creates a new client record in the HMIS.
+        
+        Validates data quality requirements per HUD Data Standards. 
+        Returns the complete client record including system-generated PersonalID.
+      
+      # SEMANTIC ANNOTATION: Documents workflow and compliance requirements
+      x-workflow-step: "client-creation" 
+      x-data-governance:
+        retention: "7 years (per 2004 Technical Standards Section 5.2.1)"
+        consent-required: true
+      
+      # EXPERIMENTAL: Effect annotations (Phase 1)
+      # Documents what side effects this operation performs
+      # Enables: Test generation, effect composition reasoning, provenance tracking
+      x-effects:
+        - effect: ValidationCheck
+          handler: hmis:validateHUDStandards
+          description: "Validates client data against HUD Data Standards"
+          signature: "data: ClientData, schema: Schema → ValidationResult"
+          resumable: true
+          ontology-validation: "Uses SHACL shapes from ontology"
+          
+        - effect: DatabaseWrite
+          handler: hmis:persistClient
+          description: "Persists client record to HMIS database"
+          signature: "entity: Client, data: Data → PersonalID"
+          resumable: false
+          transaction: true
+          
+        - effect: AuditLog
+          handler: hmis:logClientCreation
+          description: "Records client creation in immutable audit trail"
+          signature: "event: ClientCreatedEvent → Unit"
+          resumable: false
+          provenance: "http://www.w3.org/ns/prov#Activity"
+          provenance-type: "prov:Create"
+      
+      requestBody: 
+        content: 
+          application/json:
+            schema:
+              $ref: "#/components/schemas/clientBase"
+            
+            # SEMANTIC ANNOTATION: Request validation rules
+            x-validation-rules:
+              - rule: "At least one name field (FirstName or LastName) required"
+                severity: "error"
+              - rule: "SSN must be valid if SSNDataQuality = Full SSN reported"
+                severity: "error"
+      responses: 
+        '200':
+          description: Client record created successfully
+          content: 
+            application/json:
+              schema: 
+                allOf: 
+                  - $ref: "#/components/schemas/clientPrimaryKey"
+                  - $ref: "#/components/schemas/clientBase"
+                  - $ref: "#/components/schemas/clientMetaData"
+              
+              # SEMANTIC ANNOTATION: JSON-LD response formatting
+              # Vendors can optionally consume this as RDF for data warehouse integration
+              x-jsonld-frame:
+                "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
+                "@type": "hmis:Client"
+                "@id": "http://hmis.example.org/client/{PersonalID}"
+        '400':
+          description: Invalid input provided
+          content: 
+            application/json:
+              schema: 
+                oneOf:
+                  - type: object
+                    description: Data type validation error
+                    x-jsonld-type: hmis:ValidationError
+                    properties:
+                      missingInformationIncorrectDatatype:
+                        type: string
+                        description: Invalid input provided - incorrect data type or missing required field
+                        x-semantic-uri: http://hmis.hud.gov/errors#ValidationError
+                  - type: object
+                    description: Business rule validation error 
+                    x-jsonld-type: hmis:BusinessRuleError
+                    properties: 
+                      invalidInputProvided:
+                        type: string
+                        description: Business rule violation (e.g., conditional field requirements)
+                        example: "If VeteranStatus = No, YearEnteredService and YearSeparated must be NULL" 
+                        x-semantic-uri: http://hmis.hud.gov/errors#BusinessRuleError
+              
+              # SEMANTIC ANNOTATION: Error ontology for potential Phase 2 implementation
+              x-error-classification:
+                validation-error: "Data fails HUD Data Standards validation"
+                business-rule-error: "Violates HUD program logic (e.g., conditional requirements)"
+                # Phase 2 additions:
+                # authorization-error: "Access control policy violation (ROI, consent)"
+                # policy-error: "Violates federal or CoC-specific requirements"
+
+  # ==========================================================================
+  # BASELINE SCENARIO 3: Update an existing client record
+  # Policy Trace: Data quality maintenance (2004 Standards 5.2.2)
+  # Workflow: Client data correction, demographic updates
+  # ==========================================================================
+  /client/{PersonalID}:
+    patch:
+      operationId: updateClient
+      summary: Update an existing client record
+      description: |
+        Updates an existing client record in the HMIS.
+        
+        Supports partial updates - only fields provided will be updated.
+        System automatically updates DateUpdated and UserID metadata.
+        Validates data quality requirements per HUD Data Standards.
+      
+      # SEMANTIC ANNOTATION: Documents workflow and compliance requirements
+      x-workflow-step: "client-update"
+      x-required-by-policy:
+        - "2004 HMIS Data Standards Section 5.2.2: Data quality maintenance"
+        - "CoC Program Interim Rule: HMIS data accuracy requirements"
+      x-data-governance:
+        audit-trail: "All updates logged with timestamp and user"
+        version-control: "DateUpdated reflects most recent modification"
+        
+      # EXPERIMENTAL: Algebraic effect annotations (Phase 1)
+      x-effects:
+        - effect: AuthorizationCheck
+          handler: hmis:checkClientUpdatePermission
+          description: "Verifies user authorized to update client records"
+          signature: "userID: ID, clientID: ID â†' AuthResult"
+          resumable: true
+          
+        - effect: DatabaseRead
+          handler: hmis:fetchExistingClient
+          description: "Retrieves current client record for validation"
+          signature: "clientID: ID â†' Client"
+          resumable: true
+          
+        - effect: ValidationCheck
+          handler: hmis:validateClientUpdate
+          description: "Validates updated data against HUD Data Standards"
+          signature: "existing: Client, updates: ClientData â†' ValidationResult"
+          resumable: true
+          validation-type: "Partial update validation"
+          
+        - effect: DatabaseWrite
+          handler: hmis:updateClientRecord
+          description: "Persists updated client data"
+          signature: "clientID: ID, updates: Data â†' Client"
+          resumable: false
+          transaction: true
+          
+        - effect: AuditLog
+          handler: hmis:logClientUpdate
+          description: "Records update operation with field-level change tracking"
+          signature: "event: ClientUpdatedEvent â†' Unit"
+          resumable: false
+          provenance-type: "prov:Modify"
+          change-tracking: "Logs which fields changed and previous values"
+      
+      parameters:
+        - name: PersonalID
+          in: path
+          required: true
+          description: Unique identifier of the client to update
+          schema:
+            type: string
+            maxLength: 32
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+      
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/clientBase"
+            
+            # SEMANTIC ANNOTATION: Partial update semantics
+            x-update-semantics:
+              type: "partial"
+              description: "Only provided fields will be updated. Omitted fields remain unchanged."
+              null-handling: "null values clear the field (set to empty)"
+            
+            x-validation-rules:
+              - rule: "Cannot modify PersonalID (immutable identifier)"
+                severity: "error"
+              - rule: "SSN validation only if SSN field is updated"
+                severity: "error"
+              - rule: "DateUpdated automatically set by system"
+                severity: "info"
+      
+      responses:
+        '200':
+          description: Client record updated successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/clientPrimaryKey"
+                  - $ref: "#/components/schemas/clientBase"
+                  - $ref: "#/components/schemas/clientMetaData"
+              
+              x-jsonld-frame:
+                "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
+                "@type": "hmis:Client"
+                "@id": "http://hmis.example.org/client/{PersonalID}"
+        
+        '400':
+          description: Invalid update data provided
+          content:
+            application/json:
+              schema:
+                type: object
+                x-jsonld-type: hmis:ValidationError
+                properties:
+                  error:
+                    type: string
+                    description: Validation error details
+                    x-semantic-uri: http://hmis.hud.gov/errors#ValidationError
+        
+        '404':
+          description: Client not found
+          content:
+            application/json:
+              schema:
+                type: object
+                x-jsonld-type: hmis:ClientNotFoundError
+                properties:
+                  error:
+                    type: string
+                    example: "Client with PersonalID '{PersonalID}' not found"
+                    x-semantic-uri: http://hmis.hud.gov/errors#NotFoundError
+
+  # ==========================================================================
+  # BASELINE SCENARIO 4: Generate a list of enrollments related to a single client
+  # Policy Trace: Client service history (CoC Program Interim Rule)
+  # Workflow: Case management, service coordination, longitudinal analysis
+  # ==========================================================================
+  /project/{ProjectID}/clients:
+    get: 
+      operationId: getClientsByProject
+      summary: Get all clients associated with a specific project
+      description: |
+        Returns a list of clients enrolled in the specified project.
+        
+        Supports filtering by date range.
+        Useful for project-level reporting and case management.
+      # SEMANTIC ANNOTATION: Workflow and policy context
+      x-workflow-step: "project-client-history"
+      
+      # EXPERIMENTAL: Algebraic effect annotations (Phase 1)
+      x-effects:
+        - effect: AuthorizationCheck
+          handler: hmis:checkClientEnrollmentAccess
+          description: "Verifies user authorized to view client enrollment history"
+          signature: "userID: ID, clientID: ID â†' AuthResult"
+          resumable: true
+          privacy-note: "May require client consent for cross-organization access"
+          
+        - effect: ConsentCheck
+          handler: hmis:validateEnrollmentConsent
+          description: "Validates consent for enrollment data access"
+          signature: "clientID: ID, purpose: Purpose â†' ConsentStatus"
+          resumable: true
+          required-by: "2004 HMIS Standards Section 4.2"
+          
+        - effect: DatabaseRead
+          handler: hmis:queryClientEnrollments
+          description: "Retrieves all enrollments for specified client"
+          signature: "clientID: ID, filters: EnrollmentFilters â†' List[Enrollment]"
+          resumable: true
+          query-optimization: "Indexed by PersonalID, EntryDate"
+          
+        - effect: AuditLog
+          handler: hmis:logEnrollmentQuery
+          description: "Records enrollment history access for compliance"
+          signature: "event: EnrollmentQueryEvent â†' Unit"
+          resumable: false
+          provenance-type: "prov:Read"
+          pii-access: true
+      parameters:
+        - name: ProjectID
+          in: path
+          required: false
+          description: Unique identifier of the project
+          schema:
+            type: string
+            maxLength: 32
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID 
+            x-filter-type: "equal-to" 
+
+        - name: entryDate
+          in: query
+          required: false
+          description: Filter enrollments with EntryDate on or after this date
+          schema:
+            type: string
+            format: date
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
+            x-filter-type: "greater-than-or-equal"
+        
+        - name: exitDate
+          in: query
+          required: false
+          description: Filter enrollments with EntryDate on or before this date
+          schema:
+            type: string
+            format: date
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasExitDate 
+            x-filter-type: "less-than-or-equal"
+      responses:
+        '200':
+          description: List of clients associated with the specified project
+          content:
+            application/json:
+              schema:
+                type: object
+                x-jsonld-type: hmis:ProjectClientListResponse
+                properties:
+                  clients:
+                    type: array
+                    description: List of clients associated with the provided project IDs
+                    x-semantic-uri: http://hmis.hud.gov/ontology#hasClient
+                    items:
+                      allOf:
+                        - $ref: "#/components/schemas/clientPrimaryKey"
+                        - type: object
+                          properties:
+                            entryDate:
+                              type: string
+                              format: date
+                              description: Enrollment start date
+                              x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
+                            exitDate:
+                              type: string
+                              format: date
+                              description: Enrollment end date
+                              x-semantic-uri: http://hmis.hud.gov/ontology#hasExitDate
+                        - $ref: "#/components/schemas/clientBase"
+        '404':
+          description: Project not found
+          content:
+            application/json:
+              schema:
+                type: object
+                x-jsonld-type: hmis:ProjectNotFoundError
+                properties:
+                  error:
+                    type: string
+                    example: "Project with ProjectID '{ProjectID}' not found"
+                    x-semantic-uri: http://hmis.hud.gov/errors#NotFoundError
+              
+              # SEMANTIC ANNOTATION: Complex response with multiple entity types
+              x-jsonld-frame: 
+                "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
+                "@type": "hmis:ProjectClientListResponse"
+                "clients": {
+                  "@type": "hmis:Client"
+                }
+
+  # ==========================================================================
+  # BASELINE SCENARIO 5: Generate a list of enrollments related to a single client
+  # Policy Trace: Client service history (CoC Program Interim Rule)
+  # Workflow: Case management, service coordination, longitudinal analysis
+  # ==========================================================================
+  /client/{PersonalID}/enrollments: 
+
+    get:
+      operationId: getClientEnrollments
+      summary: Get all enrollments for a specific client
+      description: |
+        Returns all enrollment records for a client across all projects.
+        
+        Includes both active and historical enrollments.
+        Useful for case management, coordinated entry, and longitudinal analysis.
+        Supports filtering by date range and enrollment status.
+      
+      # SEMANTIC ANNOTATION: Workflow and policy context
+      x-workflow-step: "client-enrollment-history"
+      x-required-by-policy:
+        - "CoC Program Interim Rule: Service coordination across providers"
+        - "Coordinated Entry Management Guide: Client service history tracking"
+      x-use-cases:
+        - "Case manager reviewing client's service history"
+        - "Coordinated entry assessment of previous services"
+        - "Longitudinal analysis of client outcomes"
+        - "Referral coordination across projects"
+      
+      # EXPERIMENTAL: Algebraic effect annotations (Phase 1)
+      x-effects:
+        - effect: AuthorizationCheck
+          handler: hmis:checkClientEnrollmentAccess
+          description: "Verifies user authorized to view client enrollment history"
+          signature: "userID: ID, clientID: ID â†' AuthResult"
+          resumable: true
+          privacy-note: "May require client consent for cross-organization access"
+          
+        - effect: ConsentCheck
+          handler: hmis:validateEnrollmentConsent
+          description: "Validates consent for enrollment data access"
+          signature: "clientID: ID, purpose: Purpose â†' ConsentStatus"
+          resumable: true
+          required-by: "2004 HMIS Standards Section 4.2"
+          
+        - effect: DatabaseRead
+          handler: hmis:queryClientEnrollments
+          description: "Retrieves all enrollments for specified client"
+          signature: "clientID: ID, filters: EnrollmentFilters â†' List[Enrollment]"
+          resumable: true
+          query-optimization: "Indexed by PersonalID, EntryDate"
+          
+        - effect: AuditLog
+          handler: hmis:logEnrollmentQuery
+          description: "Records enrollment history access for compliance"
+          signature: "event: EnrollmentQueryEvent â†' Unit"
+          resumable: false
+          provenance-type: "prov:Read"
+          pii-access: true
+      
+      parameters:
+        - name: PersonalID
+          in: path
+          required: true
+          description: Unique identifier of the client
+          schema:
+            type: string
+            maxLength: 32
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+        
+        - name: projectID
+          in: query
+          required: false
+          description: Unique identifier of the project
+          schema:
+            type: string
+            maxLength: 32
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID 
+            x-filter-type: "equal-to" 
+
+        - name: entryDate
+          in: query
+          required: false
+          description: Filter enrollments with EntryDate on or after this date
+          schema:
+            type: string
+            format: date
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
+            x-filter-type: "greater-than-or-equal"
+        
+        - name: exitDate
+          in: query
+          required: false
+          description: Filter enrollments with EntryDate on or before this date
+          schema:
+            type: string
+            format: date
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasExitDate 
+            x-filter-type: "less-than-or-equal"
+      
+      responses:
+        '200':
+          description: List of enrollments for the specified client
+          content:
+            application/json:
+              schema:
+                type: object
+                x-jsonld-type: hmis:ClientEnrollmentListResponse
+                properties:
+                  enrollments:
+                    type: array
+                    description: List of enrollment records
+                    x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollment
+                    items:
+                      type: object
+                      x-jsonld-type: hmis:Enrollment
+                      properties:
+                        PersonalID:
+                          type: string
+                          maxLength: 32
+                          description: Client identifier for which enrollments are returned
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+                        EnrollmentID:
+                          type: string
+                          maxLength: 32
+                          description: Unique identifier for the enrollment
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+                          x-hud-data-element: "Universal Data Element"
+                        
+                        ProjectID:
+                          type: string
+                          maxLength: 32
+                          description: Project in which client is enrolled
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+                          x-hud-data-element: "Universal Data Element"
+                        
+                        ProjectName:
+                          type: string
+                          maxLength: 200
+                          description: Name of the project (for convenience)
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectName
+                        
+                        EntryDate:
+                          type: string
+                          format: date
+                          description: Date client entered the project
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
+                          x-hud-data-element: "3.10"
+                        
+                        ExitDate:
+                          type: string
+                          format: date
+                          description: Date client exited the project (null if active)
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasExitDate
+                          x-hud-data-element: "3.11"
+                          x-ontology-cardinality: "0..1"
+                        
+                        HouseholdID:
+                          type: string
+                          maxLength: 32
+                          description: Household identifier for this enrollment
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasHouseholdID
+                          x-hud-data-element: "Universal Data Element"
+                        
+                        RelationshipToHoH:
+                          type: integer
+                          description: Relationship to Head of Household
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasRelationshipToHoH
+                          x-hud-data-element: "3.15"
+                          x-ontology-range: hmis:RelationshipToHoHType
+                        
+                        EnrollmentCoC:
+                          type: string
+                          description: CoC code where enrollment occurred
+                          pattern: '^[A-Z]{2}-[0-9]{3}$'
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentCoC
+                          x-hud-data-element: "3.16"
+                        
+                        DateCreated:
+                          type: string
+                          format: date-time
+                          x-semantic-uri: http://purl.org/dc/terms/created
+                          x-provenance: true
+                        
+                        DateUpdated:
+                          type: string
+                          format: date-time
+                          x-semantic-uri: http://purl.org/dc/terms/modified
+                          x-provenance: true
+              x-jsonld-frame:
+                "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
+                "@type": "hmis:ClientEnrollmentListResponse"
+                "enrollments": {
+                  "@type": "hmis:Enrollment"
+                }
+        
+        '404':
+          description: Client not found
+          content:
+            application/json:
+              schema:
+                type: object
+                x-jsonld-type: hmis:ClientNotFoundError
+                properties:
+                  error:
+                    type: string
+                    example: "Client with PersonalID '{PersonalID}' not found"
+                    x-semantic-uri: http://hmis.hud.gov/errors#NotFoundError
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+
+# ==========================================================================
+# BASELINE SCENARIO 6: Generate a list of projects funded by HUD: CoC Rapid Re-Housing
+# ==========================================================================
+/projects:
+  get:
+    operationId: getProjects
+    summary: Get projects filtered by funder and project type
+    description: |
+      Returns a list of projects matching specified criteria.
+      
+      Supports filtering by:
+      - Funding source (via Funder table join)
+      - Project type (Rapid Re-Housing = 13)
+      - Operating date range
+      - CoC code
+      
+      Useful for HIC reporting, system planning, and resource mapping.
+    
+    x-workflow-step: "project-list-query"
+    x-required-by-policy:
+      - "HIC/PIT Guidance: Project inventory reporting"
+      - "CoC Program Interim Rule: System planning and coordination"
+    x-use-cases:
+      - "Generate project lists for HIC reporting"
+      - "Identify RRH capacity across CoC"
+      - "Map resources by funder and project type"
+    
+    x-effects:
+      - effect: AuthorizationCheck
+        handler: hmis:checkProjectListAccess
+        description: "Verifies user authorized to view project lists"
+        signature: "userID: ID → AuthResult"
+        resumable: true
+        
+      - effect: DatabaseRead
+        handler: hmis:queryProjects
+        description: "Retrieves projects matching filter criteria"
+        signature: "filters: ProjectFilters → List[Project]"
+        resumable: true
+        query-optimization: "Indexed by ProjectType, Funder"
+        
+      - effect: AuditLog
+        handler: hmis:logProjectQuery
+        description: "Records project list access"
+        signature: "event: ProjectQueryEvent → Unit"
+        resumable: false
+        provenance-type: "prov:Read"
+    
+    parameters:
+      - name: funder
+        in: query
+        required: false
+        description: Filter by funding source (from Funder table)
+        schema:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFunder
+          x-hud-data-element: "2.06"
+          x-filter-type: "equal-to"
+          example: 1
+          description: "1 = HUD:CoC (see FundingSource_list for complete enumeration)"
+      
+      - name: projectType
+        in: query
+        required: false
+        description: Filter by project type
+        schema:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectType
+          x-hud-data-element: "2.02"
+          x-filter-type: "equal-to"
+          example: 13
+          description: "13 = PH - Rapid Re-Housing"
+      
+      - name: cocCode
+        in: query
+        required: false
+        description: Filter by CoC code
+        schema:
+          type: string
+          pattern: '^[A-Z]{2}-[0-9]{3}$'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCoCCode
+          x-hud-data-element: "2.03"
+          x-filter-type: "equal-to"
+          example: "CA-600"
+      
+      - name: operatingStartDate
+        in: query
+        required: false
+        description: Filter projects operating on or after this date
+        schema:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOperatingStartDate
+          x-hud-data-element: "2.02"
+          x-filter-type: "greater-than-or-equal"
+      
+      - name: operatingEndDate
+        in: query
+        required: false
+        description: Filter projects operating on or before this date
+        schema:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOperatingEndDate
+          x-hud-data-element: "2.02"
+          x-filter-type: "less-than-or-equal"
+    
+    responses:
+      '200':
+        description: List of projects matching filter criteria
+        content:
+          application/json:
+            schema:
+              type: object
+              x-jsonld-type: hmis:ProjectListResponse
+              properties:
+                projects:
+                  type: array
+                  description: Array of project records
+                  x-semantic-uri: http://hmis.hud.gov/ontology#hasProject
+                  items:
+                    type: object
+                    x-jsonld-type: hmis:Project
+                    properties:
+                      ProjectID:
+                        type: string
+                        maxLength: 32
+                        description: Unique identifier for the project
+                        x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+                        x-hud-data-element: "Universal Data Element"
+                      
+                      ProjectName:
+                        type: string
+                        maxLength: 200
+                        description: Name of the project
+                        x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectName
+                        x-hud-data-element: "2.02"
+                      
+                      ProjectCommonName:
+                        type: string
+                        maxLength: 200
+                        description: Common name (optional)
+                        x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectCommonName
+                        x-hud-data-element: "2.02"
+                        x-ontology-cardinality: "0..1"
+                      
+                      OrganizationID:
+                        type: string
+                        maxLength: 32
+                        description: Organization operating this project
+                        x-semantic-uri: http://hmis.hud.gov/ontology#hasOrganizationID
+                        x-hud-data-element: "Universal Data Element"
+                      
+                      ProjectType:
+                        type: integer
+                        description: Type of housing/service project
+                        x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectType
+                        x-hud-data-element: "2.02"
+                        x-ontology-range: hmis:ProjectTypeType
+                      
+                      HousingType:
+                        type: integer
+                        description: Housing type for residential projects
+                        x-semantic-uri: http://hmis.hud.gov/ontology#hasHousingType
+                        x-hud-data-element: "2.02"
+                        x-ontology-cardinality: "0..1"
+                      
+                      RRHSubType:
+                        type: integer
+                        description: RRH subtype (if ProjectType = 13)
+                        x-semantic-uri: http://hmis.hud.gov/ontology#hasRRHSubType
+                        x-hud-data-element: "2.02"
+                        x-conditional: "Required if ProjectType = 13"
+                      
+                      OperatingStartDate:
+                        type: string
+                        format: date
+                        description: Date project began operations
+                        x-semantic-uri: http://hmis.hud.gov/ontology#hasOperatingStartDate
+                        x-hud-data-element: "2.02"
+                      
+                      OperatingEndDate:
+                        type: string
+                        format: date
+                        description: Date project ended operations (null if active)
+                        x-semantic-uri: http://hmis.hud.gov/ontology#hasOperatingEndDate
+                        x-hud-data-element: "2.02"
+                        x-ontology-cardinality: "0..1"
+                      
+                      ContinuumProject:
+                        type: integer
+                        description: Whether project is part of CoC (0=No, 1=Yes)
+                        x-semantic-uri: http://hmis.hud.gov/ontology#hasContinuumProject
+                        x-hud-data-element: "2.02"
+                      
+                      DateCreated:
+                        type: string
+                        format: date-time
+                        x-semantic-uri: http://purl.org/dc/terms/created
+                        x-provenance: true
+                      
+                      DateUpdated:
+                        type: string
+                        format: date-time
+                        x-semantic-uri: http://purl.org/dc/terms/modified
+                        x-provenance: true
+            
+            x-jsonld-frame:
+              "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
+              "@type": "hmis:ProjectListResponse"
+              "projects": {
+                "@type": "hmis:Project"
+              }
+      
+      '400':
+        description: Invalid query parameters
+        content:
+          application/json:
+            schema:
+              type: object
+              x-jsonld-type: hmis:ValidationError
+              properties:
+                error:
+                  type: string
+                  example: "Invalid projectType value - must be valid ProjectType enum"
+                  x-semantic-uri: http://hmis.hud.gov/errors#ValidationError
+
+# ==========================================================================
+# BASELINE SCENARIO 8: Generate a list of clients funded by HUD: CoC Rapid Re-Housing
+# ==========================================================================
+/clients:
+  get:
+    operationId: getClients
+    summary: Get clients enrolled in projects filtered by funder and project type
+    description: |
+      Returns a list of clients enrolled in projects matching specified criteria.
+      
+      Supports filtering by:
+      - Funding source (via Project → Funder join)
+      - Project type
+      - Enrollment date range
+      - Whether enrollment has ended (exitDate null/not null)
+      
+      Note: This returns unique clients across matching projects.
+      For enrollment-level detail, use /client/{PersonalID}/enrollments.
+    
+    x-workflow-step: "client-list-by-project-criteria"
+    x-required-by-policy:
+      - "PIT Count: Client enumeration by project type"
+      - "System Performance Measures: RRH client tracking"
+    x-use-cases:
+      - "Generate client counts for PIT"
+      - "Identify all RRH clients in system"
+      - "Track clients by funder for reporting"
+    
+    x-effects:
+      - effect: AuthorizationCheck
+        handler: hmis:checkClientListAccess
+        description: "Verifies user authorized to view client lists"
+        signature: "userID: ID → AuthResult"
+        resumable: true
+        privacy-note: "May require elevated permissions for PII access"
+        
+      - effect: DatabaseRead
+        handler: hmis:queryClientsByProjectCriteria
+        description: "Retrieves clients enrolled in matching projects"
+        signature: "filters: ClientProjectFilters → List[Client]"
+        resumable: true
+        query-optimization: "Indexed by EnrollmentID, ProjectType, Funder"
+        
+      - effect: AuditLog
+        handler: hmis:logClientListQuery
+        description: "Records client list access with filter criteria"
+        signature: "event: ClientListQueryEvent → Unit"
+        resumable: false
+        provenance-type: "prov:Read"
+        pii-access: true
+    
+    parameters:
+      - name: funder
+        in: query
+        required: false
+        description: Filter by project funding source
+        schema:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFunder
+          x-hud-data-element: "2.06"
+          x-filter-type: "equal-to"
+          example: 1
+          description: "1 = HUD:CoC"
+      
+      - name: projectType
+        in: query
+        required: false
+        description: Filter by project type
+        schema:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectType
+          x-hud-data-element: "2.02"
+          x-filter-type: "equal-to"
+          example: 13
+          description: "13 = PH - Rapid Re-Housing"
+      
+      - name: entryDateStart
+        in: query
+        required: false
+        description: Filter enrollments with EntryDate on or after this date
+        schema:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
+          x-hud-data-element: "3.10"
+          x-filter-type: "greater-than-or-equal"
+      
+      - name: entryDateEnd
+        in: query
+        required: false
+        description: Filter enrollments with EntryDate on or before this date
+        schema:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
+          x-hud-data-element: "3.10"
+          x-filter-type: "less-than-or-equal"
+      
+      - name: hasExitDate
+        in: query
+        required: false
+        description: Filter by whether enrollment has ended (true = has exit, false = no exit/active)
+        schema:
+          type: boolean
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasExitDate
+          x-hud-data-element: "3.11"
+          x-filter-type: "null-check"
+          description: "Use false to approximate 'active enrollments' (no ExitDate recorded)"
+    
+    responses:
+      '200':
+        description: List of clients enrolled in matching projects
+        content:
+          application/json:
+            schema:
+              type: object
+              x-jsonld-type: hmis:ClientListResponse
+              properties:
+                clients:
+                  type: array
+                  description: Array of clients with enrollment summary
+                  x-semantic-uri: http://hmis.hud.gov/ontology#hasClient
+                  items:
+                    type: object
+                    x-jsonld-type: hmis:ClientEnrollmentSummary
+                    properties:
+                      PersonalID:
+                        type: string
+                        maxLength: 32
+                        description: Unique client identifier
+                        x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+                        x-hud-data-element: "Universal Data Element"
+                      
+                      FirstName:
+                        type: string
+                        maxLength: 50
+                        description: Client first name
+                        x-semantic-uri: http://hmis.hud.gov/ontology#hasFirstName
+                        x-hud-data-element: "3.01"
+                        x-pii: true
+                      
+                      LastName:
+                        type: string
+                        maxLength: 50
+                        description: Client last name
+                        x-semantic-uri: http://hmis.hud.gov/ontology#hasLastName
+                        x-hud-data-element: "3.01"
+                        x-pii: true
+                      
+                      DOB:
+                        type: string
+                        format: date
+                        description: Date of birth
+                        x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfBirth
+                        x-hud-data-element: "3.03"
+                        x-pii: true
+                      
+                      enrollments:
+                        type: array
+                        description: Matching enrollments for this client
+                        x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollment
+                        items:
+                          type: object
+                          properties:
+                            EnrollmentID:
+                              type: string
+                              maxLength: 32
+                              x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+                              x-hud-data-element: "Universal Data Element"
+                            
+                            ProjectID:
+                              type: string
+                              maxLength: 32
+                              x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+                              x-hud-data-element: "Universal Data Element"
+                            
+                            ProjectName:
+                              type: string
+                              maxLength: 200
+                              x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectName
+                              x-hud-data-element: "2.02"
+                            
+                            EntryDate:
+                              type: string
+                              format: date
+                              x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
+                              x-hud-data-element: "3.10"
+                            
+                            ExitDate:
+                              type: string
+                              format: date
+                              description: Null if enrollment is ongoing
+                              x-semantic-uri: http://hmis.hud.gov/ontology#hasExitDate
+                              x-hud-data-element: "3.11"
+                              x-ontology-cardinality: "0..1"
+            
+            x-jsonld-frame:
+              "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
+              "@type": "hmis:ClientListResponse"
+              "clients": {
+                "@type": "hmis:ClientEnrollmentSummary"
+              }
+      
+      '400':
+        description: Invalid query parameters
+        content:
+          application/json:
+            schema:
+              type: object
+              x-jsonld-type: hmis:ValidationError
+              properties:
+                error:
+                  type: string
+                  example: "Invalid date range - entryDateStart must be before entryDateEnd"
+                  x-semantic-uri: http://hmis.hud.gov/errors#ValidationError
+
+# ==========================================================================
+# NOTES ON SCENARIOS 7 & 9
+# ==========================================================================
+# Scenario 7: Generate a list of projects with project type: Rapid Re-Housing
+#   - Same endpoint as Scenario 6 (/projects)
+#   - Just use projectType=13 query parameter WITHOUT funder parameter
+#   - Example: GET /projects?projectType=13
+#
+# Scenario 9: Generate a list of clients who are active in project type Rapid Re-Housing
+#   - Same endpoint as Scenario 8 (/clients)
+#   - Use projectType=13 AND hasExitDate=false
+#   - Example: GET /clients?projectType=13&hasExitDate=false
+#
+# This design follows RESTful principles - single endpoint with flexible filtering
+# rather than creating separate endpoints for each filter combination.
+#
+# ==============================================================================
+# EXPERIMENTAL EXTENSION: Algebraic Effect Handler Annotations (Phase 1)
+# ==============================================================================
+# Inspired by Frank, Koka, and algebraic effect systems research.
+# These annotations document computational effects for each operation,
+# enabling:
+#   1. Automated test harness generation (mock effect handlers)
+#   2. Effect composition reasoning (e.g., "Does this workflow require consent?")
+#   3. Provenance tracking (map effects to PROV-O activities)
+#   4. Phase 2 runtime: Actual effect handler implementation
+#
+# Phase 1 Status: EXPERIMENTAL - Documentary annotations only
+# For future phases, runtime effect handlers with resumable computations will be considered for implementation in the Python toolchain.
+
+
+# ==========================================================================
+# ADDITIONAL SCHEMA COMPONENTS FOR ENROLLMENT DATA
+# ==========================================================================
+  schemas:
+    # ========================================================================
+    # CLIENT SCHEMAS - Semantic Annotations Enabled
+    # ========================================================================
+    
+    clientPrimaryKey:
+      type: object
+      description: Unique identifier for Client resource
+      # SEMANTIC ANNOTATION: Maps to ontology identifier property
+      # Enables: The Python parser extracts this from owl:hasIdentifier in the ontology
+      x-jsonld-type: hmis:ClientIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#ClientIdentifier
+      
+      properties:
+        PersonalID:
+          type: string
+          description: Unique identifier for the client
+          maxLength: 32
+          
+          # SEMANTIC ANNOTATION: Links to ontology property
+          # Enables: JSON-LD frame generation, SPARQL query construction
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+          x-hud-data-element: "Universal Data Element"
+          x-ontology-cardinality: "1..1"  # Required, exactly one
+    
+    clientBase:
+      type: object
+      description: Core Client demographic and identifying information
+      
+      # SEMANTIC ANNOTATION: Maps entire schema to ontology class
+      # Enables: Automated @context generation, RDF type assignment in responses
+      x-jsonld-type: hmis:Client
+      x-semantic-uri: http://hmis.hud.gov/ontology#Client
+      x-hud-csv-table: "Client.csv"
+      
+      properties: 
+        FirstName:
+          type: string
+          description: First name of the client
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFirstName
+          x-hud-data-element: "3.01"
+          x-hud-reference:
+            standard: "FY 2026 HMIS Data Dictionary"
+            section: "3.01 Name"
+            url: "https://www.hudexchange.info/resource/3824/hmis-data-dictionary/"
+          
+        MiddleName:
+          type: string
+          description: Middle name of the client
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMiddleName
+          x-hud-data-element: "3.01"
+          x-ontology-cardinality: "0..1"  # Optional
+          
+        LastName:
+          type: string
+          description: Last name of the client
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLastName
+          x-hud-data-element: "3.01"
+          
+        NameSuffix:
+          type: string
+          description: Suffix of the client's name
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNameSuffix
+          x-hud-data-element: "3.01"
+          x-ontology-cardinality: "0..1"
+          
+        NameDataQuality:
+          type: integer
+          description: Data quality indicator for name fields
+          oneOf:
+            - $ref: '#/components/schemas/NameDataQuality_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNameDataQuality
+          x-hud-data-element: "3.01"
+          x-ontology-range: hmis:NameDataQualityType
+          
+        SSN:
+          type: string
+          description: Social Security Number
+          pattern: '^[0-9]{9}$'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSSN
+          x-hud-data-element: "3.02"
+          x-pii: true  # Mark as personally identifiable information
+          x-encryption-required: true
+          
+        SSNDataQuality:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/SSNDataQuality_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSSNDataQuality
+          x-hud-data-element: "3.02"
+          x-ontology-range: hmis:SSNDataQualityType
+          
+        DOB:
+          type: string
+          description: Date of birth of the client
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfBirth
+          x-hud-data-element: "3.03"
+          x-pii: true
+          
+        DOBDataQuality:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/DOBDataQuality_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDOBDataQuality
+          x-hud-data-element: "3.03"
+          x-ontology-range: hmis:DOBDataQualityType
+        
+        # ===== RACE DATA ELEMENTS (3.04) =====
+        AmIndAKNative:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAmIndAKNative
+          x-hud-data-element: "3.04"
+          x-ontology-range: hmis:NoYesType
+          
+        Asian:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAsian
+          x-hud-data-element: "3.04"
+          
+        BlackAfAmerican:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasBlackAfAmerican
+          x-hud-data-element: "3.04"
+          
+        HispanicLatinaeo:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHispanicLatinaeo
+          x-hud-data-element: "3.04"
+          
+        MidEastNAfrican:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMidEastNAfrican
+          x-hud-data-element: "3.04"
+          
+        NativeHIPacific:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNativeHIPacific
+          x-hud-data-element: "3.04"
+          
+        White:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWhite
+          x-hud-data-element: "3.04"
+          
+        RaceNone:
+          type: integer
+          description: Non-null only if all other race fields are 0 (UNKNOWN)
+          oneOf:
+            - $ref: '#/components/schemas/RaceGenderNone_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasRaceNone
+          x-hud-data-element: "3.04"
+          x-business-rule: "Set only when all race fields = 0"
+          
+        AdditionalRaceEthnicity:
+          type: string
+          maxLength: 100
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAdditionalRaceEthnicity
+          x-hud-data-element: "3.04"
+          x-ontology-cardinality: "0..1"
+        
+        # ===== GENDER DATA ELEMENTS (3.06) =====
+        Woman:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWoman
+          x-hud-data-element: "3.06"
+          
+        Man:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMan
+          x-hud-data-element: "3.06"
+          
+        NonBinary:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNonBinary
+          x-hud-data-element: "3.06"
+          
+        CulturallySpecific:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCulturallySpecific
+          x-hud-data-element: "3.06"
+          
+        Transgender:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTransgender
+          x-hud-data-element: "3.06"
+          
+        Questioning:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasQuestioning
+          x-hud-data-element: "3.06"
+          
+        DifferentIdentity:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDifferentIdentity
+          x-hud-data-element: "3.06"
+          
+        GenderNone:
+          type: integer
+          description: Non-null only if all other gender fields = 0
+          oneOf:
+            - $ref: '#/components/schemas/RaceGenderNone_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasGenderNone
+          x-hud-data-element: "3.06"
+          x-business-rule: "Set only when all gender fields = 0"
+          
+        DifferentIdentityText:
+          type: string
+          maxLength: 100
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDifferentIdentityText
+          x-hud-data-element: "3.06"
+          x-ontology-cardinality: "0..1"
+        
+        # ===== VETERAN STATUS (3.07) =====
+        VeteranStatus:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVeteranStatus
+          x-hud-data-element: "3.07"
+          x-hud-reference:
+            standard: "FY 2026 HMIS Data Dictionary"
+            section: "3.07 Veteran Status"
+            url: "https://www.hudexchange.info/resource/3824/hmis-data-dictionary/"
+          x-program-specific:
+            - SSVF
+            - GPD
+            - VASH
+          
+        YearEnteredService:
+          type: string
+          pattern: '^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasYearEnteredService
+          x-hud-data-element: "3.07"
+          x-conditional: "Required if VeteranStatus = Yes"
+          
+        YearSeparated:
+          type: string
+          pattern: '^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasYearSeparated
+          x-hud-data-element: "3.07"
+          x-conditional: "Required if VeteranStatus = Yes"
+          
+        WorldWarII:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWorldWarII
+          x-hud-data-element: "3.07"
+          
+        KoreanWar:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasKoreanWar
+          x-hud-data-element: "3.07"
+          
+        VietnamWar:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVietnamWar
+          x-hud-data-element: "3.07"
+          
+        DesertStorm:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDesertStorm
+          x-hud-data-element: "3.07"
+          
+        AfghanistanOEF:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAfghanistanOEF
+          x-hud-data-element: "3.07"
+          
+        IraqOIF:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIraqOIF
+          x-hud-data-element: "3.07"
+          
+        IraqOND:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIraqOND
+          x-hud-data-element: "3.07"
+          
+        OtherTheater:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherTheater
+          x-hud-data-element: "3.07"
+          
+        MilitaryBranch:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/MilitaryBranch_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMilitaryBranch
+          x-hud-data-element: "3.07"
+          x-ontology-range: hmis:MilitaryBranchType
+          
+        DischargeStatus:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/DischargeStatus_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDischargeStatus
+          x-hud-data-element: "3.07"
+          x-ontology-range: hmis:DischargeStatusType
+    
+    clientMetaData:
+      type: object
+      description: Audit and versioning metadata for Client records
+      
+      # SEMANTIC ANNOTATION: Provenance tracking aligned with PROV-O ontology
+      x-jsonld-type: prov:Entity
+      x-semantic-uri: http://www.w3.org/ns/prov#Entity
+      
+      properties:
+        DateCreated:
+          type: string
+          format: date-time
+          x-semantic-uri: http://purl.org/dc/terms/created
+          x-provenance: true
+          
+        DateUpdated:
+          type: string
+          format: date-time
+          x-semantic-uri: http://purl.org/dc/terms/modified
+          x-provenance: true
+          
+        UserID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://www.w3.org/ns/prov#wasAttributedTo
+          x-provenance: true
+          
+        DateDeleted:
+          type: string
+          format: date-time
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateDeleted
+          x-soft-delete: true
+          x-provenance: true
+
+
+    # Enrollment-related enumerations (to be extracted from ontology)
+    RelationshipToHoH_list:
+      type: integer
+      description: Relationship to Head of Household
+      x-jsonld-type: hmis:RelationshipToHoHType
+      x-semantic-uri: http://hmis.hud.gov/ontology#RelationshipToHoHType
+      x-hud-data-element: "3.15"
+      enum: [1, 2, 3, 4, 5, 99]
+      x-enum-members:
+        - value: 1
+          label: "Self (head of household)"
+          uri: http://hmis.hud.gov/ontology#SelfHoH
+        - value: 2
+          label: "Head of household's child"
+          uri: http://hmis.hud.gov/ontology#HoHChild
+        - value: 3
+          label: "Head of household's spouse or partner"
+          uri: http://hmis.hud.gov/ontology#HoHSpousePartner
+        - value: 4
+          label: "Head of household's other relation member"
+          uri: http://hmis.hud.gov/ontology#HoHOtherRelation
+        - value: 5
+          label: "Other: non-relation member"
+          uri: http://hmis.hud.gov/ontology#NonRelationMember
+        - value: 99
+          label: "Data not collected"
+          uri: http://hmis.hud.gov/ontology#DataNotCollected
+    NameDataQuality_list: # FLAG FOR EXTENSION NEEDED
+        type: integer
+        enum: [1, 2, 8, 9, 99]
+        description: |
+          1 - Full name reported
+          2 - Partial, street name, or code name reported
+          8 - Client doesn't know
+          9 - Client prefers not to answer
+          99 - Data not collected
+    SSNDataQuality_list: # FLAG FOR EXTENSION NEEDED
+      type: integer
+      enum: [1, 2, 8, 9, 99]
+      description: |
+        1 - Full SSN Reported
+        2 - Approximate or partial SSN reported
+        8 - Client doesn't know
+        9 - Client prefers not to answer
+        99 - Data not collected
+    DOBDataQuality_list: # FLAG FOR EXTENSION NEEDED
+      type: integer 
+      enum: [1, 2, 8, 9, 99]
+      description: |
+        1 - Full DOB reported
+        2 - Approximate or partial DOB reported
+        8 - Client doesn't know
+        9 - Client prefers not to answer
+        99 - Data not collected
+    NoYes_list: # FLAG FOR EXTENSION NEEDED
+      type: integer
+      enum: [0, 1]
+      description: |
+        0 - No
+        1 - Yes
+    RaceGenderNone_list: # FLAG FOR EXTENSION NEEDED
+      type: integer
+      enum: [8,9,99]
+      description: |
+        8 - Client doesn't know
+        9 - Client prefers not to answer
+        99 - Data not collected
+    NoYesReasonsForMissingData_list: # FLAG FOR EXTENSION NEEDED
+      type: integer
+      enum: [0, 1, 8, 9, 99]
+      description: |
+        0 - No
+        1 - Yes
+        8 - Client doesn't know
+        9 - Client prefers not to answer
+        99 - Data not collected
+    MilitaryBranch_list: # FLAG FOR EXTENSION NEEDED
+      type: integer
+      enum: [1, 2, 3, 4, 6, 7, 8, 9, 99]
+      description: |
+        1 - Army
+        2 - Air Force
+        3 - Navy
+        4 - Marines
+        6 - Coast Guard
+        7 - Space Force
+        8 - Client doesn't know
+        9 - Client prefers not to answer
+        99 - Data not collected
+    DischargeStatus_list: # FLAG FOR EXTENSION NEEDED
+      type: integer
+      enum: [1, 2, 4, 5, 6, 7, 8, 9, 99]
+      description: |
+        1 - Honorable
+        2 - General under honorable conditions
+        4 - Bad conduct
+        5 - Dishonorable
+        6 - Under other than honorable conditions (OTH)
+        7 - Uncharacterized
+        8 - Client doesn't know
+        9 - Client prefers not to answer
+        99 - Data not collected
