@@ -545,8 +545,7 @@ x-effect-system:
         #       x-jsonld-frame:
         #         "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
         #         "@type": "hmis:ClientSearchResult"
-        
-  
+
   # Core effect types in HMIS domain
   effect-types:
     - name: DatabaseRead
@@ -1146,7 +1145,6 @@ paths:
   # Workflow: Case management, service coordination, longitudinal analysis
   # ==========================================================================
   /client/{PersonalID}/enrollments: 
-
     get:
       operationId: getClientEnrollments
       summary: Get all enrollments for a specific client
@@ -1347,455 +1345,448 @@ paths:
                     type: string
                     example: "Client with PersonalID '{PersonalID}' not found"
                     x-semantic-uri: http://hmis.hud.gov/errors#NotFoundError
-
-components:
-  securitySchemes:
-    BasicAuth:
-      type: http
-      scheme: basic
-
 # ==========================================================================
 # BASELINE SCENARIO 6: Generate a list of projects funded by HUD: CoC Rapid Re-Housing
 # ==========================================================================
-/projects:
-  get:
-    operationId: getProjects
-    summary: Get projects filtered by funder and project type
-    description: |
-      Returns a list of projects matching specified criteria.
-      
-      Supports filtering by:
-      - Funding source (via Funder table join)
-      - Project type (Rapid Re-Housing = 13)
-      - Operating date range
-      - CoC code
-      
-      Useful for HIC reporting, system planning, and resource mapping.
-    
-    x-workflow-step: "project-list-query"
-    x-required-by-policy:
-      - "HIC/PIT Guidance: Project inventory reporting"
-      - "CoC Program Interim Rule: System planning and coordination"
-    x-use-cases:
-      - "Generate project lists for HIC reporting"
-      - "Identify RRH capacity across CoC"
-      - "Map resources by funder and project type"
-    
-    x-effects:
-      - effect: AuthorizationCheck
-        handler: hmis:checkProjectListAccess
-        description: "Verifies user authorized to view project lists"
-        signature: "userID: ID → AuthResult"
-        resumable: true
+  /projects:
+    get:
+      operationId: getProjects
+      summary: Get projects filtered by funder and project type
+      description: |
+        Returns a list of projects matching specified criteria.
         
-      - effect: DatabaseRead
-        handler: hmis:queryProjects
-        description: "Retrieves projects matching filter criteria"
-        signature: "filters: ProjectFilters → List[Project]"
-        resumable: true
-        query-optimization: "Indexed by ProjectType, Funder"
+        Supports filtering by:
+        - Funding source (via Funder table join)
+        - Project type (Rapid Re-Housing = 13)
+        - Operating date range
+        - CoC code
         
-      - effect: AuditLog
-        handler: hmis:logProjectQuery
-        description: "Records project list access"
-        signature: "event: ProjectQueryEvent → Unit"
-        resumable: false
-        provenance-type: "prov:Read"
-    
-    parameters:
-      - name: funder
-        in: query
-        required: false
-        description: Filter by funding source (from Funder table)
-        schema:
-          type: integer
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasFunder
-          x-hud-data-element: "2.06"
-          x-filter-type: "equal-to"
-          example: 1
-          description: "1 = HUD:CoC (see FundingSource_list for complete enumeration)"
+        Useful for HIC reporting, system planning, and resource mapping.
       
-      - name: projectType
-        in: query
-        required: false
-        description: Filter by project type
-        schema:
-          type: integer
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectType
-          x-hud-data-element: "2.02"
-          x-filter-type: "equal-to"
-          example: 13
-          description: "13 = PH - Rapid Re-Housing"
+      x-workflow-step: "project-list-query"
+      x-required-by-policy:
+        - "HIC/PIT Guidance: Project inventory reporting"
+        - "CoC Program Interim Rule: System planning and coordination"
+      x-use-cases:
+        - "Generate project lists for HIC reporting"
+        - "Identify RRH capacity across CoC"
+        - "Map resources by funder and project type"
       
-      - name: cocCode
-        in: query
-        required: false
-        description: Filter by CoC code
-        schema:
-          type: string
-          pattern: '^[A-Z]{2}-[0-9]{3}$'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasCoCCode
-          x-hud-data-element: "2.03"
-          x-filter-type: "equal-to"
-          example: "CA-600"
+      x-effects:
+        - effect: AuthorizationCheck
+          handler: hmis:checkProjectListAccess
+          description: "Verifies user authorized to view project lists"
+          signature: "userID: ID → AuthResult"
+          resumable: true
+          
+        - effect: DatabaseRead
+          handler: hmis:queryProjects
+          description: "Retrieves projects matching filter criteria"
+          signature: "filters: ProjectFilters → List[Project]"
+          resumable: true
+          query-optimization: "Indexed by ProjectType, Funder"
+          
+        - effect: AuditLog
+          handler: hmis:logProjectQuery
+          description: "Records project list access"
+          signature: "event: ProjectQueryEvent → Unit"
+          resumable: false
+          provenance-type: "prov:Read"
       
-      - name: operatingStartDate
-        in: query
-        required: false
-        description: Filter projects operating on or after this date
-        schema:
-          type: string
-          format: date
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasOperatingStartDate
-          x-hud-data-element: "2.02"
-          x-filter-type: "greater-than-or-equal"
-      
-      - name: operatingEndDate
-        in: query
-        required: false
-        description: Filter projects operating on or before this date
-        schema:
-          type: string
-          format: date
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasOperatingEndDate
-          x-hud-data-element: "2.02"
-          x-filter-type: "less-than-or-equal"
-    
-    responses:
-      '200':
-        description: List of projects matching filter criteria
-        content:
-          application/json:
-            schema:
-              type: object
-              x-jsonld-type: hmis:ProjectListResponse
-              properties:
-                projects:
-                  type: array
-                  description: Array of project records
-                  x-semantic-uri: http://hmis.hud.gov/ontology#hasProject
-                  items:
-                    type: object
-                    x-jsonld-type: hmis:Project
-                    properties:
-                      ProjectID:
-                        type: string
-                        maxLength: 32
-                        description: Unique identifier for the project
-                        x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
-                        x-hud-data-element: "Universal Data Element"
-                      
-                      ProjectName:
-                        type: string
-                        maxLength: 200
-                        description: Name of the project
-                        x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectName
-                        x-hud-data-element: "2.02"
-                      
-                      ProjectCommonName:
-                        type: string
-                        maxLength: 200
-                        description: Common name (optional)
-                        x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectCommonName
-                        x-hud-data-element: "2.02"
-                        x-ontology-cardinality: "0..1"
-                      
-                      OrganizationID:
-                        type: string
-                        maxLength: 32
-                        description: Organization operating this project
-                        x-semantic-uri: http://hmis.hud.gov/ontology#hasOrganizationID
-                        x-hud-data-element: "Universal Data Element"
-                      
-                      ProjectType:
-                        type: integer
-                        description: Type of housing/service project
-                        x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectType
-                        x-hud-data-element: "2.02"
-                        x-ontology-range: hmis:ProjectTypeType
-                      
-                      HousingType:
-                        type: integer
-                        description: Housing type for residential projects
-                        x-semantic-uri: http://hmis.hud.gov/ontology#hasHousingType
-                        x-hud-data-element: "2.02"
-                        x-ontology-cardinality: "0..1"
-                      
-                      RRHSubType:
-                        type: integer
-                        description: RRH subtype (if ProjectType = 13)
-                        x-semantic-uri: http://hmis.hud.gov/ontology#hasRRHSubType
-                        x-hud-data-element: "2.02"
-                        x-conditional: "Required if ProjectType = 13"
-                      
-                      OperatingStartDate:
-                        type: string
-                        format: date
-                        description: Date project began operations
-                        x-semantic-uri: http://hmis.hud.gov/ontology#hasOperatingStartDate
-                        x-hud-data-element: "2.02"
-                      
-                      OperatingEndDate:
-                        type: string
-                        format: date
-                        description: Date project ended operations (null if active)
-                        x-semantic-uri: http://hmis.hud.gov/ontology#hasOperatingEndDate
-                        x-hud-data-element: "2.02"
-                        x-ontology-cardinality: "0..1"
-                      
-                      ContinuumProject:
-                        type: integer
-                        description: Whether project is part of CoC (0=No, 1=Yes)
-                        x-semantic-uri: http://hmis.hud.gov/ontology#hasContinuumProject
-                        x-hud-data-element: "2.02"
-                      
-                      DateCreated:
-                        type: string
-                        format: date-time
-                        x-semantic-uri: http://purl.org/dc/terms/created
-                        x-provenance: true
-                      
-                      DateUpdated:
-                        type: string
-                        format: date-time
-                        x-semantic-uri: http://purl.org/dc/terms/modified
-                        x-provenance: true
-            
-            x-jsonld-frame:
-              "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
-              "@type": "hmis:ProjectListResponse"
-              "projects": {
-                "@type": "hmis:Project"
-              }
-      
-      '400':
-        description: Invalid query parameters
-        content:
-          application/json:
-            schema:
-              type: object
-              x-jsonld-type: hmis:ValidationError
-              properties:
-                error:
-                  type: string
-                  example: "Invalid projectType value - must be valid ProjectType enum"
-                  x-semantic-uri: http://hmis.hud.gov/errors#ValidationError
+      parameters: 
+        - name: funder
+          in: query
+          required: false
+          description: Filter by funding source
+          schema:
+            type: integer
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasFunder
+            x-hud-data-element: "2.06"
+            x-filter-type: "equal-to"
+            example: 1
+            description: "1 = HUD:CoC (see FundingSource_list for complete enumeration)"
+        
+        - name: projectType
+          in: query
+          required: false
+          description: Filter by project type
+          schema:
+            type: integer
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectType
+            x-hud-data-element: "2.02"
+            x-filter-type: "equal-to"
+            example: 13
+            description: "13 = PH - Rapid Re-Housing"
+        
+        - name: cocCode
+          in: query
+          required: false
+          description: Filter by CoC code
+          schema:
+            type: string
+            pattern: '^[A-Z]{2}-[0-9]{3}$'
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasCoCCode
+            x-hud-data-element: "2.03"
+            x-filter-type: "equal-to"
+            example: "CA-600"
+        
+        - name: operatingStartDate
+          in: query
+          required: false
+          description: Filter projects operating on or after this date
+          schema:
+            type: string
+            format: date
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasOperatingStartDate
+            x-hud-data-element: "2.02"
+            x-filter-type: "greater-than-or-equal"
+        
+        - name: operatingEndDate
+          in: query
+          required: false
+          description: Filter projects operating on or before this date
+          schema:
+            type: string
+            format: date
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasOperatingEndDate
+            x-hud-data-element: "2.02"
+            x-filter-type: "less-than-or-equal"
+
+      responses:
+        '200':
+          description: List of projects matching filter criteria
+          content:
+            application/json:
+              schema:
+                type: object
+                x-jsonld-type: hmis:ProjectListResponse
+                properties:
+                  projects:
+                    type: array
+                    description: Array of project records
+                    x-semantic-uri: http://hmis.hud.gov/ontology#hasProject
+                    items:
+                      type: object
+                      x-jsonld-type: hmis:Project
+                      properties:
+                        ProjectID:
+                          type: string
+                          maxLength: 32
+                          description: Unique identifier for the project
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+                          x-hud-data-element: "Universal Data Element"
+                        
+                        ProjectName:
+                          type: string
+                          maxLength: 200
+                          description: Name of the project
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectName
+                          x-hud-data-element: "2.02"
+                        
+                        ProjectCommonName:
+                          type: string
+                          maxLength: 200
+                          description: Common name (optional)
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectCommonName
+                          x-hud-data-element: "2.02"
+                          x-ontology-cardinality: "0..1"
+                        
+                        OrganizationID:
+                          type: string
+                          maxLength: 32
+                          description: Organization operating this project
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasOrganizationID
+                          x-hud-data-element: "Universal Data Element"
+                        
+                        ProjectType:
+                          type: integer
+                          description: Type of housing/service project
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectType
+                          x-hud-data-element: "2.02"
+                          x-ontology-range: hmis:ProjectTypeType
+                        
+                        HousingType:
+                          type: integer
+                          description: Housing type for residential projects
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasHousingType
+                          x-hud-data-element: "2.02"
+                          x-ontology-cardinality: "0..1"
+                        
+                        RRHSubType:
+                          type: integer
+                          description: RRH subtype (if ProjectType = 13)
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasRRHSubType
+                          x-hud-data-element: "2.02"
+                          x-conditional: "Required if ProjectType = 13"
+                        
+                        OperatingStartDate:
+                          type: string
+                          format: date
+                          description: Date project began operations
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasOperatingStartDate
+                          x-hud-data-element: "2.02"
+                        
+                        OperatingEndDate:
+                          type: string
+                          format: date
+                          description: Date project ended operations (null if active)
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasOperatingEndDate
+                          x-hud-data-element: "2.02"
+                          x-ontology-cardinality: "0..1"
+                        
+                        ContinuumProject:
+                          type: integer
+                          description: Whether project is part of CoC (0=No, 1=Yes)
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasContinuumProject
+                          x-hud-data-element: "2.02"
+                        
+                        DateCreated:
+                          type: string
+                          format: date-time
+                          x-semantic-uri: http://purl.org/dc/terms/created
+                          x-provenance: true
+                        
+                        DateUpdated:
+                          type: string
+                          format: date-time
+                          x-semantic-uri: http://purl.org/dc/terms/modified
+                          x-provenance: true
+              
+              x-jsonld-frame:
+                "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
+                "@type": "hmis:ProjectListResponse"
+                "projects": {
+                  "@type": "hmis:Project"
+                }
+        
+        '400':
+          description: Invalid query parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                x-jsonld-type: hmis:ValidationError
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid projectType value - must be valid ProjectType enum"
+                    x-semantic-uri: http://hmis.hud.gov/errors#ValidationError
 
 # ==========================================================================
 # BASELINE SCENARIO 8: Generate a list of clients funded by HUD: CoC Rapid Re-Housing
 # ==========================================================================
-/clients:
-  get:
-    operationId: getClients
-    summary: Get clients enrolled in projects filtered by funder and project type
-    description: |
-      Returns a list of clients enrolled in projects matching specified criteria.
-      
-      Supports filtering by:
-      - Funding source (via Project → Funder join)
-      - Project type
-      - Enrollment date range
-      - Whether enrollment has ended (exitDate null/not null)
-      
-      Note: This returns unique clients across matching projects.
-      For enrollment-level detail, use /client/{PersonalID}/enrollments.
-    
-    x-workflow-step: "client-list-by-project-criteria"
-    x-required-by-policy:
-      - "PIT Count: Client enumeration by project type"
-      - "System Performance Measures: RRH client tracking"
-    x-use-cases:
-      - "Generate client counts for PIT"
-      - "Identify all RRH clients in system"
-      - "Track clients by funder for reporting"
-    
-    x-effects:
-      - effect: AuthorizationCheck
-        handler: hmis:checkClientListAccess
-        description: "Verifies user authorized to view client lists"
-        signature: "userID: ID → AuthResult"
-        resumable: true
-        privacy-note: "May require elevated permissions for PII access"
+  /clients:
+    get:
+      operationId: getClients
+      summary: Get clients enrolled in projects filtered by funder and project type
+      description: |
+        Returns a list of clients enrolled in projects matching specified criteria.
         
-      - effect: DatabaseRead
-        handler: hmis:queryClientsByProjectCriteria
-        description: "Retrieves clients enrolled in matching projects"
-        signature: "filters: ClientProjectFilters → List[Client]"
-        resumable: true
-        query-optimization: "Indexed by EnrollmentID, ProjectType, Funder"
+        Supports filtering by:
+        - Funding source (via Project → Funder join)
+        - Project type
+        - Enrollment date range
+        - Whether enrollment has ended (exitDate null/not null)
         
-      - effect: AuditLog
-        handler: hmis:logClientListQuery
-        description: "Records client list access with filter criteria"
-        signature: "event: ClientListQueryEvent → Unit"
-        resumable: false
-        provenance-type: "prov:Read"
-        pii-access: true
-    
-    parameters:
-      - name: funder
-        in: query
-        required: false
-        description: Filter by project funding source
-        schema:
-          type: integer
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasFunder
-          x-hud-data-element: "2.06"
-          x-filter-type: "equal-to"
-          example: 1
-          description: "1 = HUD:CoC"
+        Note: This returns unique clients across matching projects.
+        For enrollment-level detail, use /client/{PersonalID}/enrollments.
       
-      - name: projectType
-        in: query
-        required: false
-        description: Filter by project type
-        schema:
-          type: integer
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectType
-          x-hud-data-element: "2.02"
-          x-filter-type: "equal-to"
-          example: 13
-          description: "13 = PH - Rapid Re-Housing"
+      x-workflow-step: "client-list-by-project-criteria"
+      x-required-by-policy:
+        - "PIT Count: Client enumeration by project type"
+        - "System Performance Measures: RRH client tracking"
+      x-use-cases:
+        - "Generate client counts for PIT"
+        - "Identify all RRH clients in system"
+        - "Track clients by funder for reporting"
       
-      - name: entryDateStart
-        in: query
-        required: false
-        description: Filter enrollments with EntryDate on or after this date
-        schema:
-          type: string
-          format: date
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
-          x-hud-data-element: "3.10"
-          x-filter-type: "greater-than-or-equal"
+      x-effects:
+        - effect: AuthorizationCheck
+          handler: hmis:checkClientListAccess
+          description: "Verifies user authorized to view client lists"
+          signature: "userID: ID → AuthResult"
+          resumable: true
+          privacy-note: "May require elevated permissions for PII access"
+          
+        - effect: DatabaseRead
+          handler: hmis:queryClientsByProjectCriteria
+          description: "Retrieves clients enrolled in matching projects"
+          signature: "filters: ClientProjectFilters → List[Client]"
+          resumable: true
+          query-optimization: "Indexed by EnrollmentID, ProjectType, Funder"
+          
+        - effect: AuditLog
+          handler: hmis:logClientListQuery
+          description: "Records client list access with filter criteria"
+          signature: "event: ClientListQueryEvent → Unit"
+          resumable: false
+          provenance-type: "prov:Read"
+          pii-access: true
       
-      - name: entryDateEnd
-        in: query
-        required: false
-        description: Filter enrollments with EntryDate on or before this date
-        schema:
-          type: string
-          format: date
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
-          x-hud-data-element: "3.10"
-          x-filter-type: "less-than-or-equal"
+      parameters:
+        - name: funder
+          in: query
+          required: false
+          description: Filter by project funding source
+          schema:
+            type: integer
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasFunder
+            x-hud-data-element: "2.06"
+            x-filter-type: "equal-to"
+            example: 1
+            description: "1 = HUD:CoC"
+        
+        - name: projectType
+          in: query
+          required: false
+          description: Filter by project type
+          schema:
+            type: integer
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectType
+            x-hud-data-element: "2.02"
+            x-filter-type: "equal-to"
+            example: 13
+            description: "13 = PH - Rapid Re-Housing"
+        
+        - name: entryDateStart # REVIEW how can we adjust the filtering?
+          in: query
+          required: false
+          description: Filter enrollments with EntryDate on or after this date
+          schema:
+            type: string
+            format: date
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
+            x-hud-data-element: "3.10"
+            x-filter-type: "greater-than-or-equal"
+        
+        - name: entryDateEnd
+          in: query
+          required: false
+          description: Filter enrollments with EntryDate on or before this date
+          schema:
+            type: string
+            format: date
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
+            x-hud-data-element: "3.10"
+            x-filter-type: "less-than-or-equal"
+        
+        - name: hasExitDate
+          in: query
+          required: false
+          description: Filter by whether enrollment has ended (true = has exit, false = no exit/active)
+          schema:
+            type: boolean
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasExitDate
+            x-hud-data-element: "3.11"
+            x-filter-type: "null-check"
+            description: "Use false to approximate 'active enrollments' (no ExitDate recorded)"
       
-      - name: hasExitDate
-        in: query
-        required: false
-        description: Filter by whether enrollment has ended (true = has exit, false = no exit/active)
-        schema:
-          type: boolean
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasExitDate
-          x-hud-data-element: "3.11"
-          x-filter-type: "null-check"
-          description: "Use false to approximate 'active enrollments' (no ExitDate recorded)"
-    
-    responses:
-      '200':
-        description: List of clients enrolled in matching projects
-        content:
-          application/json:
-            schema:
-              type: object
-              x-jsonld-type: hmis:ClientListResponse
-              properties:
-                clients:
-                  type: array
-                  description: Array of clients with enrollment summary
-                  x-semantic-uri: http://hmis.hud.gov/ontology#hasClient
-                  items:
-                    type: object
-                    x-jsonld-type: hmis:ClientEnrollmentSummary
-                    properties:
-                      PersonalID:
-                        type: string
-                        maxLength: 32
-                        description: Unique client identifier
-                        x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
-                        x-hud-data-element: "Universal Data Element"
-                      
-                      FirstName:
-                        type: string
-                        maxLength: 50
-                        description: Client first name
-                        x-semantic-uri: http://hmis.hud.gov/ontology#hasFirstName
-                        x-hud-data-element: "3.01"
-                        x-pii: true
-                      
-                      LastName:
-                        type: string
-                        maxLength: 50
-                        description: Client last name
-                        x-semantic-uri: http://hmis.hud.gov/ontology#hasLastName
-                        x-hud-data-element: "3.01"
-                        x-pii: true
-                      
-                      DOB:
-                        type: string
-                        format: date
-                        description: Date of birth
-                        x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfBirth
-                        x-hud-data-element: "3.03"
-                        x-pii: true
-                      
-                      enrollments:
-                        type: array
-                        description: Matching enrollments for this client
-                        x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollment
-                        items:
-                          type: object
-                          properties:
-                            EnrollmentID:
-                              type: string
-                              maxLength: 32
-                              x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
-                              x-hud-data-element: "Universal Data Element"
-                            
-                            ProjectID:
-                              type: string
-                              maxLength: 32
-                              x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
-                              x-hud-data-element: "Universal Data Element"
-                            
-                            ProjectName:
-                              type: string
-                              maxLength: 200
-                              x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectName
-                              x-hud-data-element: "2.02"
-                            
-                            EntryDate:
-                              type: string
-                              format: date
-                              x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
-                              x-hud-data-element: "3.10"
-                            
-                            ExitDate:
-                              type: string
-                              format: date
-                              description: Null if enrollment is ongoing
-                              x-semantic-uri: http://hmis.hud.gov/ontology#hasExitDate
-                              x-hud-data-element: "3.11"
-                              x-ontology-cardinality: "0..1"
-            
-            x-jsonld-frame:
-              "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
-              "@type": "hmis:ClientListResponse"
-              "clients": {
-                "@type": "hmis:ClientEnrollmentSummary"
-              }
-      
-      '400':
-        description: Invalid query parameters
-        content:
-          application/json:
-            schema:
-              type: object
-              x-jsonld-type: hmis:ValidationError
-              properties:
-                error:
-                  type: string
-                  example: "Invalid date range - entryDateStart must be before entryDateEnd"
-                  x-semantic-uri: http://hmis.hud.gov/errors#ValidationError
+      responses:
+        '200':
+          description: List of clients enrolled in matching projects
+          content:
+            application/json:
+              schema:
+                type: object
+                x-jsonld-type: hmis:ClientListResponse
+                properties:
+                  clients:
+                    type: array
+                    description: Array of clients with enrollment summary
+                    x-semantic-uri: http://hmis.hud.gov/ontology#hasClient
+                    items:
+                      type: object
+                      x-jsonld-type: hmis:ClientEnrollmentSummary
+                      properties:
+                        PersonalID:
+                          type: string
+                          maxLength: 32
+                          description: Unique client identifier
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+                          x-hud-data-element: "Universal Data Element"
+                        
+                        FirstName:
+                          type: string
+                          maxLength: 50
+                          description: Client first name
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasFirstName
+                          x-hud-data-element: "3.01"
+                          x-pii: true
+                        
+                        LastName:
+                          type: string
+                          maxLength: 50
+                          description: Client last name
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasLastName
+                          x-hud-data-element: "3.01"
+                          x-pii: true
+                        
+                        DOB:
+                          type: string
+                          format: date
+                          description: Date of birth
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfBirth
+                          x-hud-data-element: "3.03"
+                          x-pii: true
+                        
+                        enrollments:
+                          type: array
+                          description: Matching enrollments for this client
+                          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollment
+                          items:
+                            type: object
+                            properties:
+                              EnrollmentID:
+                                type: string
+                                maxLength: 32
+                                x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+                                x-hud-data-element: "Universal Data Element"
+                              
+                              ProjectID:
+                                type: string
+                                maxLength: 32
+                                x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+                                x-hud-data-element: "Universal Data Element"
+                              
+                              ProjectName:
+                                type: string
+                                maxLength: 200
+                                x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectName
+                                x-hud-data-element: "2.02"
+                              
+                              EntryDate:
+                                type: string
+                                format: date
+                                x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
+                                x-hud-data-element: "3.10"
+                              
+                              ExitDate:
+                                type: string
+                                format: date
+                                description: Null if enrollment is ongoing
+                                x-semantic-uri: http://hmis.hud.gov/ontology#hasExitDate
+                                x-hud-data-element: "3.11"
+                                x-ontology-cardinality: "0..1"
+              
+              x-jsonld-frame:
+                "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
+                "@type": "hmis:ClientListResponse"
+                "clients": {
+                  "@type": "hmis:ClientEnrollmentSummary"
+                }
+        
+        '400':
+          description: Invalid query parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                x-jsonld-type: hmis:ValidationError
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid date range - entryDateStart must be before entryDateEnd"
+                    x-semantic-uri: http://hmis.hud.gov/errors#ValidationError
 
 # ==========================================================================
 # NOTES ON SCENARIOS 7 & 9
@@ -1828,10 +1819,328 @@ components:
 # For future phases, runtime effect handlers with resumable computations will be considered for implementation in the Python toolchain.
 
 
+                   
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+
+
 # ==========================================================================
 # ADDITIONAL SCHEMA COMPONENTS FOR ENROLLMENT DATA
 # ==========================================================================
   schemas:
+
+    # ========================================================================
+    # Project Descriptor SCHEMAS - Semantic Annotations Enabled
+    # ========================================================================
+    organizationPrimaryKey:
+      type: object
+      description: Unique identifier for Organization resource
+      x-jsonld-type: hmis:OrganizationIdentifier
+      x-hud-csv-table: "Organization.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#OrganizationIdentifier # REVIEW 
+      properties:
+        OrganizationID:
+          type: string
+          x-hud-data-element: 2.01.1
+          maxLength: 32
+    organizationBase:
+      type: object
+      description: Core Organization information
+      x-jsonld-type: hmis:Organization 
+      x-hud-csv-table: "Organization.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#Organization # REVIEW
+      properties:
+        OrganizationName:
+          type: string
+          maxLength: 200
+          x-hud-data-element: 2.01.2
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOrganizationName
+        VictimServiceProvider:
+          type: integer
+          description: "Indicates whether the organization is a victim service provider (1=yes, 0=no)"
+          x-hud-data-element: 2.01.3
+          x-semantic-uri: http://hmis.hud.gov/ontology#isVictimServiceProvider
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        OrganizationCommonName:
+          type: string
+          maxLength: 200
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOrganizationCommonName
+
+    userPrimaryKey:
+      type: object
+      description: Unique identifier for User resource
+      x-jsonld-type: hmis:UserIdentifier
+      x-hud-csv-table: "User.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#UserIdentifier
+      properties:
+        UserID:
+          type: string
+          maxLength: 32
+          x-hud-data-element: 5.07.01
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasUserID
+    userBase:
+        type: object
+        description: Core User information
+        x-jsonld-type: hmis:User
+        x-hud-csv-table: "User.csv"
+        x-semantic-uri: http://hmis.hud.gov/ontology#User
+        properties:
+          UserFirstName:
+            type: string
+            maxLength: 5
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasUserFirstName
+          UserLastName:
+            type: string
+            maxLength: 50
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasUserLastName
+          UserPhone:
+            type: string
+            pattern: '^[2-9][0-9]{2}[2-9][0-9]{2}[0-9]{4}$'
+            maxLength: 10
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasUserPhone
+          UserExtension:
+            type: string
+            pattern: '^[0-9]{1,5}$'
+            maxLength: 5
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasUserExtension
+          UserEmail:
+            type: string
+            format: email
+            maxLength: 320
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasUserEmail
+
+    projectPrimaryKey:
+      type: object
+      description: Unique identifier for Project resource
+      x-jsonld-type: hmis:ProjectIdentifier
+      x-hud-csv-table: "Project.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#ProjectIdentifier
+      properties:
+        ProjectID:
+          type: string
+          maxLength: 32
+          x-hud-data-element: 2.02.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+    projectBase:
+      type: object
+      description: Core Project information
+      x-jsonld-type: hmis:Project
+      x-hud-csv-table: "Project.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#Project
+      properties: 
+        OrganizationID: #REVIEW Does this make sense to include? We can always reference the primary key schema
+          type: string
+          maxLength: 32
+          x-hud-data-element: 2.01.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOrganizationID
+        ProjectName:
+          type: string
+          maxLength: 200
+          x-hud-data-element: 2.02.2
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectName
+        ProjectCommonName:
+          type: string
+          maxLength: 200
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectCommonName
+        OperatingStartDate:
+          type: string
+          format: date
+          x-hud-data-element: 2.02.3
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOperatingStart
+        OperatingEndDate:
+          type: string
+          format: date
+          x-hud-data-element: 2.02.4
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOperatingEnd
+        ContinuumProject:
+          type: integer
+          x-hud-data-element: 2.02.5
+          x-semantic-uri: http://hmis.hud.gov/ontology#isContinuumProject
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        ProjectType:
+          type: integer
+          x-hud-data-element: 2.02.6
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectType
+          oneOf:
+            - $ref: '#/components/schemas/ProjectType_list'
+        HousingType:
+          type: integer
+          x-hud-data-element: 2.02.D
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHousingType
+          oneOf:
+            - $ref: '#/components/schemas/HousingType'
+        RRhSubType:
+          type: integer
+          x-hud-data-element: 2.02.A
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasRRHSubType
+          oneOf:
+            - $ref: '#/components/schemas/RRHSubType_list'
+        ResidentialAffiliation:
+          type: integer
+          x-hud-data-element: 2.02.B
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasResidentialAffiliation
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        TargetPopulation:
+          type: integer
+          x-hud-data-element: 2.02.7
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTargetPopulation
+          oneOf:
+            - $ref: '#/components/schemas/TargetPopulation_list'
+        HOPWAMedAssistedLivingFac:
+          type: integer
+          x-hud-data-element: 2.02.8
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHOPWAMedAssistedLivingFac
+          oneOf:
+            - $ref: '#/components/schemas/HOPWAMedAssistedLivingFacNum_list'
+        PITCount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPITCount
+
+    funderPrimaryKey:
+      type: object
+      description: Unique identifier for Funder resource
+      x-jsonld-type: hmis:FunderIdentifier
+      x-hud-csv-table: "Funder.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#FunderIdentifier
+      properties:
+        FunderID:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFunderID
+    funderBase:
+      type: object
+      description: Core Funder information
+      x-jsonld-type: hmis:Funder
+      x-hud-csv-table: "Funder.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#Funder
+      properties: 
+        ProjectID:
+          type: string
+          maxLength: 32
+          description: Must match a record in Project
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+        Funder:
+          type: integer
+          description: Funding source identifier
+          x-hud-data-element: 2.06.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFunder
+          oneOf:
+            - $ref: '#/components/schemas/FundingSource_list'
+        OtherFunder:
+          type: string
+          maxLength: 100
+          description: Required if FundingSource = 46
+          x-hud-data-element: 2.06.A
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherFunder
+        GrantID:
+          type: string
+          maxLength: 100
+          description: Grant identifier
+          x-hud-data-element: 2.06.2
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasGrantID
+        StartDate:
+          type: string
+          format: date
+          description: Start date
+          x-hud-data-element: 2.06.3
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasStartDate
+        EndDate:
+          type: string
+          format: date
+          description: End date
+          x-hud-data-element: 2.06.4
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEndDate
+    
+    projectCoCPrimaryKey:
+      type: object
+      description: Unique identifier for ProjectCoC resource
+      x-jsonld-type: hmis:ProjectCoCIdentifier
+      x-hud-csv-table: "ProjectCoC.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#ProjectCoCIdentifier
+      properties:
+        ProjectCoCID:
+          type: string
+          maxLength: 32
+          x-hud-data-element: 2.03.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectCoCID
+    projectCoCBase:
+      type: object
+      description: Core ProjectCoC information
+      x-jsonld-type: hmis:ProjectCoC
+      x-hud-csv-table: "ProjectCoC.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#ProjectCoC
+      properties:
+        ProjectID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+        CoCCode:
+          type: string
+          pattern: '^[A-Z]{2}-[0-9]{3}$'
+          x-hud-data-element: 2.03.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCoCCode
+        Geocode:
+          type: string
+          pattern: ^[0-9]{6}$
+          x-hud-data-element: 2.03.2
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasGeocode
+        Address1:
+          type: string
+          maxLength: 100
+          x-hud-data-element: 2.03.3
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAddress1
+        Address2:
+          type: string
+          maxLength: 100
+          x-hud-data-element: 2.03.4
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAddress2
+        City:
+          type: string
+          maxLength: 50
+          x-hud-data-element: 2.03.5
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCity
+        State:
+          type: string
+          pattern: '^[A-Z]{2}$'
+          x-hud-data-element: 2.03.6
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasState
+        ZipCode:
+          type: string
+          pattern: ^[0-9]{5}$
+          x-hud-data-element: 2.03.7
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasZipCode
+        GeographyType:
+          type: integer
+          x-hud-data-element: 2.03.8
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasGeographyType
+          oneOf:
+            - $ref: '#/components/schemas/GeographyType_list'
+
+    inventoryPrimaryKey:
+      type: object
+      description: Unique identifier for Inventory resource
+      x-jsonld-type: hmis:InventoryIdentifier
+      x-hud-csv-table: "Inventory.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#InventoryIdentifier
+      properties:
+        InventoryID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInventoryID
+    inventoryBase:
+      type: object
+      description: Core Inventory information
+      x-jsonld-type: hmis:Inventory
+      x-hud-csv-table: "Inventory.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#Inventory
+      properties:
+
+
     # ========================================================================
     # CLIENT SCHEMAS - Semantic Annotations Enabled
     # ========================================================================
@@ -1841,8 +2150,9 @@ components:
       description: Unique identifier for Client resource
       # SEMANTIC ANNOTATION: Maps to ontology identifier property
       # Enables: The Python parser extracts this from owl:hasIdentifier in the ontology
-      x-jsonld-type: hmis:ClientIdentifier
-      x-semantic-uri: http://hmis.hud.gov/ontology#ClientIdentifier
+      x-jsonld-type: hmis:ClientIdentifier #REVIEW. What is this doing?
+      x-hud-csv-table: "Client.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#ClientIdentifier #This isn't in the ontology. What purpose does this have?
       
       properties:
         PersonalID:
@@ -2178,7 +2488,7 @@ components:
           x-hud-data-element: "3.07"
           x-ontology-range: hmis:DischargeStatusType
     
-    clientMetaData:
+    clientMetaData: #QUESTION to Roman: How should we handle the meta data for this spec?
       type: object
       description: Audit and versioning metadata for Client records
       
@@ -2213,7 +2523,7 @@ components:
           x-provenance: true
 
 
-    # Enrollment-related enumerations (to be extracted from ontology)
+    # Enumerations (to be extracted from ontology)
     RelationshipToHoH_list:
       type: integer
       description: Relationship to Head of Household
@@ -2315,3 +2625,265 @@ components:
         8 - Client doesn't know
         9 - Client prefers not to answer
         99 - Data not collected
+    ProjectType_list:
+      type: integer
+      description: "Defines the type of housing or service project."
+      oneOf:
+        - title: "EMERGENCY_SHELTER_ENTRY_EXIT"
+          const: 0
+          description: "Emergency Shelter - Entry Exit"
+        - title: "EMERGENCY_SHELTER_NIGHT_BY_NIGHT"
+          const: 1
+          description: "Emergency Shelter - Night-by-Night"
+        - title: "TRANSITIONAL_HOUSING"
+          const: 2
+          description: "Transitional Housing"
+        - title: "PERMANENT_SUPPORTIVE_HOUSING"
+          const: 3
+          description: "Permanent Supportive Housing"
+        - title: "STREET_OUTREACH"
+          const: 4
+          description: "Street Outreach"
+        - title: "SERVICES_ONLY"
+          const: 6
+          description: "Services Only"
+        - title: "OTHER"
+          const: 7
+          description: "Other"
+        - title: "SAFE_HAVEN"
+          const: 8
+          description: "Safe Haven"
+        - title: "HOUSING_ONLY"
+          const: 9
+          description: "Housing Only"
+        - title: "HOUSING_WITH_SERVICES"
+          const: 10
+          description: "Housing with Services (no disability required for entry)"
+        - title: "DAY_SHELTER"
+          const: 11
+          description: "Day Shelter"
+        - title: "HOMELESSNESS_PREVENTION"
+          const: 12
+          description: "Homelessness Prevention"
+        - title: "RAPID_RE_HOUSING"
+          const: 13
+          description: "Rapid Re-Housing"
+        - title: "COORDINATED_ENTRY"
+          const: 14
+          description: "Coordinated Entry"
+    HousingType:
+      type: integer
+      description: "Specifies the type of housing configuration."
+      oneOf:
+        - title: "SITE_BASED_SINGLE_SITE"
+          const: 1
+          description: "Site-based - single site"
+        - title: "SITE_BASED_CLUSTERED_MULTIPLE_SITES"
+          const: 2
+          description: "Site-based - clustered / multiple sites"
+        - title: "TENANT_BASED_SCATTERED_SITE"
+          const: 3
+          description: "Tenant-based - scattered site"
+    RRHSubType_list:
+      type: integer
+      description: "Subtypes for Rapid Re-Housing projects."
+      oneOf:
+        - title: "SERVICES_ONLY"
+          const: 1
+          description: "RRH: Services Only"
+        - title: "HOUSING_WITH_OR_WITHOUT_SERVICES"
+          const: 2
+          description: "RRH: Housing with or without services"
+    TargetPopulation_list:
+      type: integer
+      description: "Identifies the target population for the project."
+      oneOf:
+        - title: "DV_SURVIVOR_OF_DOMESTIC_VIOLENCE"
+          const: 1
+          description: "Survivors of domestic violence"
+        - title: "HIV_PERSONS_WITH_HIV/AIDS"
+          const: 3
+          description: "Persons with HIV/AIDS"
+        - title: "NA_NOT_APPLICABLE"
+          const: 4
+          description: "Not applicable"
+    HOPWAMedAssistedLivingFacNum_list:
+      type: integer
+      description: "Defines whether a project is a HOPWA-funded medical assisted living facility."
+      oneOf:
+        - title: "NO"
+          const: 0
+          description: "Not a HOPWA-funded medical assisted living facility."
+        - title: "YES"
+          const: 1
+          description: "Yes, HOPWA-funded medical assisted living facility."
+        - title: "NON_HOPWA_FUNDED_PROJECT"
+          const: 2
+          description: "Non-HOPWA funded project"
+    FundingSource_list:
+      type: integer
+      description: "Specifies the source of funding for housing and services projects."
+      oneOf:
+        - title: "HUD_COC_HOMELESSNESS_PREVENTION"
+          const: 1
+          description: "HUD: CoC - Homelessness Prevention (High Performing Communities Only)"
+        - title: "HUD_COC_PERMANENT_SUPPORTIVE_HOUSING"
+          const: 2
+          description: "HUD: CoC - Permanent Supportive Housing"
+        - title: "HUD_COC_RAPID_RE_HOUSING"
+          const: 3
+          description: "HUD: CoC - Rapid Re-Housing"
+        - title: "HUD_COC_SUPPORTIVE_SERVICES_ONLY"
+          const: 4
+          description: "HUD: CoC - Supportive Services Only"
+        - title: "HUD_COC_TRANSITIONAL_HOUSING"
+          const: 5
+          description: "HUD: CoC - Transitional Housing"
+        - title: "HUD_COC_SAFE_HAVEN"
+          const: 6
+          description: "HUD: CoC - Safe Haven"
+        - title: "HUD_COC_SINGLE_ROOM_OCCUPANCY"
+          const: 7
+          description: "HUD: CoC - Single Room Occupancy (SRO)"
+        - title: "HUD_ESG_EMERGENCY_SHELTER"
+          const: 8
+          description: "HUD: ESG - Emergency Shelter (operating and/or essential services)"
+        - title: "HUD_ESG_HOMELESSNESS_PREVENTION"
+          const: 9
+          description: "HUD: ESG - Homelessness Prevention"
+        - title: "HUD_ESG_RAPID_REHOUSING"
+          const: 10
+          description: "HUD: ESG - Rapid Rehousing"
+        - title: "HUD_ESG_STREET_OUTREACH"
+          const: 11
+          description: "HUD: ESG - Street Outreach"
+        - title: "HUD_HOPWA_HOTEL_MOTEL_VOUCHERS"
+          const: 13
+          description: "HUD: HOPWA - Hotel/Motel Vouchers"
+        - title: "HUD_HOPWA_HOUSING_INFORMATION"
+          const: 14
+          description: "HUD: HOPWA - Housing Information"
+        - title: "HUD_HOPWA_PERMANENT_HOUSING"
+          const: 15
+          description: "HUD: HOPWA - Permanent Housing (facility based or TBRA)"
+        - title: "HUD_HOPWA_PERMANENT_HOUSING_PLACEMENT"
+          const: 16
+          description: "HUD: HOPWA - Permanent Housing Placement"
+        - title: "HUD_HOPWA_SHORT_TERM_RENT_MORTGAGE_UTILITY"
+          const: 17
+          description: "HUD: HOPWA - Short-Term Rent, Mortgage, Utility assistance"
+        - title: "HUD_HOPWA_SHORT_TERM_SUPPORTIVE_FACILITY"
+          const: 18
+          description: "HUD: HOPWA - Short-Term Supportive Facility"
+        - title: "HUD_HOPWA_TRANSITIONAL_HOUSING"
+          const: 19
+          description: "HUD: HOPWA - Transitional Housing (facility based or TBRA)"
+        - title: "HUD_HUD_VASH"
+          const: 20
+          description: "HUD: HUD/VASH"
+        - title: "HHS_PATH_STREET_OUTREACH"
+          const: 21
+          description: "HHS: PATH - Street Outreach & Supportive Services Only"
+        - title: "HHS_RHY_BASIC_CENTER_PROGRAM"
+          const: 22
+          description: "HHS: RHY - Basic Center Program (prevention and shelter)"
+        - title: "HHS_RHY_MATERNITY_GROUP_HOME"
+          const: 23
+          description: "HHS: RHY - Maternity Group Home for Pregnant and Parenting Youth"
+        - title: "HHS_RHY_TRANSITIONAL_LIVING_PROGRAM"
+          const: 24
+          description: "HHS: RHY - Transitional Living Program"
+        - title: "HHS_RHY_STREET_OUTREACH_PROJECT"
+          const: 25
+          description: "HHS: RHY - Street Outreach Project"
+        - title: "HHS_RHY_DEMONSTRATION_PROJECT"
+          const: 26
+          description: "HHS: RHY - Demonstration Project"
+        - title: "VA_CRS_CONTRACT_RESIDENTIAL_SERVICES"
+          const: 27
+          description: "VA: CRS Contract Residential Services"
+        - title: "VA_COMMUNITY_CONTRACT_SAFE_HAVEN_PROGRAM"
+          const: 30
+          description: "VA: Community Contract Safe Haven Program"
+        - title: "VA_SUPPORTIVE_SERVICES_FOR_VETERAN_FAMILIES"
+          const: 33
+          description: "VA: Supportive Services for Veteran Families"
+        - title: "N_A"
+          const: 34
+          description: "Not applicable"
+        - title: "HUD_PAY_FOR_SUCCESS"
+          const: 35
+          description: "HUD: Pay for Success"
+        - title: "HUD_PUBLIC_INDIAN_HOUSING_PROGRAMS"
+          const: 36
+          description: "HUD: Public and Indian Housing (PIH) Programs"
+        - title: "VA_GRANT_PER_DIEM_BRIDGE_HOUSING"
+          const: 37
+          description: "VA: Grant Per Diem - Bridge Housing"
+        - title: "VA_GRANT_PER_DIEM_LOW_DEMAND"
+          const: 38
+          description: "VA: Grant Per Diem - Low Demand"
+        - title: "VA_GRANT_PER_DIEM_HOSPITAL_TO_HOUSING"
+          const: 39
+          description: "VA: Grant Per Diem - Hospital to Housing"
+        - title: "VA_GRANT_PER_DIEM_CLINICAL_TREATMENT"
+          const: 40
+          description: "VA: Grant Per Diem - Clinical Treatment"
+        - title: "VA_GRANT_PER_DIEM_SERVICE_INTENSIVE_TRANSITIONAL_HOUSING"
+          const: 41
+          description: "VA: Grant Per Diem - Service Intensive Transitional Housing"
+        - title: "VA_GRANT_PER_DIEM_TRANSITION_IN_PLACE"
+          const: 42
+          description: "VA: Grant Per Diem - Transition in Place"
+        - title: "HUD_COC_YOUTH_HOMELESS_DEMONSTRATION_PROGRAM"
+          const: 43
+          description: "HUD: CoC - Youth Homeless Demonstration Program (YHDP)"
+        - title: "HUD_COC_JOINT_COMPONENT_TH_RRH"
+          const: 44
+          description: "HUD: CoC - Joint Component TH/RRH"
+        - title: "VA_GRANT_PER_DIEM_CASE_MANAGEMENT_HOUSING_RETENTION"
+          const: 45
+          description: "VA: Grant Per Diem - Case Management/Housing Retention"
+        - title: "LOCAL_OR_OTHER_FUNDING_SOURCE"
+          const: 46
+          description: "Local or Other Funding Source (Please Specify)"
+        - title: "HUD_ESG_CV"
+          const: 47
+          description: "HUD: ESG - CV"
+        - title: "HUD_HOPWA_CV"
+          const: 48
+          description: "HUD: HOPWA - CV"
+        - title: "HUD_HOME"
+          const: 50
+          description: "HUD: HOME"
+        - title: "HUD_HOME_ARP"
+          const: 51
+          description: "HUD: HOME (ARP)"
+        - title: "HUD_PIH_EMERGENCY_HOUSING_VOUCHER"
+          const: 52
+          description: "HUD: PIH (Emergency Housing Voucher)"
+        - title: "HUD_ESG_RUSH"
+          const: 53
+          description: "HUD: ESG - RUSH"
+        - title: "HUD_UNSHELTERED_SPECIAL_NOFO"
+          const: 54
+          description: "HUD: Unsheltered Special NOFO"
+        - title: "HUD_RURAL_SPECIAL_NOFO"
+          const: 55
+          description: "HUD: Rural Special NOFO"
+    GeographyType_list:
+      type: integer
+      description: "Indicates the type of geographic area for the project location."
+      oneOf:
+        - title: "URBAN"
+          const: 1
+          description: "Urban"
+        - title: "SUBURBAN"
+          const: 2
+          description: "Suburban"
+        - title: "RURAL"
+          const: 3
+          description: "Rural"
+        - title: "Unknown / data not collected"
+          const: 99
+          description: "Unknown / data not collected"
