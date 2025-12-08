@@ -2139,12 +2139,132 @@ components:
       x-hud-csv-table: "Inventory.csv"
       x-semantic-uri: http://hmis.hud.gov/ontology#Inventory
       properties:
+        ProjectID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+        CoCCode:
+          type: integer
+          description: Must match a CoCCode in ProjectCoC.csv for the same ProjectID
+          x-hud-data-element: 2.07.3
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCoCCode
+        HouseholdType:
+          type: integer
+          x-hud-data-element: 2.07.4
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHouseholdType
+          oneOf:
+            - $ref: '#/components/schemas/HouseholdType_list'
+        Availability:
+          type: integer
+          x-hud-data-element: 2.07.5
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAvailability
+          oneOf:
+            - $ref: '#/components/schemas/Availability_list'
+        UnitInventory:
+          type: integer
+          x-hud-data-element: 2.07.15
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasUnitInventory
+        BedInventory:
+          type: integer
+          x-hud-data-element: 2.07.14
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasBedInventory
+        CHVetBedInventory:
+          type: integer
+          x-hud-data-element: 2.07.7
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCHVetBedInventory
+        YouthVetBedInventory:
+          type: integer
+          x-hud-data-element: 2.07.8
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasYouthVetBedInventory
+        VetBedInventory:
+          type: integer
+          x-hud-data-element: 2.07.9
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasYouthVetBedInventory
+        CHYouthBedInventory:
+          type: integer
+          x-hud-data-element: 2.07.10
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCHYouthBedInventory
+        YouthBedInventory:
+          type: integer
+          x-hud-data-element: 2.07.11
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDVBedInventory
+        CHBedInventory:
+          type: integer
+          x-hud-data-element: 2.07.12
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCHVetBedInventory
+        OtherBedInventory:
+          type: integer
+          x-hud-data-element: 2.07.13
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherBedInventory
+        ESBedType:
+          type: integer
+          x-hud-data-element: 2.07.5
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasESBedType
+          oneOf:
+            - $ref: '#/components/schemas/BedType_list'
+        InventoryStartDate:
+          type: string
+          format: date
+          x-hud-data-element: 2.07.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInventoryStartDate
+        InventoryEndDate:
+          type: string
+          format: date
+          x-hud-data-element: 2.07.2
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInventoryEndDate
+
+    affiliationPrimaryKey:
+      type: object
+      description: Unique identifier for Affiliation resource
+      x-jsonld-type: hmis:AffiliationIdentifier
+      x-hud-csv-table: "Affiliation.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#AffiliationIdentifier
+      properties:
+        AffiliationID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAffiliationID
+    affiliationBase:
+      type: object
+      description: Core Affiliation information
+      x-jsonld-type: hmis:Affiliation
+      x-hud-csv-table: "Affiliation.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#Affiliation
+      properties:
+        ProjectID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+        ResProjectID:
+          type: string
+          maxLength: 32
+          x-hud-data-element: 2.04.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasResProjectID
+  
+    hmisParticipationPrimaryKey:
+      type: object
+      description: Unique identifier for HMISParticipation resource
+      x-jsonld-type: hmis:HMISParticipationIdentifier
+      x-hud-csv-table: "HMISParticipation.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#HMISParticipationIdentifier
+      properties:
+        HMISParticipationID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHMISParticipationID
+
 
 
     # ========================================================================
     # CLIENT SCHEMAS - Semantic Annotations Enabled
     # ========================================================================
     
+
+
+
+
+
+
     clientPrimaryKey:
       type: object
       description: Unique identifier for Client resource
@@ -2887,3 +3007,42 @@ components:
         - title: "Unknown / data not collected"
           const: 99
           description: "Unknown / data not collected"
+    HouseholdType_list:
+      type: integer
+      description: "Specifies the household compositiom."
+      oneOf:
+        - title: "Households without children"
+          const: 1
+          description: "Households without Children"
+        - title: "Households with at least one adult and one child"
+          const: 3
+          description: "Households with at least one adult and one child"
+        - title: "Households with only children"
+          const: 4
+          description: "Households with only children"
+    Availability_list:
+      type: integer
+      description: "Indicates when the beds in the project are Availability."
+      oneOf:
+        - title: "Year-round"
+          const: 1
+          description: "Year-round"
+        - title: "Seasonal"
+          const: 2
+          description: "Seasonal"
+        - title: "Overflow"
+          const: 3
+          description: "Overflow"
+    BedType_list:
+      type: integer
+      description: "Specifies the type of bed available in the project."
+      oneOf: 
+        -  title: "Facility-based beds"
+           const: 1
+           description: "Facility-based beds"
+        -  title: "Voucher beds"
+           const: 2
+           description: "Voucher beds"
+        -  title: "Other beds"
+           const: 3
+           description: "Other beds"
