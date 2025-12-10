@@ -979,7 +979,7 @@ paths:
                 allOf:
                   - $ref: "#/components/schemas/clientPrimaryKey"
                   - $ref: "#/components/schemas/clientBase"
-                  - $ref: "#/components/schemas/clientMetaData"
+                  - $ref: "#/components/schemas/hmisMetadata"
               
               x-jsonld-frame:
                 "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
@@ -2252,19 +2252,108 @@ components:
           type: string
           maxLength: 32
           x-semantic-uri: http://hmis.hud.gov/ontology#hasHMISParticipationID
+    hmisParticipationBase:
+      type: object
+      description: Core HMISParticipation information
+      x-jsonld-type: hmis:HMISParticipation
+      x-hud-csv-table: "HMISParticipation.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#HMISParticipation
+      properties:
+        ProjectID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+        HMISParticipationType:
+          type: integer
+          x-hud-data-element: 2.08.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHMISParticipationType
+          oneOf:
+            - $ref: '#/components/schemas/HMISParticipationType_list'
+        HMISParticipationStartDate:
+          type: string
+          format: date
+          x-hud-data-element: 2.08.2
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHMISParticipationStartDate
+        HMISParticipationEndDate:
+          type: string
+          format: date
+          x-hud-data-element: 2.08.3
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHMISParticipationEndDate
 
+    ceParticipationPrimaryKey:
+      type: object
+      description: Unique identifier for CEParticipation resource
+      x-jsonld-type: hmis:CEParticipationIdentifier
+      x-hud-csv-table: "CEParticipation.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#CEParticipationIdentifier
+      properties:
+        CEParticipationID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCEParticipationID
+    ceParticipationBase:
+      type: object
+      description: Core CEParticipation information
+      x-jsonld-type: hmis:CEParticipation
+      x-hud-csv-table: "CEParticipation.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#CEParticipation
+      properties:
+        ProjectID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+        AccessPoint:
+          type: integer
+          x-hud-data-element: 2.09.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAccessPoint
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        PreventionAssessment:
+          type: integer
+          x-hud-data-element: 2.09.A
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPreventionAssessment
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        CrisisAssessment:
+          type: integer
+          x-hud-data-element: 2.09.A
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCrisisAssessment
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        HousingAssessment:
+          type: integer
+          x-hud-data-element: 2.09.A
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHousingAssessment
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        DirectServices:
+          type: integer
+          x-hud-data-element: 2.09.A
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDirectServices
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        ReceivesReferrals:
+          type: integer
+          x-hud-data-element: 2.09.A
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasReceivesReferrals
+          oneOf:
+            - $ref: '#/components/schemas/NoYes_list'
+        CEParticipationStartDate:
+          type: string
+          format: date
+          x-hud-data-element: 2.09.3
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCEParticipation
+        CEParticipationEndDate:
+          type: string
+          format: date
+          x-hud-data-element: 2.09.4
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCEParticipationEndDate
 
 
     # ========================================================================
     # CLIENT SCHEMAS - Semantic Annotations Enabled
     # ========================================================================
-    
-
-
-
-
-
-
+  
     clientPrimaryKey:
       type: object
       description: Unique identifier for Client resource
@@ -2285,7 +2374,6 @@ components:
           x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
           x-hud-data-element: "Universal Data Element"
           x-ontology-cardinality: "1..1"  # Required, exactly one
-    
     clientBase:
       type: object
       description: Core Client demographic and identifying information
@@ -2608,9 +2696,1395 @@ components:
           x-hud-data-element: "3.07"
           x-ontology-range: hmis:DischargeStatusType
     
-    clientMetaData: #QUESTION to Roman: How should we handle the meta data for this spec?
+    
+    # ========================================================================
+    # ENROLLMENT SCHEMAS - Semantic Annotations Enabled
+    # ========================================================================
+    enrollmentPrimaryKey:
+        type: object
+        description: Unique identifier for Enrollment resource
+        x-jsonld-type: hmis:EnrollmentIdentifier
+        x-hud-csv-table: "Enrollment.csv"
+        x-semantic-uri: http://hmis.hud.gov/ontology#EnrollmentIdentifier
+        properties:
+          EnrollmentID:
+            type: string
+            maxLength: 32
+            x-hud-data-element: 5.06.1
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+    enrollmentBase: #REVIEW Need to finish adding x-hud-data-element tags
       type: object
-      description: Audit and versioning metadata for Client records
+      description: Core Enrollment information
+      x-jsonld-type: hmis:Enrollment
+      x-hud-csv-table: "Enrollment.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#Enrollment
+      properties:
+        PersonalID:
+          type: string
+          maxLength: 32
+          x-hud-data-element: 5.08.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+        ProjectID:
+          type: string
+          maxLength: 32
+          x-hud-data-element: 2.02.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+        EntryDate:
+          type: string
+          format: date
+          x-hud-data-element: 3.10.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
+        HouseholdID:
+          type: string
+          maxLength: 32
+          x-hud-data-element: 5.09.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHouseholdID
+        RelationshipToHoH:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/RelationshipToHoH_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasRelationshipToHoH
+          x-hud-data-element: 3.15.1
+        EnrollmentCoC:
+          type: string
+          pattern: '^[A-Z]{2}-[0-9]{3}$'
+          x-hud-data-element: 3.16.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentCoC
+        LivingSituation:
+          type: integer
+          x-hud-data-element: 3.917.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLivingSituation
+          oneOf:
+            - $ref: '#/components/schemas/LivingSituation_list'
+        RentalSubsidyType:
+          type: integer
+          x-hud-data-element: 3.917.A
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasRentalSubsidyType
+          oneOf:
+            - $ref: '#/components/schemas/RentalSubsidyType_list'
+        LengthOfStay:
+          type: integer
+          x-hud-data-element: 3.917.2
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLengthOfStay
+          oneOf:
+            - $ref: '#/components/schemas/LengthOfStay_list'
+        LOSUnderThreshold:
+          type: integer
+          x-hud-data-element: 3.917.2A
+         # x-hud-data-element: 3.917.2B #REVIEW Can we allow this?
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLOSUnderThreshold
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        PreviousStreetESSH:
+          type: integer
+          x-hud-data-element: 3.917.2C
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPreviousStreetESSH
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        DateToStreetESSH:
+          type: string
+          format: date
+          x-hud-data-element: 3.917.3
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateToStreetESSH
+        TimesHomelessPastThreeYears:
+          type: integer
+          x-hud-data-element: 3.917.4
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTimesHomelessPastThreeYears
+          oneOf:
+            - $ref: '#/components/schemas/TimesHomelessPastThreeYears_list'
+        MonthsHomelessPastThreeYears:
+          type: integer
+          x-hud-data-element: 3.917.5
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMonthsHomelessPastThreeYears
+          oneOf:
+            - $ref: '#/components/schemas/MonthsHomelessPastThreeYears_list'
+        DisablingCondition:
+          type: integer
+          x-hud-data-element: 3.08.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDisablingCondition
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        DateOfEngagement:
+          type: string
+          format: date
+          x-hud-data-element: 4.13.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfEngagement
+        MoveInDate:
+          type: string
+          format: date
+          x-hud-data-element: 3.20.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMoveInDate
+        DateOfPATHStatus:
+          type: string
+          format: date
+          x-hud-data-element: P3.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfPATHStatus
+        ClientEnrolledInPATH:
+          type: integer
+          x-hud-data-element: P3.2
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasClientEnrolledInPATH
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        ReasonNotEnrolled:
+          type: integer
+          x-hud-data-element: P3.A
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasReasonNotEnrolled
+          oneOf:
+            - $ref: '#/components/schemas/ReasonNotEnrolled_list'
+        PercentAMI:
+          type: integer
+          x-hud-data-element: V4.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPercentAMI
+          oneOf:
+            - $ref: '#/components/schemas/PercentAMI_list'
+        ReferralSource:
+          type: integer
+          x-hud-data-element: R.1.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasReferralSource
+          oneOf:
+            - $ref: '#components/schemas/ReferralSource_list' #REVIEW Add this list.
+        CountOutreachReferralApproaches:
+          type: integer
+          x-hud-data-element: R.1.A
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCountOutreachReferralApproaches
+        DateOfBCPStatus:
+          type: string
+          format: date
+          x-hud-data-element: B1.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfBCPStatus
+        EligibleForRHY:
+          type: integer
+          x-hud-data-element: R2.2
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEligibleForRHY
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        ReasonNoServices:
+          type: integer
+          x-hud-data-element: R2.A
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasReasonNoServices
+          oneOf:
+            - $ref: '#/components/schemas/ReasonNoServices_list'
+        RunawayYouth:
+          type: integer
+          x-hud-data-element: R2.B
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasRunawayYouth
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        FormerWardChildWelfare:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFormerWardChildWelfare
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        ChildWelfareYears:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasChildWelfareYears
+          oneOf:
+            - $ref: '#/components/schemas/RHYNumberofYears_list'
+        ChildWelfareMonths:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasChildWelfareMonths
+          minimum: 1
+          maximum: 11
+        FormerWardJuvenileJustice:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFormerWardJuvenileJustice
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        JuvenileJusticeYears:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasJuvenileJusticeYears
+          oneOf:
+            - $ref: '#/components/schemas/RHYNumberofYears_list'
+        JuvenileJusticeMonths:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasJuvenileJusticeMonths
+          minimum: 1
+          maximum: 11
+        UnemploymentFam:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasUnemploymentFam
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        MentalHealthDisorderFam:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMentalHealthDisorderFam
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        PhysicalDisabilityFam:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPhysicalDisabilityFam
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        AlcoholDrugUseDisorderFam:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAlcoholDrugUseDisorderFam
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        InsufficientIncome:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInsufficientIncome
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        IncarceratedParent:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIncarceratedParent
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        VAMCStation:
+          type: string
+          maxLength: 5
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVAMCStation
+          oneOf:
+            - $ref: '#/components/schemas/VAMCStationNumber_list'
+        TargetScreenReqd:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTargetScreenReqd
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        TimeToHousingLoss:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTimeToHousingLoss
+          oneOf:
+            - $ref: '#/components/schemas/TimeToHousingLoss_list'
+        AnnualPercentAMI:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAnnualPercentAMI
+          oneOf:
+            - $ref: '#/components/schemas/AnnualPercentAMI_list'
+        LiteralHomelessHistory:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLiteralHomelessHistory
+          oneOf:
+            - $ref: '#/components/schemas/LiteralHomelessHistory_list'
+        ClientLeaseholder:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasClientLeaseholder
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        HOHLeaseholder:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHOHLeaseholder
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        SubsidyAtRisk:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSubsidyAtRisk
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        EvictionHistory:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEvictionHistory
+          oneOf:
+            - $ref: '#/components/schemas/EvictionHistory_list'
+        CriminalRecord:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCriminalRecord
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        IncarceratedAdult:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIncarceratedAdult 
+          oneOf:
+            - $ref: '#/components/schemas/IncarceratedAdult_list'
+        PrisonDischarge:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPrisonDischarge
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        SexOffender:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSexOffender
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        DisabledHoH:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDisabledHoH
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        CurrentPregnant:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCurrentPregnant
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        SingleParent:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSingleParent
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        DependentUnder6:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDependentUnder6
+          oneOf:
+            - $ref: '#/components/schemas/DependentUnder6_list'
+        HH5Plus:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHH5Plus
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        CoCPrioritized:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCoCPrioritized
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        HPScreeningScore:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHPScreeningScore
+        ThresholdScore:
+          type: integer
+        MentalHealthConsultation:
+          type: integer
+          x-hud-data-element: V10
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMentalHealthConsultation
+          oneOf:
+            - $ref: '#/components/schemas/MentalHealthConsultation_list'
+
+    exitPrimaryKey:
+        type: object
+        description: Unique identifier for Exit resource
+        x-jsonld-type: hmis:ExitIdentifier
+        x-hud-csv-table: "Exit.csv"
+        x-semantic-uri: http://hmis.hud.gov/ontology#ExitIdentifier
+        properties:
+          ExitID:
+            type: string
+            maxLength: 32
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasExitID
+    exitBase: #REVIEW Need to finish adding x-hud-data-element tags
+      type: object
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          description: Enrollment Id
+        PersonalID:
+          type: string
+          maxLength: 32
+          description: Personal Id
+        ExitDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasExitDate
+        Destination:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDestination
+          oneOf: 
+            -  $ref: '#/components/schemas/LivingSituation_list'
+        DestinationSubsidyType:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDestinationSubsidyType
+          oneOf:
+            - $ref: '#/components/schemas/RentalSubsidyTypes_list'
+        OtherDestination:
+          type: string
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherDestination
+        HousingAssessment:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHousingAssessment
+          oneOf:
+            - $ref: '#/components/schemas/HousingAssessmentAtExit_list'
+        SubsidyInformation:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSubsidyInformation
+          oneOf:
+            - $ref: '#/components/schemas/SubsidyInformation_list'
+        ProjectCompletionStatus:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectCompletionStatus
+          oneOf:
+            - $ref: '#/components/schemas/ProjectCompletionStatus_list'
+        EarlyExitReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEarlyExitReason
+          oneOf:
+            - $ref: '#/components/schemas/ExpelledReason_list'
+        ExchangeForSex:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasExchangeForSex
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        ExchangeForSexPastThreeMonths:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasExchangeForSexPastThreeMonths
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        CountOfExchangeForSex:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCountOfExchangeForSex
+          oneOf: 
+            - $ref: '#/components/schemas/CountExchangeForSex_list'
+        AskedOrForcedToExchangeForSex:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAskedOrForcedToExchangeForSex
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        AskedOrForcedToExchangeForSexPastThreeMonths:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAskedOrForcedToExchangeForSexPastThreeMonths
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        WorkplaceViolenceThreats:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWorkplaceViolenceThreats
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        WorkplacePromiseDifference:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWorkplacePromiseDifference
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        CoercedToContinueWork:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCoercedToContinueWork
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        LaborExploitPastThreeMonths:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLaborExploitPastThreeMonths
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        CounselingReceived:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCounselingReceived
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        IndividualCounseling:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIndividualCounseling
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        FamilyCounseling:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFamilyCounseling
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        GroupCounseling:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasGroupCounseling
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        SessionCountAtExit:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSessionCountAtExit
+        PostExitCounselingPlan:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPostExitCounselingPlan
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        SessionsInPlan:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSessionsInPlan
+        DestinationSafeClient:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDestinationSafeClient
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        DestinationSafeWorker:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDestinationSafeWorker
+          oneOf: 
+            - $ref: '#/components/schemas/WorkerResponse_list'
+        PosAdultConnections:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPosAdultConnections
+          oneOf: 
+            - $ref: '#/components/schemas/WorkerResponse_list'
+        PosPeerConnections:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPosPeerConnections
+          oneOf: 
+            - $ref: '#/components/schemas/WorkerResponse_list'
+        PosCommunityConnections:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPosCommunityConnections
+          oneOf: 
+            - $ref: '#/components/schemas/WorkerResponse_list'
+        AftercareDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAftercareDate
+        AftercareProvided:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAftercareProvided
+          oneOf: 
+            - $ref: '#/components/schemas/AftercareProvided_list'
+        EmailSocialMedia:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEmailSocialMedia
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        Telephone:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTelephone
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        InPersonIndividual:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInPersonIndividual
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        InPersonGroup:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInPersonGroup
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        CmExitReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCmExitReason
+          oneOf: 
+            - $ref: '#/components/schemas/CMExitReason_list'
+    
+      incomeBenefitsPrimaryKey:
+        type: object
+        description: Unique identifier for IncomeBenefits resource
+        x-jsonld-type: hmis:IncomeBenefitsIdentifier
+        x-hud-csv-table: "IncomeBenefits.csv"
+        x-semantic-uri: http://hmis.hud.gov/ontology#IncomeBenefitsIdentifier
+        properties:
+          IncomeBenefitsID:
+            type: string
+            maxLength: 32
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasIncomeBenefitsID
+    incomeBenefitsBase: #REVIEW Need to finish adding x-hud-data-element tags
+      type: object
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+        PersonalID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+        InformationDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInformationDate
+        IncomeFromAnySource:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIncomeFromAnySource
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        TotalMonthlyIncome:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTotalMonthlyIncome
+        Earned:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEarnedIncome
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        EarnedAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEarnedAmount
+        Unemployment:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasUnemployment
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        UnemploymentAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasUnemploymentAmount
+        SSI:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSSI
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        SSIAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSSIAmount
+        SSDI:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSSDI
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        SSDIAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSSDIAmount
+        VADisabilityService:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVADisabilityService
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        VADisabilityServiceAmount:
+          type: integer 
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVADisabilityServiceAmount
+        VADisabilityNonService:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVADisabilityNonService
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        VADisabilityNonServiceAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVADisabilityNonServiceAmount
+        PrivateDisability:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPrivateDisability
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        PrivateDisabilityAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPrivateDisabilityAmount
+        WorkersComp:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWorkersComp
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        WorkersCompAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWorkersCompAmount
+        TANF:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTANF
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        TANFAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTANFAmount
+        GA:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasGA
+          oneOf:    
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        GAAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasGAAmount
+        SocSecRetirement:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSocSecRetirement
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        SocSecRetirementAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSocSecRetirementAmount
+        Pension:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPension
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        PensionAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPensionAmount
+        ChildSupport:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasChildSupport
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        ChildSupportAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasChildSupportAmount
+        Alimony:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAlimony
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        AlimonyAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAlimonyAmount
+        OtherIncomeSource:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherIncomeSource
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        OtherIncomeAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherIncomeAmount
+        OtherIncomeSourceIdentify:
+          type: string
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherIncomeSourceIdentify
+        BenefitsFromAnySource:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasBenefits
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        SNAP:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSNAP
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        WIC:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWIC
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        TANFChildcare:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTANFChildcare
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        TANFTransportation:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTANFTransportation
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        OtherTANF:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherTANF
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        OtherBenefitsSource:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherBenefitsSource
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        OtherBenefitsSourceIdentify:
+          type: string
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherBenefitsSourceIdentify
+        InsuranceFromAnySource:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInsuranceFromAnySource
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        Medicaid:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMedicaid
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        NoMedicaidReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoMedicaidReason
+          oneOf:
+            - $ref: '#/components/schemas/ReasonNotInsured_list'
+        Medicare:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMedicare
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        NoMedicareReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoMedicareReason
+          oneOf:
+            - $ref: '#/components/schemas/ReasonNotInsured_list'
+        SCHIP:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSCHIP
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        NoSCHIPReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoSCHIPReason
+          oneOf:
+            - $ref: '#/components/schemas/ReasonNotInsured_list'
+        VHAServices:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVHAServices
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        NoVHAReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoVHAReason
+          oneOf:
+            - $ref: '#/components/schemas/ReasonNotInsured_list'
+        EmployerProvided:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEmployerProvided
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        NoEmployerProvidedReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoEmployerProvidedReason
+          oneOf:
+            - $ref: '#/components/schemas/ReasonNotInsured_list'
+        PrivatePay:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPrivatePay
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        NoPrivatePayReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoPrivatePayReason
+          oneOf:  
+            - $ref: '#/components/schemas/ReasonNotInsured_list'
+        StateInsurance:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasStateInsurance
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        NoStateInsuranceReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoStateInsuranceReason
+          oneOf:
+            - $ref: '#/components/schemas/ReasonNotInsured_list'
+        IndianHealthInsurance:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIndianHealthInsurance
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        NoIndianHealthInsuranceReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoIndianHealthInsuranceReason
+          oneOf:
+            - $ref: '#/components/schemas/ReasonNotInsured_list'
+        OtherInsurance:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherInsurance
+          oneOf:
+            - $ref: '#/components/schemas/NoYesMissing_list'
+        OtherInsuranceIdentify:
+          type: string
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherInsuranceIdentify
+        ADAP:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasADAP
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        NoADAPReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoADAPReason
+          oneOf:
+            - $ref: "#/components/schemas/NoAssistanceReason_list"
+        RyanWhiteMedDent:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasRyanWhiteMedDent
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        NoRyanWhiteMedDentReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoRyanWhiteMedDentReason
+          oneOf:
+            - $ref: "#/components/schemas/NoAssistanceReason_list"
+        ConnectionWithSOAR:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasConnectionWithSOAR
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        DataCollectionStage:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDataCollectionStage
+          oneOf: 
+            -  $ref: "#/components/schemas/DataCollectionStage_list"
+
+    healthAndDVPrimaryKey:
+      type: object
+      description: Unique identifier for HealthAndDV resource
+      x-jsonld-type: hmis:HealthAndDVIdentifier
+      x-hud-csv-table: "HealthAndDV.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#HealthAndDVIdentifier
+      properties:
+        HealthAndDVID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHealthAndDVID
+    healthAndDVBase: #REVIEW Need to finish adding x-hud-data-element tags
+      type: object
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+        PersonalID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+        InformationDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInformationDate
+        DomesticViolenceSurvivor:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDomesticViolenceSurvivor
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        WhenOccurred:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWhenOccurred
+          oneOf:
+            - $ref: '#/components/schemas/WhenDVOccurred_list'
+        CurrentlyFleeing:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCurrentlyFleeing
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        GeneralHealthStatus:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasGeneralHealthStatus
+          oneOf:
+            - $ref: '#/components/schemas/HealthStatus_list'
+        DentalHealthStatus:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDentalHealthStatus
+          oneOf:
+            - $ref: '#/components/schemas/HealthStatus_list'
+        MentalHealthStatus:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMentalHealthStatus
+          oneOf:
+            - $ref: '#/components/schemas/HealthStatus_list'
+        PregnancyStatus:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPregnancyStatus
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        DueDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDueDate
+        DataCollectionStage:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDataCollectionStage
+          oneOf: 
+            - $ref: '#/components/schemas/DataCollectionStage_list'
+
+    employmentEducationPrimaryKey:
+      type: object
+      description: Unique identifier for EmploymentEducation resource
+      x-jsonld-type: hmis:EmploymentEducationIdentifier
+      x-hud-csv-table: "EmploymentEducation.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#EmploymentEducationIdentifier
+      properties:
+        EmploymentEducationID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEmploymentEducationID
+    employmentEducationBase: #REVIEW Need to finish adding x-hud-data-element tags
+      type: object
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+        PersonalID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+        InformationDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInformationDate
+        LastGradeCompleted:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLastGradeCompleted
+          oneOf:
+            - $ref: '#/components/schemas/LastGradeCompleted_list'
+        SchoolStatus:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSchoolStatus
+          oneOf:
+            - $ref: '#/components/schemas/SchoolStatus_list'
+        Employed:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEmployed
+          oneOf:
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        EmploymentType:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEmploymentType
+          oneOf:
+            - $ref: '#/components/schemas/EmploymentType_list'
+        NotEmployedReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNotEmployedReason
+          oneOf:
+            - $ref: '#/components/schemas/NotEmployedReason_list'
+        DataCollectionStage:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDataCollectionStage
+          oneOf:
+            - $ref: '#/components/schemas/DataCollectionStage_list'
+      
+    disabilitiesPrimaryKey: #REVIEW Need to finish adding extension tags
+      type: object
+      properties: 
+        DisabilitiesID:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+    disabilitiesBase: #REVIEW Need to finish adding extension tags
+      type: object
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          description: Enrollment ID
+        PersonalID:
+          type: string
+          maxLength: 32
+          description: Personal ID
+        InformationDate:
+          type: string
+          format: date
+          description: Information date
+        DisabilityType:
+          type: integer
+          description: Disability type
+          $ref: '#/components/schemas/DisabilityType_list'
+        DisabilityResponse:
+          type: integer
+          description: If DisabilityType = 10 use '#/components/schemas/DisabilityResponse', all other DisabilityType use '#/components/schemas/NoYes'
+          oneOf: 
+            - $ref: '#/components/schemas/DisabilityResponse_list'
+            - $ref: '#/components/schemas/NoYes_list'
+        IndefiniteAndImpairs:
+          type: integer
+          description: Indefinite and impairs
+          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        TCellCountAvailable:
+          type: integer
+          description: T-cell count available (if DisabilityType = 8 AND DisabilityResponse = 1)
+          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        TCellCount:
+          type: integer
+          description: T-cell count (if TCellCountAvailable = 1)
+        TCellSource:
+          type: integer
+          description: T-cell source (if TCellCount is not null)
+          $ref: '#/components/schemas/TCellSourceViralLoadSource_list'
+        ViralLoadAvailable:
+          type: integer
+          description: Viral load available (if DisabilityType = 8 AND DisabilityResponse = 1)
+          $ref: '#/components/schemas/ViralLoadAvailable_list'
+        ViralLoad:
+          type: integer
+          description: Viral load (if ViralLoadAvailable = 1)
+        ViralLoadSource:
+          type: integer
+          description: Viral load source (if ViralLoad is not null)
+          $ref: '#/components/schemas/TCellSourceViralLoadSource_list'
+        AntiRetroviral:
+          type: integer
+          description: Anti-Retroviral (if DisabilityType = 8 AND DisabilityResponse = 1)
+          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        DataCollectionStage:
+          type: integer
+          description: Data collection stage
+          $ref: '#/components/schemas/DataCollectionStage_list'
+
+    servicesPrimaryKey: #REVIEW Need to finish adding extension tags
+          type: object
+          properties:
+            ServicesID:
+              type: string
+              maxLength: 32
+              description: Unique identifier
+    servicesBase: #REVIEW Need to finish adding extension tags
+      type: object
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          description: Enrollment ID
+        PersonalID:
+          type: string
+          maxLength: 32
+          description: Personal ID
+        DateProvided:
+          type: string
+          format: date
+          description: Date provided
+        RecordType:
+          type: integer
+          description: Record type
+          $ref: '#/components/schemas/RecordType_list'
+        TypeProvided:
+          type: integer
+          description: Type provided
+          oneOf:
+            - $ref: '#/components/schemas/PATHServices_list'
+            - $ref: '#/components/schemas/RHYServices_list'
+            - $ref: '#/components/schemas/HOPWAServices_list'
+            - $ref: '#/components/schemas/SSVFServices_list'
+            - $ref: '#/components/schemas/HOPWAFinancialAssistance_list'
+            - $ref: '#/components/schemas/PATHReferralOutcome_list'
+            - $ref: '#/components/schemas/PATHReferral_list'
+            - $ref: '#/components/schemas/BedNight_list'
+            - $ref: '#/components/schemas/VoucherTracking_list'
+            - $ref: '#/components/schemas/MovingOnAssistance_list'
+        OtherTypeProvided:
+          type: string
+          maxLength: 50
+          description: Other type provided (if RecordType = 144 and TypeProvided = 6 or RecordType = 210 and TypeProvided = 12)
+        MovingOnOtherType:
+          type: string
+          maxLength: 50
+          description: Moving on other type (if RecordType = 300 and TypeProvided = 5)
+        SubTypeProvided:
+          type: integer
+          description: Subtype provided (if RecordType = 144 and TypeProvided = 3, 4, or 5)
+          oneOf:
+            - $ref: '#/components/schemas/SSVFSubType3_list'
+            - $ref: '#/components/schemas/SSVFSubType4_list'
+            - $ref: '#/components/schemas/SSVFSubType5_list'
+        FAAmount:
+          type: number
+          format: double
+          description: Financial assistance amount (if RecordType = 151 or 152)
+        FAStartDate:
+          type: string
+          format: date
+          description: Financial assistance start date (if RecordType = 151 or 152)
+        FAEndDate:
+          type: string
+          format: date
+          description: Financial assistance end date (if RecordType = 151 or 152)
+        ReferralOutcome:
+          type: integer
+          description: Referral outcome (if RecordType = 161)
+          $ref: '#/components/schemas/PATHReferralOutcome_list'
+    
+    currentLivingSituationPrimaryKey: #REVIEW Need to finish adding extension tags
+      type: object
+      properties:
+        CurrentLivingSitID:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+    currentLivingSituationBase: #REVIEW Need to finish adding extension tags
+      type: object
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          description: Enrollment ID
+        PersonalID:
+          type: string
+          maxLength: 32
+          description: Personal ID
+        InformationDate:
+          type: string
+          format: date
+          description: Information date
+        CurrentLivingSituation:
+          type: integer
+          description: Current living situation
+          $ref: '#/components/schemas/LivingSituation_list'
+        CLSSubsidyType:
+          type: integer
+          description: Current living situation subsidy type (if CurrentLivingSituation = 435)
+          $ref: '#/components/schemas/RentalSubsidyTypes_list'
+        VerifiedBy:
+          type: string
+          maxLength: 100
+          description: Verified by (if ProjectType = 14)
+        LeaveSituation14Days:
+          type: integer
+          description: Leave situation in 14 days (if CurrentLivingSituation in [215, 206, 207, 225, 204, 205, 302, 329, 314, 332, 336, 335, 410, 435, 421, 411])
+          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        SubsequentResidence:
+          type: integer
+          description: Subsequent residence (if LeaveSituation14Days = 1)
+          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        ResourcesToObtain:
+          type: integer
+          description: Resources to obtain (if LeaveSituation14Days = 1)
+          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        LeaseOwn60Day:
+          type: integer
+          description: Lease own in 60 days (if LeaveSituation14Days = 1)
+          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        movedTwoOrMore:
+          type: integer
+          description: Moved two or more times (if LeaveSituation14Days = 1)
+          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+        LocationDetails:
+          type: string
+          maxLength: 250
+          description: Location details
+
+    assessmentPrimaryKey: #REVIEW Need to finish adding extension tags
+      type: object
+      properties: 
+        AssessmentID:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+
+    assessmentBase: #REVIEW Need to finish adding extension tags
+      type: object
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          description: Enrollment Id
+        PersonalID:
+          type: string
+          maxLength: 32
+          description: Personal Id
+        AssessmentDate:
+          type: string
+          format: date
+          description: Assessment date
+        AssessmentLocation:
+          type: string
+          maxLength: 250
+          description: Assessment location
+        AssessmentType:
+          type: integer
+          description: Assessment type
+          $ref: '#/components/schemas/AssessmentType'
+        AssessmentLevel:
+          type: integer
+          description: Assessment level
+          $ref: '#/components/schemas/AssessmentLevel'
+        PrioritizationStatus:
+          type: integer
+          description: Prioritization status
+          $ref: '#/components/schemas/PrioritizationStatus'
+
+    assessmentQuestionsPrimaryKey: #REVIEW Need to finish adding extension tags
+      type: object
+      properties:
+        AssessmentQuestionID:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+          
+    assessmentQuestionsBase: #REVIEW Need to finish adding extension tags
+      type: object
+      properties:
+        AassessmentID:
+          type: string
+          maxLength: 32
+          description: Assessment ID
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          description: Enrollment ID
+        PersonalID:
+          type: string
+          maxLength: 32
+          description: Personal ID
+        AssessmentQuestionGroup:
+          type: string
+          maxLength: 250
+          description: Assessment question group (locally determined)
+        AssessmentQuestionOrder:
+          type: integer
+          description: Assessment question order (locally determined)
+        AssessmentQuestion:
+          type: string
+          maxLength: 250
+          description: Assessment question (cannot be null if AssessmentQuestions.csv is populated)
+        AssessmentAnswer:
+          type: string
+          maxLength: 500
+          description: Assessment answer (locally determined)
+
+    assessmentResultsPrimaryKey: #REVIEW Need to finish adding extension tags
+        type: object
+        properties:
+          AssessmentResultID:
+            type: string
+            maxLength: 32
+            description: Unique Identifier
+    assessmentResultsBase: #REVIEW Need to finish adding extension tags
+        type: object
+        properties:
+          AssessmentID:
+            type: string
+            maxLength: 32
+            description: Unique identifier
+          EnrollmentID:
+            type: string
+            maxLength: 32
+            description: Enrollment Id
+          PersonalID:
+            type: string
+            maxLength: 32
+            description: Personal Id
+          AssessmentResultType:
+            type: string
+            maxLength: 250
+          AssessmentResult:
+            type: string
+            maxLength: 250
+
+    eventPrimaryKey: #REVIEW Need to finish adding extension tags
+      type: object
+      properties:
+        EventID:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+    eventBase: #REVIEW Need to finish adding extension tags
+      type: object
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          description: Enrollment Id
+        PersonalID:
+          type: string
+          maxLength: 32
+          description: Personal Id
+        EventDate:
+          type: string
+          format: date
+          description: Event date
+        Event:
+          type: integer
+          description: Event type
+          $ref: '#/components/schemas/Referral_list'
+        ProbSolDivRRResult:
+          type: integer
+          description: Problem-solving/diversion/rapid resolution result
+          $ref: '#/components/schemas/NoYesMissing_list'
+        ReferralCaseManageAfter:
+          type: integer
+          description: Referral for case management after event
+          $ref: '#/components/schemas/NoYesMissing_list'
+        LocationCrisisOrPHHousing:
+          type: string
+          maxLength: 250
+          description: Location of crisis or permanent housing
+        ReferralResult:
+          type: integer
+          description: Referral result
+          $ref: '#/components/schemas/ReferralResult_list'
+        ResultDate:
+          type: string
+          format: date
+          description: Result date (if ReferralResult is not null)
+
+    youthEducationStatusPrimaryKey: #REVIEW Need to finish adding extension tags
+      type: object
+      properties:
+        YouthEducationStatusID:
+          type: string
+          maxLength: 32
+          description: Unique identifier
+    youthEducationStatusBase: #REVIEW Need to finish adding extension tags
+      type: object
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          description: Enrollment ID
+        PersonalID:
+          type: string
+          maxLength: 32
+          description: Personal ID
+        InformationDate:
+          type: string
+          format: date
+          description: Information date
+        CurrentSchoolAttend:
+          type: integer
+          description: Current school attendance
+          $ref: '#/components/schemas/CurrentSchoolAttend_list'
+        MostRecentEdStatus:
+          type: integer
+          description: Most recent education status (if CurrentSchoolAttend = 0)
+          $ref: '#/components/schemas/MostRecentEdStatus_list'
+        CurrentEdStatus:
+          type: integer
+          description: Current education status (if CurrentSchoolAttend = 1 or 2)
+          $ref: '#/components/schemas/CurrentEdStatus_list'
+        DataCollectionStage:
+          type: integer
+          description: Data collection stage
+          $ref: '#/components/schemas/DataCollectionStage_list'
+
+
+
+    # ========================================================================
+    # META DATA SCHEMAS - Semantic Annotations Enabled
+    # ========================================================================
+    
+    hmisMetadata:
+      type: object
+      description: Audit and versioning metadata for HMIS records
       
       # SEMANTIC ANNOTATION: Provenance tracking aligned with PROV-O ontology
       x-jsonld-type: prov:Entity
@@ -2641,7 +4115,6 @@ components:
           x-semantic-uri: http://hmis.hud.gov/ontology#hasDateDeleted
           x-soft-delete: true
           x-provenance: true
-
 
     # Enumerations (to be extracted from ontology)
     RelationshipToHoH_list:
@@ -2703,6 +4176,13 @@ components:
       description: |
         0 - No
         1 - Yes
+    NoYesMissing_list: # FLAG FOR EXTENSION NEEDED
+      type: integer
+      enum: [0, 1, 99]
+      description: |
+        0 - No
+        1 - Yes
+        99 - Data not collected
     RaceGenderNone_list: # FLAG FOR EXTENSION NEEDED
       type: integer
       enum: [8,9,99]
