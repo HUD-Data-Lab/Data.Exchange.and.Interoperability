@@ -1818,8 +1818,59 @@ paths:
 # Phase 1 Status: EXPERIMENTAL - Documentary annotations only
 # For future phases, runtime effect handlers with resumable computations will be considered for implementation in the Python toolchain.
 
+# ==========================================================================
+# BASELINE SCENARIO 11: Comprehensive return of all a person’s services. Within a timeframe or all time
+# ==========================================================================
+/csvexport:
+  get:
+    operationId: getcsvexport
+    summary: Get CSV export based on specific parameters
+    description: |
+      Returns the entire CSV specifications based on the parameters provided.
+    parameters:
+      - name: startDate
+        in: query
+        required: false
+        description: Start date for filtering records (YYYY-MM-DD)
+        schema:
+          type: string
+          format: date
+      - name: endDate
+        in: query
+        required: false
+        description: End date for filtering records (YYYY-MM-DD)
+        schema:
+          type: string
+          format: date
+      - PersonalID:
+        name: PersonalID
+        in: query
+        required: false
+        description: Unique identifier of the client
+        schema:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+      - ProjectID:
+        name: ProjectID
+        in: query
+        required: false
+        description: Unique identifier of the project
+        schema:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+      - OrganizationID:
+        name: OrganizationID
+        in: query
+        required: false
+        description: Unique identifier of the organization
+        schema:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOrganizationID
 
-                   
+
 components:
   securitySchemes:
     BasicAuth:
@@ -2696,7 +2747,6 @@ components:
           x-hud-data-element: "3.07"
           x-ontology-range: hmis:DischargeStatusType
     
-    
     # ========================================================================
     # ENROLLMENT SCHEMAS - Semantic Annotations Enabled
     # ========================================================================
@@ -3234,17 +3284,17 @@ components:
           oneOf: 
             - $ref: '#/components/schemas/CMExitReason_list'
     
-      incomeBenefitsPrimaryKey:
-        type: object
-        description: Unique identifier for IncomeBenefits resource
-        x-jsonld-type: hmis:IncomeBenefitsIdentifier
-        x-hud-csv-table: "IncomeBenefits.csv"
-        x-semantic-uri: http://hmis.hud.gov/ontology#IncomeBenefitsIdentifier
-        properties:
-          IncomeBenefitsID:
-            type: string
-            maxLength: 32
-            x-semantic-uri: http://hmis.hud.gov/ontology#hasIncomeBenefitsID
+    incomeBenefitsPrimaryKey:
+      type: object
+      description: Unique identifier for IncomeBenefits resource
+      x-jsonld-type: hmis:IncomeBenefitsIdentifier
+      x-hud-csv-table: "IncomeBenefits.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#IncomeBenefitsIdentifier
+      properties:
+        IncomeBenefitsID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIncomeBenefitsID
     incomeBenefitsBase: #REVIEW Need to finish adding x-hud-data-element tags
       type: object
       properties:
@@ -3686,9 +3736,14 @@ components:
       
     disabilitiesPrimaryKey: #REVIEW Need to finish adding extension tags
       type: object
+      description: Unique identifier for Disabilities resource
+      x-jsonld-type: hmis:DisabilitiesIdentifier
+      x-hud-csv-table: "Disabilities.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#DisabilitiesIdentifier
       properties: 
         DisabilitiesID:
           type: string
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDisabilitiesID
           maxLength: 32
           description: Unique identifier
     disabilitiesBase: #REVIEW Need to finish adding extension tags
@@ -3697,89 +3752,112 @@ components:
         EnrollmentID:
           type: string
           maxLength: 32
-          description: Enrollment ID
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
         PersonalID:
           type: string
           maxLength: 32
-          description: Personal ID
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
         InformationDate:
           type: string
           format: date
-          description: Information date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInformationDate
         DisabilityType:
           type: integer
-          description: Disability type
-          $ref: '#/components/schemas/DisabilityType_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDisabilityType
+          oneOf: 
+            -  $ref: '#/components/schemas/DisabilityType_list'
         DisabilityResponse:
           type: integer
           description: If DisabilityType = 10 use '#/components/schemas/DisabilityResponse', all other DisabilityType use '#/components/schemas/NoYes'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDisabilityResponse
           oneOf: 
             - $ref: '#/components/schemas/DisabilityResponse_list'
             - $ref: '#/components/schemas/NoYes_list'
         IndefiniteAndImpairs:
           type: integer
-          description: Indefinite and impairs
-          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIndefiniteAndImpairs
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         TCellCountAvailable:
           type: integer
           description: T-cell count available (if DisabilityType = 8 AND DisabilityResponse = 1)
-          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTCellCountAvailable
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         TCellCount:
           type: integer
           description: T-cell count (if TCellCountAvailable = 1)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTCellCount
         TCellSource:
           type: integer
           description: T-cell source (if TCellCount is not null)
-          $ref: '#/components/schemas/TCellSourceViralLoadSource_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTCellSource
+          oneOf: 
+            - $ref: '#/components/schemas/TCellSourceViralLoadSource_list'
         ViralLoadAvailable:
           type: integer
           description: Viral load available (if DisabilityType = 8 AND DisabilityResponse = 1)
-          $ref: '#/components/schemas/ViralLoadAvailable_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasViralLoadAvailable
+          oneOf: 
+            - $ref: '#/components/schemas/ViralLoadAvailable_list'
         ViralLoad:
           type: integer
           description: Viral load (if ViralLoadAvailable = 1)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasViralLoad
         ViralLoadSource:
           type: integer
           description: Viral load source (if ViralLoad is not null)
-          $ref: '#/components/schemas/TCellSourceViralLoadSource_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasViralLoadSource
+          oneOf: 
+            - $ref: '#/components/schemas/TCellSourceViralLoadSource_list'
         AntiRetroviral:
           type: integer
           description: Anti-Retroviral (if DisabilityType = 8 AND DisabilityResponse = 1)
-          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAntiRetroviral
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         DataCollectionStage:
           type: integer
           description: Data collection stage
-          $ref: '#/components/schemas/DataCollectionStage_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDataCollectionStage
+          oneOf: 
+            - $ref: '#/components/schemas/DataCollectionStage_list'
 
     servicesPrimaryKey: #REVIEW Need to finish adding extension tags
           type: object
+          description: Unique identifier for Services resource
+          x-jsonld-type: hmis:ServicesIdentifier
+          x-hud-csv-table: "Services.csv"
+          x-semantic-uri: http://hmis.hud.gov/ontology#ServicesIdentifier
           properties:
             ServicesID:
               type: string
               maxLength: 32
               description: Unique identifier
+              x-semantic-uri: http://hmis.hud.gov/ontology#hasServicesID
     servicesBase: #REVIEW Need to finish adding extension tags
       type: object
       properties:
         EnrollmentID:
           type: string
           maxLength: 32
-          description: Enrollment ID
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
         PersonalID:
           type: string
           maxLength: 32
-          description: Personal ID
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
         DateProvided:
           type: string
           format: date
-          description: Date provided
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateProvided
         RecordType:
           type: integer
-          description: Record type
-          $ref: '#/components/schemas/RecordType_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasRecordType
+          oneOf: 
+            - $ref: '#/components/schemas/RecordType_list'
         TypeProvided:
           type: integer
-          description: Type provided
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTypeProvided
           oneOf:
             - $ref: '#/components/schemas/PATHServices_list'
             - $ref: '#/components/schemas/RHYServices_list'
@@ -3795,13 +3873,16 @@ components:
           type: string
           maxLength: 50
           description: Other type provided (if RecordType = 144 and TypeProvided = 6 or RecordType = 210 and TypeProvided = 12)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherTypeProvided
         MovingOnOtherType:
           type: string
           maxLength: 50
           description: Moving on other type (if RecordType = 300 and TypeProvided = 5)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMovingOnOtherType
         SubTypeProvided:
           type: integer
           description: Subtype provided (if RecordType = 144 and TypeProvided = 3, 4, or 5)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSubTypeProvided
           oneOf:
             - $ref: '#/components/schemas/SSVFSubType3_list'
             - $ref: '#/components/schemas/SSVFSubType4_list'
@@ -3810,273 +3891,332 @@ components:
           type: number
           format: double
           description: Financial assistance amount (if RecordType = 151 or 152)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFAAmount
         FAStartDate:
           type: string
           format: date
           description: Financial assistance start date (if RecordType = 151 or 152)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFAStartDate
         FAEndDate:
           type: string
           format: date
           description: Financial assistance end date (if RecordType = 151 or 152)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFAEndDate
         ReferralOutcome:
           type: integer
           description: Referral outcome (if RecordType = 161)
-          $ref: '#/components/schemas/PATHReferralOutcome_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasReferralOutcome
+          oneOf: 
+            - $ref: '#/components/schemas/PATHReferralOutcome_list'
     
     currentLivingSituationPrimaryKey: #REVIEW Need to finish adding extension tags
       type: object
+      description: Unique identifier for CurrentLivingSituation resource
+      x-jsonld-type: hmis:CurrentLivingSituationIdentifier
+      x-hud-csv-table: "CurrentLivingSituation.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#CurrentLivingSituationIdentifier
       properties:
         CurrentLivingSitID:
           type: string
           maxLength: 32
           description: Unique identifier
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCurrentLivingSitID
     currentLivingSituationBase: #REVIEW Need to finish adding extension tags
       type: object
       properties:
         EnrollmentID:
           type: string
           maxLength: 32
-          description: Enrollment ID
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
         PersonalID:
           type: string
           maxLength: 32
-          description: Personal ID
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
         InformationDate:
           type: string
           format: date
-          description: Information date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInformationDate
         CurrentLivingSituation:
           type: integer
-          description: Current living situation
-          $ref: '#/components/schemas/LivingSituation_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCurrentLivingSituation
+          oneOf: 
+            - $ref: '#/components/schemas/LivingSituation_list'
         CLSSubsidyType:
           type: integer
           description: Current living situation subsidy type (if CurrentLivingSituation = 435)
-          $ref: '#/components/schemas/RentalSubsidyTypes_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCLSSubsidyType
+          oneOf: 
+            - $ref: '#/components/schemas/RentalSubsidyTypes_list'
         VerifiedBy:
           type: string
           maxLength: 100
           description: Verified by (if ProjectType = 14)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVerifiedBy
         LeaveSituation14Days:
           type: integer
           description: Leave situation in 14 days (if CurrentLivingSituation in [215, 206, 207, 225, 204, 205, 302, 329, 314, 332, 336, 335, 410, 435, 421, 411])
-          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLeaveSituation14Days
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         SubsequentResidence:
           type: integer
           description: Subsequent residence (if LeaveSituation14Days = 1)
-          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSubsequentResidence
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         ResourcesToObtain:
           type: integer
           description: Resources to obtain (if LeaveSituation14Days = 1)
-          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasResourcesToObtain
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         LeaseOwn60Day:
           type: integer
           description: Lease own in 60 days (if LeaveSituation14Days = 1)
-          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLeaseOwn60Day
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         movedTwoOrMore:
           type: integer
           description: Moved two or more times (if LeaveSituation14Days = 1)
-          $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMovedTwoOrMore
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         LocationDetails:
           type: string
           maxLength: 250
-          description: Location details
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLocationDetails
 
     assessmentPrimaryKey: #REVIEW Need to finish adding extension tags
       type: object
+      description: Unique identifier for Assessment resource
+      x-jsonld-type: hmis:AssessmentIdentifier
+      x-hud-csv-table: "Assessment.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#AssessmentIdentifier
       properties: 
         AssessmentID:
           type: string
           maxLength: 32
-          description: Unique identifier
-
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentID
     assessmentBase: #REVIEW Need to finish adding extension tags
       type: object
       properties:
         EnrollmentID:
           type: string
           maxLength: 32
-          description: Enrollment Id
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
         PersonalID:
           type: string
           maxLength: 32
-          description: Personal Id
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
         AssessmentDate:
           type: string
           format: date
-          description: Assessment date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentDate
         AssessmentLocation:
           type: string
           maxLength: 250
-          description: Assessment location
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentLocation
         AssessmentType:
           type: integer
-          description: Assessment type
-          $ref: '#/components/schemas/AssessmentType'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentType
+          oneOf: 
+            - $ref: '#/components/schemas/AssessmentType'
         AssessmentLevel:
           type: integer
-          description: Assessment level
-          $ref: '#/components/schemas/AssessmentLevel'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentLevel
+          oneOf: 
+            - $ref: '#/components/schemas/AssessmentLevel'
         PrioritizationStatus:
           type: integer
-          description: Prioritization status
-          $ref: '#/components/schemas/PrioritizationStatus'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPrioritizationStatus
+          oneOf: 
+            - $ref: '#/components/schemas/PrioritizationStatus'
 
     assessmentQuestionsPrimaryKey: #REVIEW Need to finish adding extension tags
       type: object
+      description: Unique identifier for AssessmentQuestions resource
+      x-jsonld-type: hmis:AssessmentQuestionsIdentifier
+      x-hud-csv-table: "AssessmentQuestions.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#AssessmentQuestionsIdentifier
       properties:
         AssessmentQuestionID:
           type: string
           maxLength: 32
-          description: Unique identifier
-          
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentQuestionID  
     assessmentQuestionsBase: #REVIEW Need to finish adding extension tags
       type: object
       properties:
         AassessmentID:
           type: string
           maxLength: 32
-          description: Assessment ID
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentID
         EnrollmentID:
           type: string
           maxLength: 32
-          description: Enrollment ID
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
         PersonalID:
           type: string
           maxLength: 32
-          description: Personal ID
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
         AssessmentQuestionGroup:
           type: string
           maxLength: 250
           description: Assessment question group (locally determined)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentQuestionGroup
         AssessmentQuestionOrder:
           type: integer
           description: Assessment question order (locally determined)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentQuestionOrder
         AssessmentQuestion:
           type: string
           maxLength: 250
           description: Assessment question (cannot be null if AssessmentQuestions.csv is populated)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentQuestion
         AssessmentAnswer:
           type: string
           maxLength: 500
           description: Assessment answer (locally determined)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentAnswer
 
     assessmentResultsPrimaryKey: #REVIEW Need to finish adding extension tags
         type: object
+        description: Unique identifier for AssessmentResults resource
+        x-jsonld-type: hmis:AssessmentResultsIdentifier
+        x-hud-csv-table: "AssessmentResults.csv"
+        x-semantic-uri: http://hmis.hud.gov/ontology#AssessmentResultsIdentifier
         properties:
           AssessmentResultID:
             type: string
             maxLength: 32
-            description: Unique Identifier
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentResultID
     assessmentResultsBase: #REVIEW Need to finish adding extension tags
         type: object
         properties:
           AssessmentID:
             type: string
             maxLength: 32
-            description: Unique identifier
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentID
           EnrollmentID:
             type: string
             maxLength: 32
-            description: Enrollment Id
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
           PersonalID:
             type: string
             maxLength: 32
-            description: Personal Id
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
           AssessmentResultType:
             type: string
             maxLength: 250
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentResultType
           AssessmentResult:
             type: string
             maxLength: 250
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentResult
 
     eventPrimaryKey: #REVIEW Need to finish adding extension tags
       type: object
+      description: Unique identifier for Event resource
+      x-jsonld-type: hmis:EventIdentifier
+      x-hud-csv-table: "Event.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#EventIdentifier
       properties:
         EventID:
           type: string
           maxLength: 32
-          description: Unique identifier
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEventID
     eventBase: #REVIEW Need to finish adding extension tags
       type: object
       properties:
         EnrollmentID:
           type: string
           maxLength: 32
-          description: Enrollment Id
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
         PersonalID:
           type: string
           maxLength: 32
-          description: Personal Id
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
         EventDate:
           type: string
           format: date
-          description: Event date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEventDate
         Event:
           type: integer
-          description: Event type
-          $ref: '#/components/schemas/Referral_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEvent
+          oneOf: 
+            - $ref: '#/components/schemas/Referral_list'
         ProbSolDivRRResult:
           type: integer
-          description: Problem-solving/diversion/rapid resolution result
-          $ref: '#/components/schemas/NoYesMissing_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProbSolDivRRResult
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesMissing_list'
         ReferralCaseManageAfter:
           type: integer
-          description: Referral for case management after event
-          $ref: '#/components/schemas/NoYesMissing_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasReferralCaseManageAfter
+          oneOf: 
+            - $ref: '#/components/schemas/NoYesMissing_list'
         LocationCrisisOrPHHousing:
           type: string
           maxLength: 250
-          description: Location of crisis or permanent housing
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLocationCrisisOrPHHousing
         ReferralResult:
           type: integer
-          description: Referral result
-          $ref: '#/components/schemas/ReferralResult_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasReferralResult
+          oneOf: 
+            - $ref: '#/components/schemas/ReferralResult_list'
         ResultDate:
           type: string
           format: date
-          description: Result date (if ReferralResult is not null)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasResultDate
 
     youthEducationStatusPrimaryKey: #REVIEW Need to finish adding extension tags
       type: object
+      description: Unique identifier for YouthEducationStatus resource
+      x-jsonld-type: hmis:YouthEducationStatusIdentifier
+      x-hud-csv-table: "YouthEducationStatus.csv"
+      x-semantic-uri: http://hmis.hud.gov/ontology#YouthEducationStatusIdentifier
       properties:
         YouthEducationStatusID:
           type: string
           maxLength: 32
-          description: Unique identifier
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasYouthEducationStatusID
     youthEducationStatusBase: #REVIEW Need to finish adding extension tags
       type: object
       properties:
         EnrollmentID:
           type: string
           maxLength: 32
-          description: Enrollment ID
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
         PersonalID:
           type: string
           maxLength: 32
-          description: Personal ID
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
         InformationDate:
           type: string
           format: date
-          description: Information date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInformationDate
         CurrentSchoolAttend:
           type: integer
-          description: Current school attendance
-          $ref: '#/components/schemas/CurrentSchoolAttend_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCurrentSchoolAttend
+          oneOf: 
+            - $ref: '#/components/schemas/CurrentSchoolAttend_list'
         MostRecentEdStatus:
           type: integer
           description: Most recent education status (if CurrentSchoolAttend = 0)
-          $ref: '#/components/schemas/MostRecentEdStatus_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMostRecentEdStatus
+          oneOf: 
+            - $ref: '#/components/schemas/MostRecentEdStatus_list'
         CurrentEdStatus:
           type: integer
           description: Current education status (if CurrentSchoolAttend = 1 or 2)
-          $ref: '#/components/schemas/CurrentEdStatus_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCurrentEdStatus
+          oneOf: 
+            - $ref: '#/components/schemas/CurrentEdStatus_list'
         DataCollectionStage:
           type: integer
-          description: Data collection stage
-          $ref: '#/components/schemas/DataCollectionStage_list'
-
-
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDataCollectionStage
+          oneOf: 
+            - $ref: '#/components/schemas/DataCollectionStage_list'
 
     # ========================================================================
     # META DATA SCHEMAS - Semantic Annotations Enabled
@@ -4116,210 +4256,2047 @@ components:
           x-soft-delete: true
           x-provenance: true
 
-    # Enumerations (to be extracted from ontology)
+# Enumerations (to be extracted from ontology)
+    
+# Response lists
+    LastGradeCompleted_list:
+      type: integer
+      description: "The last grade level completed by the client."
+      oneOf:
+        - title: "LESS_THAN_GRADE_5"
+          const: 1
+          description: "Less than grade 5"
+        - title: "GRADES_5_6"
+          const: 2
+          description: "Grades 5-6"
+        - title: "GRADES_7_8"
+          const: 3
+          description: "Grades 7-8"
+        - title: "GRADES_9_11"
+          const: 4
+          description: "Grades 9-11"
+        - title: "GRADE_12"
+          const: 5
+          description: "Grade 12"
+        - title: "SCHOOL_PROGRAM_NO_GRADE_LEVELS"
+          const: 6
+          description: "School program does not have grade levels"
+        - title: "GED"
+          const: 7
+          description: "GED"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "SOME_COLLEGE"
+          const: 10
+          description: "Some college"
+        - title: "ASSOCIATES_DEGREE"
+          const: 11
+          description: "Associate's degree"
+        - title: "BACHELORS_DEGREE"
+          const: 12
+          description: "Bachelor's degree"
+        - title: "GRADUATE_DEGREE"
+          const: 13
+          description: "Graduate degree"
+        - title: "VOCATIONAL_CERTIFICATION"
+          const: 14
+          description: "Vocational certification"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    SchoolStatus_list:
+      type: integer
+      description: "Current schooling status of the client."
+      oneOf:
+        - title: "ATTENDING_SCHOOL_REGULARLY"
+          const: 1
+          description: "Attending school regularly"
+        - title: "ATTENDING_SCHOOL_IRREGULARLY"
+          const: 2
+          description: "Attending school irregularly"
+        - title: "GRADUATED_HIGH_SCHOOL"
+          const: 3
+          description: "Graduated from high school"
+        - title: "OBTAINED_GED"
+          const: 4
+          description: "Obtained GED"
+        - title: "DROPPED_OUT"
+          const: 5
+          description: "Dropped out"
+        - title: "SUSPENDED"
+          const: 6
+          description: "Suspended"
+        - title: "EXPELLED"
+          const: 7
+          description: "Expelled"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    EmploymentType_list:
+      type: integer
+      description: "Type of employment the client is engaged in."
+      oneOf:
+        - title: "FULL_TIME"
+          const: 1
+          description: "Full-time"
+        - title: "PART_TIME"
+          const: 2
+          description: "Part-time"
+        - title: "SEASONAL_SPORADIC"
+          const: 3
+          description: "Seasonal / sporadic (including day labor)"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    NotEmployedReason_list:
+      type: integer
+      description: "Reason why the client is not Employed."
+      oneOf:
+        - title: "LOOKING_FOR_WORK"
+          const: 1
+          description: "Looking for work"
+        - title: "UNABLE_TO_WORK"
+          const: 2
+          description: "Unable to work"
+        - title: "NOT_LOOKING_FOR_WORK"
+          const: 3
+          description: "Not looking for work"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    ReasonNotInsured_list:
+      type: integer
+      description: "Reasons why the client is not insured."
+      oneOf:
+        - title: "APPLIED_DECISION_PENDING"
+          const: 1
+          description: "Applied; decision pending"
+        - title: "APPLIED_CLIENT_NOT_ELIGIBLE"
+          const: 2
+          description: "Applied; client not eligible"
+        - title: "CLIENT_DID_NOT_APPLY"
+          const: 3
+          description: "Client did not apply"
+        - title: "INSURANCE_TYPE_NA"
+          const: 4
+          description: "Insurance type n/a for this client"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    NoAssistanceReason_list:
+      type: integer
+      description: "Reasons for no assistance provided to the client."
+      oneOf:
+        - title: "APPLIED_DECISION_PENDING"
+          const: 1
+          description: "Applied; decision pending"
+        - title: "APPLIED_CLIENT_NOT_ELIGIBLE"
+          const: 2
+          description: "Applied; client not eligible"
+        - title: "CLIENT_DID_NOT_APPLY"
+          const: 3
+          description: "Client did not apply"
+        - title: "INSURANCE_NOT_APPLICABLE"
+          const: 4
+          description: "Insurance type not applicable for this client"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    RecordType_list:
+      type: integer
+      description: "Defines types of records and services in the system."
+      oneOf:
+        - title: "PATH_SERVICE"
+          const: 141
+          description: "Services under PATH."
+        - title: "RHY_SERVICE_CONNECTIONS"
+          const: 142
+          description: "Services provided to Homeless Youth."
+        - title: "HOPWA_SERVICE"
+          const: 143
+          description: "Services dedicated to housing needs of people living with HIV/AIDS."
+        - title: "SSVF_SERVICE"
+          const: 144
+          description: "Supportive Services for Veteran Families."
+        - title: "HOPWA_FINANCIAL_ASSISTANCE"
+          const: 151
+          description: "Financial assistance through Services dedicated to the housing needs of people living with HIV/AIDS."
+        - title: "SSVF_FINANCIAL_ASSISTANCE"
+          const: 152
+          description: "Financial assistance Supportive Services for Veteran Families."
+        - title: "PATH_REFERRAL"
+          const: 161
+          description: "Referral services through Projects for Assistance in Transition from Homelessness (PATH)."
+        - title: "BED_NIGHT"
+          const: 200
+          description: "Record of bed nights at Night-by-Night shelter."
+        - title: "HUD_VASH_VOUCHER_TRACKING"
+          const: 210
+          description: "Voucher tracking under HUD-VASH."
+        - title: "MOVING_ON_ASSISTANCE"
+          const: 300
+          description: "Assistance provided for moving on."
+    PATHServices_list:
+      type: integer
+      description: "Services provided under the PATH program."
+      oneOf:
+        - title: "RE_ENGAGEMENT"
+          const: 1
+          description: "Re-engagement"
+        - title: "SCREENING"
+          const: 2
+          description: "Screening"
+        - title: "HABILITATION_REHABILITATION"
+          const: 3
+          description: "Habilitation/rehabilitation"
+        - title: "COMMUNITY_MENTAL_HEALTH"
+          const: 4
+          description: "Community mental health"
+        - title: "SUBSTANCE_USE_TREATMENT"
+          const: 5
+          description: "Substance use treatment"
+        - title: "CASE_MANAGEMENT"
+          const: 6
+          description: "Case management"
+        - title: "RESIDENTIAL_SUPPORTIVE_SERVICES"
+          const: 7
+          description: "Residential supportive services"
+        - title: "HOUSING_MINOR_RENOVATION"
+          const: 8
+          description: "Housing minor renovation"
+        - title: "HOUSING_MOVING_ASSISTANCE"
+          const: 9
+          description: "Housing moving assistance"
+        - title: "HOUSING_ELIGIBILITY_DETERMINATION"
+          const: 10
+          description: "Housing eligibility determination"
+        - title: "SECURITY_DEPOSITS"
+          const: 11
+          description: "Security deposits"
+        - title: "ONE_TIME_RENT_FOR_EVICTION_PREVENTION"
+          const: 12
+          description: "One-time rent for eviction prevention"
+        - title: "CLINICAL_ASSESSMENT"
+          const: 14
+          description: "Clinical assessment"
+    RHYServices_list:
+      type: integer
+      description: "Services provided under the RHY program."
+      oneOf:
+        - title: "COMMUNITY_SERVICE_SERVICE_LEARNING"
+          const: 2
+          description: "Community service/service learning (CSL)"
+        - title: "EDUCATION"
+          const: 5
+          description: "Education"
+        - title: "EMPLOYMENT_AND_OR_TRAINING_SERVICES"
+          const: 6
+          description: "Employment and/or training services"
+        - title: "CRIMINAL_JUSTICE_LEGAL_SERVICES"
+          const: 7
+          description: "Criminal justice /legal services"
+        - title: "LIFE_SKILLS_TRAINING"
+          const: 8
+          description: "Life skills training"
+        - title: "PARENTING_EDUCATION_FOR_YOUTH_WITH_CHILDREN"
+          const: 10
+          description: "Parenting education for youth with children"
+        - title: "POST_NATAL_CARE_FOR_CLIENT"
+          const: 12
+          description: "Post-natal care for client (person who gave birth)"
+        - title: "PRE_NATAL_CARE"
+          const: 13
+          description: "Pre-natal care"
+        - title: "HEALTH_MEDICAL_CARE"
+          const: 14
+          description: "Health/medical care"
+        - title: "SUBSTANCE_USE_DISORDER_TREATMENT"
+          const: 17
+          description: "Substance use disorder treatment"
+        - title: "SUBSTANCE_USE_DISORDER_ED_PREVENTION_SERVICES"
+          const: 18
+          description: "Substance use disorder Ed/Prevention Services"
+        - title: "HOME_BASED_SERVICES"
+          const: 26
+          description: "Home-based Services"
+        - title: "POST_NATAL_NEWBORN_CARE"
+          const: 27
+          description: "Post-natal newborn care (wellness exams; immunizations)"
+        - title: "STD_TESTING"
+          const: 28
+          description: "STD Testing"
+        - title: "STREET_BASED_SERVICES"
+          const: 29
+          description: "Street-based Services"
+    HOPWAServices_list:
+      type: integer
+      description: "Types of services provided under the HOPWA program."
+      oneOf:
+        - title: "ADULT_DAY_CARE_AND_PERSONAL_ASSISTANCE"
+          const: 1
+          description: "Adult day care and personal assistance"
+        - title: "CASE_MANAGEMENT"
+          const: 2
+          description: "Case management"
+        - title: "CHILD_CARE"
+          const: 3
+          description: "Child care"
+        - title: "CRIMINAL_JUSTICE_LEGAL_SERVICES"
+          const: 4
+          description: "Criminal justice/legal services"
+        - title: "EDUCATION"
+          const: 5
+          description: "Education"
+        - title: "EMPLOYMENT_AND_TRAINING_SERVICES"
+          const: 6
+          description: "Employment and training services"
+        - title: "FOOD_MEALS_NUTRITIONAL_SERVICES"
+          const: 7
+          description: "Food/meals/nutritional services"
+        - title: "HEALTH_MEDICAL_CARE"
+          const: 8
+          description: "Health/medical care"
+        - title: "LIFE_SKILLS_TRAINING"
+          const: 9
+          description: "Life skills training"
+        - title: "MENTAL_HEALTH_CARE_COUNSELING"
+          const: 10
+          description: "Mental health care/counseling"
+        - title: "OUTREACH_AND_ENGAGEMENT"
+          const: 11
+          description: "Outreach and/or engagement"
+        - title: "SUBSTANCE_USE_SERVICES_TREATMENT"
+          const: 12
+          description: "Substance use services/treatment"
+        - title: "TRANSPORTATION"
+          const: 13
+          description: "Transportation"
+        - title: "OTHER_HOPWA_FUNDED_SERVICE"
+          const: 14
+          description: "Other HOPWA funded service"
+    HOPWAFinancialAssistance_list:
+      type: integer
+      description: "Types of financial assistance provided under HOPWA."
+      oneOf:
+        - title: "RENTAL_ASSISTANCE"
+          const: 1
+          description: "Rental assistance"
+        - title: "SECURITY_DEPOSITS"
+          const: 2
+          description: "Security deposits"
+        - title: "UTILITY_DEPOSITS"
+          const: 3
+          description: "Utility deposits"
+        - title: "UTILITY_PAYMENTS"
+          const: 4
+          description: "Utility payments"
+        - title: "MORTGAGE_ASSISTANCE"
+          const: 7
+          description: "Mortgage assistance"
+    SSVFServices_list:
+      type: integer
+      description: "SSVF services provided."
+      oneOf:
+        - title: "OUTREACH_SERVICES"
+          const: 1
+          description: "Outreach services"
+        - title: "CASE_MANAGEMENT_SERVICES"
+          const: 2
+          description: "Case management services"
+        - title: "ASSISTANCE_OBTAINING_VA_BENEFITS"
+          const: 3
+          description: "Assistance obtaining VA benefits"
+        - title: "ASSISTANCE_OBTAINING_COORDINATING_OTHER_PUBLIC_BENEFITS"
+          const: 4
+          description: "Assistance obtaining/coordinating other public benefits"
+        - title: "DIRECT_PROVISION_OF_OTHER_PUBLIC_BENEFITS"
+          const: 5
+          description: "Direct provision of other public benefits"
+        - title: "OTHER_NON_TFA_SUPPORTIVE_SERVICE"
+          const: 6
+          description: "Other (non-TFA) supportive service approved by VA"
+        - title: "SHALLOW_SUBSIDY"
+          const: 7
+          description: "Shallow Subsidy"
+        - title: "RETURNING_HOME"
+          const: 8
+          description: "Returning Home"
+        - title: "RAPID_RESOLUTION"
+          const: 9
+          description: "Rapid Resolution"
+    SSVFSubType3_list:
+      type: integer
+      description: "SSVF SubType for assistance obtaining VA benefits."
+      oneOf:
+        - title: "VA_VOCATIONAL_REHABILITATION_COUNSELING"
+          const: 1
+          description: "VA vocational and rehabilitation counseling"
+        - title: "EMPLOYMENT_AND_TRAINING_SERVICES"
+          const: 2
+          description: "Employment and training services"
+        - title: "EDUCATIONAL_ASSISTANCE"
+          const: 3
+          description: "Educational assistance"
+        - title: "HEALTH_CARE_SERVICES"
+          const: 4
+          description: "Health care services"
+    SSVFSubType4_list:
+      type: integer
+      description: "Subtypes of services provided under SSVF for obtaining/coordinating public benefits."
+      oneOf:
+        - title: "HEALTH_CARE_SERVICES"
+          const: 1
+          description: "Health care services"
+        - title: "DAILY_LIVING_SERVICES"
+          const: 2
+          description: "Daily living services"
+        - title: "PERSONAL_FINANCIAL_PLANNING_SERVICES"
+          const: 3
+          description: "Personal financial planning services"
+        - title: "TRANSPORTATION_SERVICES"
+          const: 4
+          description: "Transportation services"
+        - title: "INCOME_SUPPORT_SERVICES"
+          const: 5
+          description: "Income support services"
+        - title: "FIDUCIARY_AND_REPRESENTATIVE_PAYEE_SERVICES"
+          const: 6
+          description: "Fiduciary and representative payee services"
+        - title: "LEGAL_SERVICES_CHILD_SUPPORT"
+          const: 7
+          description: "Legal services - child support"
+        - title: "LEGAL_SERVICES_EVICTION_PREVENTION"
+          const: 8
+          description: "Legal services - eviction prevention"
+        - title: "LEGAL_SERVICES_OUTSTANDING_FINES_PENALTIES"
+          const: 9
+          description: "Legal services - outstanding fines and penalties"
+        - title: "LEGAL_SERVICES_RESTORE_ACQUIRE_DRIVERS_LICENSE"
+          const: 10
+          description: "Legal services - restore / acquire driver's license"
+        - title: "LEGAL_SERVICES_OTHER"
+          const: 11
+          description: "Legal services - other"
+        - title: "CHILD_CARE"
+          const: 12
+          description: "Child care"
+        - title: "HOUSING_COUNSELING"
+          const: 13
+          description: "Housing counseling"
+    SSVFSubType5_list:
+      type: integer
+      description: "Subtypes of services provided under SSVF for direct provision of public benefits."
+      oneOf:
+        - title: "PERSONAL_FINANCIAL_PLANNING_SERVICES"
+          const: 1
+          description: "Personal financial planning services"
+        - title: "TRANSPORTATION_SERVICES"
+          const: 2
+          description: "Transportation services"
+        - title: "INCOME_SUPPORT_SERVICES"
+          const: 3
+          description: "Income support services"
+        - title: "FIDUCIARY_AND_REPRESENTATIVE_PAYEE_SERVICES"
+          const: 4
+          description: "Fiduciary and representative payee services"
+        - title: "LEGAL_SERVICES_CHILD_SUPPORT"
+          const: 5
+          description: "Legal services - child support"
+        - title: "LEGAL_SERVICES_EVICTION_PREVENTION"
+          const: 6
+          description: "Legal services - eviction prevention"
+        - title: "LEGAL_SERVICES_OUTSTANDING_FINES_PENALTIES"
+          const: 7
+          description: "Legal services - outstanding fines and penalties"
+        - title: "LEGAL_SERVICES_RESTORE_ACQUIRE_DRIVERS_LICENSE"
+          const: 8
+          description: "Legal services - restore / acquire driver's license"
+        - title: "LEGAL_SERVICES_OTHER"
+          const: 9
+          description: "Legal services-other"
+        - title: "CHILD_CARE"
+          const: 10
+          description: "Child care"
+        - title: "HOUSING_COUNSELING"
+          const: 11
+          description: "Housing counseling"
+    PATHReferralOutcome_list:
+      type: integer
+      description: "Outcomes of referrals made under the PATH program."
+      oneOf:
+        - title: "ATTAINED"
+          const: 1
+          description: "Attained"
+        - title: "NOT_ATTAINED"
+          const: 2
+          description: "Not attained"
+        - title: "UNKNOWN"
+          const: 3
+          description: "Unknown"
+    PATHReferral_list:
+      type: integer
+      description: "Referrals made under the PATH program."
+      oneOf:
+        - title: "COMMUNITY_MENTAL_HEALTH"
+          const: 1
+          description: "Community mental health"
+        - title: "SUBSTANCE_USE_TREATMENT"
+          const: 2
+          description: "Substance use treatment"
+        - title: "PRIMARY_HEALTH_DENTAL_CARE"
+          const: 3
+          description: "Primary health/dental care"
+        - title: "JOB_TRAINING"
+          const: 4
+          description: "Job training"
+        - title: "EDUCATIONAL_SERVICES"
+          const: 5
+          description: "Educational services"
+        - title: "HOUSING_SERVICES"
+          const: 6
+          description: "Housing services"
+        - title: "PERMANENT_HOUSING"
+          const: 7
+          description: "Permanent housing"
+        - title: "INCOME_ASSISTANCE"
+          const: 8
+          description: "Income assistance"
+        - title: "EMPLOYMENT_ASSISTANCE"
+          const: 9
+          description: "Employment assistance"
+        - title: "MEDICAL_INSURANCE"
+          const: 10
+          description: "Medical insurance"
+        - title: "TEMPORARY_HOUSING"
+          const: 11
+          description: "Temporary housing"
+    BedNight_list:
+      type: integer
+      description: "Represents a single night of bed occupancy."
+      oneOf:
+        - title: "BED_NIGHT"
+          const: 200
+    VoucherTracking_list:
+      type: integer
+      description: "Tracking of housing vouchers issued to veterans."
+      oneOf:
+        - title: "REFERRAL_PACKAGE_FORWARDED"
+          const: 1
+          description: "Referral package forwarded to PHA"
+        - title: "VOUCHER_DENIED"
+          const: 2
+          description: "Voucher denied by PHA"
+        - title: "VOUCHER_ISSUED"
+          const: 3
+          description: "Voucher issued by PHA"
+        - title: "VOUCHER_REVOKED_OR_EXPIRED"
+          const: 4
+          description: "Voucher revoked or expired"
+        - title: "VOUCHER_IN_USE"
+          const: 5
+          description: "Voucher in use - veteran moved into housing"
+        - title: "VOUCHER_PORTED_LOCALLY"
+          const: 6
+          description: "Voucher was ported locally"
+        - title: "VOUCHER_ABSORBED"
+          const: 7
+          description: "Voucher was administratively absorbed by new PHA"
+        - title: "VOUCHER_CONVERTED"
+          const: 8
+          description: "Voucher was converted to Housing Choice Voucher"
+        - title: "VETERAN_EXITED_RETURNED_VOUCHER"
+          const: 9
+          description: "Veteran exited - voucher was returned"
+        - title: "VETERAN_EXITED_FAMILY_MAINTAINED_VOUCHER"
+          const: 10
+          description: "Veteran exited - family maintained the voucher"
+        - title: "VETERAN_EXITED_PRIOR_TO_RECEIVING_VOUCHER"
+          const: 11
+          description: "Veteran exited - prior to ever receiving a voucher"
+        - title: "OTHER"
+          const: 12
+          description: "Other"
+    MovingOnAssistance_list:
+      type: integer
+      description: "Types of assistance provided to help clients move on from the project."
+      oneOf:
+        - title: "SUBSIDIZED_HOUSING_APPLICATION_ASSISTANCE"
+          const: 1
+          description: "Subsidized housing application assistance"
+        - title: "FINANCIAL_ASSISTANCE_FOR_MOVING_ON"
+          const: 2
+          description: "Financial assistance for Moving On"
+        - title: "NON_FINANCIAL_ASSISTANCE_FOR_MOVING_ON"
+          const: 3
+          description: "Non-financial assistance for Moving On"
+        - title: "HOUSING_REFERRAL_PLACEMENT"
+          const: 4
+          description: "Housing referral/placement"
+        - title: "OTHER"
+          const: 5
+          description: "Other (please specify)"
+    CurrentSchoolAttend_list:
+      type: integer
+      description: "Current school attendance status."
+      oneOf:
+        - title: "NOT_ENROLLED"
+          const: 0
+          description: "Not currently enrolled in any school or educational course"
+        - title: "ENROLLED_NOT_ATTENDING_REGULARLY"
+          const: 1
+          description: "Currently enrolled but NOT attending regularly (when school or the course is in session)"
+        - title: "ENROLLED_ATTENDING_REGULARLY"
+          const: 2
+          description: "Currently enrolled and attending regularly (when school or the course is in session)"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    MostRecentEdStatus_list:
+      type: integer
+      description: "Most recent education status in K12 or higher education."
+      oneOf:
+        - title: "K12_GRADUATED"
+          const: 0
+          description: "K12: Graduated from high school"
+        - title: "K12_OBTAINED_GED"
+          const: 1
+          description: "K12: Obtained GED"
+        - title: "K12_DROPPED_OUT"
+          const: 2
+          description: "K12: Dropped out"
+        - title: "K12_SUSPENDED"
+          const: 3
+          description: "K12: Suspended"
+        - title: "K12_EXPELLED"
+          const: 4
+          description: "K12: Expelled"
+        - title: "HIGHER_ED_PURSUING_CREDENTIAL_NOT_ATTENDING"
+          const: 5
+          description: "Higher education: Pursuing a credential but not currently attending"
+        - title: "HIGHER_ED_DROPPED_OUT"
+          const: 6
+          description: "Higher education: Dropped out"
+        - title: "HIGHER_ED_OBTAINED_CREDENTIAL"
+          const: 7
+          description: "Higher education: Obtained a credential/degree"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    CurrentEdStatus_list:
+      type: integer
+      description: "Current educational pursuit status."
+      oneOf:
+        - title: "PURSUING_HIGH_SCHOOL_DIPLOMA_OR_GED"
+          const: 0
+          description: "Pursuing a high school diploma or GED"
+        - title: "PURSUING_ASSOCIATES_DEGREE"
+          const: 1
+          description: "Pursuing Associate's Degree"
+        - title: "PURSUING_BACHELORS_DEGREE"
+          const: 2
+          description: "Pursuing Bachelor's Degree"
+        - title: "PURSUING_GRADUATE_DEGREE"
+          const: 3
+          description: "Pursuing Graduate Degree"
+        - title: "PURSUING_OTHER_POST_SECONDARY_CREDENTIAL"
+          const: 4
+          description: "Pursuing other post-secondary credential"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    AssessmentType:
+      type: integer
+      description: "Type of assessment conducted."
+      oneOf:
+        - title: "PHONE"
+          const: 1
+          description: "Phone"
+        - title: "VIRTUAL"
+          const: 2
+          description: "Virtual"
+        - title: "IN_PERSON"
+          const: 3
+          description: "In Person"
+    AssessmentLevel:
+      type: integer
+      description: "Level of assessment for housing needs."
+      oneOf:
+        - title: "CRISIS_NEEDS_ASSESSMENT"
+          const: 1
+          description: "Crisis Needs Assessment"
+        - title: "HOUSING_NEEDS_ASSESSMENT"
+          const: 2
+          description: "Housing Needs Assessment"
+    PrioritizationStatus:
+      type: integer
+      description: "Status in the prioritization list for housing."
+      oneOf:
+        - title: "PLACED_ON_PRIORITIZATION_LIST"
+          const: 1
+          description: "Placed on prioritization list"
+        - title: "NOT_PLACED_ON_PRIORITIZATION_LIST"
+          const: 2
+          description: "Not placed on prioritization list"
+    HMISParticipationType:
+      type: integer
+      description: "Level of participation in the CoC's HMIS or VSP's comparable database by the project."
+      oneOf:
+        - title: "NOT_PARTICIPATING"
+          const: 0
+          description: "No persons in this project have data collected in the CoC's HMIS or by VSP in a comparable database."
+        - title: "HMIS_PARTICIPATING"
+          const: 1
+          description: "All persons in this project have data collected in the CoC's HMIS."
+        - title: "COMPARABLE_DATABASE_PARTICIPATING"
+          const: 2
+          description: "All persons in this project have data collected in a VSP comparable database"
+    HouseholdType:
+      type: integer
+      description: "Defines the type of households served by the project."
+      oneOf:
+        - title: "HOUSEHOLDS_WITHOUT_CHILDREN"
+          const: 1
+          description: "Households without children"
+        - title: "HOUSEHOLDS_WITH_AT_LEAST_ONE_ADULT_AND_ONE_CHILD"
+          const: 3
+          description: "Households with at least one adult and one child"
+        - title: "HOUSEHOLDS_WITH_ONLY_CHILDREN"
+          const: 4
+          description: "Households with only children"
+    Availability:
+      type: integer
+      description: "Availability status of the housing project's accommodations."
+      oneOf:
+        - title: "YEAR_ROUND"
+          const: 1
+          description: "Available year-round"
+        - title: "SEASONAL"
+          const: 2
+          description: "Seasonally available"
+        - title: "OVERFLOW"
+          const: 3
+          description: "Overflow accommodations"
+    BedType:
+      type: integer
+      description: "Specifies the type of beds available in the housing project."
+      oneOf:
+        - title: "FACILITY_BASED_BEDS"
+          const: 1
+          description: "Facility-based beds"
+        - title: "VOUCHER_BEDS"
+          const: 2
+          description: "Voucher beds"
+        - title: "OTHER_BEDS"
+          const: 3
+          description: "Other types of beds"
+    GeographyType:
+      type: integer
+      description: "Specifies the geographical setting of the project."
+      oneOf:
+        - title: "URBAN"
+          const: 1
+          description: "Urban area"
+        - title: "SUBURBAN"
+          const: 2
+          description: "Suburban area"
+        - title: "RURAL"
+          const: 3
+          description: "Rural area"
+        - title: "UNKNOWN_DATA_NOT_COLLECTED"
+          const: 99
+          description: "Unknown or data not collected"
+    GeographyType_list:
+      type: integer
+      description: "Indicates the type of geographic area for the project location."
+      oneOf:
+        - title: "URBAN"
+          const: 1
+          description: "Urban"
+        - title: "SUBURBAN"
+          const: 2
+          description: "Suburban"
+        - title: "RURAL"
+          const: 3
+          description: "Rural"
+        - title: "Unknown / data not collected"
+          const: 99
+          description: "Unknown / data not collected"
+    HouseholdType_list:
+      type: integer
+      description: "Specifies the household compositiom."
+      oneOf:
+        - title: "Households without children"
+          const: 1
+          description: "Households without Children"
+        - title: "Households with at least one adult and one child"
+          const: 3
+          description: "Households with at least one adult and one child"
+        - title: "Households with only children"
+          const: 4
+          description: "Households with only children"
+    Availability_list:
+      type: integer
+      description: "Indicates when the beds in the project are Availability."
+      oneOf:
+        - title: "Year-round"
+          const: 1
+          description: "Year-round"
+        - title: "Seasonal"
+          const: 2
+          description: "Seasonal"
+        - title: "Overflow"
+          const: 3
+          description: "Overflow"
+    BedType_list:
+      type: integer
+      description: "Specifies the type of bed available in the project."
+      oneOf: 
+        -  title: "Facility-based beds"
+           const: 1
+           description: "Facility-based beds"
+        -  title: "Voucher beds"
+           const: 2
+           description: "Voucher beds"
+        -  title: "Other beds"
+           const: 3
+           description: "Other beds"
+
+
+# Quality Response lists
+
+    NameDataQuality_list:
+      type: integer
+      description: "Indicates the data quality of the reported name."
+      oneOf:
+        - title: "FULL_NAME_REPORTED"
+          const: 1
+          description: "Full name reported"
+        - title: "PARTIAL_OR_CODE_NAME_REPORTED"
+          const: 2
+          description: "Partial, street name, or code name reported"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    SSNDataQuality_list:
+      type: integer
+      description: "Indicates the data quality of the reported Social Security Number."
+      oneOf:
+        - title: "FULL_SSN_REPORTED"
+          const: 1
+          description: "Full SSN reported"
+        - title: "APPROXIMATE_OR_PARTIAL_SSN_REPORTED"
+          const: 2
+          description: "Approximate or partial SSN reported"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    DOBDataQuality_list:
+      type: integer
+      description: "Indicates the data quality of the reported date of birth."
+      oneOf:
+        - title: "FULL_DOB_REPORTED"
+          const: 1
+          description: "Full date of birth reported"
+        - title: "APPROXIMATE_OR_PARTIAL_DOB_REPORTED"
+          const: 2
+          description: "Approximate or partial date of birth reported"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+
+  # Response List I
     RelationshipToHoH_list:
       type: integer
-      description: Relationship to Head of Household
-      x-jsonld-type: hmis:RelationshipToHoHType
-      x-semantic-uri: http://hmis.hud.gov/ontology#RelationshipToHoHType
-      x-hud-data-element: "3.15"
-      enum: [1, 2, 3, 4, 5, 99]
-      x-enum-members:
-        - value: 1
-          label: "Self (head of household)"
-          uri: http://hmis.hud.gov/ontology#SelfHoH
-        - value: 2
-          label: "Head of household's child"
-          uri: http://hmis.hud.gov/ontology#HoHChild
-        - value: 3
-          label: "Head of household's spouse or partner"
-          uri: http://hmis.hud.gov/ontology#HoHSpousePartner
-        - value: 4
-          label: "Head of household's other relation member"
-          uri: http://hmis.hud.gov/ontology#HoHOtherRelation
-        - value: 5
-          label: "Other: non-relation member"
-          uri: http://hmis.hud.gov/ontology#NonRelationMember
-        - value: 99
-          label: "Data not collected"
-          uri: http://hmis.hud.gov/ontology#DataNotCollected
-    NameDataQuality_list: # FLAG FOR EXTENSION NEEDED
-        type: integer
-        enum: [1, 2, 8, 9, 99]
-        description: |
-          1 - Full name reported
-          2 - Partial, street name, or code name reported
-          8 - Client doesn't know
-          9 - Client prefers not to answer
-          99 - Data not collected
-    SSNDataQuality_list: # FLAG FOR EXTENSION NEEDED
-      type: integer
-      enum: [1, 2, 8, 9, 99]
-      description: |
-        1 - Full SSN Reported
-        2 - Approximate or partial SSN reported
-        8 - Client doesn't know
-        9 - Client prefers not to answer
-        99 - Data not collected
-    DOBDataQuality_list: # FLAG FOR EXTENSION NEEDED
-      type: integer 
-      enum: [1, 2, 8, 9, 99]
-      description: |
-        1 - Full DOB reported
-        2 - Approximate or partial DOB reported
-        8 - Client doesn't know
-        9 - Client prefers not to answer
-        99 - Data not collected
-    NoYes_list: # FLAG FOR EXTENSION NEEDED
-      type: integer
-      enum: [0, 1]
-      description: |
-        0 - No
-        1 - Yes
-    NoYesMissing_list: # FLAG FOR EXTENSION NEEDED
-      type: integer
-      enum: [0, 1, 99]
-      description: |
-        0 - No
-        1 - Yes
-        99 - Data not collected
-    RaceGenderNone_list: # FLAG FOR EXTENSION NEEDED
-      type: integer
-      enum: [8,9,99]
-      description: |
-        8 - Client doesn't know
-        9 - Client prefers not to answer
-        99 - Data not collected
-    NoYesReasonsForMissingData_list: # FLAG FOR EXTENSION NEEDED
-      type: integer
-      enum: [0, 1, 8, 9, 99]
-      description: |
-        0 - No
-        1 - Yes
-        8 - Client doesn't know
-        9 - Client prefers not to answer
-        99 - Data not collected
-    MilitaryBranch_list: # FLAG FOR EXTENSION NEEDED
-      type: integer
-      enum: [1, 2, 3, 4, 6, 7, 8, 9, 99]
-      description: |
-        1 - Army
-        2 - Air Force
-        3 - Navy
-        4 - Marines
-        6 - Coast Guard
-        7 - Space Force
-        8 - Client doesn't know
-        9 - Client prefers not to answer
-        99 - Data not collected
-    DischargeStatus_list: # FLAG FOR EXTENSION NEEDED
-      type: integer
-      enum: [1, 2, 4, 5, 6, 7, 8, 9, 99]
-      description: |
-        1 - Honorable
-        2 - General under honorable conditions
-        4 - Bad conduct
-        5 - Dishonorable
-        6 - Under other than honorable conditions (OTH)
-        7 - Uncharacterized
-        8 - Client doesn't know
-        9 - Client prefers not to answer
-        99 - Data not collected
-    ProjectType_list:
-      type: integer
-      description: "Defines the type of housing or service project."
+      description: "Defines the client's relationship to the Head of Household."
       oneOf:
-        - title: "EMERGENCY_SHELTER_ENTRY_EXIT"
-          const: 0
-          description: "Emergency Shelter - Entry Exit"
-        - title: "EMERGENCY_SHELTER_NIGHT_BY_NIGHT"
+        - title: "SELF_HEAD_OF_HOUSEHOLD"
           const: 1
-          description: "Emergency Shelter - Night-by-Night"
-        - title: "TRANSITIONAL_HOUSING"
+          description: "Self (Head of Household)"
+        - title: "HEAD_OF_HOUSEHOLD_CHILD"
           const: 2
-          description: "Transitional Housing"
-        - title: "PERMANENT_SUPPORTIVE_HOUSING"
+          description: "Head of household's child"
+        - title: "HEAD_OF_HOUSEHOLD_SPOUSE_OR_PARTNER"
           const: 3
-          description: "Permanent Supportive Housing"
-        - title: "STREET_OUTREACH"
+          description: "Head of household's spouse or partner"
+        - title: "HEAD_OF_HOUSEHOLD_OTHER_RELATION_MEMBER"
           const: 4
-          description: "Street Outreach"
-        - title: "SERVICES_ONLY"
-          const: 6
-          description: "Services Only"
-        - title: "OTHER"
-          const: 7
-          description: "Other"
-        - title: "SAFE_HAVEN"
-          const: 8
+          description: "Head of household's other relation member"
+        - title: "OTHER_NON_RELATION_MEMBER"
+          const: 5
+          description: "Other: non-relation member"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    LivingSituation_list:
+      type: integer
+      description: "Enumerates types of living situations."
+      oneOf:
+        - title: "HOMELESS_NOT_MEANT_FOR_HABITATION"
+          const: 116
+          description: "Place not meant for habitation (e.g., a vehicle, an abandoned building, bus/train/subway station/airport or anywhere outside)"
+        - title: "HOMELESS_EMERGENCY_SHELTER"
+          const: 101
+          description: "Emergency shelter, including hotel or motel paid for with emergency shelter voucher, Host Home shelter "
+        - title: "HOMELESS_SAFE_HAVEN"
+          const: 118
           description: "Safe Haven"
-        - title: "HOUSING_ONLY"
+        - title: "INSTITUTIONAL_FOSTER_CARE"
+          const: 215
+          description: "Foster care home or foster care group home"
+        - title: "INSTITUTIONAL_HOSPITAL"
+          const: 206
+          description: "Hospital or other residential non-psychiatric medical facility"
+        - title: "INSTITUTIONAL_JAIL"
+          const: 207
+          description: "Jail, prison, or juvenile detention facility"
+        - title: "INSTITUTIONAL_LONG_TERM_CARE"
+          const: 225
+          description: "Long-term care facility or nursing home"
+        - title: "INSTITUTIONAL_PSYCHIATRIC"
+          const: 204
+          description: "Psychiatric hospital or other psychiatric facility"
+        - title: "INSTITUTIONAL_REHAB"
+          const: 205
+          description: "Substance abuse treatment facility or detox center"
+        - title: "TEMPORARY_TRANSITIONAL_HOUSING"
+          const: 302
+          description: "Transitional housing for homeless persons (including homeless youth)"
+        - title: "TEMPORARY_HALFWAY_HOUSE"
+          const: 329
+          description: "Residential project or halfway house with no homeless criteria"
+        - title: "TEMPORARY_HOTEL_OR_MOTEL"
+          const: 314
+          description: "Hotel or motel paid for without emergency shelter voucher"
+        - title: "TEMPORARY_HOST_HOME"
+          const: 332
+          description: "Host Home (non-crisis)"
+        - title: "TEMPORARY_FAMILY_SHORT_TERM"
+          const: 312
+          description: "Staying or living with family, temporary tenure (e.g. room, apartment, or house)"
+        - title: "TEMPORARY_FRIENDS_SHORT_TERM"
+          const: 313
+          description: "Staying or living with friends, temporary tenure (e.g. room, apartment, or house)"
+        - title: "TEMPORARY_HOPWA"
+          const: 327
+          description: "Moved from one HOPWA funded project to HOPWA TH"
+        - title: "TEMPORARY_FRIENDS_UNKNOWN_TERM"
+          const: 336
+          description: "Staying or living in a friend's room, apartment, or house"
+        - title: "TEMPORARY_FAMILY_UNKNOWN_TERM"
+          const: 335
+          description: "Staying or living in a family's room, apartment, or house"
+        - title: "PERMANENT_FAMILY"
+          const: 422
+          description: "Staying or living with family, permanent tenure"
+        - title: "PERMANENT_FRIENDS"
+          const: 423
+          description: "Staying or living with friends, permanent tenure"
+        - title: "PERMANENT_HOPWA"
+          const: 426
+          description: "Moved from one HOPWA funded project to HOPWA PH"
+        - title: "PERMANENT_UNSUBSIDIZED_RENTAL"
+          const: 410
+          description: "Rental by client, no ongoing housing subsidy"
+        - title: "PERMANENT_SUBSIDIZED_RENTAL"
+          const: 435
+          description: "Rental by client, with ongoing housing subsidy"
+        - title: "PERMANENT_SUBSIDIZED_OWNED"
+          const: 421
+          description: "Owned by client, with ongoing housing subsidy"
+        - title: "PERMANENT_UNSUBSIDIZED_OWNED"
+          const: 411
+          description: "Owned by client, no ongoing housing subsidy"
+        - title: "OTHER_NO_EXIT_INTERVIEW"
+          const: 30
+          description: "No exit interview completed"
+        - title: "OTHER"
+          const: 17
+          description: "Other"
+        - title: "OTHER_DECEASED"
+          const: 24
+          description: "Deceased"
+        - title: "OTHER_UNABLE_TO_DETERMINE"
+          const: 37
+          description: "Worker unable to determine"
+        - title: "OTHER_CLIENT_UNKNOWN"
+          const: 8
+          description: "Client doesn't know"
+        - title: "OTHER_CLIENT_NO_ANSWER"
           const: 9
-          description: "Housing Only"
-        - title: "HOUSING_WITH_SERVICES"
-          const: 10
-          description: "Housing with Services (no disability required for entry)"
-        - title: "DAY_SHELTER"
-          const: 11
-          description: "Day Shelter"
-        - title: "HOMELESSNESS_PREVENTION"
-          const: 12
-          description: "Homelessness Prevention"
-        - title: "RAPID_RE_HOUSING"
-          const: 13
-          description: "Rapid Re-Housing"
-        - title: "COORDINATED_ENTRY"
-          const: 14
-          description: "Coordinated Entry"
-    HousingType:
+          description: "Client prefers not to answer"
+        - title: "OTHER_DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+      PercentAMI_list:
       type: integer
-      description: "Specifies the type of housing configuration."
+      description: "Percentage of Area Median Income (AMI) that the client's income falls into."
       oneOf:
-        - title: "SITE_BASED_SINGLE_SITE"
+        - title: "30_PERCENT_OR_LESS"
           const: 1
-          description: "Site-based - single site"
-        - title: "SITE_BASED_CLUSTERED_MULTIPLE_SITES"
+          description: "30% or less"
+        - title: "31_TO_50_PERCENT"
           const: 2
-          description: "Site-based - clustered / multiple sites"
-        - title: "TENANT_BASED_SCATTERED_SITE"
+          description: "31% to 50%"
+        - title: "51_TO_80_PERCENT"
           const: 3
-          description: "Tenant-based - scattered site"
-    RRHSubType_list:
-      type: integer
-      description: "Subtypes for Rapid Re-Housing projects."
-      oneOf:
-        - title: "SERVICES_ONLY"
-          const: 1
-          description: "RRH: Services Only"
-        - title: "HOUSING_WITH_OR_WITHOUT_SERVICES"
-          const: 2
-          description: "RRH: Housing with or without services"
-    TargetPopulation_list:
-      type: integer
-      description: "Identifies the target population for the project."
-      oneOf:
-        - title: "DV_SURVIVOR_OF_DOMESTIC_VIOLENCE"
-          const: 1
-          description: "Survivors of domestic violence"
-        - title: "HIV_PERSONS_WITH_HIV/AIDS"
-          const: 3
-          description: "Persons with HIV/AIDS"
-        - title: "NA_NOT_APPLICABLE"
+          description: "51% to 80%"
+        - title: "81_PERCENT_OR_GREATER"
           const: 4
-          description: "Not applicable"
-    HOPWAMedAssistedLivingFacNum_list:
+          description: "81% or greater"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    VAMCStationNumber_list:
+      type: string
+      description: "VA Medical Center Station Numbers with corresponding facility names."
+      oneOf:
+        - title: "402_TOGUS_ME"
+          const: "402"
+          description: "Togus, ME"
+        - title: "405_WHITE_RIVER_JUNCTION_VT"
+          const: "405"
+          description: "White River Junction, VT"
+        - title: "436_MONTANA_HCS"
+          const: "436"
+          description: "Montana HCS"
+        - title: "437_FARGO_ND"
+          const: "437"
+          description: "Fargo, ND"
+        - title: "438_SIOUX_FALLS_SD"
+          const: "438"
+          description: "Sioux Falls, SD"
+        - title: "442_CHEYENNE_WY"
+          const: "442"
+          description: "Cheyenne, WY"
+        - title: "459_HONOLULU_HI"
+          const: "459"
+          description: "Honolulu, HI"
+        - title: "460_WILMINGTON_DE"
+          const: "460"
+          description: "Wilmington, DE"
+        - title: "463_ANCHORAGE_AK"
+          const: "463"
+          description: "Anchorage, AK"
+        - title: "501_NEW_MEXICO_HCS"
+          const: "501"
+          description: "New Mexico HCS"
+        - title: "502_ALEXANDRIA_LA"
+          const: "502"
+          description: "Alexandria, LA"
+        - title: "503_ALTOONA_PA"
+          const: "503"
+          description: "Altoona, PA"
+        - title: "504_AMARILLO_TX"
+          const: "504"
+          description: "Amarillo, TX"
+        - title: "506_ANN_ARBOR_MI"
+          const: "506"
+          description: "Ann Arbor, MI"
+        - title: "508_ATLANTA_GA"
+          const: "508"
+          description: "Atlanta, GA"
+        - title: "509_AUGUSTA_GA"
+          const: "509"
+          description: "Augusta, GA"
+        - title: "512_BALTIMORE_HCS_MD"
+          const: "512"
+          description: "Baltimore HCS, MD"
+        - title: "515_BATTLE_CREEK_MI"
+          const: "515"
+          description: "Battle Creek, MI"
+        - title: "516_BAY_PINES_FL"
+          const: "516"
+          description: "Bay Pines, FL"
+        - title: "517_BECKLEY_WV"
+          const: "517"
+          description: "Beckley, WV"
+        - title: "518_BEDFORD_MA"
+          const: "518"
+          description: "Bedford, MA"
+        - title: "519_BIG_SPRING_TX"
+          const: "519"
+          description: "Big Spring, TX"
+        - title: "520_GULF_COAST_HCS_MS"
+          const: "520"
+          description: "Gulf Coast HCS, MS"
+        - title: "521_BIRMINGHAM_AL"
+          const: "521"
+          description: "Birmingham, AL"
+        - title: "523_VA_BOSTON_HCS_MA"
+          const: "523"
+          description: "VA Boston HCS, MA"
+        - title: "526_BRONX_NY"
+          const: "526"
+          description: "Bronx, NY"
+        - title: "528_WESTERN_NEW_YORK_NY"
+          const: "528"
+          description: "Western New York, NY"
+        - title: "529_BUTLER_PA"
+          const: "529"
+          description: "Butler, PA"
+        - title: "531_BOISE_ID"
+          const: "531"
+          description: "Boise, ID"
+        - title: "534_CHARLESTON_SC"
+          const: "534"
+          description: "Charleston, SC"
+        - title: "537_JESSE_BROWN_VAMC_CHICAGO_IL"
+          const: "537"
+          description: "Jesse Brown VAMC (Chicago), IL"
+        - title: "538_CHILLICOTHE_OH"
+          const: "538"
+          description: "Chillicothe, OH"
+        - title: "539_CINCINNATI_OH"
+          const: "539"
+          description: "Cincinnati, OH"
+        - title: "540_CLARKSBURG_WV"
+          const: "540"
+          description: "Clarksburg, WV"
+        - title: "541_CLEVELAND_OH"
+          const: "541"
+          description: "Cleveland, OH"
+        - title: "542_COATESVILLE_PA"
+          const: "542"
+          description: "Coatesville, PA"
+        - title: "544_COLUMBIA_SC"
+          const: "544"
+          description: "Columbia, SC"
+        - title: "546_MIAMI_FL"
+          const: "546"
+          description: "Miami, FL"
+        - title: "548_WEST_PALM_BEACH_FL"
+          const: "548"
+          description: "West Palm Beach, FL"
+        - title: "549_DALLAS_TX"
+          const: "549"
+          description: "Dallas, TX"
+        - title: "550_DANVILLE_IL"
+          const: "550"
+          description: "Danville, IL"
+        - title: "552_DAYTON_OH"
+          const: "552"
+          description: "Dayton, OH"
+        - title: "553_DETROIT_MI"
+          const: "553"
+          description: "Detroit, MI"
+        - title: "554_DENVER_CO"
+          const: "554"
+          description: "Denver, CO"
+        - title: "556_CAPTAIN_JAMES_A_LOVELL_FHCC"
+          const: "556"
+          description: "Captain James A Lovell FHCC"
+        - title: "557_DUBLIN_GA"
+          const: "557"
+          description: "Dublin, GA"
+        - title: "558_DURHAM_NC"
+          const: "558"
+          description: "Durham, NC"
+        - title: "561_NEW_JERSEY_HCS_NJ"
+          const: "561"
+          description: "New Jersey HCS, NJ"
+        - title: "562_ERIE_PA"
+          const: "562"
+          description: "Erie, PA"
+        - title: "564_FAYETTEVILLE_AR"
+          const: "564"
+          description: "Fayetteville, AR"
+        - title: "565_FAYETTEVILLE_NC"
+          const: "565"
+          description: "Fayetteville, NC"
+        - title: "568_BLACK_HILLS_HCS_SD"
+          const: "568"
+          description: "Black Hills HCS, SD"
+        - title: "570_FRESNO_CA"
+          const: "570"
+          description: "Fresno, CA"
+        - title: "573_GAINESVILLE_FL"
+          const: "573"
+          description: "Gainesville, FL"
+        - title: "575_GRAND_JUNCTION_CO"
+          const: "575"
+          description: "Grand Junction, CO"
+        - title: "578_HINES_IL"
+          const: "578"
+          description: "Hines, IL"
+        - title: "580_HOUSTON_TX"
+          const: "580"
+          description: "Houston, TX"
+        - title: "581_HUNTINGTON_WV"
+          const: "581"
+          description: "Huntington, WV"
+        - title: "583_INDIANAPOLIS_IN"
+          const: "583"
+          description: "Indianapolis, IN"
+        - title: "585_IRON_MOUNTAIN_MI"
+          const: "585"
+          description: "Iron Mountain, MI"
+        - title: "586_JACKSON_MS"
+          const: "586"
+          description: "Jackson, MS"
+        - title: "589_KANSAS_City_MO"
+          const: "589"
+          description: "Kansas City, MO"
+        - title: "590_HAMPTON_VA"
+          const: "590"
+          description: "Hampton, VA"
+        - title: "593_LAS_VEGAS_NV"
+          const: "593"
+          description: "Las Vegas, NV"
+        - title: "595_LEBANON_PA"
+          const: "595"
+          description: "Lebanon, PA"
+        - title: "596_LEXINGTON_KY"
+          const: "596"
+          description: "Lexington, KY"
+        - title: "598_LITTLE_ROCK_AR"
+          const: "598"
+          description: "Little Rock, AR"
+        - title: "600_LONG_BEACH_CA"
+          const: "600"
+          description: "Long Beach, CA"
+        - title: "603_LOUISVILLE_KY"
+          const: "603"
+          description: "Louisville, KY"
+        - title: "605_LOMA_LINDA_CA"
+          const: "605"
+          description: "Loma Linda, CA"
+        - title: "607_MADISON_WI"
+          const: "607"
+          description: "Madison, WI"
+        - title: "608_MANCHESTER_NH"
+          const: "608"
+          description: "Manchester, NH"
+        - title: "610_NORTHERN_INDIANA_HCS_IN"
+          const: "610"
+          description: "Northern Indiana HCS, IN"
+        - title: "612_N_CALIFORNIA_CA"
+          const: "612"
+          description: "N. California, CA"
+        - title: "613_MARTINSBURG_WV"
+          const: "613"
+          description: "Martinsburg, WV"
+        - title: "614_MEMPHIS_TN"
+          const: "614"
+          description: "Memphis, TN"
+        - title: "618_MINNEAPOLIS_MN"
+          const: "618"
+          description: "Minneapolis, MN"
+        - title: "619_CENTRAL_ALABAMA_VETERANS_HCS_AL"
+          const: "619"
+          description: "Central Alabama Veterans HCS, AL"
+        - title: "620_VA_HUDSON_VALLEY_HCS_NY"
+          const: "620"
+          description: "VA Hudson Valley HCS, NY"
+        - title: "621_MOUNTAIN_HOME_TN"
+          const: "621"
+          description: "Mountain Home, TN"
+        - title: "623_MUSKOGEE_OK"
+          const: "623"
+          description: "Muskogee, OK"
+        - title: "626_MIDDLE_TENNESSEE_HCS_TN"
+          const: "626"
+          description: "Middle Tennessee HCS, TN"
+        - title: "629_NEW_ORLEANS_LA"
+          const: "629"
+          description: "New Orleans, LA"
+        - title: "630_NEW_YORK_HARBOR_HCS_NY"
+          const: "630"
+          description: "New York Harbor HCS, NY"
+        - title: "631_VA_CENTRAL_WESTERN_MASSACHUSETTS_HCS"
+          const: "631"
+          description: "VA Central Western Massachusetts HCS"
+        - title: "632_NORTHPORT_NY"
+          const: "632"
+          description: "Northport, NY"
+        - title: "635_OKLAHOMA_City_OK"
+          const: "635"
+          description: "Oklahoma City, OK"
+        - title: "636_NEBRASKA_W_IOWA_NE"
+          const: "636"
+          description: "Nebraska-W Iowa, NE"
+        - title: "637_ASHEVILLE_NC"
+          const: "637"
+          description: "Asheville, NC"
+        - title: "640_PALO_ALTO_CA"
+          const: "640"
+          description: "Palo Alto, CA"
+        - title: "642_PHILADELPHIA_PA"
+          const: "642"
+          description: "Philadelphia, PA"
+        - title: "644_PHOENIX_AZ"
+          const: "644"
+          description: "Phoenix, AZ"
+        - title: "646_PITTSBURGH_PA"
+          const: "646"
+          description: "Pittsburgh, PA"
+        - title: "648_PORTLAND_OR"
+          const: "648"
+          description: "Portland, OR"
+        - title: "649_NORTHERN_ARIZONA_HCS"
+          const: "649"
+          description: "Northern Arizona HCS"
+        - title: "650_PROVIDENCE_RI"
+          const: "650"
+          description: "Providence, RI"
+        - title: "652_RICHMOND_VA"
+          const: "652"
+          description: "Richmond, VA"
+        - title: "653_ROSEBURG_OR"
+          const: "653"
+          description: "Roseburg, OR"
+        - title: "654_RENO_NV"
+          const: "654"
+          description: "Reno, NV"
+        - title: "655_SAGINAW_MI"
+          const: "655"
+          description: "Saginaw, MI"
+        - title: "656_ST_CLOUD_MN"
+          const: "656"
+          description: "St. Cloud, MN"
+        - title: "657_ST_LOUIS_MO"
+          const: "657"
+          description: "St. Louis, MO"
+        - title: "658_SALEM_VA"
+          const: "658"
+          description: "Salem, VA"
+        - title: "659_SALISBURY_NC"
+          const: "659"
+          description: "Salisbury, NC"
+        - title: "660_SALT_LAKE_City_UT"
+          const: "660"
+          description: "Salt Lake City, UT"
+        - title: "662_SAN_FRANCISCO_CA"
+          const: "662"
+          description: "San Francisco, CA"
+        - title: "663_VA_PUGET_SOUND_WA"
+          const: "663"
+          description: "VA Puget Sound, WA"
+        - title: "664_SAN_DIEGO_CA"
+          const: "664"
+          description: "San Diego, CA"
+        - title: "666_SHERIDAN_WY"
+          const: "666"
+          description: "Sheridan, WY"
+        - title: "667_SHREVEPORT_LA"
+          const: "667"
+          description: "Shreveport, LA"
+        - title: "668_SPOKANE_WA"
+          const: "668"
+          description: "Spokane, WA"
+        - title: "671_SAN_ANTONIO_TX"
+          const: "671"
+          description: "San Antonio, TX"
+        - title: "672_SAN_JUAN_PR"
+          const: "672"
+          description: "San Juan, PR"
+        - title: "673_TAMPA_FL"
+          const: "673"
+          description: "Tampa, FL"
+        - title: "674_TEMPLE_TX"
+          const: "674"
+          description: "Temple, TX"
+        - title: "675_ORLANDO_FL"
+          const: "675"
+          description: "Orlando, FL"
+        - title: "676_TOMAH_WI"
+          const: "676"
+          description: "Tomah, WI"
+        - title: "678_SOUTHERN_ARIZONA_HCS"
+          const: "678"
+          description: "Southern Arizona HCS"
+        - title: "679_TUSCALOOSA_AL"
+          const: "679"
+          description: "Tuscaloosa, AL"
+        - title: "687_WALLA_WALLA_WA"
+          const: "687"
+          description: "Walla Walla, WA"
+        - title: "688_WASHINGTON_DC"
+          const: "688"
+          description: "Washington, DC"
+        - title: "689_VA_CONNECTICUT_HCS_CT"
+          const: "689"
+          description: "VA Connecticut HCS, CT"
+        - title: "691_GREATER_LOS_ANGELES_HCS"
+          const: "691"
+          description: "Greater Los Angeles HCS"
+        - title: "692_WHITE_City_OR"
+          const: "692"
+          description: "White City, OR"
+        - title: "693_WILKES_BARRE_PA"
+          const: "693"
+          description: "Wilkes-Barre, PA"
+        - title: "695_MILWAUKEE_WI"
+          const: "695"
+          description: "Milwaukee, WI"
+        - title: "740_VA_TEXAS_VALLEY_COASTAL_BEND_HCS"
+          const: "740"
+          description: "VA Texas Valley Coastal Bend HCS"
+        - title: "756_EL_PASO_TX"
+          const: "756"
+          description: "El Paso, TX"
+        - title: "757_COLUMBUS_OH"
+          const: "757"
+          description: "Columbus, OH"
+        - title: "459GE_GUAM"
+          const: "459GE"
+          description: "Guam"
+        - title: "528A5_CANANDAIGUA_NY"
+          const: "528A5"
+          description: "Canandaigua, NY"
+        - title: "528A6_BATH_NY"
+          const: "528A6"
+          description: "Bath, NY"
+        - title: "528A7_SYRACUSE_NY"
+          const: "528A7"
+          description: "Syracuse, NY"
+        - title: "528A8_ALBANY_NY"
+          const: "528A8"
+          description: "Albany, NY"
+        - title: "589A4_COLUMBIA_MO"
+          const: "589A4"
+          description: "Columbia, MO"
+        - title: "589A5_KANSAS_City_MO"
+          const: "589A5"
+          description: "Kansas City, MO"
+        - title: "589A6_EASTERN_KS_HCS_KS"
+          const: "589A6"
+          description: "Eastern KS HCS, KS"
+        - title: "589A7_WICHITA_KS"
+          const: "589A7"
+          description: "Wichita, KS"
+        - title: "636A6_CENTRAL_IOWA_IA"
+          const: "636A6"
+          description: "Central Iowa, IA"
+        - title: "636A8_IOWA_City_IA"
+          const: "636A8"
+          description: "Iowa City, IA"
+        - title: "657A4_POPLAR_BLUFF_MO"
+          const: "657A4"
+          description: "Poplar Bluff, MO"
+        - title: "657A5_MARION_IL"
+          const: "657A5"
+          description: "Marion, IL"
+        - title: "DATA_NOT_COLLECTED"
+          const: "99"
+          description: "Data not collected"
+    RentalSubsidyTypes_list:
       type: integer
-      description: "Defines whether a project is a HOPWA-funded medical assisted living facility."
+      description: "Specifies the type of rental subsidy provided to the client."
+      oneOf:
+        - title: "GPD_TIP_HOUSING_SUBSIDY"
+          const: 428
+          description: "GPD TIP housing subsidy"
+        - title: "VASH_HOUSING_SUBSIDY"
+          const: 419
+          description: "VASH housing subsidy"
+        - title: "RRH_OR_EQUIVALENT_SUBSIDY"
+          const: 431
+          description: "RRH or equivalent subsidy"
+        - title: "HCV_VOUCHER"
+          const: 433
+          description: "HCV voucher (tenant or project based) (not dedicated)"
+        - title: "PUBLIC_HOUSING_UNIT"
+          const: 434
+          description: "Public housing unit"
+        - title: "RENTAL_BY_CLIENT_WITH_OTHER_HOUSING_SUBSIDY"
+          const: 420
+          description: "Rental by client, with other ongoing housing subsidy"
+        - title: "HOUSING_STABILITY_VOUCHER"
+          const: 436
+          description: "Housing Stability Voucher"
+        - title: "FAMILY_UNIFICATION_PROGRAM_VOUCHER"
+          const: 437
+          description: "Family Unification Program Voucher (FUP)"
+        - title: "FOSTER_YOUTH_TO_INDEPENDENCE_INITIATIVE"
+          const: 438
+          description: "Foster Youth to Independence Initiative (FYI)"
+        - title: "PERMANENT_SUPPORTIVE_HOUSING"
+          const: 439
+          description: "Permanent Supportive Housing"
+        - title: "OTHER_PERMANENT_HOUSING"
+          const: 440
+          description: "Other permanent housing dedicated for formerly homeless persons"
+    LengthOfStay_list:
+      type: integer
+      description: "Indicates the length of the client's stay."
+      oneOf:
+        - title: "ONE_WEEK_TO_ONE_MONTH"
+          const: 2
+          description: "One week or more, but less than one month"
+        - title: "ONE_MONTH_TO_90_DAYS"
+          const: 3
+          description: "One month or more, but less than 90 days"
+        - title: "90_DAYS_TO_ONE_YEAR"
+          const: 4
+          description: "90 days or more but less than one year"
+        - title: "ONE_YEAR_OR_LONGER"
+          const: 5
+          description: "One year or longer"
+        - title: "ONE_NIGHT_OR_LESS"
+          const: 10
+          description: "One night or less"
+        - title: "TWO_TO_SIX_NIGHTS"
+          const: 11
+          description: "Two to six nights"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    TimesHomelessPastThreeYears_list:
+      type: integer
+      description: "Number of times the client has been homeless in the past three years."
+      oneOf:
+        - title: "ONE_TIME"
+          const: 1
+          description: "One time"
+        - title: "TWO_TIMES"
+          const: 2
+          description: "Two times"
+        - title: "THREE_TIMES"
+          const: 3
+          description: "Three times"
+        - title: "FOUR_OR_MORE_TIMES"
+          const: 4
+          description: "Four or more times"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    MonthsHomelessPastThreeYears_list:
+      type: integer
+      description: "Total months the client has been homeless in the past three years."
+      oneOf:
+        - title: "ONE_MONTH"
+          const: 101
+          description: "1 month"
+        - title: "TWO_MONTHS"
+          const: 102
+          description: "2 months"
+        - title: "THREE_MONTHS"
+          const: 103
+          description: "3 months"
+        - title: "FOUR_MONTHS"
+          const: 104
+          description: "4 months"
+        - title: "FIVE_MONTHS"
+          const: 105
+          description: "5 months"
+        - title: "SIX_MONTHS"
+          const: 106
+          description: "6 months"
+        - title: "SEVEN_MONTHS"
+          const: 107
+          description: "7 months"
+        - title: "EIGHT_MONTHS"
+          const: 108
+          description: "8 months"
+        - title: "NINE_MONTHS"
+          const: 109
+          description: "9 months"
+        - title: "TEN_MONTHS"
+          const: 110
+          description: "10 months"
+        - title: "ELEVEN_MONTHS"
+          const: 111
+          description: "11 months"
+        - title: "TWELVE_MONTHS"
+          const: 112
+          description: "12 months"
+        - title: "MORE_THAN_TWELVE_MONTHS"
+          const: 113
+          description: "More than 12 months"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    ReasonNotEnrolled_list:
+      type: integer
+      description: "Reasons why a client was not enrolled in the PATH program."
+      oneOf:
+        - title: "CLIENT_INELIGIBLE_FOR_PATH"
+          const: 1
+          description: "Client was found ineligible for PATH"
+        - title: "NOT_ENROLLED_OTHER_REASONS"
+          const: 2
+          description: "Client was not enrolled for other reason(s)"
+        - title: "UNABLE_TO_LOCATE_CLIENT"
+          const: 3
+          description: "Unable to locate client"
+    ReferralSource_list:
+      type: integer
+      description: "Sources from which referrals are received."
+      oneOf:
+        - title: "SELF_REFERRAL"
+          const: 1
+          description: "Self-Referral"
+        - title: "INDIVIDUAL_REFERRAL"
+          const: 2
+          description: "Individual: Parent/Guardian/Relative/Friend/Foster Parent/Other Individual"
+        - title: "OUTREACH_PROJECT"
+          const: 7
+          description: "Outreach Project"
+        - title: "TEMPORARY_SHELTER"
+          const: 11
+          description: "Temporary Shelter"
+        - title: "RESIDENTIAL_PROJECT"
+          const: 18
+          description: "Residential Project"
+        - title: "HOTLINE"
+          const: 28
+          description: "Hotline"
+        - title: "CHILD_WELFARE_CPS"
+          const: 30
+          description: "Child Welfare/CPS"
+        - title: "JUVENILE_JUSTICE"
+          const: 34
+          description: "Juvenile Justice"
+        - title: "LAW_ENFORCEMENT_POLICE"
+          const: 35
+          description: "Law Enforcement/ Police"
+        - title: "MENTAL_HOSPITAL"
+          const: 37
+          description: "Mental Hospital"
+        - title: "SCHOOL"
+          const: 38
+          description: "School"
+        - title: "OTHER_ORGANIZATION"
+          const: 39
+          description: "Other Organization"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"          
+    ReasonNoServices_list:
+      type: integer
+      description: "Reasons for not providing services."
+      oneOf:
+        - title: "OUT_OF_AGE_RANGE"
+          const: 1
+          description: "Out of age range"
+        - title: "WARD_OF_THE_State"
+          const: 2
+          description: "Ward of the State"
+        - title: "WARD_OF_THE_CRIMINAL_JUSTICE_SYSTEM"
+          const: 3
+          description: "Ward of the criminal justice system"
+        - title: "OTHER"
+          const: 4
+          description: "Other"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    SexualOrientation_list:
+      type: integer
+      description: "Sexual orientation of the client."
+      oneOf:
+        - title: "HETEROSEXUAL"
+          const: 1
+          description: "Heterosexual"
+        - title: "GAY"
+          const: 2
+          description: "Gay"
+        - title: "LESBIAN"
+          const: 3
+          description: "Lesbian"
+        - title: "BISEXUAL"
+          const: 4
+          description: "Bisexual"
+        - title: "QUESTIONING_UNSURE"
+          const: 5
+          description: "Questioning / unsure"
+        - title: "OTHER"
+          const: 6
+          description: "Other"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    RHYNumberofYears_list:
+      type: integer
+      description: "Years formerly a ward of Child Welfare or Foster Care Agency."
+      oneOf:
+        - title: "LESS_THAN_ONE_YEAR"
+          const: 1
+          description: "Less than one year"
+        - title: "ONE_TO_TWO_YEARS"
+          const: 2
+          description: "1 to 2 years"
+        - title: "THREE_TO_FIVE_OR_MORE_YEARS"
+          const: 3
+          description: "3 to 5 or more years"
+    TimeToHousingLoss_list:
+      type: integer
+      description: "Time remaining before housing loss occurs."
+      oneOf:
+        - title: "1_TO_6_DAYS"
+          const: 0
+          description: "1-6 days"
+        - title: "7_TO_13_DAYS"
+          const: 1
+          description: "7-13 days"
+        - title: "14_TO_21_DAYS"
+          const: 2
+          description: "14-21 days"
+        - title: "MORE_THAN_21_DAYS"
+          const: 3
+          description: "More than 21 days"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    AnnualPercentAMI_list:
+      type: integer
+      description: "Percentage of Area Median Income (AMI) for the household."
+      oneOf:
+        - title: "0_DOLLARS"
+          const: 0
+          description: "$0 (i.e., not Employed, not receiving cash benefits, no other current income)"
+        - title: "1_TO_14_PERCENT_AMI"
+          const: 1
+          description: "1-14% of AMI for household size"
+        - title: "15_TO_30_PERCENT_AMI"
+          const: 2
+          description: "15-30% of AMI for household size"
+        - title: "MORE_THAN_30_PERCENT_AMI"
+          const: 3
+          description: "More than 30% of AMI for household size"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    LiteralHomelessHistory_list:
+      type: integer
+      description: "History of literal homelessness."
+      oneOf:
+        - title: "MOST_RECENT_IN_LAST_YEAR"
+          const: 0
+          description: "Most recent episode occurred in the last year"
+        - title: "MOST_RECENT_MORE_THAN_ONE_YEAR_AGO"
+          const: 1
+          description: "Most recent episode occurred more than one year ago"
+        - title: "NONE"
+          const: 2
+          description: "None"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    EvictionHistory_list:
+      type: integer
+      description: "History of rental evictions for the individual."
+      oneOf:
+        - title: "NO_PRIOR_RENTAL_EVICTIONS"
+          const: 0
+          description: "No prior rental evictions"
+        - title: "1_PRIOR_RENTAL_EVICTION"
+          const: 1
+          description: "1 prior rental eviction"
+        - title: "2_OR_MORE_PRIOR_RENTAL_EVICTIONS"
+          const: 2
+          description: "2 or more prior rental evictions"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    IncarceratedAdult_list:
+      type: integer
+      description: "Incarcerated as adult (any adult in household)."
+      oneOf:
+        - title: "NOT_INCARCERATED"
+          const: 0
+          description: "Not incarcerated"
+        - title: "INCARCERATED_ONCE"
+          const: 1
+          description: "Incarcerated once"
+        - title: "INCARCERATED_TWO_OR_MORE_TIMES"
+          const: 2
+          description: "Incarcerated two or more times"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    DependentUnder6_list:
+      type: integer
+      description: "Presence and age of youngest child under six years in the household."
       oneOf:
         - title: "NO"
           const: 0
-          description: "Not a HOPWA-funded medical assisted living facility."
+          description: "No"
+        - title: "YOUNGEST_UNDER_1_YEAR"
+          const: 1
+          description: "Youngest child is under 1 year old"
+        - title: "YOUNGEST_1_TO_6_YEARS"
+          const: 2
+          description: "Youngest child is 1 to 6 years old and/or one or more children (any age) require significant care"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    HousingAssessmentAtExit_list:
+      type: integer
+      description: "Assessment of housing situation at the time of project exit."
+      oneOf:
+        - title: "MAINTAINED_HOUSING"
+          const: 1
+          description: "Able to maintain the housing they had at project entry"
+        - title: "MOVED_TO_NEW_HOUSING"
+          const: 2
+          description: "Moved to new housing unit"
+        - title: "MOVED_IN_WITH_FAMILY_FRIENDS_TEMPORARILY"
+          const: 3
+          description: "Moved in with family/friends on a temporary basis"
+        - title: "MOVED_IN_WITH_FAMILY_FRIENDS_PERMANENTLY"
+          const: 4
+          description: "Moved in with family/friends on a permanent basis"
+        - title: "MOVED_TO_TRANSITIONAL_HOUSING"
+          const: 5
+          description: "Moved to a transitional or temporary housing facility or program"
+        - title: "BECAME_HOMELESS"
+          const: 6
+          description: "Client became homeless-moving to a shelter or other place unfit for human habitation"
+        - title: "JAIL_PRISON"
+          const: 7
+          description: "Jail/prison"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DECEASED"
+          const: 10
+          description: "Deceased"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    SubsidyInformation_list:
+      type: integer
+      description: "Type of subsidy or financial assistance the client has at project exit."
+      oneOf:
+        - title: "WITHOUT_A_SUBSIDY"
+          const: 1
+          description: "Without a subsidy"
+        - title: "WITH_SUBSIDY_AT_PROJECT_ENTRY"
+          const: 2
+          description: "With the subsidy they had at project entry"
+        - title: "WITH_ONGOING_SUBSIDY_ACQUIRED"
+          const: 3
+          description: "With an on-going subsidy acquired since project entry"
+        - title: "WITH_OTHER_FINANCIAL_ASSISTANCE"
+          const: 4
+          description: "But only with other financial assistance"
+        - title: "WITH_ONGOING_SUBSIDY"
+          const: 11
+          description: "With on-going subsidy"
+        - title: "WITHOUT_ONGOING_SUBSIDY"
+          const: 12
+          description: "Without an on-going subsidy"
+    ProjectCompletionStatus_list:
+      type: integer
+      description: "Completion status of the project."
+      oneOf:
+        - title: "COMPLETED_PROJECT"
+          const: 1
+          description: "Completed project"
+        - title: "CLIENT_LEFT_EARLY"
+          const: 2
+          description: "Client voluntarily left early"
+        - title: "CLIENT_WAS_EXPELLED"
+          const: 3
+          description: "Client was expelled or otherwise involuntarily discharged from project"
+    ExpelledReason_list:
+      type: integer
+      description: "Reasons for expulsion from the project."
+      oneOf:
+        - title: "CRIMINAL_ACTIVITY"
+          const: 1
+          description: "Criminal activity/destruction of property/violence"
+        - title: "NON_COMPLIANCE"
+          const: 2
+          description: "Non-compliance with project rules"
+        - title: "NON_PAYMENT"
+          const: 3
+          description: "Non-payment of rent/occupancy charge"
+        - title: "MAXIMUM_TIME_REACHED"
+          const: 4
+          description: "Reached maximum time allowed by project"
+        - title: "PROJECT_TERMINATED"
+          const: 5
+          description: "Project terminated"
+        - title: "UNKNOWN_DISAPPEARED"
+          const: 6
+          description: "Unknown/disappeared"
+    CountExchangeForSex_list:
+      type: integer
+      description: "How may times ever received anything for sex."
+      oneOf:
+        - title: "1_TO_3"
+          const: 1
+          description: "1-3 times"
+        - title: "4_TO_7"
+          const: 2
+          description: "4-7 times"
+        - title: "8_TO_11"
+          const: 3
+          description: "8-11 times"
+        - title: "12_OR_MORE"
+          const: 4
+          description: "12 or more times"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    WorkerResponse_list:
+      type: integer
+      description: "Worker's response to a query or situation."
+      oneOf:
+        - title: "NO"
+          const: 0
+          description: "No"
         - title: "YES"
           const: 1
-          description: "Yes, HOPWA-funded medical assisted living facility."
-        - title: "NON_HOPWA_FUNDED_PROJECT"
+          description: "Yes"
+        - title: "WORKER_DOES_NOT_KNOW"
           const: 2
-          description: "Non-HOPWA funded project"
+          description: "Worker does not know"
+    AftercareProvided_list:
+      type: integer
+      description: "Specifies if aftercare was provided following service completion."
+      oneOf:
+        - title: "NO"
+          const: 0
+          description: "No"
+        - title: "YES"
+          const: 1
+          description: "Yes"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+    CMExitReason_list:
+      type: integer
+      description: "Reasons for exiting case management."
+      oneOf:
+        - title: "ACCOMPLISHED_GOALS"
+          const: 1
+          description: "Accomplished goals and/or obtained services and no longer needs CM"
+        - title: "TRANSFERRED_TO_ANOTHER_SITE"
+          const: 2
+          description: "Transferred to another HUD/VASH program site"
+        - title: "FOUND_OTHER_HOUSING"
+          const: 3
+          description: "Found/chose other housing"
+        - title: "NON_COMPLIANCE"
+          const: 4
+          description: "Did not comply with HUD/VASH CM"
+        - title: "EVICTION_ISSUES"
+          const: 5
+          description: "Eviction and/or other housing related issues"
+        - title: "UNHAPPY_WITH_HOUSING"
+          const: 6
+          description: "Unhappy with HUD/VASH housing"
+        - title: "NO_LONGER_ELIGIBLE"
+          const: 7
+          description: "No longer financially eligible for HUD/VASH voucher"
+        - title: "LOST_INTEREST"
+          const: 8
+          description: "No longer interested in participating in this program"
+        - title: "VETERAN_NOT_LOCATED"
+          const: 9
+          description: "Veteran cannot be located"
+        - title: "VETERAN_TOO_ILL"
+          const: 10
+          description: "Veteran too ill to participate at this time"
+        - title: "VETERAN_INCARCERATED"
+          const: 11
+          description: "Veteran is incarcerated"
+        - title: "VETERAN_DECEASED"
+          const: 12
+          description: "Veteran is deceased"
+        - title: "OTHER"
+          const: 13
+          description: "Other"
     FundingSource_list:
       type: integer
       description: "Specifies the source of funding for housing and services projects."
@@ -4471,58 +6448,453 @@ components:
         - title: "HUD_RURAL_SPECIAL_NOFO"
           const: 55
           description: "HUD: Rural Special NOFO"
-    GeographyType_list:
+    ProjectType_list:
       type: integer
-      description: "Indicates the type of geographic area for the project location."
+      description: "Defines the type of housing or service project."
       oneOf:
-        - title: "URBAN"
+        - title: "EMERGENCY_SHELTER_ENTRY_EXIT"
+          const: 0
+          description: "Emergency Shelter - Entry Exit"
+        - title: "EMERGENCY_SHELTER_NIGHT_BY_NIGHT"
           const: 1
-          description: "Urban"
-        - title: "SUBURBAN"
+          description: "Emergency Shelter - Night-by-Night"
+        - title: "TRANSITIONAL_HOUSING"
           const: 2
-          description: "Suburban"
-        - title: "RURAL"
+          description: "Transitional Housing"
+        - title: "PERMANENT_SUPPORTIVE_HOUSING"
           const: 3
-          description: "Rural"
-        - title: "Unknown / data not collected"
-          const: 99
-          description: "Unknown / data not collected"
-    HouseholdType_list:
-      type: integer
-      description: "Specifies the household compositiom."
-      oneOf:
-        - title: "Households without children"
-          const: 1
-          description: "Households without Children"
-        - title: "Households with at least one adult and one child"
-          const: 3
-          description: "Households with at least one adult and one child"
-        - title: "Households with only children"
+          description: "Permanent Supportive Housing"
+        - title: "STREET_OUTREACH"
           const: 4
-          description: "Households with only children"
-    Availability_list:
+          description: "Street Outreach"
+        - title: "SERVICES_ONLY"
+          const: 6
+          description: "Services Only"
+        - title: "OTHER"
+          const: 7
+          description: "Other"
+        - title: "SAFE_HAVEN"
+          const: 8
+          description: "Safe Haven"
+        - title: "HOUSING_ONLY"
+          const: 9
+          description: "Housing Only"
+        - title: "HOUSING_WITH_SERVICES"
+          const: 10
+          description: "Housing with Services (no disability required for entry)"
+        - title: "DAY_SHELTER"
+          const: 11
+          description: "Day Shelter"
+        - title: "HOMELESSNESS_PREVENTION"
+          const: 12
+          description: "Homelessness Prevention"
+        - title: "RAPID_RE_HOUSING"
+          const: 13
+          description: "Rapid Re-Housing"
+        - title: "COORDINATED_ENTRY"
+          const: 14
+          description: "Coordinated Entry"
+    RRHSubType_list:
       type: integer
-      description: "Indicates when the beds in the project are Availability."
+      description: "Subtypes for Rapid Re-Housing projects."
       oneOf:
-        - title: "Year-round"
+        - title: "SERVICES_ONLY"
           const: 1
-          description: "Year-round"
-        - title: "Seasonal"
+          description: "RRH: Services Only"
+        - title: "HOUSING_WITH_OR_WITHOUT_SERVICES"
           const: 2
-          description: "Seasonal"
-        - title: "Overflow"
-          const: 3
-          description: "Overflow"
-    BedType_list:
+          description: "RRH: Housing with or without services"
+    HousingType:
       type: integer
-      description: "Specifies the type of bed available in the project."
+      description: "Specifies the type of housing configuration."
+      oneOf:
+        - title: "SITE_BASED_SINGLE_SITE"
+          const: 1
+          description: "Site-based - single site"
+        - title: "SITE_BASED_CLUSTERED_MULTIPLE_SITES"
+          const: 2
+          description: "Site-based - clustered / multiple sites"
+        - title: "TENANT_BASED_SCATTERED_SITE"
+          const: 3
+          description: "Tenant-based - scattered site"
+    TargetPopulation_list:
+      type: integer
+      description: "Identifies the target population for the project."
+      oneOf:
+        - title: "DV_SURVIVOR_OF_DOMESTIC_VIOLENCE"
+          const: 1
+          description: "Survivors of domestic violence"
+        - title: "HIV_PERSONS_WITH_HIV/AIDS"
+          const: 3
+          description: "Persons with HIV/AIDS"
+        - title: "NA_NOT_APPLICABLE"
+          const: 4
+          description: "Not applicable"
+    HOPWAMedAssistedLivingFacNum_list:
+      type: integer
+      description: "Defines whether a project is a HOPWA-funded medical assisted living facility."
+      oneOf:
+        - title: "NO"
+          const: 0
+          description: "Not a HOPWA-funded medical assisted living facility."
+        - title: "YES"
+          const: 1
+          description: "Yes, HOPWA-funded medical assisted living facility."
+        - title: "NON_HOPWA_FUNDED_PROJECT"
+          const: 2
+          description: "Non-HOPWA funded project"
+    MilitaryBranch_list:
+      type: integer
+      description: "Branch of military service."
+      oneOf:
+        - title: "ARMY"
+          const: 1
+          description: "Army"
+        - title: "AIR_FORCE"
+          const: 2
+          description: "Air Force"
+        - title: "NAVY"
+          const: 3
+          description: "Navy"
+        - title: "MARINES"
+          const: 4
+          description: "Marines"
+        - title: "COAST_GUARD"
+          const: 6
+          description: "Coast Guard"
+        - title: "SPACE_FORCE"
+          const: 7
+          description: "Space Force"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    DischargeStatus_list:
+      type: integer
+      description: "Military discharge status."
+      oneOf:
+        - title: "HONORABLE"
+          const: 1
+          description: "Honorable"
+        - title: "GENERAL_UNDER_HONORABLE_CONDITIONS"
+          const: 2
+          description: "General under honorable conditions"
+        - title: "BAD_CONDUCT"
+          const: 4
+          description: "Bad conduct"
+        - title: "DISHONORABLE"
+          const: 5
+          description: "Dishonorable"
+        - title: "UNDER_OTHER_THAN_HONORABLE_CONDITIONS"
+          const: 6
+          description: "Under other than honorable conditions (OTH)"
+        - title: "UNCHARACTERIZED"
+          const: 7
+          description: "Uncharacterized"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    DisabilityType_list:
+      type: integer
+      description: "Enumerates types of disabilities."
+      oneOf:
+        - title: "PHYSICAL_DISABILITY"
+          const: 5
+          description: "Physical Disability."
+        - title: "DEVELOPMENTAL_DISABILITY"
+          const: 6
+          description: "Developmental Disability."
+        - title: "CHRONIC_HEALTH_CONDITION"
+          const: 7
+          description: "Ongoing health conditions."
+        - title: "HIV_AIDS"
+          const: 8
+          description: "HIV or AIDS."
+        - title: "MENTAL_HEALTH_DISORDER"
+          const: 9
+          description: "Mental health disorders."
+        - title: "SUBSTANCE_USE_DISORDER"
+          const: 10
+          description: "Substance use disorders."
+    DisabilityResponse_list:
+      type: integer
+      description: "Response regarding disabilities, used if DisabilityType = 10 (Substance Use)."
+      oneOf:
+        - title: "NO"
+          const: 0
+          description: "No"
+        - title: "ALCOHOL_USE_DISORDER"
+          const: 1
+          description: "Alcohol use disorder"
+        - title: "DRUG_USE_DISORDER"
+          const: 2
+          description: "Drug use disorder"
+        - title: "BOTH_ALCOHOL_AND_DRUG_USE_DISORDERS"
+          const: 3
+          description: "Both alcohol and drug use disorders"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    TCellSourceViralLoadSource_list:
+      type: integer
+      description: "Source of T-Cell count or viral load data."
+      oneOf:
+        - title: "MEDICAL_REPORT"
+          const: 1
+          description: "Medical Report"
+        - title: "CLIENT_REPORT"
+          const: 2
+          description: "Client Report"
+        - title: "OTHER"
+          const: 3
+          description: "Other"
+    ViralLoadAvailable_list:
+      type: integer
+      description: "Availability of viral load data for the client."
+      oneOf:
+        - title: "NOT_AVAILABLE"
+          const: 0
+          description: "Not available"
+        - title: "AVAILABLE"
+          const: 1
+          description: "Available"
+        - title: "UNDETECTABLE"
+          const: 2
+          description: "Undetectable"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    DataCollectionStage_list:
+      type: integer
+      description: "Stage of data collection within the project lifecycle."
+      oneOf:
+        - title: "PROJECT_ENTRY"
+          const: 1
+          description: "Project entry"
+        - title: "UPDATE"
+          const: 2
+          description: "Update"
+        - title: "PROJECT_EXIT"
+          const: 3
+          description: "Project exit"
+        - title: "ANNUAL_ASSESSMENT"
+          const: 5
+          description: "Annual assessment"
+        - title: "POST_EXIT"
+          const: 5
+          description: "Post Exit"    
+    WhenDVOccurred_list:
+      type: integer
+      description: "Specifies when domestic violence occurred relative to the Information date."
+      oneOf:
+        - title: "WITHIN_THREE_MONTHS"
+          const: 1
+          description: "Within the past three months"
+        - title: "THREE_TO_SIX_MONTHS_AGO"
+          const: 2
+          description: "Three to six months ago (excluding six months exactly)"
+        - title: "SIX_MONTHS_TO_ONE_YEAR_AGO"
+          const: 3
+          description: "Six months to one year ago (excluding one year exactly)"
+        - title: "ONE_YEAR_OR_MORE"
+          const: 4
+          description: "One year or more"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    HealthStatus_list:
+      type: integer
+      description: "General health status of the client."
+      oneOf:
+        - title: "EXCELLENT"
+          const: 1
+          description: "Excellent"
+        - title: "VERY_GOOD"
+          const: 2
+          description: "Very good"
+        - title: "GOOD"
+          const: 3
+          description: "Good"
+        - title: "FAIR"
+          const: 4
+          description: "Fair"
+        - title: "POOR"
+          const: 5
+          description: "Poor"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client doesn't know"
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer"
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected"
+    Referral_list:
+      type: integer
+      description: "Type of Event or referral action taken."
+      oneOf:
+        - title: "REFERRAL_TO_PREVENTION_ASSISTANCE_PROJECT"
+          const: 1
+          description: "Referral to Prevention Assistance project"
+        - title: "PROBLEM_SOLVING_DIVERSION_RAPID_RESOLUTION"
+          const: 2
+          description: "Problem Solving/Diversion/Rapid Resolution intervention or service"
+        - title: "REFERRAL_TO_SCHEDULED_CRISIS_NEEDS_ASSESSMENT"
+          const: 3
+          description: "Referral to scheduled Coordinated Entry Crisis Needs Assessment"
+        - title: "REFERRAL_TO_SCHEDULED_HOUSING_NEEDS_ASSESSMENT"
+          const: 4
+          description: "Referral to scheduled Coordinated Entry Housing Needs Assessment"
+        - title: "REFERRAL_TO_POST_PLACEMENT_FOLLOW_UP_CASE_MANAGEMENT"
+          const: 5
+          description: "Referral to Post-placement/ follow-up case management"
+        - title: "REFERRAL_TO_STREET_OUTREACH_PROJECT"
+          const: 6
+          description: "Referral to Street Outreach project or services"
+        - title: "REFERRAL_TO_HOUSING_NAVIGATION_PROJECT"
+          const: 7
+          description: "Referral to Housing Navigation project or services"
+        - title: "REFERRAL_TO_NON_CONTINUUM_SERVICES_INELIGIBLE"
+          const: 8
+          description: "Referral to Non-continuum services: Ineligible for continuum services"
+        - title: "REFERRAL_TO_NON_CONTINUUM_SERVICES_NO_Availability"
+          const: 9
+          description: "Referral to Non-continuum services: No Availability in continuum services"
+        - title: "REFERRAL_TO_EMERGENCY_SHELTER_BED_OPENING"
+          const: 10
+          description: "Referral to Emergency Shelter bed opening"
+        - title: "REFERRAL_TO_TRANSITIONAL_HOUSING_BED_OPENING"
+          const: 11
+          description: "Referral to Transitional Housing bed/unit opening"
+        - title: "REFERRAL_TO_JOINT_TH_RRH_PROJECT_OPENING"
+          const: 12
+          description: "Referral to Joint TH-RRH project/unit/resource opening"
+        - title: "REFERRAL_TO_RRH_PROJECT_RESOURCE_OPENING"
+          const: 13
+          description: "Referral to RRH project resource opening"
+        - title: "REFERRAL_TO_PSH_PROJECT_RESOURCE_OPENING"
+          const: 14
+          description: "Referral to PSH project resource opening"
+        - title: "REFERRAL_TO_OTHER_PH_PROJECT_RESOURCE_OPENING"
+          const: 15
+          description: "Referral to Other PH project/unit/resource opening"
+        - title: "REFERRAL_TO_EMERGENCY_ASSISTANCE"
+          const: 16
+          description: "Referral to emergency assistance/flex fund/furniture assistance"
+        - title: "REFERRAL_TO_HOUSING_STABILITY_VOUCHER"
+          const: 18
+          description: "Referral to a Housing Stability Voucher"
+    ReferralResult_list:
+      type: integer
+      description: "Outcome of the referral process."
+      oneOf:
+        - title: "SUCCESSFUL_REFERRAL_CLIENT_ACCEPTED"
+          const: 1
+          description: "Successful referral: client accepted"
+        - title: "UNSUCCESSFUL_REFERRAL_CLIENT_REJECTED"
+          const: 2
+          description: "Unsuccessful referral: client rejected"
+        - title: "UNSUCCESSFUL_REFERRAL_PROVIDER_REJECTED"
+          const: 3
+          description: "Unsuccessful referral: provider rejected"
+
+
+# Response Lists II
+
+    NoYes_list:
+      type: integer
+      description: "Indicates a simple binary choice."
+      oneOf:
+        - title: "NO"
+          const: 0
+          description: "No"
+        - title: "YES"
+          const: 1
+          description: "Yes"
+    NoYesMissing_list:
+      type: integer
+      description: "A basic boolean with an additional option for missing data."
+      oneOf:
+        - title: "NO"
+          const: 0
+          description: "The response is no."
+        - title: "YES"
+          const: 1
+          description: "The response is yes."
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data for this field was not collected."
+    NoYesReasonsForMissingData_list:
+      type: integer
+      description: "Boolean with reasons for missing data."
+      oneOf:
+        - title: "NO"
+          const: 0
+          description: "No, without additional context."
+        - title: "YES"
+          const: 1
+          description: "Yes, without additional context."
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client does not know the answer."
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer."
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Data not collected."
+    RaceGenderNone_list:
+      type: integer
+      description: "Indicates if race or gender data is not specified."
+      oneOf:
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+          description: "Client does not know their race or gender."
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+          description: "Client prefers not to answer race or gender questions."
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
+          description: "Race or gender data was not collected."
+    MissingDataQuality_list:
+      type: integer
+      description: |
+        Factored out the [Client Doesn't Know], [Client perfers not to answer], and [data not collected]
+        The intention is to limit the number of lists that we define throughout the API reference.
       oneOf: 
-        -  title: "Facility-based beds"
-           const: 1
-           description: "Facility-based beds"
-        -  title: "Voucher beds"
-           const: 2
-           description: "Voucher beds"
-        -  title: "Other beds"
-           const: 3
-           description: "Other beds"
+        - title: "CLIENT_DOESNT_KNOW"
+          const: 8
+        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+          const: 9
+        - title: "DATA_NOT_COLLECTED"
+          const: 99
