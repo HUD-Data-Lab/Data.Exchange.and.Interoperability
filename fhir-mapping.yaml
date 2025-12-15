@@ -731,6 +731,1014 @@ transformations:
           
           return extension
 
+          
+# ============================================================================
+# PART 6: CROSS-SYSTEM INTEROPERABILITY SCENARIOS
+# ============================================================================
+
+cross_system_scenarios:
+  
+  # Scenario 14: Hospital EHR Patient Search (HMIS → FHIR)
+  hospital_patient_search:
+    scenario_id: "14"
+    description: "Search for HMIS client in hospital EHR system via FHIR"
+    use_case: "Care coordination between homeless services and hospital systems"
+    hud_purpose: "TREAT - Coordinate medical services for client"
+    hud_standard: "4.2.3 Purpose Specification"
+    
+    geometric_interpretation:
+      manifold_description: "Parallel transport of Client identity from HMIS schema to Hospital EHR schema"
+      connection_form: "Identity matching preserves demographic data while respecting privacy boundaries"
+      fiber_bundle: |
+        π_HMIS: E_HMIS_Client → M_HMIS
+        π_Hospital: E_Hospital_Patient → M_Hospital
+        
+        Match_Patient: E_HMIS_Client → E_Hospital_Patient
+        is a smooth map preserving identity invariants:
+        
+        E_HMIS_Client -----> E_Hospital_Patient
+             |                     |
+          π_HMIS              π_Hospital
+             |                     |
+             ↓                     ↓
+          M_HMIS ----------> M_Hospital
+                  (FHIR bridge)
+      
+      sheaf_condition: "Local identity constraints in HMIS must glue consistently with Hospital identity constraints"
+      deformation: "HIPAA privacy rules conserve the classification structure of the mapping"
+    
+    actor_model:
+      description: "Hospital search spawns causally-ordered actors across system boundary"
+      causal_dependencies:
+        - "ROI consent must exist before hospital query (happens-before)"
+        - "HMIS identity must be validated before FHIR translation (happens-before)"
+        - "Hospital response causally depends on FHIR query message"
+      
+      vector_clock_propagation: |
+        VC_initial[HMIS_Client, Hospital_Query] = (t1, 0)
+        VC_after_ROI[HMIS_Client, Hospital_Query] = (t2, 0)  where t2 > t1
+        VC_query_sent[HMIS_Client, Hospital_Query] = (t3, t4) where t3 > t2
+        VC_response[HMIS_Client, Hospital_Query] = (t3, t5) where t5 > t4
+      
+      parallel_transport_actor:
+        behavior: |
+          receive(hospital_search_request) →
+            # Step 1: Validate causal dependencies
+            assert msg.vector_clock[ROI_Actor] ≥ roi_creation_time
+            assert msg.vector_clock[HMIS_Client_Actor] ≥ client_creation_time
+            
+            # Step 2: Parallel transport demographics to FHIR
+            fhir_patient_query = transport(
+              from: hmis_client_data,
+              along: HMIS→FHIR connection,
+              preserving: [FirstName, LastName, DOB, SSN_masked]
+            )
+            
+            # Step 3: Validate information loss (privacy constraints)
+            if not validate_hipaa_compliance(fhir_patient_query):
+              send_error(RequesterActor, PrivacyViolation)
+              return
+            
+            # Step 4: Send message to Hospital system
+            hospital_response = await send_external(
+              target: HospitalFHIREndpoint,
+              message: fhir_patient_query,
+              vector_clock: increment(msg.vector_clock, Hospital_Query_Actor)
+            )
+            
+            # Step 5: Parallel transport results back to HMIS
+            hmis_match_result = transport(
+              from: hospital_response,
+              along: FHIR→HMIS connection,
+              preserving: [MatchConfidence, ClinicalSummary, AdmissionDates]
+            )
+            
+            send(RequesterActor, MatchResult(hmis_match_result))
+    
+    # Required HMIS Resources (Input)
+    hmis_input_resources:
+      - resource: Client
+        hud_elements: ["3.01", "3.03", "3.05"]  # Name, DOB, SSN
+        required_fields:
+          - PersonalID
+          - FirstName
+          - LastName
+          - DOB
+          - SSN  # Optional but improves matching
+        
+        privacy_controls:
+          consent_required: true
+          consent_category: "external-system-query"
+          roi_verification: validate_roi_active
+          minimum_necessary: true
+          ssn_masking: "last_4_only"  # Only send last 4 digits of SSN
+        
+        ontology_mapping:
+          semantic_uri: http://hmis.hud.gov/ontology#Client
+          fhir_target: http://hl7.org/fhir/Patient
+          connection_preserves: ["identity_attributes", "demographic_data"]
+      
+      - resource: Enrollment
+        hud_elements: ["3.10"]  # Current enrollment for context
+        required_fields:
+          - EnrollmentID
+          - EntryDate
+          - ProjectID
+        
+        privacy_controls:
+          purpose_justification: "Medical care coordination"
+          disclose_to_hospital: false  # Don't send enrollment details
+        
+        ontology_mapping:
+          semantic_uri: http://hmis.hud.gov/ontology#Enrollment
+          fhir_target: http://hl7.org/fhir/EpisodeOfCare
+          connection_preserves: ["temporal_context"]
+      
+      - resource: Consent (ROI)
+        hud_elements: ["N/A - Technical Standard 4.2.3"]
+        required_fields:
+          - ConsentID
+          - ConsentStatus  # Must be 'active'
+          - ConsentScope  # Must include 'external-healthcare-query'
+          - ConsentPeriod  # Must cover current date
+        
+        validation_rules:
+          - validate_roi_active
+          - validate_purpose_disclosure
+    
+    # FHIR Query Construction (Output to Hospital)
+    fhir_query_construction:
+      method: POST
+      endpoint: "$match"  # FHIR Patient $match operation
+      fhir_operation: http://hl7.org/fhir/OperationDefinition/Patient-match
+      
+      query_parameters:
+        resource: Patient
+        onlyCertainMatches: false
+        count: 10
+      
+      fhir_patient_bundle:
+        resourceType: Parameters
+        parameter:
+          - name: resource
+            resource:
+              resourceType: Patient
+              
+              # Map from HMIS Client
+              identifier:
+                - system: "http://hmis.hud.gov/identifiers/PersonalID"
+                  value: "{{PersonalID}}"
+                  extension:
+                    - url: "http://hmis.hud.gov/fhir/extensions/source-system"
+                      valueString: "HMIS"
+              
+              name:
+                - family: "{{LastName}}"
+                  given: ["{{FirstName}}"]
+              
+              birthDate: "{{DOB}}"  # Format: YYYY-MM-DD
+              
+              # Optional: SSN (masked for privacy)
+              identifier:
+                - system: "http://hl7.org/fhir/sid/us-ssn"
+                  value: "***-**-{{SSN_last_4}}"
+                  extension:
+                    - url: "http://hmis.hud.gov/fhir/extensions/masked-identifier"
+                      valueBoolean: true
+              
+              # Gender (if available)
+              gender: "{{Gender}}"  # Map from HUD gender fields
+              
+              # Extension: Purpose of query
+              extension:
+                - url: "http://hmis.hud.gov/fhir/extensions/query-purpose"
+                  valueCodeableConcept:
+                    coding:
+                      - system: "http://terminology.hl7.org/CodeSystem/v3-ActReason"
+                        code: "TREAT"
+                        display: "Care coordination for homeless services client"
+          
+          - name: onlyCertainMatches
+            valueBoolean: false
+          
+          - name: count
+            valueInteger: 10
+      
+      privacy_safeguards:
+        - "SSN masked to last 4 digits only"
+        - "No HMIS-specific program information disclosed"
+        - "Query purpose explicitly stated (TREAT)"
+        - "Audit log created in both systems"
+    
+    # Hospital FHIR Response (Input from Hospital)
+    hospital_fhir_response:
+      expected_resource: Bundle
+      bundle_type: searchset
+      
+      entry_structure:
+        - resource:
+            resourceType: Patient
+            id: "hospital-patient-12345"
+            
+            identifier:
+              - system: "http://hospital.org/patients"
+                value: "12345"
+            
+            name:
+              - family: "Doe"
+                given: ["John"]
+            
+            birthDate: "1985-06-15"
+            
+            # Match score
+            extension:
+              - url: "http://hl7.org/fhir/StructureDefinition/match-grade"
+                valueCode: "probable"  # certain, probable, possible, certainly-not
+          
+          search:
+            mode: "match"
+            score: 0.85  # Confidence: 0.0-1.0
+      
+      match_algorithm:
+        description: "Hospital uses probabilistic matching on demographics"
+        match_grades:
+          certain: "All identifiers match (SSN + DOB + Name)"
+          probable: "2 of 3 identifiers match closely"
+          possible: "1 identifier matches, others similar"
+          certainly-not: "No identifiers match"
+    
+    # HMIS Result Transformation (Output back to HMIS)
+    hmis_result_transformation:
+      description: "Transform hospital FHIR response back to HMIS-consumable format"
+      
+      result_structure:
+        PersonalID: "{{hmis_original_PersonalID}}"
+        
+        hospital_matches:
+          - hospital_patient_id: "{{hospital_patient_id}}"
+            match_confidence: "{{search.score}}"
+            match_grade: "{{extension[match-grade].valueCode}}"
+            
+            demographics:
+              FirstName: "{{name[0].given[0]}}"
+              LastName: "{{name[0].family}}"
+              DOB: "{{birthDate}}"
+            
+            clinical_summary:
+              recent_encounters: "{{referenced_Encounter_resources}}"
+              active_conditions: "{{referenced_Condition_resources}}"
+              recent_admissions: "{{Encounter.where(class='inpatient').period}}"
+            
+            care_coordination_context:
+              can_share_data: "{{evaluated_from_consent}}"
+              roi_required_for_full_access: true
+              hipaa_restrictions: "{{privacy_extensions}}"
+      
+      privacy_filtering:
+        description: "Filter hospital response to minimum necessary for HMIS use case"
+        
+        included_data:
+          - "Match confidence and patient ID"
+          - "Basic demographics for verification"
+          - "Recent admission dates (for care coordination)"
+          - "High-level clinical summary (if ROI permits)"
+        
+        excluded_data:
+          - "Detailed clinical notes"
+          - "Sensitive diagnoses (HIV, mental health, substance use)"
+          - "Financial information"
+          - "Full treatment history"
+    
+    # Effect Handlers (Cross-System)
+    effect_handlers:
+      - handler: validate_roi_active
+        timing: before_query
+        description: "Ensure ROI exists before sending query to hospital"
+        
+      - handler: validate_purpose_disclosure
+        timing: before_query
+        description: "Verify query purpose aligns with HUD allowable uses"
+        
+      - handler: mask_sensitive_identifiers
+        timing: during_query_construction
+        description: "Mask SSN to last 4 digits for privacy"
+        
+      - handler: create_cross_system_audit
+        timing: after_query
+        description: "Log query in both HMIS and hospital audit trails"
+        
+      - handler: validate_hipaa_compliance
+        timing: before_query
+        description: "Ensure query complies with HIPAA minimum necessary"
+        
+      - handler: filter_response_data
+        timing: after_response
+        description: "Remove data beyond minimum necessary from hospital response"
+    
+    # Implementation: Python Function
+    implementation:
+      language: python
+      function_name: search_hospital_patient
+      
+      code: |
+        def search_hospital_patient(
+            hmis_client_id: str,
+            hospital_fhir_endpoint: str,
+            requesting_user: str
+        ) -> dict:
+            """
+            Search for HMIS client in hospital EHR via FHIR $match operation.
+            
+            This implements Scenario 14: Cross-system patient matching with
+            full privacy controls and causal ordering via actor model.
+            """
+            
+            # Step 1: Validate ROI (effect handler)
+            roi_valid = validate_roi_active(
+                patient_id=hmis_client_id,
+                recipient_org=hospital_fhir_endpoint,
+                request_date=datetime.now()
+            )
+            if not roi_valid:
+                raise ValidationError("No active ROI for hospital data sharing")
+            
+            # Step 2: Retrieve HMIS client data
+            hmis_client = hmis_db.get_client(hmis_client_id)
+            
+            # Step 3: Parallel transport to FHIR (geometric frame semantics)
+            fhir_patient_query = {
+                "resourceType": "Parameters",
+                "parameter": [
+                    {
+                        "name": "resource",
+                        "resource": {
+                            "resourceType": "Patient",
+                            "identifier": [
+                                {
+                                    "system": "http://hmis.hud.gov/identifiers/PersonalID",
+                                    "value": hmis_client.PersonalID
+                                }
+                            ],
+                            "name": [
+                                {
+                                    "family": hmis_client.LastName,
+                                    "given": [hmis_client.FirstName]
+                                }
+                            ],
+                            "birthDate": hmis_client.DOB.strftime("%Y-%m-%d"),
+                            # Mask SSN (effect handler)
+                            "identifier": [
+                                {
+                                    "system": "http://hl7.org/fhir/sid/us-ssn",
+                                    "value": f"***-**-{hmis_client.SSN[-4:]}",
+                                    "extension": [{
+                                        "url": "http://hmis.hud.gov/fhir/extensions/masked",
+                                        "valueBoolean": True
+                                    }]
+                                }
+                            ] if hmis_client.SSN else []
+                        }
+                    },
+                    {"name": "onlyCertainMatches", "valueBoolean": False},
+                    {"name": "count", "valueInteger": 10}
+                ]
+            }
+            
+            # Step 4: Send FHIR query to hospital (actor message passing)
+            hospital_response = requests.post(
+                f"{hospital_fhir_endpoint}/Patient/$match",
+                json=fhir_patient_query,
+                headers={
+                    "Content-Type": "application/fhir+json",
+                    "Authorization": f"Bearer {get_oauth_token()}"
+                },
+                timeout=30
+            )
+            
+            if hospital_response.status_code != 200:
+                raise ExternalSystemError(
+                    f"Hospital query failed: {hospital_response.text}"
+                )
+            
+            # Step 5: Parse hospital response
+            bundle = hospital_response.json()
+            matches = []
+            
+            for entry in bundle.get("entry", []):
+                patient = entry.get("resource", {})
+                search_meta = entry.get("search", {})
+                
+                match_result = {
+                    "hospital_patient_id": patient.get("id"),
+                    "match_confidence": search_meta.get("score", 0.0),
+                    "match_grade": extract_match_grade(patient),
+                    "demographics": {
+                        "FirstName": patient["name"][0]["given"][0],
+                        "LastName": patient["name"][0]["family"],
+                        "DOB": patient.get("birthDate")
+                    }
+                }
+                
+                matches.append(match_result)
+            
+            # Step 6: Create audit trail (effect handler)
+            create_cross_system_audit(
+                hmis_client_id=hmis_client_id,
+                hospital_endpoint=hospital_fhir_endpoint,
+                matches_found=len(matches),
+                requesting_user=requesting_user
+            )
+            
+            # Step 7: Return HMIS-compatible result
+            return {
+                "PersonalID": hmis_client_id,
+                "hospital_matches": matches,
+                "query_timestamp": datetime.now().isoformat(),
+                "roi_verified": True
+            }
+      
+      example_usage: |
+        # HMIS case manager searches for client in hospital system
+        result = search_hospital_patient(
+            hmis_client_id="HMIS-CLIENT-12345",
+            hospital_fhir_endpoint="https://hospital.org/fhir/r4",
+            requesting_user="case-manager-001"
+        )
+        
+        print(f"Found {len(result['hospital_matches'])} potential matches:")
+        for match in result['hospital_matches']:
+            print(f"  - Patient {match['hospital_patient_id']}: "
+                  f"{match['match_confidence']:.0%} confidence "
+                  f"({match['match_grade']})")
+    
+    # Use Case Examples
+    use_case_examples:
+      - title: "Emergency Room Follow-up"
+        description: |
+          Client was seen in hospital ER last night. HMIS case manager
+          searches hospital system to coordinate follow-up care and confirm
+          client kept appointment.
+        
+        hmis_context:
+          - Client enrolled in street outreach program
+          - Case manager noted client reported ER visit
+          - Want to verify visit and coordinate discharge planning
+        
+        workflow:
+          1. Case manager searches HMIS client in hospital FHIR endpoint
+          2. Match found with 89% confidence
+          3. Hospital record shows ER visit for hypothermia
+          4. HMIS creates care coordination task for housing + medical follow-up
+      
+      - title: "Chronic Condition Management"
+        description: |
+          Client with diabetes enrolled in permanent supportive housing.
+          HMIS care coordinator checks hospital records to ensure client
+          attending scheduled appointments.
+        
+        hmis_context:
+          - Client in PSH program with medical care coordination services
+          - Care plan requires quarterly diabetes check-ups
+          - Want to confirm client kept hospital appointment
+        
+        workflow:
+          1. Care coordinator searches client in hospital system
+          2. Match found (SSN + DOB + Name = "certain")
+          3. Hospital shows recent endocrinology appointment attended
+          4. HMIS updates care plan: "Medical appointment compliance: Good"
+      
+      - title: "Medicaid Enrollment Support"
+        description: |
+          Client applying for Medicaid needs documentation of hospital visits
+          for disability determination. HMIS staff queries hospital to gather
+          evidence for application.
+        
+        hmis_context:
+          - Client enrolled in rapid re-housing program
+          - Applying for Medicaid with disability waiver
+          - Needs proof of ongoing medical treatment
+        
+        workflow:
+          1. HMIS benefits specialist searches client in hospital
+          2. Match found with visit history
+          3. Hospital FHIR endpoint returns recent encounter dates
+          4. HMIS staff requests formal medical records for Medicaid application
+    
+    # Error Handling
+    error_scenarios:
+      - error_code: "NO_ROI"
+        description: "No active ROI consent for hospital data sharing"
+        http_status: 403
+        message: "Client has not consented to external system queries"
+        recovery: "Obtain client consent before retrying"
+      
+      - error_code: "HOSPITAL_UNREACHABLE"
+        description: "Hospital FHIR endpoint not responding"
+        http_status: 503
+        message: "External system temporarily unavailable"
+        recovery: "Retry with exponential backoff"
+      
+      - error_code: "NO_MATCHES"
+        description: "Hospital system found no matching patients"
+        http_status: 200
+        message: "No matching patients found in hospital system"
+        recovery: "Verify client demographics and try again"
+      
+      - error_code: "MULTIPLE_CERTAIN_MATCHES"
+        description: "Hospital found multiple 'certain' matches (data quality issue)"
+        http_status: 409
+        message: "Ambiguous match - manual resolution required"
+        recovery: "Review matches manually with case manager"
+    
+    # Performance & Scalability
+    performance_considerations:
+      query_timeout: "30 seconds"
+      caching_strategy: "Cache negative results for 24 hours"
+      rate_limiting: "Max 100 queries/hour per HMIS installation"
+      async_support: true
+      batch_processing: "Support batch matching for annual data quality reviews"
+    
+    # Testing & Validation
+    test_scenarios:
+      - scenario: "Exact match on all demographics"
+        input:
+          FirstName: "John"
+          LastName: "Doe"
+          DOB: "1985-06-15"
+          SSN_last_4: "1234"
+        expected_output:
+          match_grade: "certain"
+          match_confidence: 1.0
+      
+      - scenario: "Probable match (slight name variation)"
+        input:
+          FirstName: "Jon"  # Typo
+          LastName: "Doe"
+          DOB: "1985-06-15"
+        expected_output:
+          match_grade: "probable"
+          match_confidence: 0.85
+      
+      - scenario: "No match found"
+        input:
+          FirstName: "Jane"
+          LastName: "Smith"
+          DOB: "1990-01-01"
+        expected_output:
+          hospital_matches: []
+          match_confidence: 0.0
+
+# ============================================================================
+# PART 7: CROSS-SYSTEM EFFECT HANDLERS
+# ============================================================================
+
+cross_system_effect_handlers:
+  
+  mask_sensitive_identifiers:
+    description: "Mask SSN and other sensitive identifiers before sending to external system"
+    applies_to: ["hospital_patient_search"]
+    hud_standard: "4.2.3 Minimum Necessary"
+    
+    validation_rules:
+      - rule: "SSN must be masked to last 4 digits for external queries"
+        implementation: "Replace first 5 digits with '***-**-'"
+      
+      - rule: "Full SSN only shared if explicit consent exists"
+        check: "Consent.provision.data includes 'full-ssn'"
+    
+    code: |
+      def mask_sensitive_identifiers(patient_data: dict) -> dict:
+          masked_data = patient_data.copy()
+          
+          # Mask SSN
+          if 'SSN' in masked_data and masked_data['SSN']:
+              ssn = masked_data['SSN']
+              masked_data['SSN'] = f"***-**-{ssn[-4:]}"
+              masked_data['SSN_masked'] = True
+          
+          return masked_data
+  
+  create_cross_system_audit:
+    description: "Create audit trail for cross-system data exchange"
+    applies_to: ["hospital_patient_search", "medicaid_eligibility_verification"]
+    hud_standard: "4.2.6 Accountability"
+    fhir_resource: AuditEvent
+    
+    audit_requirements:
+      - "Log query sent to external system"
+      - "Log results received (count, not content)"
+      - "Log any errors or access denials"
+      - "Retain audit logs for 7 years"
+    
+    code: |
+      def create_cross_system_audit(
+          hmis_client_id: str,
+          external_system: str,
+          matches_found: int,
+          requesting_user: str
+      ) -> str:
+          audit_event = {
+              "resourceType": "AuditEvent",
+              "type": {
+                  "system": "http://hmis.hud.gov/codesystems/audit-event-type",
+                  "code": "cross-system-query",
+                  "display": "Cross-System Patient Query"
+              },
+              "action": "E",  # Execute
+              "recorded": datetime.now().isoformat(),
+              "outcome": "0",  # Success
+              "agent": [
+                  {
+                      "who": {
+                          "reference": f"Practitioner/{requesting_user}"
+                      },
+                      "requestor": True
+                  }
+              ],
+              "source": {
+                  "site": "HMIS",
+                  "type": [{
+                      "system": "http://terminology.hl7.org/CodeSystem/security-source-type",
+                      "code": "4",  # Application Server
+                  }]
+              },
+              "entity": [
+                  {
+                      "what": {
+                          "reference": f"Patient/{hmis_client_id}"
+                      },
+                      "role": {
+                          "system": "http://terminology.hl7.org/CodeSystem/object-role",
+                          "code": "1",  # Patient
+                      }
+                  },
+                  {
+                      "what": {
+                          "identifier": {
+                              "value": external_system
+                          }
+                      },
+                      "role": {
+                          "system": "http://terminology.hl7.org/CodeSystem/object-role",
+                          "code": "13",  # Security Resource
+                      },
+                      "detail": [{
+                          "type": "matches_found",
+                          "valueString": str(matches_found)
+                      }]
+                  }
+              ]
+          }
+          
+          # Create in both HMIS and send to hospital if they support it
+          audit_id = fhir_client.create_audit_event(audit_event)
+          return audit_id
+  
+  validate_hipaa_compliance:
+    description: "Validate query complies with HIPAA minimum necessary standard"
+    applies_to: ["hospital_patient_search"]
+    regulation: "HIPAA 45 CFR § 164.502(b)"
+    hud_alignment: "4.2.3 Minimum Necessary"
+    
+    validation_rules:
+      - rule: "Only demographics necessary for matching are included"
+        check: "Query includes no clinical data"
+      
+      - rule: "Purpose of query is explicitly stated"
+        check: "Query includes 'query-purpose' extension"
+      
+      - rule: "SSN is masked unless full identifier required"
+        check: "SSN masked or explicit consent exists"
+    
+    code: |
+      def validate_hipaa_compliance(query: dict) -> bool:
+          patient_resource = query["parameter"][0]["resource"]
+          
+          # Check only demographics included
+          prohibited_fields = ["condition", "medication", "procedure", "observation"]
+          for field in prohibited_fields:
+              if field in patient_resource:
+                  raise ValidationError(
+                      f"HIPAA violation: {field} not necessary for matching"
+                  )
+          
+          # Check purpose stated
+          extensions = patient_resource.get("extension", [])
+          purpose_stated = any(
+              ext["url"] == "http://hmis.hud.gov/fhir/extensions/query-purpose"
+              for ext in extensions
+          )
+          if not purpose_stated:
+              raise ValidationError("Query purpose must be explicitly stated")
+          
+          # Check SSN masked
+          identifiers = patient_resource.get("identifier", [])
+          for identifier in identifiers:
+              if identifier.get("system") == "http://hl7.org/fhir/sid/us-ssn":
+                  if "***" not in identifier["value"]:
+                      # Full SSN - check consent
+                      raise ValidationError("SSN must be masked for external queries")
+          
+          return True
+
+# ============================================================================
+# PART 8: BITEMPORAL IDENTITY MATCHING
+# ============================================================================
+
+bitemporal_matching:
+  
+  description: |
+    Identity matching across HMIS and hospital systems requires bitemporal
+    tracking because:
+    1. We learn about matches at different times (transaction time)
+    2. Matches were true at different times (valid time)
+    3. Both systems can have corrections that affect match confidence
+  
+  temporal_dimensions:
+    
+    transaction_time:
+      description: "When the system recorded the identity match"
+      fhir_mapping: Provenance.recorded
+      significance: "Audit trail - when did we LEARN about this match?"
+      immutable: true
+      
+      example:
+        scenario: "Case manager searches hospital on 2024-11-16"
+        value: "2024-11-16T09:00:00Z"
+        meaning: "We learned about the match on Nov 16"
+    
+    valid_time:
+      description: "When the identity match was actually true in the real world"
+      fhir_mapping: Provenance.occurredDateTime
+      significance: "Historical accuracy - when was this person ACTUALLY the same?"
+      mutable: true  # Can be corrected
+      
+      example:
+        scenario: "ER visit happened 2024-11-15, but we queried next day"
+        value: "2024-11-15T08:00:00Z"
+        meaning: "The person was in the ER on Nov 15 (before we knew)"
+  
+  identity_match_schema:
+    resourceType: IdentityMatch
+    
+    fields:
+      hmis_client_id:
+        type: Reference(Patient)
+        description: "HMIS Client PersonalID"
+      
+      hospital_patient_id:
+        type: Reference(Patient)
+        description: "Hospital Patient MRN"
+      
+      match_confidence:
+        type: decimal
+        range: [0.0, 1.0]
+        description: "Probabilistic confidence in match"
+      
+      match_algorithm:
+        type: CodeableConcept
+        values:
+          - exact_match: "All identifiers match exactly"
+          - probabilistic: "Fellegi-Sunter probabilistic matching"
+          - manual_review: "Human-reviewed match"
+      
+      # BITEMPORAL FIELDS
+      valid_from:
+        type: dateTime
+        description: "When this match became true (in real world)"
+        example: "2024-11-15T08:00:00Z"  # ER visit time
+      
+      valid_to:
+        type: dateTime
+        description: "When this match ceased to be true (or null if current)"
+        example: null  # Still believed true
+      
+      transaction_from:
+        type: dateTime
+        description: "When we recorded this match (in system)"
+        example: "2024-11-16T09:00:00Z"  # Query time
+        immutable: true
+      
+      transaction_to:
+        type: dateTime
+        description: "When we superseded this match (or null if current)"
+        example: null  # Current belief
+        immutable: true
+      
+      # PROVENANCE
+      match_basis:
+        type: CodeableConcept
+        description: "What factors contributed to match"
+        values:
+          - name_exact: "First and Last name exact match"
+          - dob_exact: "Date of birth exact match"
+          - ssn_partial: "Last 4 SSN digits match"
+          - temporal_coherent: "Event timing makes sense"
+      
+      superseded_by:
+        type: Reference(IdentityMatch)
+        description: "If corrected, points to new version"
+        example: null
+      
+      supersedes:
+        type: Reference(IdentityMatch)
+        description: "If correction, points to old version"
+        example: null
+  
+  # Query Examples
+  temporal_queries:
+    
+    current_matches:
+      description: "What matches do we currently believe?"
+      query: |
+        SELECT * FROM IdentityMatch
+        WHERE transaction_to IS NULL
+          AND valid_to IS NULL
+      
+      fhir_query: |
+        GET /IdentityMatch?_filter=
+          transaction_to eq null and valid_to eq null
+    
+    as_of_transaction_time:
+      description: "What did we believe on 2024-11-20?"
+      query: |
+        SELECT * FROM IdentityMatch
+        WHERE transaction_from <= '2024-11-20'
+          AND (transaction_to IS NULL OR transaction_to > '2024-11-20')
+      
+      fhir_query: |
+        GET /IdentityMatch?_filter=
+          transaction_from le 2024-11-20 and
+          (transaction_to eq null or transaction_to gt 2024-11-20)
+    
+    as_of_valid_time:
+      description: "What was true on 2024-11-15 (ER visit day)?"
+      query: |
+        SELECT * FROM IdentityMatch
+        WHERE valid_from <= '2024-11-15'
+          AND (valid_to IS NULL OR valid_to > '2024-11-15')
+          AND transaction_to IS NULL  -- Current belief
+      
+      use_case: "Reconstruct who was in hospital on specific date"
+    
+    match_history:
+      description: "Show all versions of a match (corrections)"
+      query: |
+        WITH RECURSIVE match_chain AS (
+          SELECT * FROM IdentityMatch
+          WHERE hmis_client_id = 'HMIS-789'
+          
+          UNION ALL
+          
+          SELECT im.* FROM IdentityMatch im
+          JOIN match_chain mc ON im.supersedes = mc.id
+        )
+        SELECT * FROM match_chain
+        ORDER BY transaction_from
+      
+      use_case: "Audit trail - how did our belief about this match evolve?"
+  
+  # Correction Handling
+  correction_workflow:
+    
+    scenario: "Hospital corrects patient DOB, affecting match confidence"
+    
+    step_1_initial_match:
+      transaction_time: "2024-11-16T09:00:00Z"
+      valid_time: "2024-11-15T08:00:00Z"
+      match:
+        hmis_client_id: "HMIS-789"
+        hospital_patient_id: "Hospital-12345"
+        match_confidence: 0.89
+        match_basis: ["name_exact", "dob_exact", "ssn_partial"]
+        valid_from: "2024-11-15T08:00:00Z"
+        valid_to: null
+        transaction_from: "2024-11-16T09:00:00Z"
+        transaction_to: null
+    
+    step_2_hospital_correction:
+      event: "Hospital realizes DOB was recorded wrong"
+      hospital_update:
+        transaction_time: "2024-12-01T14:00:00Z"
+        valid_time: "1985-07-15"  # Corrected DOB (was always this)
+        old_value: "1985-06-15"
+    
+    step_3_recompute_match:
+      description: "HMIS system detects hospital change via webhook/polling"
+      trigger: "Hospital Patient resource updated"
+      
+      action: |
+        # Close out old match
+        UPDATE IdentityMatch
+        SET transaction_to = '2024-12-01T14:30:00Z'
+        WHERE id = 'match-001'
+        
+        # Create new match with lower confidence
+        INSERT INTO IdentityMatch (
+          hmis_client_id, hospital_patient_id,
+          match_confidence, match_basis,
+          valid_from, valid_to,
+          transaction_from, transaction_to,
+          supersedes
+        ) VALUES (
+          'HMIS-789', 'Hospital-12345',
+          0.72, ['name_exact', 'ssn_partial'],  # DOB removed!
+          '2024-11-15T08:00:00Z', null,  # Valid time unchanged
+          '2024-12-01T14:30:00Z', null,  # New transaction time
+          'match-001'  # Points to old version
+        )
+      
+      result:
+        new_match_confidence: 0.72
+        reason: "DOB no longer matches (hospital correction)"
+        action_required: "Manual review - investigate DOB discrepancy"
+    
+    step_4_audit_trail:
+      query_match_history: |
+        -- Who was Hospital-12345 on Nov 15 as of Nov 16?
+        SELECT * FROM IdentityMatch
+        WHERE hospital_patient_id = 'Hospital-12345'
+          AND valid_from <= '2024-11-15'
+          AND transaction_from <= '2024-11-16'
+          AND transaction_to > '2024-11-16'
+        
+        Result: HMIS-789 (confidence 0.89)
+        
+        -- Who is Hospital-12345 now (current belief)?
+        SELECT * FROM IdentityMatch
+        WHERE hospital_patient_id = 'Hospital-12345'
+          AND transaction_to IS NULL
+        
+        Result: HMIS-789 (confidence 0.72) - still same person, lower confidence
+  
+  # Geometric Interpretation
+  manifold_structure:
+    
+    base_space:
+      description: "Space of all possible (HMIS, Hospital, confidence) matches"
+      dimension: 3
+      coordinates: [hmis_id, hospital_id, confidence]
+    
+    fiber_bundle:
+      description: "Each match point has a fiber of temporal versions"
+      total_space: E = {(match, t_transaction, t_valid)}
+      projection: π(match, t_transaction, t_valid) = match
+      
+      fiber_over_point:
+        point: (HMIS-789, Hospital-12345, 0.89)
+        fiber: |
+          All temporal versions of this match hypothesis:
+          [
+            (match, 2024-11-16T09:00, 2024-11-15T08:00),  # Original
+            (match, 2024-12-01T14:30, 2024-11-15T08:00),  # After correction
+            ...
+          ]
+    
+    geodesics:
+      description: "Optimal path through match space = highest confidence"
+      metric: |
+        Distance between matches = 1 - confidence
+        Geodesic = path minimizing total distance
+      
+      example:
+        start: HMIS-789 (needs hospital match)
+        candidates: [Hospital-12345, Hospital-67890, Hospital-11111]
+        confidences: [0.89, 0.45, 0.12]
+        
+        geodesic_endpoint: Hospital-12345 (shortest distance = 1 - 0.89 = 0.11)
+    
+    parallel_transport:
+      description: "How match confidence changes when data is corrected"
+      
+      initial_vector: v = (HMIS-789, Hospital-12345, confidence=0.89)
+      
+      transport_along_correction:
+        path: "Hospital DOB correction"
+        connection: ∇_correction(confidence) = recompute_with_new_data()
+        
+        result: v' = (HMIS-789, Hospital-12345, confidence=0.72)
+      
+      interpretation: |
+        Parallel transport preserves the identity hypothesis (same people)
+        but updates confidence based on new information. The connection
+        form encodes how corrections propagate through the match space.
+    
+    curvature:
+      description: "Privacy boundaries create 'curvature' in match space"
+      
+      example:
+        scenario: "SSN would improve match confidence, but privacy rules forbid"
+        
+        flat_space: "If no privacy rules, could use full SSN → confidence 0.95"
+        
+        curved_space: |
+          Privacy rules force us to:
+          - Mask SSN to last 4 digits
+          - Use probabilistic matching
+          → confidence 0.89 (lower than geometric optimum)
+        
+        curvature_tensor: R^μ_νρσ measures deviation from privacy-free matching
+
 # ============================================================================
 # METADATA
 # ============================================================================
