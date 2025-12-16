@@ -838,7 +838,7 @@ paths:
                 allOf: 
                   - $ref: "#/components/schemas/clientPrimaryKey"
                   - $ref: "#/components/schemas/clientBase"
-                  - $ref: "#/components/schemas/clientMetaData"
+                  - $ref: "#/components/schemas/hmisMetadata"
               
               # SEMANTIC ANNOTATION: JSON-LD response formatting
               # Vendors can optionally consume this as RDF for data warehouse integration
@@ -1828,282 +1828,290 @@ paths:
 # ==========================================================================
 # BASELINE SCENARIO 11: Comprehensive return of all a person’s services. Within an enrollment timeframe or all time
 # ==========================================================================
-/csvexport:
-  get:
-    operationId: getcsvexport
-    summary: Get CSV export for a single client filtered by parameters
-    description: |
-      Returns the entire CSV specifications based on the parameters provided.
-    parameters:
-      - name: EntryDate
-        in: query
-        type: string
-        format: date
-        required: false
-        x-hud-data-element: 3.10.1
-        x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
-      - name: ExitDate
-        in: query
-        type: string
-        format: date
-        required: false
-        x-semantic-uri: http://hmis.hud.gov/ontology#hasExitDate
-      - PersonalID:
-        name: PersonalID
-        in: query
-        required: false
-        description: Unique identifier of the client
-        schema:
-          type: string
-          maxLength: 32
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
-    responses:
-      '200':
-      description: List of enrollments for the specified client
-      content:
-        application/json:
+  /csvexport:
+    get:
+      operationId: getcsvexport
+      summary: Get CSV export for a single client filtered by parameters
+      description: |
+        Returns the entire CSV specifications based on the parameters provided.
+      parameters:
+        - name: EntryDate
+          in: query
+          required: false
+          schema: 
+            type: string
+            format: date
+          x-hud-data-element: 3.10.1
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
+        - name: ExitDate
+          in: query
+          required: false
+          schema: 
+            type: string
+            format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasExitDate
+        - name: PersonalID
+          in: query
+          required: false
+          description: Unique identifier of the client
           schema:
-            type: object
-            x-jsonld-type: hmis:ClientEnrollmentListResponse
-            properties:
-              #Project Descriptors
-              Organization.csv:
-                type: array
-                description: List of organization records
-                allOf:
-                  - $ref: '#/components/schemas/organizationPrimaryKey'
-                  - $ref: '#/components/schemas/organizationBase'
-                  - $ref: '#/components/schemas/hmisMetadata'
-              User.csv:
-                type: array
-                description: List of user records
-                allOf:
-                  - $ref: '#/components/schemas/userPrimaryKey'
-                  - $ref: '#/components/schemas/userBase'
-                  - $ref: '#/components/schemas/hmisMetadata'
-              Project.csv:
-                type: array
-                description: List of project records
-                allOf:
-                  - $ref: '#/components/schemas/projectPrimaryKey'
-                  - $ref: '#/components/schemas/projectBase'
-                  - $ref: '#/components/schemas/hmisMetadata'
-              Funder.csv:
-                type: array
-                description: List of funder records
-                allOf:
-                  - $ref: '#/components/schemas/funderPrimaryKey'
-                  - $ref: '#/components/schemas/funderBase'
-                  - $ref: '#/components/schemas/hmisMetadata'
-              ProjectCoC.csv:
-                type: array
-                description: List of project CoC records
-                allOf:
-                  - $ref: '#/components/schemas/projectCoCPrimaryKey'
-                  - $ref: '#/components/schemas/projectCoCBase'
-                  - $ref: '#/components/schemas/hmisMetadata'
-              Inventory.csv:
-                type: array
-                description: List of inventory records
-                allOf:
-                  - $ref: '#/components/schemas/inventoryPrimaryKey'
-                  - $ref: '#/components/schemas/inventoryBase'
-                  - $ref: '#/components/schemas/hmisMetadata'
-              Affiliation.csv:
-                type: array
-                description: List of affiliation records
-                allOf:
-                  - $ref: '#/components/schemas/affiliationPrimaryKey'
-                  - $ref: '#/components/schemas/affiliationBase'
-                  - $ref: '#/components/schemas/hmisMetadata'
-              HMISParticipation.csv:
-                type: array
-                description: List of HMIS participation records
-                allOf:
-                  - $ref: '#/components/schemas/hmisParticipationPrimaryKey'
-                  - $ref: '#/components/schemas/hmisParticipationBase'
-                  - $ref: '#/components/schemas/hmisMetadata'
-              CEParticipation.csv:
-                type: array
-                description: List of CE participation records
-                allOf:
-                  - $ref: '#/components/schemas/ceParticipationPrimaryKey'
-                  - $ref: '#/components/schemas/ceParticipationBase'
-                  - $ref: '#/components/schemas/hmisMetadata'
-              #Client file
-              Client.csv:
-                type: array
-                description: List of client records
-                allOf:
-                  - $ref: '#/components/schemas/clientPrimaryKey'
-                  - $ref: '#/components/schemas/clientBase'
-                  - $ref: '#/components/schemas/hmisMetadata'
-              #Enrollment files
-              Enrollment.csv:
-                type: array
-                description: List of enrollment records
-                allOf:
-                  - $ref: '#/components/schemas/enrollmentPrimaryKey'
-                  - $ref: '#/components/schemas/enrollmentBase'
-                  - $ref: '#/components/schemas/hmisMetadata'
-              Exit.csv:
-                type: array
-                description: List of exit records
-                allOf:
-                  - $ref: '#/components/schemas/exitPrimaryKey'
-                  - $ref: '#/components/schemas/exitBase'
-                  - $ref: '#/components/schemas/hmisMetadata'
-              IncomeBenefits.csv:
-                type: array
-                description: List of income and benefits records
-                allOf:
-                  - $ref: '#/components/schemas/incomeBenefitsPrimaryKey'
-                  - $ref: '#/components/schemas/incomeBenefitsBase'
-                  - $ref: '#/components/schemas/hmisMetadata' 
-              HealthAndDV.csv:
-                type: array
-                description: List of health and domestic violence records
-                allOf:
-                  - $ref: '#/components/schemas/healthAndDVPrimaryKey'
-                  - $ref: '#/components/schemas/healthAndDVBase'
-                  - $ref: '#/components/schemas/hmisMetadata'
-              EmploymentEducation.csv:
-                type: array
-                description: List of employment and education records
-                allOf:
-                  - $ref: '#/components/schemas/employmentEducationPrimaryKey'
-                  - $ref: '#/components/schemas/employmentEducationBase'
-                  - $ref: '#/components/schemas/hmisMetadata'
-              Disabilities.csv:
-                type: array
-                description: List of disabilities records
-                allOf:
-                  - $ref: '#/components/schemas/disabilitiesPrimaryKey'
-                  - $ref: '#/components/schemas/disabilitiesBase'
-                  - $ref: '#/components/schemas/hmisMetadata'
-              Services.csv:
-                type: array
-                description: List of services records
-                allOf:
-                  - $ref: '#/components/schemas/servicesPrimaryKey'
-                  - $ref: '#/components/schemas/servicesBase'
-                  - $ref: '#/components/schemas/hmisMetadata'
-              CurrentLivingSituation.csv:
-                type: array
-                description: List of current living situation records
-                allOf:
-                  - $ref: '#/components/schemas/currentLivingSituationPrimaryKey'
-                  - $ref: '#/components/schemas/currentLivingSituationBase'
-                  - $ref: '#/components/schemas/hmisMetadata'
-              Assessments.csv:
-                type: array
-                description: List of assessments records
-                allOf:
-                  - $ref: '#/components/schemas/assessmentsPrimaryKey'
-                  - $ref: '#/components/schemas/assessmentsBase'
-                  - $ref: '#/components/schemas/hmisMetadata' 
-              AssessmentQuestions.csv:
-                type: array
-                description: List of assessment questions records
-                allOf:
-                  - $ref: '#/components/schemas/assessmentQuestionsPrimaryKey'
-                  - $ref: '#/components/schemas/assessmentQuestionsBase'
-                  - $ref: '#/components/schemas/hmisMetadata' 
-              AssessmentResults.csv:
-                type: array
-                description: List of assessment results records
-                allOf:
-                  - $ref: '#/components/schemas/assessmentResultsPrimaryKey'
-                  - $ref: '#/components/schemas/assessmentResultsBase'
-                  - $ref: '#/components/schemas/hmisMetadata'
-              Event.csv:
-                type: array
-                description: List of event records
-                allOf:
-                  - $ref: '#/components/schemas/eventPrimaryKey'
-                  - $ref: '#/components/schemas/eventBase'
-                  - $ref: '#/components/schemas/hmisMetadata'
-          x-jsonld-frame:
-            "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
-            "@type": "hmis:ClientEnrollmentListResponse"
-            "Organization.csv": {
-              "@type": "hmis:Organization"
-            }
-            "User.csv": {
-              "@type": "hmis:User"
-            }
-            "Project.csv": {      
-              "@type": "hmis:Project"
-            }
-            "Funder.csv": {   
-              "@type": "hmis:Funder"
-            }
-            "ProjectCoC.csv": {   
-              "@type": "hmis:ProjectCoC"
-            }
-            "Inventory.csv": {   
-              "@type": "hmis:Inventory"
-            }
-            "Affiliation.csv": {   
-              "@type": "hmis:Affiliation"
-            }
-            "HMISParticipation.csv": {   
-              "@type": "hmis:HMISParticipation"
-            }
-            "CEParticipation.csv": {   
-              "@type": "hmis:CEParticipation"
-            }
-            "Client.csv": {      
-              "@type": "hmis:Client"
-            }
-            "Enrollment.csv": {      
-              "@type": "hmis:Enrollment"
-            }
-            "Exit.csv": {      
-              "@type": "hmis:Exit"
-            }
-            "IncomeBenefits.csv": {      
-              "@type": "hmis:IncomeBenefits"
-            }
-            "HealthAndDV.csv": {      
-              "@type": "hmis:HealthAndDV"
-            }
-            "EmploymentEducation.csv": {      
-              "@type": "hmis:EmploymentEducation"
-            }
-            "Disabilities.csv": {      
-              "@type": "hmis:Disabilities"
-            }
-            "Services.csv": {     
-              "@type": "hmis:Services"
-            }
-            "CurrentLivingSituation.csv": {      
-              "@type": "hmis:CurrentLivingSituation"
-            }
-            "Assessments.csv": {      
-              "@type": "hmis:Assessments"
-            }
-            "AssessmentQuestions.csv": {      
-              "@type": "hmis:AssessmentQuestions"
-            }
-            "AssessmentResults.csv": {      
-              "@type": "hmis:AssessmentResults"
-            }
-            "Event.csv": {      
-              "@type": "hmis:Event"
-            }            
-    '400':
-      description: Invalid query parameters
-      content:
-        application/json:
-          schema:
-            type: object
-            x-jsonld-type: hmis:ValidationError
-            properties:
-              error:
-                type: string
-                example: "Invalid date range - startDate must be before endDate"
-                x-semantic-uri: http://hmis.hud.gov/errors#ValidationError
+            type: string
+            maxLength: 32
+            x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+      responses:
+        '200':
+          description: List of enrollments for the specified client
+          content:
+            application/json:
+              schema:
+                type: object
+                x-jsonld-type: hmis:ClientEnrollmentListResponse
+                properties:
+                  #Project Descriptors
+                  Organization.csv:
+                    type: array
+                    description: List of organization records
+                    allOf:
+                      - $ref: '#/components/schemas/organizationPrimaryKey'
+                      - $ref: '#/components/schemas/organizationBase'
+                      - $ref: '#/components/schemas/hmisMetadata'
+                  User.csv:
+                    type: array
+                    description: List of user records
+                    allOf:
+                      - $ref: '#/components/schemas/userPrimaryKey'
+                      - $ref: '#/components/schemas/userBase'
+                      - $ref: '#/components/schemas/hmisMetadata'
+                  Project.csv:
+                    type: array
+                    description: List of project records
+                    allOf:
+                      - $ref: '#/components/schemas/projectPrimaryKey'
+                      - $ref: '#/components/schemas/projectBase'
+                      - $ref: '#/components/schemas/hmisMetadata'
+                  Funder.csv:
+                    type: array
+                    description: List of funder records
+                    allOf:
+                      - $ref: '#/components/schemas/funderPrimaryKey'
+                      - $ref: '#/components/schemas/funderBase'
+                      - $ref: '#/components/schemas/hmisMetadata'
+                  ProjectCoC.csv:
+                    type: array
+                    description: List of project CoC records
+                    allOf:
+                      - $ref: '#/components/schemas/projectCoCPrimaryKey'
+                      - $ref: '#/components/schemas/projectCoCBase'
+                      - $ref: '#/components/schemas/hmisMetadata'
+                  Inventory.csv:
+                    type: array
+                    description: List of inventory records
+                    allOf:
+                      - $ref: '#/components/schemas/inventoryPrimaryKey'
+                      - $ref: '#/components/schemas/inventoryBase'
+                      - $ref: '#/components/schemas/hmisMetadata'
+                  Affiliation.csv:
+                    type: array
+                    description: List of affiliation records
+                    allOf:
+                      - $ref: '#/components/schemas/affiliationPrimaryKey'
+                      - $ref: '#/components/schemas/affiliationBase'
+                      - $ref: '#/components/schemas/hmisMetadata'
+                  HMISParticipation.csv:
+                    type: array
+                    description: List of HMIS participation records
+                    allOf:
+                      - $ref: '#/components/schemas/hmisParticipationPrimaryKey'
+                      - $ref: '#/components/schemas/hmisParticipationBase'
+                      - $ref: '#/components/schemas/hmisMetadata'
+                  CEParticipation.csv:
+                    type: array
+                    description: List of CE participation records
+                    allOf:
+                      - $ref: '#/components/schemas/ceParticipationPrimaryKey'
+                      - $ref: '#/components/schemas/ceParticipationBase'
+                      - $ref: '#/components/schemas/hmisMetadata'
+                  #Client file
+                  Client.csv:
+                    type: array
+                    description: List of client records
+                    allOf:
+                      - $ref: '#/components/schemas/clientPrimaryKey'
+                      - $ref: '#/components/schemas/clientBase'
+                      - $ref: '#/components/schemas/hmisMetadata'
+                  #Enrollment files
+                  Enrollment.csv:
+                    type: array
+                    description: List of enrollment records
+                    allOf:
+                      - $ref: '#/components/schemas/enrollmentPrimaryKey'
+                      - $ref: '#/components/schemas/enrollmentBase'
+                      - $ref: '#/components/schemas/hmisMetadata'
+                  Exit.csv:
+                    type: array
+                    description: List of exit records
+                    allOf:
+                      - $ref: '#/components/schemas/exitPrimaryKey'
+                      - $ref: '#/components/schemas/exitBase'
+                      - $ref: '#/components/schemas/hmisMetadata'
+                  IncomeBenefits.csv:
+                    type: array
+                    description: List of income and benefits records
+                    allOf:
+                      - $ref: '#/components/schemas/incomeBenefitsPrimaryKey'
+                      - $ref: '#/components/schemas/incomeBenefitsBase'
+                      - $ref: '#/components/schemas/hmisMetadata' 
+                  HealthAndDV.csv:
+                    type: array
+                    description: List of health and domestic violence records
+                    allOf:
+                      - $ref: '#/components/schemas/healthAndDVPrimaryKey'
+                      - $ref: '#/components/schemas/healthAndDVBase'
+                      - $ref: '#/components/schemas/hmisMetadata'
+                  EmploymentEducation.csv:
+                    type: array
+                    description: List of employment and education records
+                    allOf:
+                      - $ref: '#/components/schemas/employmentEducationPrimaryKey'
+                      - $ref: '#/components/schemas/employmentEducationBase'
+                      - $ref: '#/components/schemas/hmisMetadata'
+                  Disabilities.csv:
+                    type: array
+                    description: List of disabilities records
+                    allOf:
+                      - $ref: '#/components/schemas/disabilitiesPrimaryKey'
+                      - $ref: '#/components/schemas/disabilitiesBase'
+                      - $ref: '#/components/schemas/hmisMetadata'
+                  Services.csv:
+                    type: array
+                    description: List of services records
+                    allOf:
+                      - $ref: '#/components/schemas/servicesPrimaryKey'
+                      - $ref: '#/components/schemas/servicesBase'
+                      - $ref: '#/components/schemas/hmisMetadata'
+                  CurrentLivingSituation.csv:
+                    type: array
+                    description: List of current living situation records
+                    allOf:
+                      - $ref: '#/components/schemas/currentLivingSituationPrimaryKey'
+                      - $ref: '#/components/schemas/currentLivingSituationBase'
+                      - $ref: '#/components/schemas/hmisMetadata'
+                  Assessments.csv:
+                    type: array
+                    description: List of assessments records
+                    allOf:
+                      - $ref: '#/components/schemas/assessmentPrimaryKey'
+                      - $ref: '#/components/schemas/assessmentBase'
+                      - $ref: '#/components/schemas/hmisMetadata' 
+                  AssessmentQuestions.csv:
+                    type: array
+                    description: List of assessment questions records
+                    allOf:
+                      - $ref: '#/components/schemas/assessmentQuestionsPrimaryKey'
+                      - $ref: '#/components/schemas/assessmentQuestionsBase'
+                      - $ref: '#/components/schemas/hmisMetadata' 
+                  AssessmentResults.csv:
+                    type: array
+                    description: List of assessment results records
+                    allOf:
+                      - $ref: '#/components/schemas/assessmentResultsPrimaryKey'
+                      - $ref: '#/components/schemas/assessmentResultsBase'
+                      - $ref: '#/components/schemas/hmisMetadata'
+                  Event.csv:
+                    type: array
+                    description: List of event records
+                    allOf:
+                      - $ref: '#/components/schemas/eventPrimaryKey'
+                      - $ref: '#/components/schemas/eventBase'
+                      - $ref: '#/components/schemas/hmisMetadata'
+                  YouthEducationStatus.csv:
+                    type: array
+                    description: list of Youth Education Status records
+                    allOf: 
+                      - $ref: "#/components/schemas/youthEducationStatusPrimaryKey"
+                      - $ref: "#/components/schemas/youthEducationStatusBase"
+                      - $ref: "#/components/schemas/hmisMetadata"
+              x-jsonld-frame:
+                "@context": "https://raw.githubusercontent.com/HUD-Data-Lab/HMIS-Logic-Model/refs/heads/main/001.%20Upcoming%20Versions/JSONLD/FY26HMIS_JSON-LD_v1.jsonld"
+                "@type": "hmis:ClientEnrollmentListResponse"
+                "Organization.csv": {
+                  "@type": "hmis:Organization"
+                }
+                "User.csv": {
+                  "@type": "hmis:User"
+                }
+                "Project.csv": {      
+                  "@type": "hmis:Project"
+                }
+                "Funder.csv": {   
+                  "@type": "hmis:Funder"
+                }
+                "ProjectCoC.csv": {   
+                  "@type": "hmis:ProjectCoC"
+                }
+                "Inventory.csv": {   
+                  "@type": "hmis:Inventory"
+                }
+                "Affiliation.csv": {   
+                  "@type": "hmis:Affiliation"
+                }
+                "HMISParticipation.csv": {   
+                  "@type": "hmis:HMISParticipation"
+                }
+                "CEParticipation.csv": {   
+                  "@type": "hmis:CEParticipation"
+                }
+                "Client.csv": {      
+                  "@type": "hmis:Client"
+                }
+                "Enrollment.csv": {      
+                  "@type": "hmis:Enrollment"
+                }
+                "Exit.csv": {      
+                  "@type": "hmis:Exit"
+                }
+                "IncomeBenefits.csv": {      
+                  "@type": "hmis:IncomeBenefits"
+                }
+                "HealthAndDV.csv": {      
+                  "@type": "hmis:HealthAndDV"
+                }
+                "EmploymentEducation.csv": {      
+                  "@type": "hmis:EmploymentEducation"
+                }
+                "Disabilities.csv": {      
+                  "@type": "hmis:Disabilities"
+                }
+                "Services.csv": {     
+                  "@type": "hmis:Services"
+                }
+                "CurrentLivingSituation.csv": {      
+                  "@type": "hmis:CurrentLivingSituation"
+                }
+                "Assessments.csv": {      
+                  "@type": "hmis:Assessments"
+                }
+                "AssessmentQuestions.csv": {      
+                  "@type": "hmis:AssessmentQuestions"
+                }
+                "AssessmentResults.csv": {      
+                  "@type": "hmis:AssessmentResults"
+                }
+                "Event.csv": {      
+                  "@type": "hmis:Event"
+                }            
+        '400':
+          description: Invalid query parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                x-jsonld-type: hmis:ValidationError
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid date range - startDate must be before endDate"
+                    x-semantic-uri: http://hmis.hud.gov/errors#ValidationError
 
 components:
   securitySchemes:
@@ -2744,7 +2752,14 @@ components:
           x-semantic-uri: http://hmis.hud.gov/ontology#hasDOBDataQuality
           x-hud-data-element: "3.03"
           x-ontology-range: hmis:DOBDataQualityType
-        
+        # ===== SEX DATA ELEMENTS (4.21) =====
+        Sex:
+          type: integer
+          oneOf:
+            - $ref: '#/components/schemas/Sex_list'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSex
+          x-hud-data-element: "4.21"
+      
         # ===== RACE DATA ELEMENTS (3.04) =====
         AmIndAKNative:
           type: integer
@@ -2800,7 +2815,7 @@ components:
           type: integer
           description: Non-null only if all other race fields are 0 (UNKNOWN)
           oneOf:
-            - $ref: '#/components/schemas/RaceGenderNone_list'
+            - $ref: '#/components/schemas/RaceNone_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasRaceNone
           x-hud-data-element: "3.04"
           x-business-rule: "Set only when all race fields = 0"
@@ -2812,71 +2827,6 @@ components:
           x-hud-data-element: "3.04"
           x-ontology-cardinality: "0..1"
         
-        # ===== GENDER DATA ELEMENTS (3.06) =====
-        Woman:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasWoman
-          x-hud-data-element: "3.06"
-          
-        Man:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasMan
-          x-hud-data-element: "3.06"
-          
-        NonBinary:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasNonBinary
-          x-hud-data-element: "3.06"
-          
-        CulturallySpecific:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasCulturallySpecific
-          x-hud-data-element: "3.06"
-          
-        Transgender:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasTransgender
-          x-hud-data-element: "3.06"
-          
-        Questioning:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasQuestioning
-          x-hud-data-element: "3.06"
-          
-        DifferentIdentity:
-          type: integer
-          oneOf:
-            - $ref: '#/components/schemas/NoYes_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasDifferentIdentity
-          x-hud-data-element: "3.06"
-          
-        GenderNone:
-          type: integer
-          description: Non-null only if all other gender fields = 0
-          oneOf:
-            - $ref: '#/components/schemas/RaceGenderNone_list'
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasGenderNone
-          x-hud-data-element: "3.06"
-          x-business-rule: "Set only when all gender fields = 0"
-          
-        DifferentIdentityText:
-          type: string
-          maxLength: 100
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasDifferentIdentityText
-          x-hud-data-element: "3.06"
-          x-ontology-cardinality: "0..1"
         
         # ===== VETERAN STATUS (3.07) =====
         VeteranStatus:
@@ -3044,7 +2994,7 @@ components:
           x-hud-data-element: 3.917.A
           x-semantic-uri: http://hmis.hud.gov/ontology#hasRentalSubsidyType
           oneOf:
-            - $ref: '#/components/schemas/RentalSubsidyType_list'
+            - $ref: '#/components/schemas/RentalSubsidyTypes_list'
         LengthOfStay:
           type: integer
           x-hud-data-element: 3.917.2
@@ -3125,7 +3075,7 @@ components:
           x-hud-data-element: R.1.1
           x-semantic-uri: http://hmis.hud.gov/ontology#hasReferralSource
           oneOf:
-            - $ref: '#components/schemas/ReferralSource_list' #REVIEW Add this list.
+            - $ref: "#/components/schemas/ReferralSource_list" #REVIEW Add this list.
         CountOutreachReferralApproaches:
           type: integer
           x-hud-data-element: R.1.A
@@ -5210,7 +5160,7 @@ components:
         - title: "NOT_PLACED_ON_PRIORITIZATION_LIST"
           const: 2
           description: "Not placed on prioritization list"
-    HMISParticipationType:
+    HMISParticipationType_list:
       type: integer
       description: "Level of participation in the CoC's HMIS or VSP's comparable database by the project."
       oneOf:
@@ -5223,61 +5173,6 @@ components:
         - title: "COMPARABLE_DATABASE_PARTICIPATING"
           const: 2
           description: "All persons in this project have data collected in a VSP comparable database"
-    HouseholdType:
-      type: integer
-      description: "Defines the type of households served by the project."
-      oneOf:
-        - title: "HOUSEHOLDS_WITHOUT_CHILDREN"
-          const: 1
-          description: "Households without children"
-        - title: "HOUSEHOLDS_WITH_AT_LEAST_ONE_ADULT_AND_ONE_CHILD"
-          const: 3
-          description: "Households with at least one adult and one child"
-        - title: "HOUSEHOLDS_WITH_ONLY_CHILDREN"
-          const: 4
-          description: "Households with only children"
-    Availability:
-      type: integer
-      description: "Availability status of the housing project's accommodations."
-      oneOf:
-        - title: "YEAR_ROUND"
-          const: 1
-          description: "Available year-round"
-        - title: "SEASONAL"
-          const: 2
-          description: "Seasonally available"
-        - title: "OVERFLOW"
-          const: 3
-          description: "Overflow accommodations"
-    BedType:
-      type: integer
-      description: "Specifies the type of beds available in the housing project."
-      oneOf:
-        - title: "FACILITY_BASED_BEDS"
-          const: 1
-          description: "Facility-based beds"
-        - title: "VOUCHER_BEDS"
-          const: 2
-          description: "Voucher beds"
-        - title: "OTHER_BEDS"
-          const: 3
-          description: "Other types of beds"
-    GeographyType:
-      type: integer
-      description: "Specifies the geographical setting of the project."
-      oneOf:
-        - title: "URBAN"
-          const: 1
-          description: "Urban area"
-        - title: "SUBURBAN"
-          const: 2
-          description: "Suburban area"
-        - title: "RURAL"
-          const: 3
-          description: "Rural area"
-        - title: "UNKNOWN_DATA_NOT_COLLECTED"
-          const: 99
-          description: "Unknown or data not collected"
     GeographyType_list:
       type: integer
       description: "Indicates the type of geographic area for the project location."
@@ -5518,7 +5413,7 @@ components:
         - title: "OTHER_DATA_NOT_COLLECTED"
           const: 99
           description: "Data not collected"
-      PercentAMI_list:
+    PercentAMI_list:
       type: integer
       description: "Percentage of Area Median Income (AMI) that the client's income falls into."
       oneOf:
@@ -6193,37 +6088,6 @@ components:
         - title: "OTHER"
           const: 4
           description: "Other"
-        - title: "DATA_NOT_COLLECTED"
-          const: 99
-          description: "Data not collected"
-    SexualOrientation_list:
-      type: integer
-      description: "Sexual orientation of the client."
-      oneOf:
-        - title: "HETEROSEXUAL"
-          const: 1
-          description: "Heterosexual"
-        - title: "GAY"
-          const: 2
-          description: "Gay"
-        - title: "LESBIAN"
-          const: 3
-          description: "Lesbian"
-        - title: "BISEXUAL"
-          const: 4
-          description: "Bisexual"
-        - title: "QUESTIONING_UNSURE"
-          const: 5
-          description: "Questioning / unsure"
-        - title: "OTHER"
-          const: 6
-          description: "Other"
-        - title: "CLIENT_DOESNT_KNOW"
-          const: 8
-          description: "Client doesn't know"
-        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
-          const: 9
-          description: "Client prefers not to answer"
         - title: "DATA_NOT_COLLECTED"
           const: 99
           description: "Data not collected"
@@ -7060,8 +6924,18 @@ components:
         - title: "UNSUCCESSFUL_REFERRAL_PROVIDER_REJECTED"
           const: 3
           description: "Unsuccessful referral: provider rejected"
-
-
+    MentalHealthConsultation_list:
+      type: integer
+      description: "Mental Health Consultation status" 
+      oneOf: 
+        - title: "Mental health consultation completed"
+          const: 1
+        - title: "Mental health consultation being coordinated/arranged with VA provider"
+          const: 2
+        - title: "Mental health consultation being coordinated/arranges with other provider"
+          const: 3
+        - title: "Offer declined"
+          const: 4
 # Response Lists II
 
     NoYes_list:
@@ -7106,32 +6980,33 @@ components:
         - title: "DATA_NOT_COLLECTED"
           const: 99
           description: "Data not collected."
-    RaceGenderNone_list:
+    RaceNone_list:
       type: integer
-      description: "Indicates if race or gender data is not specified."
+      description: "Indicates if race data is not specified."
       oneOf:
         - title: "CLIENT_DOESNT_KNOW"
           const: 8
-          description: "Client does not know their race or gender."
+          description: "Client does not know their race."
         - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
           const: 9
-          description: "Client prefers not to answer race or gender questions."
+          description: "Client prefers not to answer race questions."
         - title: "DATA_NOT_COLLECTED"
           const: 99
-          description: "Race or gender data was not collected."
-    MissingDataQuality_list:
+          description: "Race data was not collected."
+    Sex_list:
       type: integer
-      description: |
-        Factored out the [Client Doesn't Know], [Client perfers not to answer], and [data not collected]
-        The intention is to limit the number of lists that we define throughout the API reference.
+      description: "Indiciates the sex of client or if data is not specified."
       oneOf: 
-        - title: "CLIENT_DOESNT_KNOW"
+        - title: Female
+          const: 0
+        - title: Male
+          const: 1
+        - title: Client doesn't know
           const: 8
-        - title: "CLIENT_PREFERS_NOT_TO_ANSWER"
+        - title: Client prefers not to answer
           const: 9
-        - title: "DATA_NOT_COLLECTED"
+        - title: Data not collected
           const: 99
-
 # Scenario focused schemas
 
 # Scenario 10
