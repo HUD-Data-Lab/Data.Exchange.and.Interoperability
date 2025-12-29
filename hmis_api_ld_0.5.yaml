@@ -768,7 +768,6 @@ paths:
                   message:
                     type: string
                     example: Invalid input provided for [enter data element with issue]
-                    x-semantic-uri: #NEED UPDATE HERE. 
 
   # ==========================================================================
   # BASELINE SCENARIO 2: Generate a new client record
@@ -1070,7 +1069,7 @@ paths:
             x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID 
             x-filter-type: "equal-to" 
 
-        - name: entryDate
+        - name: StartDate
           in: query
           required: false
           description: Filter enrollments with EntryDate on or after this date
@@ -1080,7 +1079,7 @@ paths:
             x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
             x-filter-type: "greater-than-or-equal"
         
-        - name: exitDate
+        - name: ExitDate
           in: query
           required: false
           description: Filter enrollments with EntryDate on or before this date
@@ -2224,7 +2223,7 @@ components:
       x-hud-csv-table: "Project.csv"
       x-semantic-uri: http://hmis.hud.gov/ontology#Project
       properties: 
-        OrganizationID: #REVIEW Does this make sense to include? We can always reference the primary key schema
+        OrganizationID: 
           type: string
           maxLength: 32
           x-hud-data-element: 2.01.1
@@ -2315,6 +2314,7 @@ components:
           type: string
           maxLength: 32
           description: Must match a record in Project
+          x-hud-data-element: 2.02.1
           x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
         Funder:
           type: integer
@@ -2370,6 +2370,7 @@ components:
         ProjectID:
           type: string
           maxLength: 32
+          x-hud-data-element: 2.02.1
           x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
         CoCCode:
           type: string
@@ -2448,7 +2449,7 @@ components:
             - $ref: '#/components/schemas/HouseholdType_list'
         Availability:
           type: integer
-          x-hud-data-element: 2.07.5
+          x-hud-data-element: 2.07.6
           x-semantic-uri: http://hmis.hud.gov/ontology#hasAvailability
           oneOf:
             - $ref: '#/components/schemas/Availability_list'
@@ -2530,7 +2531,7 @@ components:
         ResProjectID:
           type: string
           maxLength: 32
-          x-hud-data-element: 2.04.1
+          x-hud-data-element: 2.02.C
           x-semantic-uri: http://hmis.hud.gov/ontology#hasResProjectID
   
     hmisParticipationPrimaryKey:
@@ -2626,7 +2627,7 @@ components:
             - $ref: '#/components/schemas/NoYes_list'
         ReceivesReferrals:
           type: integer
-          x-hud-data-element: 2.09.A
+          x-hud-data-element: 2.09.2
           x-semantic-uri: http://hmis.hud.gov/ontology#hasReceivesReferrals
           oneOf:
             - $ref: '#/components/schemas/NoYes_list'
@@ -2664,7 +2665,7 @@ components:
           # SEMANTIC ANNOTATION: Links to ontology property
           # Enables: JSON-LD frame generation, SPARQL query construction
           x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
-          x-hud-data-element: "Universal Data Element"
+          x-hud-data-element: 5.08
           x-ontology-cardinality: "1..1"  # Required, exactly one
     clientBase:
       type: object
@@ -2682,7 +2683,7 @@ components:
           description: First name of the client
           maxLength: 50
           x-semantic-uri: http://hmis.hud.gov/ontology#hasFirstName
-          x-hud-data-element: "3.01"
+          x-hud-data-element: 3.01.1
           x-hud-reference:
             standard: "FY 2026 HMIS Data Dictionary"
             section: "3.01 Name"
@@ -2693,7 +2694,7 @@ components:
           description: Middle name of the client
           maxLength: 50
           x-semantic-uri: http://hmis.hud.gov/ontology#hasMiddleName
-          x-hud-data-element: "3.01"
+          x-hud-data-element: 3.01.2
           x-ontology-cardinality: "0..1"  # Optional
           
         LastName:
@@ -2701,14 +2702,14 @@ components:
           description: Last name of the client
           maxLength: 50
           x-semantic-uri: http://hmis.hud.gov/ontology#hasLastName
-          x-hud-data-element: "3.01"
+          x-hud-data-element: 3.01.3
           
         NameSuffix:
           type: string
           description: Suffix of the client's name
           maxLength: 50
           x-semantic-uri: http://hmis.hud.gov/ontology#hasNameSuffix
-          x-hud-data-element: "3.01"
+          x-hud-data-element: 3.01.4
           x-ontology-cardinality: "0..1"
           
         NameDataQuality:
@@ -2717,7 +2718,7 @@ components:
           oneOf:
             - $ref: '#/components/schemas/NameDataQuality_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasNameDataQuality
-          x-hud-data-element: "3.01"
+          x-hud-data-element: 3.01.5
           x-ontology-range: hmis:NameDataQualityType
           
         SSN:
@@ -2725,7 +2726,7 @@ components:
           description: Social Security Number
           pattern: '^[0-9]{9}$'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasSSN
-          x-hud-data-element: "3.02"
+          x-hud-data-element: 3.02.1
           x-pii: true  # Mark as personally identifiable information
           x-encryption-required: true
           
@@ -2734,7 +2735,7 @@ components:
           oneOf:
             - $ref: '#/components/schemas/SSNDataQuality_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasSSNDataQuality
-          x-hud-data-element: "3.02"
+          x-hud-data-element: 3.02.2
           x-ontology-range: hmis:SSNDataQualityType
           
         DOB:
@@ -2742,7 +2743,7 @@ components:
           description: Date of birth of the client
           format: date
           x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfBirth
-          x-hud-data-element: "3.03"
+          x-hud-data-element: 3.03.1
           x-pii: true
           
         DOBDataQuality:
@@ -2750,7 +2751,7 @@ components:
           oneOf:
             - $ref: '#/components/schemas/DOBDataQuality_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasDOBDataQuality
-          x-hud-data-element: "3.03"
+          x-hud-data-element: 3.03.2
           x-ontology-range: hmis:DOBDataQualityType
         # ===== SEX DATA ELEMENTS (4.21) =====
         Sex:
@@ -2758,7 +2759,7 @@ components:
           oneOf:
             - $ref: '#/components/schemas/Sex_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasSex
-          x-hud-data-element: "4.21"
+          x-hud-data-element: 4.21
       
         # ===== RACE DATA ELEMENTS (3.04) =====
         AmIndAKNative:
@@ -2766,7 +2767,7 @@ components:
           oneOf:
             - $ref: '#/components/schemas/NoYes_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasAmIndAKNative
-          x-hud-data-element: "3.04"
+          x-hud-data-element: 3.04.1
           x-ontology-range: hmis:NoYesType
           
         Asian:
@@ -2774,42 +2775,42 @@ components:
           oneOf:
             - $ref: '#/components/schemas/NoYes_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasAsian
-          x-hud-data-element: "3.04"
+          x-hud-data-element: 3.04.1
           
         BlackAfAmerican:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasBlackAfAmerican
-          x-hud-data-element: "3.04"
+          x-hud-data-element: 3.04.1
           
         HispanicLatinaeo:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasHispanicLatinaeo
-          x-hud-data-element: "3.04"
+          x-hud-data-element: 3.04.1
           
         MidEastNAfrican:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasMidEastNAfrican
-          x-hud-data-element: "3.04"
+          x-hud-data-element: 3.04.1
           
         NativeHIPacific:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasNativeHIPacific
-          x-hud-data-element: "3.04"
+          x-hud-data-element: 3.04.1
           
         White:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYes_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasWhite
-          x-hud-data-element: "3.04"
+          x-hud-data-element: 3.04.1
           
         RaceNone:
           type: integer
@@ -2817,14 +2818,14 @@ components:
           oneOf:
             - $ref: '#/components/schemas/RaceNone_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasRaceNone
-          x-hud-data-element: "3.04"
+          x-hud-data-element: 3.04.1
           x-business-rule: "Set only when all race fields = 0"
           
         AdditionalRaceEthnicity:
           type: string
           maxLength: 100
           x-semantic-uri: http://hmis.hud.gov/ontology#hasAdditionalRaceEthnicity
-          x-hud-data-element: "3.04"
+          x-hud-data-element: 3.04.2
           x-ontology-cardinality: "0..1"
         
         
@@ -2834,7 +2835,7 @@ components:
           oneOf:
             - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasVeteranStatus
-          x-hud-data-element: "3.07"
+          x-hud-data-element: 3.07.1
           x-hud-reference:
             standard: "FY 2026 HMIS Data Dictionary"
             section: "3.07 Veteran Status"
@@ -2848,14 +2849,14 @@ components:
           type: string
           pattern: '^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasYearEnteredService
-          x-hud-data-element: "3.07"
+          x-hud-data-element: V1.1
           x-conditional: "Required if VeteranStatus = Yes"
           
         YearSeparated:
           type: string
           pattern: '^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasYearSeparated
-          x-hud-data-element: "3.07"
+          x-hud-data-element: V1.2
           x-conditional: "Required if VeteranStatus = Yes"
           
         WorldWarII:
@@ -2863,56 +2864,56 @@ components:
           oneOf:
             - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasWorldWarII
-          x-hud-data-element: "3.07"
+          x-hud-data-element: V1.3
           
         KoreanWar:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasKoreanWar
-          x-hud-data-element: "3.07"
+          x-hud-data-element: V1.4
           
         VietnamWar:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasVietnamWar
-          x-hud-data-element: "3.07"
+          x-hud-data-element: V1.5
           
         DesertStorm:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasDesertStorm
-          x-hud-data-element: "3.07"
+          x-hud-data-element: V1.6
           
         AfghanistanOEF:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasAfghanistanOEF
-          x-hud-data-element: "3.07"
+          x-hud-data-element: V1.7
           
         IraqOIF:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasIraqOIF
-          x-hud-data-element: "3.07"
+          x-hud-data-element: V1.8
           
         IraqOND:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasIraqOND
-          x-hud-data-element: "3.07"
+          x-hud-data-element: V1.9
           
         OtherTheater:
           type: integer
           oneOf:
             - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
           x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherTheater
-          x-hud-data-element: "3.07"
+          x-hud-data-element: V1.10
           
         MilitaryBranch:
           type: integer
@@ -4230,7 +4231,7 @@ components:
     assessmentQuestionsBase: #REVIEW Need to finish adding extension tags
       type: object
       properties:
-        AassessmentID:
+        AssessmentID:
           type: string
           maxLength: 32
           x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentID
@@ -4440,7 +4441,7 @@ components:
           x-provenance: true
 
 # Enumerations (to be extracted from ontology)
-    
+
 # Response lists
     LastGradeCompleted_list:
       type: integer

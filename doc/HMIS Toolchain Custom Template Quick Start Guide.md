@@ -54,7 +54,7 @@ template:
   description: "Generates billing data for CA MCOs from HMIS enrollment records"
   output_format: "json"  # Options: json, csv, xml, api_endpoint
 
-# Map HMIS data elements to template fields
+# Map HMIS data elements to template fields <!-- REVIEW: So we would need to define each data element? Would the data element number be helpful? -->
 fields:
   # Standard HMIS fields (from ontology)
   - hmis_element: "PersonalID"
