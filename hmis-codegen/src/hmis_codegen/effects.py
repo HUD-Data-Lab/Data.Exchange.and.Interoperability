@@ -6,6 +6,7 @@ Manages algebraic effect annotations and generates handler interfaces
 
 from typing import List, Dict, Set
 from .models import Effect, EffectHandler, EffectSignature
+from pydantic import BaseModel, Field, HttpUrl
 
 
 class EffectSystem:
