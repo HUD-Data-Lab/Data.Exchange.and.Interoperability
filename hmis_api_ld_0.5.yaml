@@ -3106,7 +3106,7 @@ components:
         ChildWelfareMonths:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasChildWelfareMonths
-          x-semantic-uri: "R11.B"
+          x-hud-data-element: "R11.B"
           minimum: 1
           maximum: 11
         FormerWardJuvenileJustice:
