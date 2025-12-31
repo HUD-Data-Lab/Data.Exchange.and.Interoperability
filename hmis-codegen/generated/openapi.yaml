@@ -34,11 +34,497 @@ servers:
 
 components:
   schemas:
+    organizationPrimaryKey:
+      type: object
+      description: Unique identifier for Organization resource
+      x-jsonld-type: hmis:OrganizationIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#OrganizationIdentifier
+      x-hud-csv-table: Organization.csv
+      
+      properties:
+        OrganizationID:
+          type: string
+          maxLength: 32
+          x-hud-data-element: "2.01.1"
+    organizationBase:
+      type: object
+      description: Core Organization information
+      x-jsonld-type: hmis:Organization
+      x-semantic-uri: http://hmis.hud.gov/ontology#Organization
+      x-hud-csv-table: Organization.csv
+      
+      properties:
+        OrganizationName:
+          type: string
+          maxLength: 200
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOrganizationName
+          x-hud-data-element: "2.01.2"
+        VictimServiceProvider:
+          type: integer
+          description: Indicates whether the organization is a victim service provider (1=yes, 0=no)
+          x-semantic-uri: http://hmis.hud.gov/ontology#isVictimServiceProvider
+          x-hud-data-element: "2.01.3"
+        OrganizationCommonName:
+          type: string
+          maxLength: 200
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOrganizationCommonName
+    userPrimaryKey:
+      type: object
+      description: Unique identifier for User resource
+      x-jsonld-type: hmis:UserIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#UserIdentifier
+      x-hud-csv-table: User.csv
+      
+      properties:
+        UserID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasUserID
+          x-hud-data-element: "5.07.1"
+    userBase:
+      type: object
+      description: Core User information
+      x-jsonld-type: hmis:User
+      x-semantic-uri: http://hmis.hud.gov/ontology#User
+      x-hud-csv-table: User.csv
+      
+      properties:
+        UserFirstName:
+          type: string
+          maxLength: 5
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasUserFirstName
+        UserLastName:
+          type: string
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasUserLastName
+        UserPhone:
+          type: string
+          maxLength: 10
+          pattern: ^[2-9][0-9]{2}[2-9][0-9]{2}[0-9]{4}$
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasUserPhone
+        UserExtension:
+          type: string
+          maxLength: 5
+          pattern: ^[0-9]{1,5}$
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasUserExtension
+        UserEmail:
+          type: string
+          format: email
+          maxLength: 320
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasUserEmail
+    projectPrimaryKey:
+      type: object
+      description: Unique identifier for Project resource
+      x-jsonld-type: hmis:ProjectIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#ProjectIdentifier
+      x-hud-csv-table: Project.csv
+      
+      properties:
+        ProjectID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+          x-hud-data-element: "2.02.1"
+    projectBase:
+      type: object
+      description: Core Project information
+      x-jsonld-type: hmis:Project
+      x-semantic-uri: http://hmis.hud.gov/ontology#Project
+      x-hud-csv-table: Project.csv
+      
+      properties:
+        OrganizationID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOrganizationID
+          x-hud-data-element: "2.01.1"
+        ProjectName:
+          type: string
+          maxLength: 200
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectName
+          x-hud-data-element: "2.02.2"
+        ProjectCommonName:
+          type: string
+          maxLength: 200
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectCommonName
+        OperatingStartDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOperatingStart
+          x-hud-data-element: "2.02.3"
+        OperatingEndDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOperatingEnd
+          x-hud-data-element: "2.02.4"
+        ContinuumProject:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#isContinuumProject
+          x-hud-data-element: "2.02.5"
+        ProjectType:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectType
+          x-hud-data-element: "2.02.6"
+        HousingType:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHousingType
+          x-hud-data-element: "2.02.D"
+        RRhSubType:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasRRHSubType
+          x-hud-data-element: "2.02.A"
+        ResidentialAffiliation:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasResidentialAffiliation
+          x-hud-data-element: "2.02.B"
+        TargetPopulation:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTargetPopulation
+          x-hud-data-element: "2.02.7"
+        HOPWAMedAssistedLivingFac:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHOPWAMedAssistedLivingFac
+          x-hud-data-element: "2.02.8"
+        PITCount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPITCount
+    funderPrimaryKey:
+      type: object
+      description: Unique identifier for Funder resource
+      x-jsonld-type: hmis:FunderIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#FunderIdentifier
+      x-hud-csv-table: Funder.csv
+      
+      properties:
+        FunderID:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFunderID
+    funderBase:
+      type: object
+      description: Core Funder information
+      x-jsonld-type: hmis:Funder
+      x-semantic-uri: http://hmis.hud.gov/ontology#Funder
+      x-hud-csv-table: Funder.csv
+      
+      properties:
+        ProjectID:
+          type: string
+          description: Must match a record in Project
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+          x-hud-data-element: "2.02.1"
+        Funder:
+          type: integer
+          description: Funding source identifier
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFunder
+          x-hud-data-element: "2.06.1"
+        OtherFunder:
+          type: string
+          description: Required if FundingSource = 46
+          maxLength: 100
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherFunder
+          x-hud-data-element: "2.06.A"
+        GrantID:
+          type: string
+          description: Grant identifier
+          maxLength: 100
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasGrantID
+          x-hud-data-element: "2.06.2"
+        StartDate:
+          type: string
+          format: date
+          description: Start date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasStartDate
+          x-hud-data-element: "2.06.3"
+        EndDate:
+          type: string
+          format: date
+          description: End date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEndDate
+          x-hud-data-element: "2.06.4"
+    projectCoCPrimaryKey:
+      type: object
+      description: Unique identifier for ProjectCoC resource
+      x-jsonld-type: hmis:ProjectCoCIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#ProjectCoCIdentifier
+      x-hud-csv-table: ProjectCoC.csv
+      
+      properties:
+        ProjectCoCID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectCoCID
+          x-hud-data-element: "2.03.1"
+    projectCoCBase:
+      type: object
+      description: Core ProjectCoC information
+      x-jsonld-type: hmis:ProjectCoC
+      x-semantic-uri: http://hmis.hud.gov/ontology#ProjectCoC
+      x-hud-csv-table: ProjectCoC.csv
+      
+      properties:
+        ProjectID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+          x-hud-data-element: "2.02.1"
+        CoCCode:
+          type: string
+          pattern: ^[A-Z]{2}-[0-9]{3}$
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCoCCode
+          x-hud-data-element: "2.03.1"
+        Geocode:
+          type: string
+          pattern: ^[0-9]{6}$
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasGeocode
+          x-hud-data-element: "2.03.2"
+        Address1:
+          type: string
+          maxLength: 100
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAddress1
+          x-hud-data-element: "2.03.3"
+        Address2:
+          type: string
+          maxLength: 100
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAddress2
+          x-hud-data-element: "2.03.4"
+        City:
+          type: string
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCity
+          x-hud-data-element: "2.03.5"
+        State:
+          type: string
+          pattern: ^[A-Z]{2}$
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasState
+          x-hud-data-element: "2.03.6"
+        ZipCode:
+          type: string
+          pattern: ^[0-9]{5}$
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasZipCode
+          x-hud-data-element: "2.03.7"
+        GeographyType:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasGeographyType
+          x-hud-data-element: "2.03.8"
+    inventoryPrimaryKey:
+      type: object
+      description: Unique identifier for Inventory resource
+      x-jsonld-type: hmis:InventoryIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#InventoryIdentifier
+      x-hud-csv-table: Inventory.csv
+      
+      properties:
+        InventoryID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInventoryID
+    inventoryBase:
+      type: object
+      description: Core Inventory information
+      x-jsonld-type: hmis:Inventory
+      x-semantic-uri: http://hmis.hud.gov/ontology#Inventory
+      x-hud-csv-table: Inventory.csv
+      
+      properties:
+        ProjectID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+        CoCCode:
+          type: integer
+          description: Must match a CoCCode in ProjectCoC.csv for the same ProjectID
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCoCCode
+          x-hud-data-element: "2.07.3"
+        HouseholdType:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHouseholdType
+          x-hud-data-element: "2.07.4"
+        Availability:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAvailability
+          x-hud-data-element: "2.07.6"
+        UnitInventory:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasUnitInventory
+          x-hud-data-element: "2.07.15"
+        BedInventory:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasBedInventory
+          x-hud-data-element: "2.07.14"
+        CHVetBedInventory:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCHVetBedInventory
+          x-hud-data-element: "2.07.7"
+        YouthVetBedInventory:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasYouthVetBedInventory
+          x-hud-data-element: "2.07.8"
+        VetBedInventory:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasYouthVetBedInventory
+          x-hud-data-element: "2.07.9"
+        CHYouthBedInventory:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCHYouthBedInventory
+          x-hud-data-element: "2.07.10"
+        YouthBedInventory:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDVBedInventory
+          x-hud-data-element: "2.07.11"
+        CHBedInventory:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCHVetBedInventory
+          x-hud-data-element: "2.07.12"
+        OtherBedInventory:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherBedInventory
+          x-hud-data-element: "2.07.13"
+        ESBedType:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasESBedType
+          x-hud-data-element: "2.07.5"
+        InventoryStartDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInventoryStartDate
+          x-hud-data-element: "2.07.1"
+        InventoryEndDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInventoryEndDate
+          x-hud-data-element: "2.07.2"
+    affiliationPrimaryKey:
+      type: object
+      description: Unique identifier for Affiliation resource
+      x-jsonld-type: hmis:AffiliationIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#AffiliationIdentifier
+      x-hud-csv-table: Affiliation.csv
+      
+      properties:
+        AffiliationID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAffiliationID
+    affiliationBase:
+      type: object
+      description: Core Affiliation information
+      x-jsonld-type: hmis:Affiliation
+      x-semantic-uri: http://hmis.hud.gov/ontology#Affiliation
+      x-hud-csv-table: Affiliation.csv
+      
+      properties:
+        ProjectID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+        ResProjectID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasResProjectID
+          x-hud-data-element: "2.02.C"
+    hmisParticipationPrimaryKey:
+      type: object
+      description: Unique identifier for HMISParticipation resource
+      x-jsonld-type: hmis:HMISParticipationIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#HMISParticipationIdentifier
+      x-hud-csv-table: HMISParticipation.csv
+      
+      properties:
+        HMISParticipationID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHMISParticipationID
+    hmisParticipationBase:
+      type: object
+      description: Core HMISParticipation information
+      x-jsonld-type: hmis:HMISParticipation
+      x-semantic-uri: http://hmis.hud.gov/ontology#HMISParticipation
+      x-hud-csv-table: HMISParticipation.csv
+      
+      properties:
+        ProjectID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+        HMISParticipationType:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHMISParticipationType
+          x-hud-data-element: "2.08.1"
+        HMISParticipationStartDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHMISParticipationStartDate
+          x-hud-data-element: "2.08.2"
+        HMISParticipationEndDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHMISParticipationEndDate
+          x-hud-data-element: "2.08.3"
+    ceParticipationPrimaryKey:
+      type: object
+      description: Unique identifier for CEParticipation resource
+      x-jsonld-type: hmis:CEParticipationIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#CEParticipationIdentifier
+      x-hud-csv-table: CEParticipation.csv
+      
+      properties:
+        CEParticipationID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCEParticipationID
+    ceParticipationBase:
+      type: object
+      description: Core CEParticipation information
+      x-jsonld-type: hmis:CEParticipation
+      x-semantic-uri: http://hmis.hud.gov/ontology#CEParticipation
+      x-hud-csv-table: CEParticipation.csv
+      
+      properties:
+        ProjectID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+        AccessPoint:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAccessPoint
+          x-hud-data-element: "2.09.1"
+        PreventionAssessment:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPreventionAssessment
+          x-hud-data-element: "2.09.A"
+        CrisisAssessment:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCrisisAssessment
+          x-hud-data-element: "2.09.A"
+        HousingAssessment:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHousingAssessment
+          x-hud-data-element: "2.09.A"
+        DirectServices:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDirectServices
+          x-hud-data-element: "2.09.A"
+        ReceivesReferrals:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasReceivesReferrals
+          x-hud-data-element: "2.09.2"
+        CEParticipationStartDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCEParticipation
+          x-hud-data-element: "2.09.3"
+        CEParticipationEndDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCEParticipationEndDate
+          x-hud-data-element: "2.09.4"
     clientPrimaryKey:
       type: object
       description: Unique identifier for Client resource
       x-jsonld-type: hmis:ClientIdentifier
       x-semantic-uri: http://hmis.hud.gov/ontology#ClientIdentifier
+      x-hud-csv-table: Client.csv
       
       properties:
         PersonalID:
@@ -46,7 +532,7 @@ components:
           description: Unique identifier for the client
           maxLength: 32
           x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
-          x-hud-data-element: "Universal Data Element"
+          x-hud-data-element: "5.08"
     clientBase:
       type: object
       description: Core Client demographic and identifying information
@@ -60,174 +546,140 @@ components:
           description: First name of the client
           maxLength: 50
           x-semantic-uri: http://hmis.hud.gov/ontology#hasFirstName
-          x-hud-data-element: "3.01"
+          x-hud-data-element: "3.01.1"
         MiddleName:
           type: string
           description: Middle name of the client
           maxLength: 50
           x-semantic-uri: http://hmis.hud.gov/ontology#hasMiddleName
-          x-hud-data-element: "3.01"
+          x-hud-data-element: "3.01.2"
         LastName:
           type: string
           description: Last name of the client
           maxLength: 50
           x-semantic-uri: http://hmis.hud.gov/ontology#hasLastName
-          x-hud-data-element: "3.01"
+          x-hud-data-element: "3.01.3"
         NameSuffix:
           type: string
           description: Suffix of the client's name
           maxLength: 50
           x-semantic-uri: http://hmis.hud.gov/ontology#hasNameSuffix
-          x-hud-data-element: "3.01"
+          x-hud-data-element: "3.01.4"
         NameDataQuality:
           type: integer
           description: Data quality indicator for name fields
           x-semantic-uri: http://hmis.hud.gov/ontology#hasNameDataQuality
-          x-hud-data-element: "3.01"
+          x-hud-data-element: "3.01.5"
         SSN:
           type: string
           description: Social Security Number
           pattern: ^[0-9]{9}$
           x-semantic-uri: http://hmis.hud.gov/ontology#hasSSN
-          x-hud-data-element: "3.02"
+          x-hud-data-element: "3.02.1"
           x-pii: true
         SSNDataQuality:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasSSNDataQuality
-          x-hud-data-element: "3.02"
+          x-hud-data-element: "3.02.2"
         DOB:
           type: string
           format: date
           description: Date of birth of the client
           x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfBirth
-          x-hud-data-element: "3.03"
+          x-hud-data-element: "3.03.1"
           x-pii: true
         DOBDataQuality:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasDOBDataQuality
-          x-hud-data-element: "3.03"
+          x-hud-data-element: "3.03.2"
+        Sex:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSex
+          x-hud-data-element: "4.21"
         AmIndAKNative:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasAmIndAKNative
-          x-hud-data-element: "3.04"
+          x-hud-data-element: "3.04.1"
         Asian:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasAsian
-          x-hud-data-element: "3.04"
+          x-hud-data-element: "3.04.1"
         BlackAfAmerican:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasBlackAfAmerican
-          x-hud-data-element: "3.04"
+          x-hud-data-element: "3.04.1"
         HispanicLatinaeo:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasHispanicLatinaeo
-          x-hud-data-element: "3.04"
+          x-hud-data-element: "3.04.1"
         MidEastNAfrican:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasMidEastNAfrican
-          x-hud-data-element: "3.04"
+          x-hud-data-element: "3.04.1"
         NativeHIPacific:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasNativeHIPacific
-          x-hud-data-element: "3.04"
+          x-hud-data-element: "3.04.1"
         White:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasWhite
-          x-hud-data-element: "3.04"
+          x-hud-data-element: "3.04.1"
         RaceNone:
           type: integer
           description: Non-null only if all other race fields are 0 (UNKNOWN)
           x-semantic-uri: http://hmis.hud.gov/ontology#hasRaceNone
-          x-hud-data-element: "3.04"
+          x-hud-data-element: "3.04.1"
         AdditionalRaceEthnicity:
           type: string
           maxLength: 100
           x-semantic-uri: http://hmis.hud.gov/ontology#hasAdditionalRaceEthnicity
-          x-hud-data-element: "3.04"
-        Woman:
-          type: integer
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasWoman
-          x-hud-data-element: "3.06"
-        Man:
-          type: integer
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasMan
-          x-hud-data-element: "3.06"
-        NonBinary:
-          type: integer
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasNonBinary
-          x-hud-data-element: "3.06"
-        CulturallySpecific:
-          type: integer
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasCulturallySpecific
-          x-hud-data-element: "3.06"
-        Transgender:
-          type: integer
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasTransgender
-          x-hud-data-element: "3.06"
-        Questioning:
-          type: integer
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasQuestioning
-          x-hud-data-element: "3.06"
-        DifferentIdentity:
-          type: integer
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasDifferentIdentity
-          x-hud-data-element: "3.06"
-        GenderNone:
-          type: integer
-          description: Non-null only if all other gender fields = 0
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasGenderNone
-          x-hud-data-element: "3.06"
-        DifferentIdentityText:
-          type: string
-          maxLength: 100
-          x-semantic-uri: http://hmis.hud.gov/ontology#hasDifferentIdentityText
-          x-hud-data-element: "3.06"
+          x-hud-data-element: "3.04.2"
         VeteranStatus:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasVeteranStatus
-          x-hud-data-element: "3.07"
+          x-hud-data-element: "3.07.1"
         YearEnteredService:
           type: string
           pattern: ^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$
           x-semantic-uri: http://hmis.hud.gov/ontology#hasYearEnteredService
-          x-hud-data-element: "3.07"
+          x-hud-data-element: "V1.1"
         YearSeparated:
           type: string
           pattern: ^(19[2-8][0-9]|199[0-9]|20[01][0-9]|202[0-4])$
           x-semantic-uri: http://hmis.hud.gov/ontology#hasYearSeparated
-          x-hud-data-element: "3.07"
+          x-hud-data-element: "V1.2"
         WorldWarII:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasWorldWarII
-          x-hud-data-element: "3.07"
+          x-hud-data-element: "V1.3"
         KoreanWar:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasKoreanWar
-          x-hud-data-element: "3.07"
+          x-hud-data-element: "V1.4"
         VietnamWar:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasVietnamWar
-          x-hud-data-element: "3.07"
+          x-hud-data-element: "V1.5"
         DesertStorm:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasDesertStorm
-          x-hud-data-element: "3.07"
+          x-hud-data-element: "V1.6"
         AfghanistanOEF:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasAfghanistanOEF
-          x-hud-data-element: "3.07"
+          x-hud-data-element: "V1.7"
         IraqOIF:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasIraqOIF
-          x-hud-data-element: "3.07"
+          x-hud-data-element: "V1.8"
         IraqOND:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasIraqOND
-          x-hud-data-element: "3.07"
+          x-hud-data-element: "V1.9"
         OtherTheater:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherTheater
-          x-hud-data-element: "3.07"
+          x-hud-data-element: "V1.10"
         MilitaryBranch:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasMilitaryBranch
@@ -236,9 +688,1169 @@ components:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasDischargeStatus
           x-hud-data-element: "3.07"
-    clientMetaData:
+    enrollmentPrimaryKey:
       type: object
-      description: Audit and versioning metadata for Client records
+      description: Unique identifier for Enrollment resource
+      x-jsonld-type: hmis:EnrollmentIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#EnrollmentIdentifier
+      x-hud-csv-table: Enrollment.csv
+      
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+          x-hud-data-element: "5.06.1"
+    enrollmentBase:
+      type: object
+      description: Core Enrollment information
+      x-jsonld-type: hmis:Enrollment
+      x-semantic-uri: http://hmis.hud.gov/ontology#Enrollment
+      x-hud-csv-table: Enrollment.csv
+      
+      properties:
+        PersonalID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+          x-hud-data-element: "5.08.1"
+        ProjectID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectID
+          x-hud-data-element: "2.02.1"
+        EntryDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEntryDate
+          x-hud-data-element: "3.10.1"
+        HouseholdID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHouseholdID
+          x-hud-data-element: "5.09.1"
+        RelationshipToHoH:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasRelationshipToHoH
+          x-hud-data-element: "3.15.1"
+        EnrollmentCoC:
+          type: string
+          pattern: ^[A-Z]{2}-[0-9]{3}$
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentCoC
+          x-hud-data-element: "3.16.1"
+        LivingSituation:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLivingSituation
+          x-hud-data-element: "3.917.1"
+        RentalSubsidyType:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasRentalSubsidyType
+          x-hud-data-element: "3.917.A"
+        LengthOfStay:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLengthOfStay
+          x-hud-data-element: "3.917.2"
+        LOSUnderThreshold:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLOSUnderThreshold
+          x-hud-data-element: "3.917.2AB"
+        PreviousStreetESSH:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPreviousStreetESSH
+          x-hud-data-element: "3.917.2C"
+        DateToStreetESSH:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateToStreetESSH
+          x-hud-data-element: "3.917.3"
+        TimesHomelessPastThreeYears:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTimesHomelessPastThreeYears
+          x-hud-data-element: "3.917.4"
+        MonthsHomelessPastThreeYears:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMonthsHomelessPastThreeYears
+          x-hud-data-element: "3.917.5"
+        DisablingCondition:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDisablingCondition
+          x-hud-data-element: "3.08.1"
+        DateOfEngagement:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfEngagement
+          x-hud-data-element: "4.13.1"
+        MoveInDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMoveInDate
+          x-hud-data-element: "3.20.1"
+        DateOfPATHStatus:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfPATHStatus
+          x-hud-data-element: "P3.1"
+        ClientEnrolledInPATH:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasClientEnrolledInPATH
+          x-hud-data-element: "P3.2"
+        ReasonNotEnrolled:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasReasonNotEnrolled
+          x-hud-data-element: "P3.A"
+        PercentAMI:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPercentAMI
+          x-hud-data-element: "V4.1"
+        ReferralSource:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasReferralSource
+          x-hud-data-element: "R.1.1"
+        CountOutreachReferralApproaches:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCountOutreachReferralApproaches
+          x-hud-data-element: "R.1.A"
+        DateOfBCPStatus:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateOfBCPStatus
+          x-hud-data-element: "B1.1"
+        EligibleForRHY:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEligibleForRHY
+          x-hud-data-element: "R2.2"
+        ReasonNoServices:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasReasonNoServices
+          x-hud-data-element: "R2.A"
+        RunawayYouth:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasRunawayYouth
+          x-hud-data-element: "R2.B"
+        FormerWardChildWelfare:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFormerWardChildWelfare
+          x-hud-data-element: "R11.1"
+        ChildWelfareYears:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasChildWelfareYears
+          x-hud-data-element: "R11.A"
+        ChildWelfareMonths:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasChildWelfareMonths
+          x-hud-data-element: "R11.B"
+        FormerWardJuvenileJustice:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFormerWardJuvenileJustice
+          x-hud-data-element: "R12.1"
+        JuvenileJusticeYears:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasJuvenileJusticeYears
+          x-hud-data-element: "R12.A"
+        JuvenileJusticeMonths:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasJuvenileJusticeMonths
+          x-hud-data-element: "R12.B"
+        UnemploymentFam:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasUnemploymentFam
+          x-hud-data-element: "R13.9"
+        MentalHealthDisorderFam:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMentalHealthDisorderFam
+          x-hud-data-element: "R13.11"
+        PhysicalDisabilityFam:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPhysicalDisabilityFam
+          x-hud-data-element: "R13.15"
+        AlcoholDrugUseDisorderFam:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAlcoholDrugUseDisorderFam
+          x-hud-data-element: "R13.21"
+        InsufficientIncome:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInsufficientIncome
+          x-hud-data-element: "R13.22"
+        IncarceratedParent:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIncarceratedParent
+          x-hud-data-element: "R13.24"
+        VAMCStation:
+          type: string
+          maxLength: 5
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVAMCStation
+          x-hud-data-element: "V6.1"
+        TargetScreenReqd:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTargetScreenReqd
+          x-hud-data-element: "V7.1"
+        TimeToHousingLoss:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTimeToHousingLoss
+          x-hud-data-element: "V7.A"
+        AnnualPercentAMI:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAnnualPercentAMI
+          x-hud-data-element: "V7.B"
+        LiteralHomelessHistory:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLiteralHomelessHistory
+          x-hud-data-element: "V7.C"
+        ClientLeaseholder:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasClientLeaseholder
+          x-hud-data-element: "V7.D"
+        HOHLeaseholder:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHOHLeaseholder
+          x-hud-data-element: "V7.E"
+        SubsidyAtRisk:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSubsidyAtRisk
+          x-hud-data-element: "V7.F"
+        EvictionHistory:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEvictionHistory
+          x-hud-data-element: "V7.G"
+        CriminalRecord:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCriminalRecord
+          x-hud-data-element: "V7.H"
+        IncarceratedAdult:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIncarceratedAdult
+          x-hud-data-element: "V7.I"
+        PrisonDischarge:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPrisonDischarge
+          x-hud-data-element: "V7.J"
+        SexOffender:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSexOffender
+          x-hud-data-element: "V7.K"
+        DisabledHoH:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDisabledHoH
+          x-hud-data-element: "V7.L"
+        CurrentPregnant:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCurrentPregnant
+          x-hud-data-element: "V7.M"
+        SingleParent:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSingleParent
+          x-hud-data-element: "V7.N"
+        DependentUnder6:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDependentUnder6
+          x-hud-data-element: "V7.O"
+        HH5Plus:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHH5Plus
+          x-hud-data-element: "V7.P"
+        CoCPrioritized:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCoCPrioritized
+          x-hud-data-element: "V7.Q"
+        HPScreeningScore:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHPScreeningScore
+          x-hud-data-element: "V7.R"
+        ThresholdScore:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasThresholdScore
+          x-hud-data-element: "V7.S"
+        MentalHealthConsultation:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMentalHealthConsultation
+          x-hud-data-element: "V10"
+    exitPrimaryKey:
+      type: object
+      description: Unique identifier for Exit resource
+      x-jsonld-type: hmis:ExitIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#ExitIdentifier
+      x-hud-csv-table: Exit.csv
+      
+      properties:
+        ExitID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasExitID
+    exitBase:
+      type: object
+      
+      properties:
+        EnrollmentID:
+          type: string
+          description: Enrollment Id
+          maxLength: 32
+        PersonalID:
+          type: string
+          description: Personal Id
+          maxLength: 32
+        ExitDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasExitDate
+        Destination:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDestination
+        DestinationSubsidyType:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDestinationSubsidyType
+        OtherDestination:
+          type: string
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherDestination
+        HousingAssessment:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHousingAssessment
+        SubsidyInformation:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSubsidyInformation
+        ProjectCompletionStatus:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectCompletionStatus
+        EarlyExitReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEarlyExitReason
+        ExchangeForSex:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasExchangeForSex
+        ExchangeForSexPastThreeMonths:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasExchangeForSexPastThreeMonths
+        CountOfExchangeForSex:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCountOfExchangeForSex
+        AskedOrForcedToExchangeForSex:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAskedOrForcedToExchangeForSex
+        AskedOrForcedToExchangeForSexPastThreeMonths:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAskedOrForcedToExchangeForSexPastThreeMonths
+        WorkplaceViolenceThreats:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWorkplaceViolenceThreats
+        WorkplacePromiseDifference:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWorkplacePromiseDifference
+        CoercedToContinueWork:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCoercedToContinueWork
+        LaborExploitPastThreeMonths:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLaborExploitPastThreeMonths
+        CounselingReceived:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCounselingReceived
+        IndividualCounseling:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIndividualCounseling
+        FamilyCounseling:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFamilyCounseling
+        GroupCounseling:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasGroupCounseling
+        SessionCountAtExit:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSessionCountAtExit
+        PostExitCounselingPlan:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPostExitCounselingPlan
+        SessionsInPlan:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSessionsInPlan
+        DestinationSafeClient:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDestinationSafeClient
+        DestinationSafeWorker:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDestinationSafeWorker
+        PosAdultConnections:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPosAdultConnections
+        PosPeerConnections:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPosPeerConnections
+        PosCommunityConnections:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPosCommunityConnections
+        AftercareDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAftercareDate
+        AftercareProvided:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAftercareProvided
+        EmailSocialMedia:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEmailSocialMedia
+        Telephone:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTelephone
+        InPersonIndividual:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInPersonIndividual
+        InPersonGroup:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInPersonGroup
+        CmExitReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCmExitReason
+    incomeBenefitsPrimaryKey:
+      type: object
+      description: Unique identifier for IncomeBenefits resource
+      x-jsonld-type: hmis:IncomeBenefitsIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#IncomeBenefitsIdentifier
+      x-hud-csv-table: IncomeBenefits.csv
+      
+      properties:
+        IncomeBenefitsID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIncomeBenefitsID
+    incomeBenefitsBase:
+      type: object
+      
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+        PersonalID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+        InformationDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInformationDate
+        IncomeFromAnySource:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIncomeFromAnySource
+        TotalMonthlyIncome:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTotalMonthlyIncome
+        Earned:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEarnedIncome
+        EarnedAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEarnedAmount
+        Unemployment:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasUnemployment
+        UnemploymentAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasUnemploymentAmount
+        SSI:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSSI
+        SSIAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSSIAmount
+        SSDI:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSSDI
+        SSDIAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSSDIAmount
+        VADisabilityService:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVADisabilityService
+        VADisabilityServiceAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVADisabilityServiceAmount
+        VADisabilityNonService:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVADisabilityNonService
+        VADisabilityNonServiceAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVADisabilityNonServiceAmount
+        PrivateDisability:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPrivateDisability
+        PrivateDisabilityAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPrivateDisabilityAmount
+        WorkersComp:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWorkersComp
+        WorkersCompAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWorkersCompAmount
+        TANF:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTANF
+        TANFAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTANFAmount
+        GA:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasGA
+        GAAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasGAAmount
+        SocSecRetirement:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSocSecRetirement
+        SocSecRetirementAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSocSecRetirementAmount
+        Pension:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPension
+        PensionAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPensionAmount
+        ChildSupport:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasChildSupport
+        ChildSupportAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasChildSupportAmount
+        Alimony:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAlimony
+        AlimonyAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAlimonyAmount
+        OtherIncomeSource:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherIncomeSource
+        OtherIncomeAmount:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherIncomeAmount
+        OtherIncomeSourceIdentify:
+          type: string
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherIncomeSourceIdentify
+        BenefitsFromAnySource:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasBenefits
+        SNAP:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSNAP
+        WIC:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWIC
+        TANFChildcare:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTANFChildcare
+        TANFTransportation:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTANFTransportation
+        OtherTANF:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherTANF
+        OtherBenefitsSource:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherBenefitsSource
+        OtherBenefitsSourceIdentify:
+          type: string
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherBenefitsSourceIdentify
+        InsuranceFromAnySource:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInsuranceFromAnySource
+        Medicaid:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMedicaid
+        NoMedicaidReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoMedicaidReason
+        Medicare:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMedicare
+        NoMedicareReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoMedicareReason
+        SCHIP:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSCHIP
+        NoSCHIPReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoSCHIPReason
+        VHAServices:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVHAServices
+        NoVHAReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoVHAReason
+        EmployerProvided:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEmployerProvided
+        NoEmployerProvidedReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoEmployerProvidedReason
+        PrivatePay:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPrivatePay
+        NoPrivatePayReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoPrivatePayReason
+        StateInsurance:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasStateInsurance
+        NoStateInsuranceReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoStateInsuranceReason
+        IndianHealthInsurance:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIndianHealthInsurance
+        NoIndianHealthInsuranceReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoIndianHealthInsuranceReason
+        OtherInsurance:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherInsurance
+        OtherInsuranceIdentify:
+          type: string
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherInsuranceIdentify
+        ADAP:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasADAP
+        NoADAPReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoADAPReason
+        RyanWhiteMedDent:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasRyanWhiteMedDent
+        NoRyanWhiteMedDentReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNoRyanWhiteMedDentReason
+        ConnectionWithSOAR:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasConnectionWithSOAR
+        DataCollectionStage:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDataCollectionStage
+    healthAndDVPrimaryKey:
+      type: object
+      description: Unique identifier for HealthAndDV resource
+      x-jsonld-type: hmis:HealthAndDVIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#HealthAndDVIdentifier
+      x-hud-csv-table: HealthAndDV.csv
+      
+      properties:
+        HealthAndDVID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasHealthAndDVID
+    healthAndDVBase:
+      type: object
+      
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+        PersonalID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+        InformationDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInformationDate
+        DomesticViolenceSurvivor:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDomesticViolenceSurvivor
+        WhenOccurred:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasWhenOccurred
+        CurrentlyFleeing:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCurrentlyFleeing
+        GeneralHealthStatus:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasGeneralHealthStatus
+        DentalHealthStatus:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDentalHealthStatus
+        MentalHealthStatus:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMentalHealthStatus
+        PregnancyStatus:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPregnancyStatus
+        DueDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDueDate
+        DataCollectionStage:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDataCollectionStage
+    employmentEducationPrimaryKey:
+      type: object
+      description: Unique identifier for EmploymentEducation resource
+      x-jsonld-type: hmis:EmploymentEducationIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#EmploymentEducationIdentifier
+      x-hud-csv-table: EmploymentEducation.csv
+      
+      properties:
+        EmploymentEducationID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEmploymentEducationID
+    employmentEducationBase:
+      type: object
+      
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+        PersonalID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+        InformationDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInformationDate
+        LastGradeCompleted:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLastGradeCompleted
+        SchoolStatus:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSchoolStatus
+        Employed:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEmployed
+        EmploymentType:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEmploymentType
+        NotEmployedReason:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasNotEmployedReason
+        DataCollectionStage:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDataCollectionStage
+    disabilitiesPrimaryKey:
+      type: object
+      description: Unique identifier for Disabilities resource
+      x-jsonld-type: hmis:DisabilitiesIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#DisabilitiesIdentifier
+      x-hud-csv-table: Disabilities.csv
+      
+      properties:
+        DisabilitiesID:
+          type: string
+          description: Unique identifier
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDisabilitiesID
+    disabilitiesBase:
+      type: object
+      
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+        PersonalID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+        InformationDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInformationDate
+        DisabilityType:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDisabilityType
+        DisabilityResponse:
+          type: integer
+          description: If DisabilityType = 10 use '#/components/schemas/DisabilityResponse', all other DisabilityType use '#/components/schemas/NoYes'
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDisabilityResponse
+        IndefiniteAndImpairs:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasIndefiniteAndImpairs
+        TCellCountAvailable:
+          type: integer
+          description: T-cell count available (if DisabilityType = 8 AND DisabilityResponse = 1)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTCellCountAvailable
+        TCellCount:
+          type: integer
+          description: T-cell count (if TCellCountAvailable = 1)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTCellCount
+        TCellSource:
+          type: integer
+          description: T-cell source (if TCellCount is not null)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTCellSource
+        ViralLoadAvailable:
+          type: integer
+          description: Viral load available (if DisabilityType = 8 AND DisabilityResponse = 1)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasViralLoadAvailable
+        ViralLoad:
+          type: integer
+          description: Viral load (if ViralLoadAvailable = 1)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasViralLoad
+        ViralLoadSource:
+          type: integer
+          description: Viral load source (if ViralLoad is not null)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasViralLoadSource
+        AntiRetroviral:
+          type: integer
+          description: Anti-Retroviral (if DisabilityType = 8 AND DisabilityResponse = 1)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAntiRetroviral
+        DataCollectionStage:
+          type: integer
+          description: Data collection stage
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDataCollectionStage
+    servicesPrimaryKey:
+      type: object
+      description: Unique identifier for Services resource
+      x-jsonld-type: hmis:ServicesIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#ServicesIdentifier
+      x-hud-csv-table: Services.csv
+      
+      properties:
+        ServicesID:
+          type: string
+          description: Unique identifier
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasServicesID
+    servicesBase:
+      type: object
+      
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+        PersonalID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+        DateProvided:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDateProvided
+        RecordType:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasRecordType
+        TypeProvided:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasTypeProvided
+        OtherTypeProvided:
+          type: string
+          description: Other type provided (if RecordType = 144 and TypeProvided = 6 or RecordType = 210 and TypeProvided = 12)
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherTypeProvided
+        MovingOnOtherType:
+          type: string
+          description: Moving on other type (if RecordType = 300 and TypeProvided = 5)
+          maxLength: 50
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMovingOnOtherType
+        SubTypeProvided:
+          type: integer
+          description: Subtype provided (if RecordType = 144 and TypeProvided = 3, 4, or 5)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSubTypeProvided
+        FAAmount:
+          type: number
+          format: double
+          description: Financial assistance amount (if RecordType = 151 or 152)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFAAmount
+        FAStartDate:
+          type: string
+          format: date
+          description: Financial assistance start date (if RecordType = 151 or 152)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFAStartDate
+        FAEndDate:
+          type: string
+          format: date
+          description: Financial assistance end date (if RecordType = 151 or 152)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasFAEndDate
+        ReferralOutcome:
+          type: integer
+          description: Referral outcome (if RecordType = 161)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasReferralOutcome
+    currentLivingSituationPrimaryKey:
+      type: object
+      description: Unique identifier for CurrentLivingSituation resource
+      x-jsonld-type: hmis:CurrentLivingSituationIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#CurrentLivingSituationIdentifier
+      x-hud-csv-table: CurrentLivingSituation.csv
+      
+      properties:
+        CurrentLivingSitID:
+          type: string
+          description: Unique identifier
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCurrentLivingSitID
+    currentLivingSituationBase:
+      type: object
+      
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+        PersonalID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+        InformationDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInformationDate
+        CurrentLivingSituation:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCurrentLivingSituation
+        CLSSubsidyType:
+          type: integer
+          description: Current living situation subsidy type (if CurrentLivingSituation = 435)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCLSSubsidyType
+        VerifiedBy:
+          type: string
+          description: Verified by (if ProjectType = 14)
+          maxLength: 100
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasVerifiedBy
+        LeaveSituation14Days:
+          type: integer
+          description: Leave situation in 14 days (if CurrentLivingSituation in [215, 206, 207, 225, 204, 205, 302, 329, 314, 332, 336, 335, 410, 435, 421, 411])
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLeaveSituation14Days
+        SubsequentResidence:
+          type: integer
+          description: Subsequent residence (if LeaveSituation14Days = 1)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasSubsequentResidence
+        ResourcesToObtain:
+          type: integer
+          description: Resources to obtain (if LeaveSituation14Days = 1)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasResourcesToObtain
+        LeaseOwn60Day:
+          type: integer
+          description: Lease own in 60 days (if LeaveSituation14Days = 1)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLeaseOwn60Day
+        movedTwoOrMore:
+          type: integer
+          description: Moved two or more times (if LeaveSituation14Days = 1)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMovedTwoOrMore
+        LocationDetails:
+          type: string
+          maxLength: 250
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLocationDetails
+    assessmentPrimaryKey:
+      type: object
+      description: Unique identifier for Assessment resource
+      x-jsonld-type: hmis:AssessmentIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#AssessmentIdentifier
+      x-hud-csv-table: Assessment.csv
+      
+      properties:
+        AssessmentID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentID
+    assessmentBase:
+      type: object
+      
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+        PersonalID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+        AssessmentDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentDate
+        AssessmentLocation:
+          type: string
+          maxLength: 250
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentLocation
+        AssessmentType:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentType
+        AssessmentLevel:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentLevel
+        PrioritizationStatus:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPrioritizationStatus
+    assessmentQuestionsPrimaryKey:
+      type: object
+      description: Unique identifier for AssessmentQuestions resource
+      x-jsonld-type: hmis:AssessmentQuestionsIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#AssessmentQuestionsIdentifier
+      x-hud-csv-table: AssessmentQuestions.csv
+      
+      properties:
+        AssessmentQuestionID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentQuestionID
+    assessmentQuestionsBase:
+      type: object
+      
+      properties:
+        AssessmentID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentID
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+        PersonalID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+        AssessmentQuestionGroup:
+          type: string
+          description: Assessment question group (locally determined)
+          maxLength: 250
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentQuestionGroup
+        AssessmentQuestionOrder:
+          type: integer
+          description: Assessment question order (locally determined)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentQuestionOrder
+        AssessmentQuestion:
+          type: string
+          description: Assessment question (cannot be null if AssessmentQuestions.csv is populated)
+          maxLength: 250
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentQuestion
+        AssessmentAnswer:
+          type: string
+          description: Assessment answer (locally determined)
+          maxLength: 500
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentAnswer
+    assessmentResultsPrimaryKey:
+      type: object
+      description: Unique identifier for AssessmentResults resource
+      x-jsonld-type: hmis:AssessmentResultsIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#AssessmentResultsIdentifier
+      x-hud-csv-table: AssessmentResults.csv
+      
+      properties:
+        AssessmentResultID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentResultID
+    assessmentResultsBase:
+      type: object
+      
+      properties:
+        AssessmentID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentID
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+        PersonalID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+        AssessmentResultType:
+          type: string
+          maxLength: 250
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentResultType
+        AssessmentResult:
+          type: string
+          maxLength: 250
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasAssessmentResult
+    eventPrimaryKey:
+      type: object
+      description: Unique identifier for Event resource
+      x-jsonld-type: hmis:EventIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#EventIdentifier
+      x-hud-csv-table: Event.csv
+      
+      properties:
+        EventID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEventID
+    eventBase:
+      type: object
+      
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+        PersonalID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+        EventDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEventDate
+        Event:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEvent
+        ProbSolDivRRResult:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasProbSolDivRRResult
+        ReferralCaseManageAfter:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasReferralCaseManageAfter
+        LocationCrisisOrPHHousing:
+          type: string
+          maxLength: 250
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasLocationCrisisOrPHHousing
+        ReferralResult:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasReferralResult
+        ResultDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasResultDate
+    youthEducationStatusPrimaryKey:
+      type: object
+      description: Unique identifier for YouthEducationStatus resource
+      x-jsonld-type: hmis:YouthEducationStatusIdentifier
+      x-semantic-uri: http://hmis.hud.gov/ontology#YouthEducationStatusIdentifier
+      x-hud-csv-table: YouthEducationStatus.csv
+      
+      properties:
+        YouthEducationStatusID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasYouthEducationStatusID
+    youthEducationStatusBase:
+      type: object
+      
+      properties:
+        EnrollmentID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
+        PersonalID:
+          type: string
+          maxLength: 32
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasPersonalID
+        InformationDate:
+          type: string
+          format: date
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasInformationDate
+        CurrentSchoolAttend:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCurrentSchoolAttend
+        MostRecentEdStatus:
+          type: integer
+          description: Most recent education status (if CurrentSchoolAttend = 0)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasMostRecentEdStatus
+        CurrentEdStatus:
+          type: integer
+          description: Current education status (if CurrentSchoolAttend = 1 or 2)
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasCurrentEdStatus
+        DataCollectionStage:
+          type: integer
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasDataCollectionStage
+    hmisMetadata:
+      type: object
+      description: Audit and versioning metadata for HMIS records
       x-jsonld-type: prov:Entity
       x-semantic-uri: http://www.w3.org/ns/prov#Entity
       
@@ -259,6 +1871,421 @@ components:
           type: string
           format: date-time
           x-semantic-uri: http://hmis.hud.gov/ontology#hasDateDeleted
+    LastGradeCompleted_list:
+      type: integer
+      description: The last grade level completed by the client.
+      
+      properties:
+    SchoolStatus_list:
+      type: integer
+      description: Current schooling status of the client.
+      
+      properties:
+    EmploymentType_list:
+      type: integer
+      description: Type of employment the client is engaged in.
+      
+      properties:
+    NotEmployedReason_list:
+      type: integer
+      description: Reason why the client is not Employed.
+      
+      properties:
+    ReasonNotInsured_list:
+      type: integer
+      description: Reasons why the client is not insured.
+      
+      properties:
+    NoAssistanceReason_list:
+      type: integer
+      description: Reasons for no assistance provided to the client.
+      
+      properties:
+    RecordType_list:
+      type: integer
+      description: Defines types of records and services in the system.
+      
+      properties:
+    PATHServices_list:
+      type: integer
+      description: Services provided under the PATH program.
+      
+      properties:
+    RHYServices_list:
+      type: integer
+      description: Services provided under the RHY program.
+      
+      properties:
+    HOPWAServices_list:
+      type: integer
+      description: Types of services provided under the HOPWA program.
+      
+      properties:
+    HOPWAFinancialAssistance_list:
+      type: integer
+      description: Types of financial assistance provided under HOPWA.
+      
+      properties:
+    SSVFServices_list:
+      type: integer
+      description: SSVF services provided.
+      
+      properties:
+    SSVFSubType3_list:
+      type: integer
+      description: SSVF SubType for assistance obtaining VA benefits.
+      
+      properties:
+    SSVFSubType4_list:
+      type: integer
+      description: Subtypes of services provided under SSVF for obtaining/coordinating public benefits.
+      
+      properties:
+    SSVFSubType5_list:
+      type: integer
+      description: Subtypes of services provided under SSVF for direct provision of public benefits.
+      
+      properties:
+    PATHReferralOutcome_list:
+      type: integer
+      description: Outcomes of referrals made under the PATH program.
+      
+      properties:
+    PATHReferral_list:
+      type: integer
+      description: Referrals made under the PATH program.
+      
+      properties:
+    BedNight_list:
+      type: integer
+      description: Represents a single night of bed occupancy.
+      
+      properties:
+    VoucherTracking_list:
+      type: integer
+      description: Tracking of housing vouchers issued to veterans.
+      
+      properties:
+    MovingOnAssistance_list:
+      type: integer
+      description: Types of assistance provided to help clients move on from the project.
+      
+      properties:
+    CurrentSchoolAttend_list:
+      type: integer
+      description: Current school attendance status.
+      
+      properties:
+    MostRecentEdStatus_list:
+      type: integer
+      description: Most recent education status in K12 or higher education.
+      
+      properties:
+    CurrentEdStatus_list:
+      type: integer
+      description: Current educational pursuit status.
+      
+      properties:
+    AssessmentType:
+      type: integer
+      description: Type of assessment conducted.
+      
+      properties:
+    AssessmentLevel:
+      type: integer
+      description: Level of assessment for housing needs.
+      
+      properties:
+    PrioritizationStatus:
+      type: integer
+      description: Status in the prioritization list for housing.
+      
+      properties:
+    HMISParticipationType_list:
+      type: integer
+      description: Level of participation in the CoC's HMIS or VSP's comparable database by the project.
+      
+      properties:
+    GeographyType_list:
+      type: integer
+      description: Indicates the type of geographic area for the project location.
+      
+      properties:
+    HouseholdType_list:
+      type: integer
+      description: Specifies the household compositiom.
+      
+      properties:
+    Availability_list:
+      type: integer
+      description: Indicates when the beds in the project are Availability.
+      
+      properties:
+    BedType_list:
+      type: integer
+      description: Specifies the type of bed available in the project.
+      
+      properties:
+    NameDataQuality_list:
+      type: integer
+      description: Indicates the data quality of the reported name.
+      
+      properties:
+    SSNDataQuality_list:
+      type: integer
+      description: Indicates the data quality of the reported Social Security Number.
+      
+      properties:
+    DOBDataQuality_list:
+      type: integer
+      description: Indicates the data quality of the reported date of birth.
+      
+      properties:
+    RelationshipToHoH_list:
+      type: integer
+      description: Defines the client's relationship to the Head of Household.
+      
+      properties:
+    LivingSituation_list:
+      type: integer
+      description: Enumerates types of living situations.
+      
+      properties:
+    PercentAMI_list:
+      type: integer
+      description: Percentage of Area Median Income (AMI) that the client's income falls into.
+      
+      properties:
+    VAMCStationNumber_list:
+      type: string
+      description: VA Medical Center Station Numbers with corresponding facility names.
+      
+      properties:
+    RentalSubsidyTypes_list:
+      type: integer
+      description: Specifies the type of rental subsidy provided to the client.
+      
+      properties:
+    LengthOfStay_list:
+      type: integer
+      description: Indicates the length of the client's stay.
+      
+      properties:
+    TimesHomelessPastThreeYears_list:
+      type: integer
+      description: Number of times the client has been homeless in the past three years.
+      
+      properties:
+    MonthsHomelessPastThreeYears_list:
+      type: integer
+      description: Total months the client has been homeless in the past three years.
+      
+      properties:
+    ReasonNotEnrolled_list:
+      type: integer
+      description: Reasons why a client was not enrolled in the PATH program.
+      
+      properties:
+    ReferralSource_list:
+      type: integer
+      description: Sources from which referrals are received.
+      
+      properties:
+    ReasonNoServices_list:
+      type: integer
+      description: Reasons for not providing services.
+      
+      properties:
+    RHYNumberofYears_list:
+      type: integer
+      description: Years formerly a ward of Child Welfare or Foster Care Agency.
+      
+      properties:
+    TimeToHousingLoss_list:
+      type: integer
+      description: Time remaining before housing loss occurs.
+      
+      properties:
+    AnnualPercentAMI_list:
+      type: integer
+      description: Percentage of Area Median Income (AMI) for the household.
+      
+      properties:
+    LiteralHomelessHistory_list:
+      type: integer
+      description: History of literal homelessness.
+      
+      properties:
+    EvictionHistory_list:
+      type: integer
+      description: History of rental evictions for the individual.
+      
+      properties:
+    IncarceratedAdult_list:
+      type: integer
+      description: Incarcerated as adult (any adult in household).
+      
+      properties:
+    DependentUnder6_list:
+      type: integer
+      description: Presence and age of youngest child under six years in the household.
+      
+      properties:
+    HousingAssessmentAtExit_list:
+      type: integer
+      description: Assessment of housing situation at the time of project exit.
+      
+      properties:
+    SubsidyInformation_list:
+      type: integer
+      description: Type of subsidy or financial assistance the client has at project exit.
+      
+      properties:
+    ProjectCompletionStatus_list:
+      type: integer
+      description: Completion status of the project.
+      
+      properties:
+    ExpelledReason_list:
+      type: integer
+      description: Reasons for expulsion from the project.
+      
+      properties:
+    CountExchangeForSex_list:
+      type: integer
+      description: How may times ever received anything for sex.
+      
+      properties:
+    WorkerResponse_list:
+      type: integer
+      description: Worker's response to a query or situation.
+      
+      properties:
+    AftercareProvided_list:
+      type: integer
+      description: Specifies if aftercare was provided following service completion.
+      
+      properties:
+    CMExitReason_list:
+      type: integer
+      description: Reasons for exiting case management.
+      
+      properties:
+    FundingSource_list:
+      type: integer
+      description: Specifies the source of funding for housing and services projects.
+      
+      properties:
+    ProjectType_list:
+      type: integer
+      description: Defines the type of housing or service project.
+      
+      properties:
+    RRHSubType_list:
+      type: integer
+      description: Subtypes for Rapid Re-Housing projects.
+      
+      properties:
+    HousingType:
+      type: integer
+      description: Specifies the type of housing configuration.
+      
+      properties:
+    TargetPopulation_list:
+      type: integer
+      description: Identifies the target population for the project.
+      
+      properties:
+    HOPWAMedAssistedLivingFacNum_list:
+      type: integer
+      description: Defines whether a project is a HOPWA-funded medical assisted living facility.
+      
+      properties:
+    MilitaryBranch_list:
+      type: integer
+      description: Branch of military service.
+      
+      properties:
+    DischargeStatus_list:
+      type: integer
+      description: Military discharge status.
+      
+      properties:
+    DisabilityType_list:
+      type: integer
+      description: Enumerates types of disabilities.
+      
+      properties:
+    DisabilityResponse_list:
+      type: integer
+      description: Response regarding disabilities, used if DisabilityType = 10 (Substance Use).
+      
+      properties:
+    TCellSourceViralLoadSource_list:
+      type: integer
+      description: Source of T-Cell count or viral load data.
+      
+      properties:
+    ViralLoadAvailable_list:
+      type: integer
+      description: Availability of viral load data for the client.
+      
+      properties:
+    DataCollectionStage_list:
+      type: integer
+      description: Stage of data collection within the project lifecycle.
+      
+      properties:
+    WhenDVOccurred_list:
+      type: integer
+      description: Specifies when domestic violence occurred relative to the Information date.
+      
+      properties:
+    HealthStatus_list:
+      type: integer
+      description: General health status of the client.
+      
+      properties:
+    Referral_list:
+      type: integer
+      description: Type of Event or referral action taken.
+      
+      properties:
+    ReferralResult_list:
+      type: integer
+      description: Outcome of the referral process.
+      
+      properties:
+    MentalHealthConsultation_list:
+      type: integer
+      description: Mental Health Consultation status
+      
+      properties:
+    NoYes_list:
+      type: integer
+      description: Indicates a simple binary choice.
+      
+      properties:
+    NoYesMissing_list:
+      type: integer
+      description: A basic boolean with an additional option for missing data.
+      
+      properties:
+    NoYesReasonsForMissingData_list:
+      type: integer
+      description: Boolean with reasons for missing data.
+      
+      properties:
+    RaceNone_list:
+      type: integer
+      description: Indicates if race data is not specified.
+      
+      properties:
+    Sex_list:
+      type: integer
+      description: Indiciates the sex of client or if data is not specified.
+      
+      properties:
 
 paths:
   /client/search:
@@ -270,7 +2297,6 @@ paths:
         - Name (first, last, partial matches)
         - Date of birth
         - Social Security Number
-
         This endpoint uses POST to protect PII from URL logging (security best practice).
 
       
@@ -293,5 +2319,245 @@ paths:
           signature: "event: SearchEvent → Unit"
           resumable: false
           provenance-type: prov:Search
+      
+      responses:
+  /client:
+    post:
+      operationId: postClient
+      summary: Create a new client record
+      description: |
+        Creates a new client record in the HMIS.
+
+        Validates data quality requirements per HUD Data Standards. 
+        Returns the complete client record including system-generated PersonalID.
+
+      
+      
+      
+      x-effects:
+        - effect: ValidationCheck
+          handler: hmis:validateHUDStandards
+          description: Validates client data against HUD Data Standards
+          signature: "data: ClientData, schema: Schema → ValidationResult"
+          resumable: true
+        - effect: DatabaseWrite
+          handler: hmis:persistClient
+          description: Persists client record to HMIS database
+          signature: "entity: Client, data: Data → PersonalID"
+          resumable: false
+        - effect: AuditLog
+          handler: hmis:logClientCreation
+          description: Records client creation in immutable audit trail
+          signature: "event: ClientCreatedEvent → Unit"
+          resumable: false
+          provenance: http://www.w3.org/ns/prov#Activity
+          provenance-type: prov:Create
+      
+      responses:
+  /client/{PersonalID}:
+    patch:
+      operationId: updateClient
+      summary: Update an existing client record
+      description: |
+        Updates an existing client record in the HMIS.
+
+        Supports partial updates - only fields provided will be updated.
+        System automatically updates DateUpdated and UserID metadata.
+        Validates data quality requirements per HUD Data Standards.
+
+      
+      
+      
+      x-effects:
+        - effect: AuthorizationCheck
+          handler: hmis:checkClientUpdatePermission
+          description: Verifies user authorized to update client records
+          signature: "userID: ID, clientID: ID â†' AuthResult"
+          resumable: true
+        - effect: DatabaseRead
+          handler: hmis:fetchExistingClient
+          description: Retrieves current client record for validation
+          signature: "clientID: ID â†' Client"
+          resumable: true
+        - effect: ValidationCheck
+          handler: hmis:validateClientUpdate
+          description: Validates updated data against HUD Data Standards
+          signature: "existing: Client, updates: ClientData â†' ValidationResult"
+          resumable: true
+        - effect: DatabaseWrite
+          handler: hmis:updateClientRecord
+          description: Persists updated client data
+          signature: "clientID: ID, updates: Data â†' Client"
+          resumable: false
+        - effect: AuditLog
+          handler: hmis:logClientUpdate
+          description: Records update operation with field-level change tracking
+          signature: "event: ClientUpdatedEvent â†' Unit"
+          resumable: false
+          provenance-type: prov:Modify
+      
+      responses:
+  /project/{ProjectID}/clients:
+    get:
+      operationId: getClientsByProject
+      summary: Get all clients associated with a specific project
+      description: |
+        Returns a list of clients enrolled in the specified project.
+
+        Supports filtering by date range.
+        Useful for project-level reporting and case management.
+
+      
+      
+      
+      x-effects:
+        - effect: AuthorizationCheck
+          handler: hmis:checkClientEnrollmentAccess
+          description: Verifies user authorized to view client enrollment history
+          signature: "userID: ID, clientID: ID â†' AuthResult"
+          resumable: true
+        - effect: ConsentCheck
+          handler: hmis:validateEnrollmentConsent
+          description: Validates consent for enrollment data access
+          signature: "clientID: ID, purpose: Purpose â†' ConsentStatus"
+          resumable: true
+          required-by: 2004 HMIS Standards Section 4.2
+        - effect: DatabaseRead
+          handler: hmis:queryClientEnrollments
+          description: Retrieves all enrollments for specified client
+          signature: "clientID: ID, filters: EnrollmentFilters â†' List[Enrollment]"
+          resumable: true
+        - effect: AuditLog
+          handler: hmis:logEnrollmentQuery
+          description: Records enrollment history access for compliance
+          signature: "event: EnrollmentQueryEvent â†' Unit"
+          resumable: false
+          provenance-type: prov:Read
+      
+      responses:
+  /client/{PersonalID}/enrollments:
+    get:
+      operationId: getClientEnrollments
+      summary: Get all enrollments for a specific client
+      description: |
+        Returns all enrollment records for a client across all projects.
+
+        Includes both active and historical enrollments.
+        Useful for case management, coordinated entry, and longitudinal analysis.
+        Supports filtering by date range and enrollment status.
+
+      
+      
+      
+      x-effects:
+        - effect: AuthorizationCheck
+          handler: hmis:checkClientEnrollmentAccess
+          description: Verifies user authorized to view client enrollment history
+          signature: "userID: ID, clientID: ID â†' AuthResult"
+          resumable: true
+        - effect: ConsentCheck
+          handler: hmis:validateEnrollmentConsent
+          description: Validates consent for enrollment data access
+          signature: "clientID: ID, purpose: Purpose â†' ConsentStatus"
+          resumable: true
+          required-by: 2004 HMIS Standards Section 4.2
+        - effect: DatabaseRead
+          handler: hmis:queryClientEnrollments
+          description: Retrieves all enrollments for specified client
+          signature: "clientID: ID, filters: EnrollmentFilters â†' List[Enrollment]"
+          resumable: true
+        - effect: AuditLog
+          handler: hmis:logEnrollmentQuery
+          description: Records enrollment history access for compliance
+          signature: "event: EnrollmentQueryEvent â†' Unit"
+          resumable: false
+          provenance-type: prov:Read
+      
+      responses:
+  /projects:
+    get:
+      operationId: getProjects
+      summary: Get projects filtered by funder and project type
+      description: |
+        Returns a list of projects matching specified criteria.
+
+        Supports filtering by:
+        - Funding source (via Funder table join)
+        - Project type (Rapid Re-Housing = 13)
+        - Operating date range
+        - CoC code
+
+        Useful for HIC reporting, system planning, and resource mapping.
+
+      
+      
+      
+      x-effects:
+        - effect: AuthorizationCheck
+          handler: hmis:checkProjectListAccess
+          description: Verifies user authorized to view project lists
+          signature: "userID: ID → AuthResult"
+          resumable: true
+        - effect: DatabaseRead
+          handler: hmis:queryProjects
+          description: Retrieves projects matching filter criteria
+          signature: "filters: ProjectFilters → List[Project]"
+          resumable: true
+        - effect: AuditLog
+          handler: hmis:logProjectQuery
+          description: Records project list access
+          signature: "event: ProjectQueryEvent → Unit"
+          resumable: false
+          provenance-type: prov:Read
+      
+      responses:
+  /clients:
+    get:
+      operationId: getClients
+      summary: Get clients enrolled in projects filtered by funder and project type
+      description: |
+        Returns a list of clients enrolled in projects matching specified criteria.
+
+        Supports filtering by:
+        - Funding source (via Project → Funder join)
+        - Project type
+        - Enrollment date range
+        - Whether enrollment has ended (exitDate null/not null)
+
+        Note: This returns unique clients across matching projects.
+        For enrollment-level detail, use /client/{PersonalID}/enrollments.
+
+      
+      
+      
+      x-effects:
+        - effect: AuthorizationCheck
+          handler: hmis:checkClientListAccess
+          description: Verifies user authorized to view client lists
+          signature: "userID: ID → AuthResult"
+          resumable: true
+        - effect: DatabaseRead
+          handler: hmis:queryClientsByProjectCriteria
+          description: Retrieves clients enrolled in matching projects
+          signature: "filters: ClientProjectFilters → List[Client]"
+          resumable: true
+        - effect: AuditLog
+          handler: hmis:logClientListQuery
+          description: Records client list access with filter criteria
+          signature: "event: ClientListQueryEvent → Unit"
+          resumable: false
+          provenance-type: prov:Read
+      
+      responses:
+  /csvexport:
+    get:
+      operationId: getcsvexport
+      summary: Get CSV export for a single client filtered by parameters or return only the changes to the client record
+      description: |
+        Returns the entire CSV specifications based on the parameters provided.
+
+      
+      
+      
       
       responses:

@@ -15,7 +15,6 @@
 - Name (first, last, partial matches)
 - Date of birth
 - Social Security Number
-
 This endpoint uses POST to protect PII from URL logging (security best practice).
 ",
       "method": "POST",
@@ -45,11 +44,287 @@ This endpoint uses POST to protect PII from URL logging (security best practice)
         }      ],
       "enabled": true,
       "responseMode": null
+    },    {
+      "uuid": "route-postClient",
+      "type": "http",
+      "documentation": "Creates a new client record in the HMIS.
+
+Validates data quality requirements per HUD Data Standards. 
+Returns the complete client record including system-generated PersonalID.
+",
+      "method": "POST",
+      "endpoint": "/client",
+      "responses": [
+        {
+          "uuid": "response-postClient-200",
+          "body": "{\"status\": \"success\"}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id"
+        }      ],
+      "enabled": true,
+      "responseMode": null
+    },    {
+      "uuid": "route-updateClient",
+      "type": "http",
+      "documentation": "Updates an existing client record in the HMIS.
+
+Supports partial updates - only fields provided will be updated.
+System automatically updates DateUpdated and UserID metadata.
+Validates data quality requirements per HUD Data Standards.
+",
+      "method": "PATCH",
+      "endpoint": "/client/{PersonalID}",
+      "responses": [
+        {
+          "uuid": "response-updateClient-200",
+          "body": "{\"status\": \"success\"}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id"
+        }      ],
+      "enabled": true,
+      "responseMode": null
+    },    {
+      "uuid": "route-getClientsByProject",
+      "type": "http",
+      "documentation": "Returns a list of clients enrolled in the specified project.
+
+Supports filtering by date range.
+Useful for project-level reporting and case management.
+",
+      "method": "GET",
+      "endpoint": "/project/{ProjectID}/clients",
+      "responses": [
+        {
+          "uuid": "response-getClientsByProject-200",
+          "body": "{\"status\": \"success\"}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id"
+        }      ],
+      "enabled": true,
+      "responseMode": null
+    },    {
+      "uuid": "route-getClientEnrollments",
+      "type": "http",
+      "documentation": "Returns all enrollment records for a client across all projects.
+
+Includes both active and historical enrollments.
+Useful for case management, coordinated entry, and longitudinal analysis.
+Supports filtering by date range and enrollment status.
+",
+      "method": "GET",
+      "endpoint": "/client/{PersonalID}/enrollments",
+      "responses": [
+        {
+          "uuid": "response-getClientEnrollments-200",
+          "body": "{\"status\": \"success\"}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id"
+        }      ],
+      "enabled": true,
+      "responseMode": null
+    },    {
+      "uuid": "route-getProjects",
+      "type": "http",
+      "documentation": "Returns a list of projects matching specified criteria.
+
+Supports filtering by:
+- Funding source (via Funder table join)
+- Project type (Rapid Re-Housing = 13)
+- Operating date range
+- CoC code
+
+Useful for HIC reporting, system planning, and resource mapping.
+",
+      "method": "GET",
+      "endpoint": "/projects",
+      "responses": [
+        {
+          "uuid": "response-getProjects-200",
+          "body": "{\"status\": \"success\"}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id"
+        }      ],
+      "enabled": true,
+      "responseMode": null
+    },    {
+      "uuid": "route-getClients",
+      "type": "http",
+      "documentation": "Returns a list of clients enrolled in projects matching specified criteria.
+
+Supports filtering by:
+- Funding source (via Project → Funder join)
+- Project type
+- Enrollment date range
+- Whether enrollment has ended (exitDate null/not null)
+
+Note: This returns unique clients across matching projects.
+For enrollment-level detail, use /client/{PersonalID}/enrollments.
+",
+      "method": "GET",
+      "endpoint": "/clients",
+      "responses": [
+        {
+          "uuid": "response-getClients-200",
+          "body": "{\"status\": \"success\"}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id"
+        }      ],
+      "enabled": true,
+      "responseMode": null
+    },    {
+      "uuid": "route-getcsvexport",
+      "type": "http",
+      "documentation": "Returns the entire CSV specifications based on the parameters provided.
+",
+      "method": "GET",
+      "endpoint": "/csvexport",
+      "responses": [
+        {
+          "uuid": "response-getcsvexport-200",
+          "body": "{\"status\": \"success\"}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id"
+        }      ],
+      "enabled": true,
+      "responseMode": null
     }  ],
   "rootChildren": [
     {
       "type": "route",
       "uuid": "route-clientSearch"
+    },    {
+      "type": "route",
+      "uuid": "route-postClient"
+    },    {
+      "type": "route",
+      "uuid": "route-updateClient"
+    },    {
+      "type": "route",
+      "uuid": "route-getClientsByProject"
+    },    {
+      "type": "route",
+      "uuid": "route-getClientEnrollments"
+    },    {
+      "type": "route",
+      "uuid": "route-getProjects"
+    },    {
+      "type": "route",
+      "uuid": "route-getClients"
+    },    {
+      "type": "route",
+      "uuid": "route-getcsvexport"
     }  ],
   "proxyMode": false,
   "proxyHost": "",
