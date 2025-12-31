@@ -92,6 +92,7 @@ class SchemaProperty(BaseModel):
     pattern: Optional[str] = None
     
     semantic: SemanticAnnotation = Field(default_factory=SemanticAnnotation)
+    fhir_mapping: Optional[FHIRFieldMapping] = Field(None, alias="x-fhir-mapping")  # ADD THIS
     
     hud_reference: Optional[Dict[str, str]] = Field(None, alias="x-hud-reference")
     conditional: Optional[str] = Field(None, alias="x-conditional")
@@ -110,6 +111,7 @@ class APISchema(BaseModel):
     
     semantic: SemanticAnnotation = Field(default_factory=SemanticAnnotation)
     hud_csv_table: Optional[str] = Field(None, alias="x-hud-csv-table")
+    fhir_mapping: Optional[FHIRMapping] = Field(None, alias="x-fhir-mapping")  # ADD THIS
 
     class Config:
         populate_by_name = True
@@ -264,41 +266,3 @@ class FHIRMappingsFile(BaseModel):
     effect_handlers: Dict[str, Any]
     transformations: Dict[str, Any]
     medicaid_scenarios: Optional[Dict[str, Any]] = None
-
-
-# Update SchemaProperty to include FHIR mapping
-class SchemaProperty(BaseModel):
-    """OpenAPI schema property with semantic annotations"""
-    name: str
-    type: str
-    format: Optional[str] = None
-    description: Optional[str] = None
-    max_length: Optional[int] = None
-    pattern: Optional[str] = None
-    
-    # Semantic annotations
-    semantic: SemanticAnnotation = Field(default_factory=SemanticAnnotation)
-    
-    # FHIR mapping (new)
-    fhir_mapping: Optional[FHIRFieldMapping] = Field(None, alias="x-fhir-mapping")
-    
-    # HUD-specific metadata
-    hud_reference: Optional[Dict[str, str]] = Field(None, alias="x-hud-reference")
-    conditional: Optional[str] = Field(None, alias="x-conditional")
-    business_rule: Optional[str] = Field(None, alias="x-business-rule")
-
-
-# Update APISchema to include FHIR mapping
-class APISchema(BaseModel):
-    """OpenAPI schema component with semantic annotations"""
-    name: str
-    type: Literal["object", "array", "string", "integer", "number", "boolean"]
-    description: Optional[str] = None
-    properties: List[SchemaProperty] = Field(default_factory=list)
-    
-    # Semantic annotations
-    semantic: SemanticAnnotation = Field(default_factory=SemanticAnnotation)
-    hud_csv_table: Optional[str] = Field(None, alias="x-hud-csv-table")
-    
-    # FHIR mapping (new)
-    fhir_mapping: Optional[FHIRMapping] = Field(None, alias="x-fhir-mapping")

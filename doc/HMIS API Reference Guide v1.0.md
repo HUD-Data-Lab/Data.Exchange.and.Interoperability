@@ -46,7 +46,7 @@ The HMIS API will follow the following versions when formatting requests and res
 
 |||
 | - | - |
-| [Scenario 1](#scenario-1) | Search for a client record by identifying information |
+| [Scenario 1](#scenario-1) | Search for a client profile by identifying information or PersonalID |
 | [Scenario 2](#scenario-2) | Generate a new client record|
 | [Scenario 3](#scenario-3)| Generate a list of all client records in a project |
 | [Scenario 4](#scenario-4) | Generate a list of all client records in a project|
