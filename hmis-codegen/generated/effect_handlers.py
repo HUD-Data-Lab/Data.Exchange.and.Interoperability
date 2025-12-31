@@ -96,6 +96,490 @@ class MockAuditLogHandler(MockHandler):
         )
         return self.default_result
 
+@dataclass
+class MockValidationCheckHandler(MockHandler):
+    """
+    Mock handler for ValidationCheck effect
+    
+    Usage:
+        handler = MockValidationCheckHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock ValidationCheck effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockDatabaseWriteHandler(MockHandler):
+    """
+    Mock handler for DatabaseWrite effect
+    
+    Usage:
+        handler = MockDatabaseWriteHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock DatabaseWrite effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockAuditLogHandler(MockHandler):
+    """
+    Mock handler for AuditLog effect
+    
+    Usage:
+        handler = MockAuditLogHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock AuditLog effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockAuthorizationCheckHandler(MockHandler):
+    """
+    Mock handler for AuthorizationCheck effect
+    
+    Usage:
+        handler = MockAuthorizationCheckHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock AuthorizationCheck effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockDatabaseReadHandler(MockHandler):
+    """
+    Mock handler for DatabaseRead effect
+    
+    Usage:
+        handler = MockDatabaseReadHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock DatabaseRead effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockValidationCheckHandler(MockHandler):
+    """
+    Mock handler for ValidationCheck effect
+    
+    Usage:
+        handler = MockValidationCheckHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock ValidationCheck effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockDatabaseWriteHandler(MockHandler):
+    """
+    Mock handler for DatabaseWrite effect
+    
+    Usage:
+        handler = MockDatabaseWriteHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock DatabaseWrite effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockAuditLogHandler(MockHandler):
+    """
+    Mock handler for AuditLog effect
+    
+    Usage:
+        handler = MockAuditLogHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock AuditLog effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockAuthorizationCheckHandler(MockHandler):
+    """
+    Mock handler for AuthorizationCheck effect
+    
+    Usage:
+        handler = MockAuthorizationCheckHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock AuthorizationCheck effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockConsentCheckHandler(MockHandler):
+    """
+    Mock handler for ConsentCheck effect
+    
+    Usage:
+        handler = MockConsentCheckHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock ConsentCheck effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockDatabaseReadHandler(MockHandler):
+    """
+    Mock handler for DatabaseRead effect
+    
+    Usage:
+        handler = MockDatabaseReadHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock DatabaseRead effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockAuditLogHandler(MockHandler):
+    """
+    Mock handler for AuditLog effect
+    
+    Usage:
+        handler = MockAuditLogHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock AuditLog effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockAuthorizationCheckHandler(MockHandler):
+    """
+    Mock handler for AuthorizationCheck effect
+    
+    Usage:
+        handler = MockAuthorizationCheckHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock AuthorizationCheck effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockConsentCheckHandler(MockHandler):
+    """
+    Mock handler for ConsentCheck effect
+    
+    Usage:
+        handler = MockConsentCheckHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock ConsentCheck effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockDatabaseReadHandler(MockHandler):
+    """
+    Mock handler for DatabaseRead effect
+    
+    Usage:
+        handler = MockDatabaseReadHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock DatabaseRead effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockAuditLogHandler(MockHandler):
+    """
+    Mock handler for AuditLog effect
+    
+    Usage:
+        handler = MockAuditLogHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock AuditLog effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockAuthorizationCheckHandler(MockHandler):
+    """
+    Mock handler for AuthorizationCheck effect
+    
+    Usage:
+        handler = MockAuthorizationCheckHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock AuthorizationCheck effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockDatabaseReadHandler(MockHandler):
+    """
+    Mock handler for DatabaseRead effect
+    
+    Usage:
+        handler = MockDatabaseReadHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock DatabaseRead effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockAuditLogHandler(MockHandler):
+    """
+    Mock handler for AuditLog effect
+    
+    Usage:
+        handler = MockAuditLogHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock AuditLog effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockAuthorizationCheckHandler(MockHandler):
+    """
+    Mock handler for AuthorizationCheck effect
+    
+    Usage:
+        handler = MockAuthorizationCheckHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock AuthorizationCheck effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockDatabaseReadHandler(MockHandler):
+    """
+    Mock handler for DatabaseRead effect
+    
+    Usage:
+        handler = MockDatabaseReadHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock DatabaseRead effect"""
+        self.record_call(
+        )
+        return self.default_result
+
+@dataclass
+class MockAuditLogHandler(MockHandler):
+    """
+    Mock handler for AuditLog effect
+    
+    Usage:
+        handler = MockAuditLogHandler()
+        result = handler.handle(...)
+        
+        # Verify calls
+        assert len(handler.calls) == 1
+        assert handler.calls[0]['some_param'] == expected_value
+    """
+    # Default return value
+    default_result: Any = None
+    
+    def handle(self, ) -> Any:
+        """Execute mock AuditLog effect"""
+        self.record_call(
+        )
+        return self.default_result
+
 
 # ============= Mock Handler Factory =============
 
@@ -106,6 +590,28 @@ class MockHandlerFactory:
     def create_all() -> Dict[str, MockHandler]:
         """Create all mock handlers"""
         return {
+            "AuthorizationCheck": MockAuthorizationCheckHandler(),
+            "DatabaseRead": MockDatabaseReadHandler(),
+            "AuditLog": MockAuditLogHandler(),
+            "ValidationCheck": MockValidationCheckHandler(),
+            "DatabaseWrite": MockDatabaseWriteHandler(),
+            "AuditLog": MockAuditLogHandler(),
+            "AuthorizationCheck": MockAuthorizationCheckHandler(),
+            "DatabaseRead": MockDatabaseReadHandler(),
+            "ValidationCheck": MockValidationCheckHandler(),
+            "DatabaseWrite": MockDatabaseWriteHandler(),
+            "AuditLog": MockAuditLogHandler(),
+            "AuthorizationCheck": MockAuthorizationCheckHandler(),
+            "ConsentCheck": MockConsentCheckHandler(),
+            "DatabaseRead": MockDatabaseReadHandler(),
+            "AuditLog": MockAuditLogHandler(),
+            "AuthorizationCheck": MockAuthorizationCheckHandler(),
+            "ConsentCheck": MockConsentCheckHandler(),
+            "DatabaseRead": MockDatabaseReadHandler(),
+            "AuditLog": MockAuditLogHandler(),
+            "AuthorizationCheck": MockAuthorizationCheckHandler(),
+            "DatabaseRead": MockDatabaseReadHandler(),
+            "AuditLog": MockAuditLogHandler(),
             "AuthorizationCheck": MockAuthorizationCheckHandler(),
             "DatabaseRead": MockDatabaseReadHandler(),
             "AuditLog": MockAuditLogHandler(),

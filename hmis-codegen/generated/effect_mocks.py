@@ -159,6 +159,666 @@ class MockAuditLog(MockHandler):
         self.record_call('AuditLog', result, **kwargs)
         return result
 
+class MockValidationCheck(MockHandler):
+    """
+    Mock handler for ValidationCheck effect
+    
+    Validates client data against HUD Data Standards
+
+    Signature: data: ClientData, schema: Schema → ValidationResult
+    
+    Example:
+        # Setup mock
+        mock = MockValidationCheck()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock ValidationCheck effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('ValidationCheck', result, **kwargs)
+        return result
+
+class MockDatabaseWrite(MockHandler):
+    """
+    Mock handler for DatabaseWrite effect
+    
+    Persists client record to HMIS database
+
+    Signature: entity: Client, data: Data → PersonalID
+    
+    Example:
+        # Setup mock
+        mock = MockDatabaseWrite()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock DatabaseWrite effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('DatabaseWrite', result, **kwargs)
+        return result
+
+class MockAuditLog(MockHandler):
+    """
+    Mock handler for AuditLog effect
+    
+    Records client creation in immutable audit trail
+
+    Signature: event: ClientCreatedEvent → Unit
+    
+    Example:
+        # Setup mock
+        mock = MockAuditLog()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock AuditLog effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('AuditLog', result, **kwargs)
+        return result
+
+class MockAuthorizationCheck(MockHandler):
+    """
+    Mock handler for AuthorizationCheck effect
+    
+    Verifies user authorized to update client records
+
+    Signature: userID: ID, clientID: ID â†' AuthResult
+    
+    Example:
+        # Setup mock
+        mock = MockAuthorizationCheck()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock AuthorizationCheck effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('AuthorizationCheck', result, **kwargs)
+        return result
+
+class MockDatabaseRead(MockHandler):
+    """
+    Mock handler for DatabaseRead effect
+    
+    Retrieves current client record for validation
+
+    Signature: clientID: ID â†' Client
+    
+    Example:
+        # Setup mock
+        mock = MockDatabaseRead()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock DatabaseRead effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('DatabaseRead', result, **kwargs)
+        return result
+
+class MockValidationCheck(MockHandler):
+    """
+    Mock handler for ValidationCheck effect
+    
+    Validates updated data against HUD Data Standards
+
+    Signature: existing: Client, updates: ClientData â†' ValidationResult
+    
+    Example:
+        # Setup mock
+        mock = MockValidationCheck()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock ValidationCheck effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('ValidationCheck', result, **kwargs)
+        return result
+
+class MockDatabaseWrite(MockHandler):
+    """
+    Mock handler for DatabaseWrite effect
+    
+    Persists updated client data
+
+    Signature: clientID: ID, updates: Data â†' Client
+    
+    Example:
+        # Setup mock
+        mock = MockDatabaseWrite()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock DatabaseWrite effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('DatabaseWrite', result, **kwargs)
+        return result
+
+class MockAuditLog(MockHandler):
+    """
+    Mock handler for AuditLog effect
+    
+    Records update operation with field-level change tracking
+
+    Signature: event: ClientUpdatedEvent â†' Unit
+    
+    Example:
+        # Setup mock
+        mock = MockAuditLog()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock AuditLog effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('AuditLog', result, **kwargs)
+        return result
+
+class MockAuthorizationCheck(MockHandler):
+    """
+    Mock handler for AuthorizationCheck effect
+    
+    Verifies user authorized to view client enrollment history
+
+    Signature: userID: ID, clientID: ID â†' AuthResult
+    
+    Example:
+        # Setup mock
+        mock = MockAuthorizationCheck()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock AuthorizationCheck effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('AuthorizationCheck', result, **kwargs)
+        return result
+
+class MockConsentCheck(MockHandler):
+    """
+    Mock handler for ConsentCheck effect
+    
+    Validates consent for enrollment data access
+
+    Signature: clientID: ID, purpose: Purpose â†' ConsentStatus
+    
+    Example:
+        # Setup mock
+        mock = MockConsentCheck()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock ConsentCheck effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('ConsentCheck', result, **kwargs)
+        return result
+
+class MockDatabaseRead(MockHandler):
+    """
+    Mock handler for DatabaseRead effect
+    
+    Retrieves all enrollments for specified client
+
+    Signature: clientID: ID, filters: EnrollmentFilters â†' List[Enrollment]
+    
+    Example:
+        # Setup mock
+        mock = MockDatabaseRead()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock DatabaseRead effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('DatabaseRead', result, **kwargs)
+        return result
+
+class MockAuditLog(MockHandler):
+    """
+    Mock handler for AuditLog effect
+    
+    Records enrollment history access for compliance
+
+    Signature: event: EnrollmentQueryEvent â†' Unit
+    
+    Example:
+        # Setup mock
+        mock = MockAuditLog()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock AuditLog effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('AuditLog', result, **kwargs)
+        return result
+
+class MockAuthorizationCheck(MockHandler):
+    """
+    Mock handler for AuthorizationCheck effect
+    
+    Verifies user authorized to view client enrollment history
+
+    Signature: userID: ID, clientID: ID â†' AuthResult
+    
+    Example:
+        # Setup mock
+        mock = MockAuthorizationCheck()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock AuthorizationCheck effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('AuthorizationCheck', result, **kwargs)
+        return result
+
+class MockConsentCheck(MockHandler):
+    """
+    Mock handler for ConsentCheck effect
+    
+    Validates consent for enrollment data access
+
+    Signature: clientID: ID, purpose: Purpose â†' ConsentStatus
+    
+    Example:
+        # Setup mock
+        mock = MockConsentCheck()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock ConsentCheck effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('ConsentCheck', result, **kwargs)
+        return result
+
+class MockDatabaseRead(MockHandler):
+    """
+    Mock handler for DatabaseRead effect
+    
+    Retrieves all enrollments for specified client
+
+    Signature: clientID: ID, filters: EnrollmentFilters â†' List[Enrollment]
+    
+    Example:
+        # Setup mock
+        mock = MockDatabaseRead()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock DatabaseRead effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('DatabaseRead', result, **kwargs)
+        return result
+
+class MockAuditLog(MockHandler):
+    """
+    Mock handler for AuditLog effect
+    
+    Records enrollment history access for compliance
+
+    Signature: event: EnrollmentQueryEvent â†' Unit
+    
+    Example:
+        # Setup mock
+        mock = MockAuditLog()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock AuditLog effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('AuditLog', result, **kwargs)
+        return result
+
+class MockAuthorizationCheck(MockHandler):
+    """
+    Mock handler for AuthorizationCheck effect
+    
+    Verifies user authorized to view project lists
+
+    Signature: userID: ID → AuthResult
+    
+    Example:
+        # Setup mock
+        mock = MockAuthorizationCheck()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock AuthorizationCheck effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('AuthorizationCheck', result, **kwargs)
+        return result
+
+class MockDatabaseRead(MockHandler):
+    """
+    Mock handler for DatabaseRead effect
+    
+    Retrieves projects matching filter criteria
+
+    Signature: filters: ProjectFilters → List[Project]
+    
+    Example:
+        # Setup mock
+        mock = MockDatabaseRead()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock DatabaseRead effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('DatabaseRead', result, **kwargs)
+        return result
+
+class MockAuditLog(MockHandler):
+    """
+    Mock handler for AuditLog effect
+    
+    Records project list access
+
+    Signature: event: ProjectQueryEvent → Unit
+    
+    Example:
+        # Setup mock
+        mock = MockAuditLog()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock AuditLog effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('AuditLog', result, **kwargs)
+        return result
+
+class MockAuthorizationCheck(MockHandler):
+    """
+    Mock handler for AuthorizationCheck effect
+    
+    Verifies user authorized to view client lists
+
+    Signature: userID: ID → AuthResult
+    
+    Example:
+        # Setup mock
+        mock = MockAuthorizationCheck()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock AuthorizationCheck effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('AuthorizationCheck', result, **kwargs)
+        return result
+
+class MockDatabaseRead(MockHandler):
+    """
+    Mock handler for DatabaseRead effect
+    
+    Retrieves clients enrolled in matching projects
+
+    Signature: filters: ClientProjectFilters → List[Client]
+    
+    Example:
+        # Setup mock
+        mock = MockDatabaseRead()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock DatabaseRead effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('DatabaseRead', result, **kwargs)
+        return result
+
+class MockAuditLog(MockHandler):
+    """
+    Mock handler for AuditLog effect
+    
+    Records client list access with filter criteria
+
+    Signature: event: ClientListQueryEvent → Unit
+    
+    Example:
+        # Setup mock
+        mock = MockAuditLog()
+        mock.default_result = expected_value
+        
+        # Use in test
+        result = mock.handle(...)
+        
+        # Verify calls
+        mock.assert_called_once()
+        mock.assert_called_with(param=value)
+    """
+    
+    def handle(self, **kwargs) -> Any:
+        """Execute mock AuditLog effect"""
+        if self.should_raise:
+            raise self.should_raise
+        
+        result = self.default_result
+        self.record_call('AuditLog', result, **kwargs)
+        return result
+
 
 # ============================================================================
 # Mock Handler Registry
@@ -169,6 +829,28 @@ class MockHandlerRegistry:
     
     def __init__(self):
         self.handlers: Dict[str, MockHandler] = {
+            'AuthorizationCheck': MockAuthorizationCheck(),
+            'DatabaseRead': MockDatabaseRead(),
+            'AuditLog': MockAuditLog(),
+            'ValidationCheck': MockValidationCheck(),
+            'DatabaseWrite': MockDatabaseWrite(),
+            'AuditLog': MockAuditLog(),
+            'AuthorizationCheck': MockAuthorizationCheck(),
+            'DatabaseRead': MockDatabaseRead(),
+            'ValidationCheck': MockValidationCheck(),
+            'DatabaseWrite': MockDatabaseWrite(),
+            'AuditLog': MockAuditLog(),
+            'AuthorizationCheck': MockAuthorizationCheck(),
+            'ConsentCheck': MockConsentCheck(),
+            'DatabaseRead': MockDatabaseRead(),
+            'AuditLog': MockAuditLog(),
+            'AuthorizationCheck': MockAuthorizationCheck(),
+            'ConsentCheck': MockConsentCheck(),
+            'DatabaseRead': MockDatabaseRead(),
+            'AuditLog': MockAuditLog(),
+            'AuthorizationCheck': MockAuthorizationCheck(),
+            'DatabaseRead': MockDatabaseRead(),
+            'AuditLog': MockAuditLog(),
             'AuthorizationCheck': MockAuthorizationCheck(),
             'DatabaseRead': MockDatabaseRead(),
             'AuditLog': MockAuditLog(),
