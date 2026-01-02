@@ -3304,188 +3304,228 @@ components:
             type: string
             maxLength: 32
             x-semantic-uri: http://hmis.hud.gov/ontology#hasExitID
-    exitBase: #REVIEW Need to finish adding x-hud-data-element tags
+
+    exitBase:
       type: object
       properties:
         EnrollmentID:
           type: string
           maxLength: 32
           description: Enrollment Id
+          x-hud-data-element: "5.06.1"
+          x-semantic-uri: http://hmis.hud.gov/ontology#hasEnrollmentID
         PersonalID:
           type: string
           maxLength: 32
           description: Personal Id
+          x-hud-data-element: "5.08"
         ExitDate:
           type: string
           format: date
           x-semantic-uri: http://hmis.hud.gov/ontology#hasExitDate
+          x-hud-data-element: "3.11.1"
         Destination:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasDestination
+          x-hud-data-element: "3.12.1"
           oneOf: 
             -  $ref: '#/components/schemas/LivingSituation_list'
         DestinationSubsidyType:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasDestinationSubsidyType
+          x-hud-data-element: "3.12.A"
           oneOf:
             - $ref: '#/components/schemas/RentalSubsidyTypes_list'
         OtherDestination:
           type: string
           maxLength: 50
           x-semantic-uri: http://hmis.hud.gov/ontology#hasOtherDestination
+          x-hud-data-element: "3.12.B"
         HousingAssessment:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasHousingAssessment
+          x-hud-data-element: "W5.1"
           oneOf:
             - $ref: '#/components/schemas/HousingAssessmentAtExit_list'
         SubsidyInformation:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasSubsidyInformation
+          x-hud-data-element: "W5.AB" #REVIEW Confirm correct data element identifier
           oneOf:
             - $ref: '#/components/schemas/SubsidyInformation_list'
         ProjectCompletionStatus:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasProjectCompletionStatus
+          x-hud-data-element: "R17.1"
           oneOf:
             - $ref: '#/components/schemas/ProjectCompletionStatus_list'
         EarlyExitReason:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasEarlyExitReason
+          x-hud-data-element: "R17.A"
           oneOf:
             - $ref: '#/components/schemas/ExpelledReason_list'
         ExchangeForSex:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasExchangeForSex
+          x-hud-data-element: "R15.1"
           oneOf: 
             - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         ExchangeForSexPastThreeMonths:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasExchangeForSexPastThreeMonths
+          x-hud-data-element: "R15.A"
           oneOf: 
             - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         CountOfExchangeForSex:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasCountOfExchangeForSex
+          x-hud-data-element: "R15.B"
           oneOf: 
             - $ref: '#/components/schemas/CountExchangeForSex_list'
         AskedOrForcedToExchangeForSex:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasAskedOrForcedToExchangeForSex
+          x-hud-data-element: "R15.C"
           oneOf: 
             - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         AskedOrForcedToExchangeForSexPastThreeMonths:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasAskedOrForcedToExchangeForSexPastThreeMonths
+          x-hud-data-element: "R15.D"
           oneOf: 
             - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         WorkplaceViolenceThreats:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasWorkplaceViolenceThreats
+          x-hud-data-element: "R16.1"
           oneOf: 
             - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         WorkplacePromiseDifference:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasWorkplacePromiseDifference
+          x-hud-data-element: "R16.2"
           oneOf: 
             - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         CoercedToContinueWork:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasCoercedToContinueWork
+          x-hud-data-element: "R16.A"
           oneOf: 
             - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         LaborExploitPastThreeMonths:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasLaborExploitPastThreeMonths
+          x-hud-data-element: "R16.B"
           oneOf: 
             - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         CounselingReceived:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasCounselingReceived
+          x-hud-data-element: "R18.1"
           oneOf: 
             - $ref: '#/components/schemas/NoYesMissing_list'
         IndividualCounseling:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasIndividualCounseling
+          x-hud-data-element: "R18.A"
           oneOf: 
             - $ref: '#/components/schemas/NoYesMissing_list'
         FamilyCounseling:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasFamilyCounseling
+          x-hud-data-element: "R18.A"
           oneOf: 
             - $ref: '#/components/schemas/NoYesMissing_list'
         GroupCounseling:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasGroupCounseling
+          x-hud-data-element: "R18.A"
           oneOf: 
             - $ref: '#/components/schemas/NoYesMissing_list'
         SessionCountAtExit:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasSessionCountAtExit
+          x-hud-data-element: "R18.B"
         PostExitCounselingPlan:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasPostExitCounselingPlan
+          x-hud-data-element: "R18.3"
           oneOf: 
             - $ref: '#/components/schemas/NoYesMissing_list'
         SessionsInPlan:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasSessionsInPlan
+          x-hud-data-element: "R18.2"
         DestinationSafeClient:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasDestinationSafeClient
+          x-hud-data-element: "R19.1"
           oneOf: 
             - $ref: '#/components/schemas/NoYesReasonsForMissingData_list'
         DestinationSafeWorker:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasDestinationSafeWorker
+          x-hud-data-element: "R19.2"
           oneOf: 
             - $ref: '#/components/schemas/WorkerResponse_list'
         PosAdultConnections:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasPosAdultConnections
+          x-hud-data-element: "R19.3"
           oneOf: 
             - $ref: '#/components/schemas/WorkerResponse_list'
         PosPeerConnections:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasPosPeerConnections
+          x-hud-data-element: "R19.4"
           oneOf: 
             - $ref: '#/components/schemas/WorkerResponse_list'
         PosCommunityConnections:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasPosCommunityConnections
+          x-hud-data-element: "R19.5"
           oneOf: 
             - $ref: '#/components/schemas/WorkerResponse_list'
         AftercareDate:
           type: string
           format: date
           x-semantic-uri: http://hmis.hud.gov/ontology#hasAftercareDate
+          x-hud-data-element: "R20.1"
         AftercareProvided:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasAftercareProvided
+          x-hud-data-element: "R20.2"
           oneOf: 
             - $ref: '#/components/schemas/AftercareProvided_list'
         EmailSocialMedia:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasEmailSocialMedia
+          x-hud-data-element: "R20.A"
           oneOf: 
             - $ref: '#/components/schemas/NoYesMissing_list'
         Telephone:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasTelephone
+          x-hud-data-element: "R20.A"
           oneOf: 
             - $ref: '#/components/schemas/NoYesMissing_list'
         InPersonIndividual:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasInPersonIndividual
+          x-hud-data-element: "R20.A"
           oneOf: 
             - $ref: '#/components/schemas/NoYesMissing_list'
         InPersonGroup:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasInPersonGroup
+          x-hud-data-element: "R20.A"
           oneOf: 
             - $ref: '#/components/schemas/NoYesMissing_list'
         CmExitReason:
           type: integer
           x-semantic-uri: http://hmis.hud.gov/ontology#hasCmExitReason
+          x-hud-data-element: "V9.1"
           oneOf: 
             - $ref: '#/components/schemas/CMExitReason_list'
     
