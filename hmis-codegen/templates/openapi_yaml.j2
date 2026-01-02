@@ -75,6 +75,29 @@ paths:
       description: |
         {{ operation.description | indent(8) }}
       
+      {% if operation.parameters %}
+      parameters:
+        {% for param in operation.parameters %}
+        - name: {{ param.name }}
+          in: {{ param.in }}
+          required: {{ param.required | default(false) | lower }}
+          schema:
+            type: {{ param.schema.type }}
+          {% if param.description %}
+          description: {{ param.description }}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      
+      {% if operation.request_schema %}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/{{ operation.request_schema }}'
+      {% endif %}
+      
       {% if operation.metadata.workflow_step %}
       x-workflow-step: {{ operation.metadata.workflow_step }}
       {% endif %}

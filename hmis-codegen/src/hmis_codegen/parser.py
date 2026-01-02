@@ -163,26 +163,51 @@ class YAMLLDParser:
         
         return schemas
     
-    def _parse_operations(self) -> List[APIOperation]:
-        """Parse API operations from paths"""
-        operations = []
-        paths = self.data.get('paths', {})
-        
-        for path, methods in paths.items():
-            for method, operation_def in methods.items():
-                if method in ['get', 'post', 'put', 'patch', 'delete']:
-                    effects = self._parse_effects(operation_def.get('x-effects', []))
-                    
-                    operations.append(APIOperation(
-                        operation_id=operation_def['operationId'],
-                        method=method,
-                        path=path,
-                        summary=operation_def['summary'],
-                        description=operation_def['description'],
-                        effects=effects
-                    ))
-        
-        return operations
+def _parse_operations(self) -> List[APIOperation]:
+    """Parse API operations from paths"""
+    operations = []
+    paths = self.data.get('paths', {})
+    
+    for path, methods in paths.items():
+        for method, operation_def in methods.items():
+            if method in ['get', 'post', 'put', 'patch', 'delete']:
+                # Parse effects
+                effects = self._parse_effects(operation_def.get('x-effects', []))
+                
+                # Parse request schema
+                request_schema = None
+                if 'requestBody' in operation_def:
+                    content = operation_def['requestBody'].get('content', {})
+                    json_content = content.get('application/json', {})
+                    schema_ref = json_content.get('schema', {}).get('$ref', '')
+                    if schema_ref:
+                        request_schema = schema_ref.split('/')[-1]
+                
+                # Parse response schemas
+                response_schemas = {}
+                for status_code, response_def in operation_def.get('responses', {}).items():
+                    content = response_def.get('content', {})
+                    json_content = content.get('application/json', {})
+                    schema_ref = json_content.get('schema', {}).get('$ref', '')
+                    if schema_ref:
+                        response_schemas[status_code] = schema_ref.split('/')[-1]
+                
+                # Parse parameters (path, query, header)
+                parameters = operation_def.get('parameters', [])
+                
+                operations.append(APIOperation(
+                    operation_id=operation_def['operationId'],
+                    method=method,
+                    path=path,
+                    summary=operation_def.get('summary', ''),
+                    description=operation_def.get('description', ''),
+                    effects=effects,
+                    request_schema=request_schema,
+                    response_schemas=response_schemas,
+                    parameters=parameters  # Add this field to APIOperation model
+                ))
+    
+    return operations
     
     def _parse_effects(self, effects_data: List[Dict]) -> List[Effect]:
         """Parse effect annotations"""
