@@ -1062,7 +1062,7 @@ hmis:VictimServiceProvider a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "3" ;
   hmis:dataDictionaryName "VictimServiceProvider" ;
   hmis:CSVExportTable "Organization" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:ContinuumProject a owl:ObjectProperty ;
@@ -1072,7 +1072,7 @@ hmis:ContinuumProject a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "5" ;
   hmis:dataDictionaryName "ContinuumProject" ;
   hmis:CSVExportTable "Project" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:ProjectType a owl:ObjectProperty ;
@@ -1082,7 +1082,7 @@ hmis:ProjectType a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "6" ;
   hmis:dataDictionaryName "ProjectType" ;
   hmis:CSVExportTable "Project" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#2.02.6> .
+hmis:linkedVocabulary hmis:ProjectType .
 
 
 hmis:HousingType a owl:ObjectProperty ;
@@ -1092,7 +1092,7 @@ hmis:HousingType a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "D" ;
   hmis:dataDictionaryName "HousingType" ;
   hmis:CSVExportTable "Project" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#2.02.D> .
+hmis:linkedVocabulary hmis:HousingType .
 
 
 hmis:RRHSubType a owl:ObjectProperty ;
@@ -1102,7 +1102,7 @@ hmis:RRHSubType a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "RRHSubType" ;
   hmis:CSVExportTable "Project" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#2.02.A> .
+hmis:linkedVocabulary hmis:RRHSubType .
 
 
 hmis:ResidentialAffiliation a owl:ObjectProperty ;
@@ -1112,7 +1112,7 @@ hmis:ResidentialAffiliation a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "B" ;
   hmis:dataDictionaryName "ResidentialAffiliation" ;
   hmis:CSVExportTable "Project" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:TargetPopulation a owl:ObjectProperty ;
@@ -1122,7 +1122,7 @@ hmis:TargetPopulation a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "7" ;
   hmis:dataDictionaryName "TargetPopulation" ;
   hmis:CSVExportTable "Project" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#2.02.7> .
+hmis:linkedVocabulary hmis:TargetPopulation .
 
 
 hmis:HOPWAMedAssistedLivingFac a owl:ObjectProperty ;
@@ -1132,7 +1132,7 @@ hmis:HOPWAMedAssistedLivingFac a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "8" ;
   hmis:dataDictionaryName "HOPWAMedAssistedLivingFac" ;
   hmis:CSVExportTable "Project" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#2.02.8> .
+hmis:linkedVocabulary hmis:HOPWAMedAssistedLivingFac .
 
 
 hmis:Funder a owl:ObjectProperty ;
@@ -1142,7 +1142,7 @@ hmis:Funder a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "Funder" ;
   hmis:CSVExportTable "Funder" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#2.06.1> .
+hmis:linkedVocabulary hmis:FundingSource .
 
 
 hmis:GeographyType a owl:ObjectProperty ;
@@ -1152,7 +1152,7 @@ hmis:GeographyType a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "8" ;
   hmis:dataDictionaryName "GeographyType" ;
   hmis:CSVExportTable "ProjectCoC" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#2.03.4> .
+hmis:linkedVocabulary hmis:GeographyType .
 
 
 hmis:HouseholdType a owl:ObjectProperty ;
@@ -1162,7 +1162,7 @@ hmis:HouseholdType a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "4" ;
   hmis:dataDictionaryName "HouseholdType" ;
   hmis:CSVExportTable "Inventory" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#2.07.4> .
+hmis:linkedVocabulary hmis:HouseholdType .
 
 
 hmis:Availability a owl:ObjectProperty ;
@@ -1172,7 +1172,7 @@ hmis:Availability a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "6" ;
   hmis:dataDictionaryName "Availability" ;
   hmis:CSVExportTable "Inventory" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#2.07.6> .
+hmis:linkedVocabulary hmis:Availability .
 
 
 hmis:ESBedType a owl:ObjectProperty ;
@@ -1182,7 +1182,7 @@ hmis:ESBedType a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "5" ;
   hmis:dataDictionaryName "ESBedType" ;
   hmis:CSVExportTable "Inventory" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#2.07.5> .
+hmis:linkedVocabulary hmis:BedType .
 
 
 hmis:HMISParticipationType a owl:ObjectProperty ;
@@ -1192,7 +1192,7 @@ hmis:HMISParticipationType a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "HMISParticipationType" ;
   hmis:CSVExportTable "HMISParticipation" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#2.08.1> .
+hmis:linkedVocabulary hmis:HMISParticipationType .
 
 
 hmis:AccessPoint a owl:ObjectProperty ;
@@ -1202,7 +1202,7 @@ hmis:AccessPoint a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "AccessPoint" ;
   hmis:CSVExportTable "CEParticipation" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:PreventionAssessment a owl:ObjectProperty ;
@@ -1212,7 +1212,7 @@ hmis:PreventionAssessment a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "PreventionAssessment" ;
   hmis:CSVExportTable "CEParticipation" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:CrisisAssessment a owl:ObjectProperty ;
@@ -1222,7 +1222,7 @@ hmis:CrisisAssessment a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "CrisisAssessment" ;
   hmis:CSVExportTable "CEParticipation" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:HousingAssessment a owl:ObjectProperty ;
@@ -1232,7 +1232,7 @@ hmis:HousingAssessment a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "HousingAssessment" ;
   hmis:CSVExportTable "CEParticipation" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:DirectServices a owl:ObjectProperty ;
@@ -1242,7 +1242,7 @@ hmis:DirectServices a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "DirectServices" ;
   hmis:CSVExportTable "CEParticipation" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:ReceivesReferrals a owl:ObjectProperty ;
@@ -1252,7 +1252,7 @@ hmis:ReceivesReferrals a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2" ;
   hmis:dataDictionaryName "ReceivesReferrals" ;
   hmis:CSVExportTable "CEParticipation" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:NameDataQuality a owl:ObjectProperty ;
@@ -1262,7 +1262,7 @@ hmis:NameDataQuality a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "5" ;
   hmis:dataDictionaryName "NameDataQuality" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#3.01.5> .
+hmis:linkedVocabulary hmis:NameDataQuality .
 
 
 hmis:SSNDataQuality a owl:ObjectProperty ;
@@ -1272,7 +1272,7 @@ hmis:SSNDataQuality a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2" ;
   hmis:dataDictionaryName "SSNDataQuality" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#3.02.2> .
+hmis:linkedVocabulary hmis:SSNDataQuality .
 
 
 hmis:DOBDataQuality a owl:ObjectProperty ;
@@ -1282,7 +1282,7 @@ hmis:DOBDataQuality a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2" ;
   hmis:dataDictionaryName "DOBDataQuality" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#3.03.2> .
+hmis:linkedVocabulary hmis:DOBDataQuality .
 
 
 hmis:Sex a owl:ObjectProperty ;
@@ -1291,7 +1291,7 @@ hmis:Sex a owl:ObjectProperty ;
   hmis:dataElementNumber "4.21" ;
   hmis:dataDictionaryName "Sex" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#4.21> .
+hmis:linkedVocabulary hmis:Sex .
 
 
 hmis:AmIndAKNative a owl:ObjectProperty ;
@@ -1301,7 +1301,7 @@ hmis:AmIndAKNative a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "AmIndAKNative" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:Asian a owl:ObjectProperty ;
@@ -1311,7 +1311,7 @@ hmis:Asian a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "Asian" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:BlackAfAmerican a owl:ObjectProperty ;
@@ -1321,7 +1321,7 @@ hmis:BlackAfAmerican a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "BlackAfAmerican" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:HispanicLatinao a owl:ObjectProperty ;
@@ -1331,7 +1331,7 @@ hmis:HispanicLatinao a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "HispanicLatinao" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:MidEastNAfrican a owl:ObjectProperty ;
@@ -1341,7 +1341,7 @@ hmis:MidEastNAfrican a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "MidEastNAfrican" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:NativeHIPacific a owl:ObjectProperty ;
@@ -1351,7 +1351,7 @@ hmis:NativeHIPacific a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "NativeHIPacific" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:White a owl:ObjectProperty ;
@@ -1361,7 +1361,7 @@ hmis:White a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "White" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:RaceNone a owl:ObjectProperty ;
@@ -1371,7 +1371,7 @@ hmis:RaceNone a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "RaceNone" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.6> .
+hmis:linkedVocabulary hmis:Race_None .
 
 
 hmis:VeteranStatus a owl:ObjectProperty ;
@@ -1381,7 +1381,7 @@ hmis:VeteranStatus a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "VeteranStatus" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:WorldWarII a owl:ObjectProperty ;
@@ -1391,7 +1391,7 @@ hmis:WorldWarII a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "3" ;
   hmis:dataDictionaryName "WorldWarII" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:KoreanWar a owl:ObjectProperty ;
@@ -1401,7 +1401,7 @@ hmis:KoreanWar a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "4" ;
   hmis:dataDictionaryName "KoreanWar" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:VietnamWar a owl:ObjectProperty ;
@@ -1411,7 +1411,7 @@ hmis:VietnamWar a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "5" ;
   hmis:dataDictionaryName "VietnamWar" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:DesertStorm a owl:ObjectProperty ;
@@ -1421,7 +1421,7 @@ hmis:DesertStorm a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "6" ;
   hmis:dataDictionaryName "DesertStorm" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:AfghanistanOEF a owl:ObjectProperty ;
@@ -1431,7 +1431,7 @@ hmis:AfghanistanOEF a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "7" ;
   hmis:dataDictionaryName "AfghanistanOEF" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:IraqOIF a owl:ObjectProperty ;
@@ -1441,7 +1441,7 @@ hmis:IraqOIF a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "8" ;
   hmis:dataDictionaryName "IraqOIF" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:IraqOND a owl:ObjectProperty ;
@@ -1451,7 +1451,7 @@ hmis:IraqOND a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "9" ;
   hmis:dataDictionaryName "IraqOND" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:OtherTheater a owl:ObjectProperty ;
@@ -1461,7 +1461,7 @@ hmis:OtherTheater a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "10" ;
   hmis:dataDictionaryName "OtherTheater" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:MilitaryBranch a owl:ObjectProperty ;
@@ -1471,7 +1471,7 @@ hmis:MilitaryBranch a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "11" ;
   hmis:dataDictionaryName "MilitaryBranch" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#V1.11> .
+hmis:linkedVocabulary hmis:MilitaryBranch .
 
 
 hmis:DischargeStatus a owl:ObjectProperty ;
@@ -1481,7 +1481,7 @@ hmis:DischargeStatus a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "12" ;
   hmis:dataDictionaryName "DischargeStatus" ;
   hmis:CSVExportTable "Client" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#V1.12> .
+hmis:linkedVocabulary hmis:DischargeStatus .
 
 
 hmis:RelationshipToHoH a owl:ObjectProperty ;
@@ -1491,7 +1491,7 @@ hmis:RelationshipToHoH a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "RelationshipToHoH" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#3.15.1> .
+hmis:linkedVocabulary hmis:RelationshipToHoH .
 
 
 hmis:LivingSituation a owl:ObjectProperty ;
@@ -1501,7 +1501,7 @@ hmis:LivingSituation a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "LivingSituation" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#3.12.1> .
+hmis:linkedVocabulary hmis:Living_Situation_Option_List .
 
 
 hmis:RentalSubsidyType a owl:ObjectProperty ;
@@ -1511,7 +1511,7 @@ hmis:RentalSubsidyType a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "RentalSubsidyType" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#3.12.A> .
+hmis:linkedVocabulary hmis:RentalSubsidyTypes .
 
 
 hmis:LengthOfStay a owl:ObjectProperty ;
@@ -1521,7 +1521,7 @@ hmis:LengthOfStay a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2" ;
   hmis:dataDictionaryName "LengthOfStay" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#3.917.2> .
+hmis:linkedVocabulary hmis:LengthOfStay .
 
 
 hmis:LOSUnderThreshold a owl:ObjectProperty ;
@@ -1531,7 +1531,7 @@ hmis:LOSUnderThreshold a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2 A" ;
   hmis:dataDictionaryName "LOSUnderThreshold" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:LOSUnderThreshold a owl:ObjectProperty ;
@@ -1541,7 +1541,7 @@ hmis:LOSUnderThreshold a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2 B" ;
   hmis:dataDictionaryName "LOSUnderThreshold" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:PreviousStreetESSH a owl:ObjectProperty ;
@@ -1551,7 +1551,7 @@ hmis:PreviousStreetESSH a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2 C" ;
   hmis:dataDictionaryName "PreviousStreetESSH" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:TimesHomelessPastThreeYears a owl:ObjectProperty ;
@@ -1561,7 +1561,7 @@ hmis:TimesHomelessPastThreeYears a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "4" ;
   hmis:dataDictionaryName "TimesHomelessPastThreeYears" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#3.917.4> .
+hmis:linkedVocabulary hmis:TimesHomelessPastThreeYears .
 
 
 hmis:MonthsHomelessPastThreeYears a owl:ObjectProperty ;
@@ -1571,7 +1571,7 @@ hmis:MonthsHomelessPastThreeYears a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "5" ;
   hmis:dataDictionaryName "MonthsHomelessPastThreeYears" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#3.917.5> .
+hmis:linkedVocabulary hmis:MonthsHomelessPastThreeYears .
 
 
 hmis:DisablingCondition a owl:ObjectProperty ;
@@ -1580,7 +1580,7 @@ hmis:DisablingCondition a owl:ObjectProperty ;
   hmis:dataElementNumber "3.08" ;
   hmis:dataDictionaryName "DisablingCondition" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:ClientEnrolledInPATH a owl:ObjectProperty ;
@@ -1590,7 +1590,7 @@ hmis:ClientEnrolledInPATH a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2" ;
   hmis:dataDictionaryName "ClientEnrolledInPATH" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:ReasonNotEnrolled a owl:ObjectProperty ;
@@ -1600,7 +1600,7 @@ hmis:ReasonNotEnrolled a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "ReasonNotEnrolled" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#P3.A> .
+hmis:linkedVocabulary hmis:ReasonNotEnrolled .
 
 
 hmis:PercentAMI a owl:ObjectProperty ;
@@ -1610,7 +1610,7 @@ hmis:PercentAMI a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "PercentAMI" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#V4.1> .
+hmis:linkedVocabulary hmis:PercentAMI .
 
 
 hmis:ReferralSource a owl:ObjectProperty ;
@@ -1620,7 +1620,7 @@ hmis:ReferralSource a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "ReferralSource" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#R1.1> .
+hmis:linkedVocabulary hmis:ReferralSource .
 
 
 hmis:EligibleForRHY a owl:ObjectProperty ;
@@ -1630,7 +1630,7 @@ hmis:EligibleForRHY a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2" ;
   hmis:dataDictionaryName "EligibleForRHY" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:ReasonNoServices a owl:ObjectProperty ;
@@ -1640,7 +1640,7 @@ hmis:ReasonNoServices a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "ReasonNoServices" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#R2.A> .
+hmis:linkedVocabulary hmis:ReasonNoServices .
 
 
 hmis:RunawayYouth a owl:ObjectProperty ;
@@ -1650,7 +1650,7 @@ hmis:RunawayYouth a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "B" ;
   hmis:dataDictionaryName "RunawayYouth" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:FormerWardChildWelfare a owl:ObjectProperty ;
@@ -1660,7 +1660,7 @@ hmis:FormerWardChildWelfare a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "FormerWardChildWelfare" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:ChildWelfareYears a owl:ObjectProperty ;
@@ -1670,7 +1670,7 @@ hmis:ChildWelfareYears a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "ChildWelfareYears" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#R11.A> .
+hmis:linkedVocabulary hmis:RHYNumberofYears .
 
 
 hmis:FormerWardJuvenileJustice a owl:ObjectProperty ;
@@ -1680,7 +1680,7 @@ hmis:FormerWardJuvenileJustice a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "FormerWardJuvenileJustice" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:JuvenileJusticeYears a owl:ObjectProperty ;
@@ -1690,7 +1690,7 @@ hmis:JuvenileJusticeYears a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "JuvenileJusticeYears" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#R11.A> .
+hmis:linkedVocabulary hmis:RHYNumberofYears .
 
 
 hmis:UnemploymentFam a owl:ObjectProperty ;
@@ -1700,7 +1700,7 @@ hmis:UnemploymentFam a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "9" ;
   hmis:dataDictionaryName "UnemploymentFam" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:NoYesReasonsForMissing .
 
 
 hmis:MentalHealthDisorderFam a owl:ObjectProperty ;
@@ -1710,7 +1710,7 @@ hmis:MentalHealthDisorderFam a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "11" ;
   hmis:dataDictionaryName "MentalHealthDisorderFam" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:NoYesReasonsForMissing .
 
 
 hmis:PhysicalDisabilityFam a owl:ObjectProperty ;
@@ -1720,7 +1720,7 @@ hmis:PhysicalDisabilityFam a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "15" ;
   hmis:dataDictionaryName "PhysicalDisabilityFam" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:NoYesReasonsForMissing .
 
 
 hmis:AlcoholDrugUseDisorderFam a owl:ObjectProperty ;
@@ -1730,7 +1730,7 @@ hmis:AlcoholDrugUseDisorderFam a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "21" ;
   hmis:dataDictionaryName "AlcoholDrugUseDisorderFam" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:NoYesReasonsForMissing .
 
 
 hmis:InsufficientIncome a owl:ObjectProperty ;
@@ -1740,7 +1740,7 @@ hmis:InsufficientIncome a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "22" ;
   hmis:dataDictionaryName "InsufficientIncome" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:NoYesReasonsForMissing .
 
 
 hmis:IncarceratedParent a owl:ObjectProperty ;
@@ -1750,7 +1750,7 @@ hmis:IncarceratedParent a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "24" ;
   hmis:dataDictionaryName "IncarceratedParent" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:NoYesReasonsForMissing .
 
 
 hmis:VAMCStation a owl:ObjectProperty ;
@@ -1760,7 +1760,7 @@ hmis:VAMCStation a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "VAMCStation" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#V6.1> .
+hmis:linkedVocabulary hmis:VAMCStationNumber .
 
 
 hmis:TargetScreenReqd a owl:ObjectProperty ;
@@ -1770,7 +1770,7 @@ hmis:TargetScreenReqd a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "TargetScreenReqd" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:TimeToHousingLoss a owl:ObjectProperty ;
@@ -1780,7 +1780,7 @@ hmis:TimeToHousingLoss a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "TimeToHousingLoss" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#V7.A> .
+hmis:linkedVocabulary hmis:TimeToHousingLoss .
 
 
 hmis:AnnualPercentAMI a owl:ObjectProperty ;
@@ -1790,7 +1790,7 @@ hmis:AnnualPercentAMI a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "B" ;
   hmis:dataDictionaryName "AnnualPercentAMI" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#V7.B> .
+hmis:linkedVocabulary hmis:AnnualPercentAMI .
 
 
 hmis:LiteralHomelessHistory a owl:ObjectProperty ;
@@ -1800,7 +1800,7 @@ hmis:LiteralHomelessHistory a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "C" ;
   hmis:dataDictionaryName "LiteralHomelessHistory" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#V7.C> .
+hmis:linkedVocabulary hmis:LiteralHomelessHistory .
 
 
 hmis:ClientLeaseholder a owl:ObjectProperty ;
@@ -1810,7 +1810,7 @@ hmis:ClientLeaseholder a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "D" ;
   hmis:dataDictionaryName "ClientLeaseholder" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:HOHLeaseholder a owl:ObjectProperty ;
@@ -1820,7 +1820,7 @@ hmis:HOHLeaseholder a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "E" ;
   hmis:dataDictionaryName "HOHLeaseholder" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:SubsidyAtRisk a owl:ObjectProperty ;
@@ -1830,7 +1830,7 @@ hmis:SubsidyAtRisk a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "F" ;
   hmis:dataDictionaryName "SubsidyAtRisk" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:EvictionHistory a owl:ObjectProperty ;
@@ -1840,7 +1840,7 @@ hmis:EvictionHistory a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "G" ;
   hmis:dataDictionaryName "EvictionHistory" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#V7.G> .
+hmis:linkedVocabulary hmis:EvictionHistory .
 
 
 hmis:CriminalRecord a owl:ObjectProperty ;
@@ -1850,7 +1850,7 @@ hmis:CriminalRecord a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "H" ;
   hmis:dataDictionaryName "CriminalRecord" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:IncarceratedAdult a owl:ObjectProperty ;
@@ -1860,7 +1860,7 @@ hmis:IncarceratedAdult a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "I" ;
   hmis:dataDictionaryName "IncarceratedAdult" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#V7.I> .
+hmis:linkedVocabulary hmis:IncarceratedAdult .
 
 
 hmis:PrisonDischarge a owl:ObjectProperty ;
@@ -1870,7 +1870,7 @@ hmis:PrisonDischarge a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "J" ;
   hmis:dataDictionaryName "PrisonDischarge" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:SexOffender a owl:ObjectProperty ;
@@ -1880,7 +1880,7 @@ hmis:SexOffender a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "K" ;
   hmis:dataDictionaryName "SexOffender" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:DisabledHoH a owl:ObjectProperty ;
@@ -1890,7 +1890,7 @@ hmis:DisabledHoH a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "L" ;
   hmis:dataDictionaryName "DisabledHoH" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:CurrentPregnant a owl:ObjectProperty ;
@@ -1900,7 +1900,7 @@ hmis:CurrentPregnant a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "M" ;
   hmis:dataDictionaryName "CurrentPregnant" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:SingleParent a owl:ObjectProperty ;
@@ -1910,7 +1910,7 @@ hmis:SingleParent a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "N" ;
   hmis:dataDictionaryName "SingleParent" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:DependentUnder6 a owl:ObjectProperty ;
@@ -1920,7 +1920,7 @@ hmis:DependentUnder6 a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "O" ;
   hmis:dataDictionaryName "DependentUnder6" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#V7.O> .
+hmis:linkedVocabulary hmis:DependentUnder6 .
 
 
 hmis:HH5Plus a owl:ObjectProperty ;
@@ -1930,7 +1930,7 @@ hmis:HH5Plus a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "P" ;
   hmis:dataDictionaryName "HH5Plus" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:CoCPrioritized a owl:ObjectProperty ;
@@ -1940,7 +1940,7 @@ hmis:CoCPrioritized a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "Q" ;
   hmis:dataDictionaryName "CoCPrioritized" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:MentalHealthConsultation a owl:ObjectProperty ;
@@ -1949,7 +1949,7 @@ hmis:MentalHealthConsultation a owl:ObjectProperty ;
   hmis:dataElementNumber "V10" ;
   hmis:dataDictionaryName "MentalHealthConsultation" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#V10> .
+hmis:linkedVocabulary hmis:MentalHeathConsultation .
 
 
 hmis:TranslationNeeded a owl:ObjectProperty ;
@@ -1959,7 +1959,7 @@ hmis:TranslationNeeded a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "TranslationNeeded" ;
   hmis:CSVExportTable "Enrollment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:Destination a owl:ObjectProperty ;
@@ -1969,7 +1969,7 @@ hmis:Destination a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "Destination" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#3.12.1> .
+hmis:linkedVocabulary hmis:Living_Situation_Option_List .
 
 
 hmis:DestinationSubsidyType a owl:ObjectProperty ;
@@ -1979,7 +1979,7 @@ hmis:DestinationSubsidyType a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "DestinationSubsidyType" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#3.12.A> .
+hmis:linkedVocabulary hmis:RentalSubsidyTypes .
 
 
 hmis:HousingAssessment a owl:ObjectProperty ;
@@ -1989,7 +1989,7 @@ hmis:HousingAssessment a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "HousingAssessment" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#W5.1> .
+hmis:linkedVocabulary hmis:HousingAssessmentAtExit .
 
 
 hmis:SubsidyInformation a owl:ObjectProperty ;
@@ -1999,7 +1999,7 @@ hmis:SubsidyInformation a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "SubsidyInformation" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#W5.A-B> .
+hmis:linkedVocabulary hmis:SubsidyInformation .
 
 
 hmis:SubsidyInformation a owl:ObjectProperty ;
@@ -2009,7 +2009,7 @@ hmis:SubsidyInformation a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "B" ;
   hmis:dataDictionaryName "SubsidyInformation" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#W5.A-B> .
+hmis:linkedVocabulary hmis:SubsidyInformation .
 
 
 hmis:ProjectCompletionStatus a owl:ObjectProperty ;
@@ -2019,7 +2019,7 @@ hmis:ProjectCompletionStatus a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "ProjectCompletionStatus" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#R17.1> .
+hmis:linkedVocabulary hmis:ProjectCompletionStatus .
 
 
 hmis:EarlyExitReason a owl:ObjectProperty ;
@@ -2029,7 +2029,7 @@ hmis:EarlyExitReason a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "EarlyExitReason" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#R17.A> .
+hmis:linkedVocabulary hmis:ExpelledReason .
 
 
 hmis:ExchangeForSex a owl:ObjectProperty ;
@@ -2039,7 +2039,7 @@ hmis:ExchangeForSex a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "ExchangeForSex" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:ExchangeForSexPastThreeMonths a owl:ObjectProperty ;
@@ -2049,7 +2049,7 @@ hmis:ExchangeForSexPastThreeMonths a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "ExchangeForSexPastThreeMonths" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:CountOfExchangeForSex a owl:ObjectProperty ;
@@ -2059,7 +2059,7 @@ hmis:CountOfExchangeForSex a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "B" ;
   hmis:dataDictionaryName "CountOfExchangeForSex" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#R15.B> .
+hmis:linkedVocabulary hmis:CountExchangeForSex .
 
 
 hmis:AskedOrForcedToExchangeForSex a owl:ObjectProperty ;
@@ -2069,7 +2069,7 @@ hmis:AskedOrForcedToExchangeForSex a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "C" ;
   hmis:dataDictionaryName "AskedOrForcedToExchangeForSex" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:AskedOrForcedToExchangeForSexPastThreeMonths a owl:ObjectProperty ;
@@ -2079,7 +2079,7 @@ hmis:AskedOrForcedToExchangeForSexPastThreeMonths a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "D" ;
   hmis:dataDictionaryName "AskedOrForcedToExchangeForSexPastThreeMonths" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:WorkplaceViolenceThreats a owl:ObjectProperty ;
@@ -2089,7 +2089,7 @@ hmis:WorkplaceViolenceThreats a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "WorkplaceViolenceThreats" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:WorkplacePromiseDifference a owl:ObjectProperty ;
@@ -2099,7 +2099,7 @@ hmis:WorkplacePromiseDifference a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2" ;
   hmis:dataDictionaryName "WorkplacePromiseDifference" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:CoercedToContinueWork a owl:ObjectProperty ;
@@ -2109,7 +2109,7 @@ hmis:CoercedToContinueWork a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "CoercedToContinueWork" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:LaborExploitPastThreeMonths a owl:ObjectProperty ;
@@ -2119,7 +2119,7 @@ hmis:LaborExploitPastThreeMonths a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "B" ;
   hmis:dataDictionaryName "LaborExploitPastThreeMonths" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:CounselingReceived a owl:ObjectProperty ;
@@ -2129,7 +2129,7 @@ hmis:CounselingReceived a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "CounselingReceived" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:IndividualCounseling a owl:ObjectProperty ;
@@ -2139,7 +2139,7 @@ hmis:IndividualCounseling a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "IndividualCounseling" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:FamilyCounseling a owl:ObjectProperty ;
@@ -2149,7 +2149,7 @@ hmis:FamilyCounseling a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "FamilyCounseling" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:GroupCounseling a owl:ObjectProperty ;
@@ -2159,7 +2159,7 @@ hmis:GroupCounseling a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "GroupCounseling" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:PostExitCounselingPlan a owl:ObjectProperty ;
@@ -2169,7 +2169,7 @@ hmis:PostExitCounselingPlan a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "3" ;
   hmis:dataDictionaryName "PostExitCounselingPlan" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:DestinationSafeClient a owl:ObjectProperty ;
@@ -2179,7 +2179,7 @@ hmis:DestinationSafeClient a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "DestinationSafeClient" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:DestinationSafeWorker a owl:ObjectProperty ;
@@ -2189,7 +2189,7 @@ hmis:DestinationSafeWorker a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2" ;
   hmis:dataDictionaryName "DestinationSafeWorker" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#R19.A> .
+hmis:linkedVocabulary hmis:WorkerResponse .
 
 
 hmis:PosAdultConnections a owl:ObjectProperty ;
@@ -2199,7 +2199,7 @@ hmis:PosAdultConnections a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "3" ;
   hmis:dataDictionaryName "PosAdultConnections" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#R19.A> .
+hmis:linkedVocabulary hmis:WorkerResponse .
 
 
 hmis:PosPeerConnections a owl:ObjectProperty ;
@@ -2209,7 +2209,7 @@ hmis:PosPeerConnections a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "4" ;
   hmis:dataDictionaryName "PosPeerConnections" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#R19.A> .
+hmis:linkedVocabulary hmis:WorkerResponse .
 
 
 hmis:PosCommunityConnections a owl:ObjectProperty ;
@@ -2219,7 +2219,7 @@ hmis:PosCommunityConnections a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "5" ;
   hmis:dataDictionaryName "PosCommunityConnections" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#R19.A> .
+hmis:linkedVocabulary hmis:WorkerResponse .
 
 
 hmis:AftercareProvided a owl:ObjectProperty ;
@@ -2229,7 +2229,7 @@ hmis:AftercareProvided a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2" ;
   hmis:dataDictionaryName "AftercareProvided" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#R20.2> .
+hmis:linkedVocabulary hmis:AftercareProvided .
 
 
 hmis:EmailSocialMedia a owl:ObjectProperty ;
@@ -2239,7 +2239,7 @@ hmis:EmailSocialMedia a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "EmailSocialMedia" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:Telephone a owl:ObjectProperty ;
@@ -2249,7 +2249,7 @@ hmis:Telephone a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "Telephone" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:InPersonIndividual a owl:ObjectProperty ;
@@ -2259,7 +2259,7 @@ hmis:InPersonIndividual a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "InPersonIndividual" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:InPersonGroup a owl:ObjectProperty ;
@@ -2269,7 +2269,7 @@ hmis:InPersonGroup a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "InPersonGroup" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.10> .
+hmis:linkedVocabulary hmis:NoYes .
 
 
 hmis:CMExitReason a owl:ObjectProperty ;
@@ -2279,7 +2279,7 @@ hmis:CMExitReason a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "CMExitReason" ;
   hmis:CSVExportTable "Exit" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#V9.1> .
+hmis:linkedVocabulary hmis:CMExitReason .
 
 
 hmis:IncomeFromAnySource a owl:ObjectProperty ;
@@ -2289,7 +2289,7 @@ hmis:IncomeFromAnySource a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2" ;
   hmis:dataDictionaryName "IncomeFromAnySource" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:Earned a owl:ObjectProperty ;
@@ -2299,7 +2299,7 @@ hmis:Earned a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "3" ;
   hmis:dataDictionaryName "Earned" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:Unemployment a owl:ObjectProperty ;
@@ -2309,7 +2309,7 @@ hmis:Unemployment a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "4" ;
   hmis:dataDictionaryName "Unemployment" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:SSI a owl:ObjectProperty ;
@@ -2319,7 +2319,7 @@ hmis:SSI a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "5" ;
   hmis:dataDictionaryName "SSI" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:SSDI a owl:ObjectProperty ;
@@ -2329,7 +2329,7 @@ hmis:SSDI a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "6" ;
   hmis:dataDictionaryName "SSDI" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:VADisabilityService a owl:ObjectProperty ;
@@ -2339,7 +2339,7 @@ hmis:VADisabilityService a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "7" ;
   hmis:dataDictionaryName "VADisabilityService" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:VADisabilityNonService a owl:ObjectProperty ;
@@ -2349,7 +2349,7 @@ hmis:VADisabilityNonService a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "8" ;
   hmis:dataDictionaryName "VADisabilityNonService" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:PrivateDisability a owl:ObjectProperty ;
@@ -2359,7 +2359,7 @@ hmis:PrivateDisability a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "9" ;
   hmis:dataDictionaryName "PrivateDisability" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:WorkersComp a owl:ObjectProperty ;
@@ -2369,7 +2369,7 @@ hmis:WorkersComp a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "10" ;
   hmis:dataDictionaryName "WorkersComp" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:TANF a owl:ObjectProperty ;
@@ -2379,7 +2379,7 @@ hmis:TANF a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "11" ;
   hmis:dataDictionaryName "TANF" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:GA a owl:ObjectProperty ;
@@ -2389,7 +2389,7 @@ hmis:GA a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "12" ;
   hmis:dataDictionaryName "GA" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:SocSecRetirement a owl:ObjectProperty ;
@@ -2399,7 +2399,7 @@ hmis:SocSecRetirement a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "13" ;
   hmis:dataDictionaryName "SocSecRetirement" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:Pension a owl:ObjectProperty ;
@@ -2409,7 +2409,7 @@ hmis:Pension a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "14" ;
   hmis:dataDictionaryName "Pension" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:ChildSupport a owl:ObjectProperty ;
@@ -2419,7 +2419,7 @@ hmis:ChildSupport a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "15" ;
   hmis:dataDictionaryName "ChildSupport" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:Alimony a owl:ObjectProperty ;
@@ -2429,7 +2429,7 @@ hmis:Alimony a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "16" ;
   hmis:dataDictionaryName "Alimony" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:OtherIncomeSource a owl:ObjectProperty ;
@@ -2439,7 +2439,7 @@ hmis:OtherIncomeSource a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "17" ;
   hmis:dataDictionaryName "OtherIncomeSource" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:BenefitsFromAnySource a owl:ObjectProperty ;
@@ -2449,7 +2449,7 @@ hmis:BenefitsFromAnySource a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2" ;
   hmis:dataDictionaryName "BenefitsFromAnySource" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:SNAP a owl:ObjectProperty ;
@@ -2459,7 +2459,7 @@ hmis:SNAP a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "3" ;
   hmis:dataDictionaryName "SNAP" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:WIC a owl:ObjectProperty ;
@@ -2469,7 +2469,7 @@ hmis:WIC a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "4" ;
   hmis:dataDictionaryName "WIC" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:TANFChildCare a owl:ObjectProperty ;
@@ -2479,7 +2479,7 @@ hmis:TANFChildCare a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "5" ;
   hmis:dataDictionaryName "TANFChildCare" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:TANFTransportation a owl:ObjectProperty ;
@@ -2489,7 +2489,7 @@ hmis:TANFTransportation a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "6" ;
   hmis:dataDictionaryName "TANFTransportation" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:OtherTANF a owl:ObjectProperty ;
@@ -2499,7 +2499,7 @@ hmis:OtherTANF a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "7" ;
   hmis:dataDictionaryName "OtherTANF" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:OtherBenefitsSource a owl:ObjectProperty ;
@@ -2509,7 +2509,7 @@ hmis:OtherBenefitsSource a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "8" ;
   hmis:dataDictionaryName "OtherBenefitsSource" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:InsuranceFromAnySource a owl:ObjectProperty ;
@@ -2519,7 +2519,7 @@ hmis:InsuranceFromAnySource a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2" ;
   hmis:dataDictionaryName "InsuranceFromAnySource" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:Medicaid a owl:ObjectProperty ;
@@ -2529,7 +2529,7 @@ hmis:Medicaid a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "3" ;
   hmis:dataDictionaryName "Medicaid" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:NoMedicaidReason a owl:ObjectProperty ;
@@ -2539,7 +2539,7 @@ hmis:NoMedicaidReason a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "3A" ;
   hmis:dataDictionaryName "NoMedicaidReason" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#4.04.A> .
+hmis:linkedVocabulary hmis:ReasonNotInsured .
 
 
 hmis:Medicare a owl:ObjectProperty ;
@@ -2549,7 +2549,7 @@ hmis:Medicare a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "4" ;
   hmis:dataDictionaryName "Medicare" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:NoMedicareReason a owl:ObjectProperty ;
@@ -2559,7 +2559,7 @@ hmis:NoMedicareReason a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "4A" ;
   hmis:dataDictionaryName "NoMedicareReason" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#4.04.A> .
+hmis:linkedVocabulary hmis:ReasonNotInsured .
 
 
 hmis:SCHIP a owl:ObjectProperty ;
@@ -2569,7 +2569,7 @@ hmis:SCHIP a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "5" ;
   hmis:dataDictionaryName "SCHIP" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:NoSCHIPReason a owl:ObjectProperty ;
@@ -2579,7 +2579,7 @@ hmis:NoSCHIPReason a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "5A" ;
   hmis:dataDictionaryName "NoSCHIPReason" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#4.04.A> .
+hmis:linkedVocabulary hmis:ReasonNotInsured .
 
 
 hmis:VHAServices a owl:ObjectProperty ;
@@ -2589,7 +2589,7 @@ hmis:VHAServices a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "6" ;
   hmis:dataDictionaryName "VHAServices" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:NoVHAReason a owl:ObjectProperty ;
@@ -2599,7 +2599,7 @@ hmis:NoVHAReason a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "6A" ;
   hmis:dataDictionaryName "NoVHAReason" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#4.04.A> .
+hmis:linkedVocabulary hmis:ReasonNotInsured .
 
 
 hmis:EmployerProvided a owl:ObjectProperty ;
@@ -2609,7 +2609,7 @@ hmis:EmployerProvided a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "7" ;
   hmis:dataDictionaryName "EmployerProvided" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:NoEmployerProvidedReason a owl:ObjectProperty ;
@@ -2619,7 +2619,7 @@ hmis:NoEmployerProvidedReason a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "7A" ;
   hmis:dataDictionaryName "NoEmployerProvidedReason" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#4.04.A> .
+hmis:linkedVocabulary hmis:ReasonNotInsured .
 
 
 hmis:COBRA a owl:ObjectProperty ;
@@ -2629,7 +2629,7 @@ hmis:COBRA a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "8" ;
   hmis:dataDictionaryName "COBRA" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:NoCOBRAReason a owl:ObjectProperty ;
@@ -2639,7 +2639,7 @@ hmis:NoCOBRAReason a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "8A" ;
   hmis:dataDictionaryName "NoCOBRAReason" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#4.04.A> .
+hmis:linkedVocabulary hmis:ReasonNotInsured .
 
 
 hmis:PrivatePay a owl:ObjectProperty ;
@@ -2649,7 +2649,7 @@ hmis:PrivatePay a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "9" ;
   hmis:dataDictionaryName "PrivatePay" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:NoPrivatePayReason a owl:ObjectProperty ;
@@ -2659,7 +2659,7 @@ hmis:NoPrivatePayReason a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "9A" ;
   hmis:dataDictionaryName "NoPrivatePayReason" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#4.04.A> .
+hmis:linkedVocabulary hmis:ReasonNotInsured .
 
 
 hmis:StateHealthIns a owl:ObjectProperty ;
@@ -2669,7 +2669,7 @@ hmis:StateHealthIns a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "10" ;
   hmis:dataDictionaryName "StateHealthIns" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:NoStateHealthInsReason a owl:ObjectProperty ;
@@ -2679,7 +2679,7 @@ hmis:NoStateHealthInsReason a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "10A" ;
   hmis:dataDictionaryName "NoStateHealthInsReason" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#4.04.A> .
+hmis:linkedVocabulary hmis:ReasonNotInsured .
 
 
 hmis:IndianHealthServices a owl:ObjectProperty ;
@@ -2689,7 +2689,7 @@ hmis:IndianHealthServices a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "11" ;
   hmis:dataDictionaryName "IndianHealthServices" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:NoIndianHealthServicesReason a owl:ObjectProperty ;
@@ -2699,7 +2699,7 @@ hmis:NoIndianHealthServicesReason a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "11A" ;
   hmis:dataDictionaryName "NoIndianHealthServicesReason" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#4.04.A> .
+hmis:linkedVocabulary hmis:ReasonNotInsured .
 
 
 hmis:OtherInsurance a owl:ObjectProperty ;
@@ -2709,7 +2709,7 @@ hmis:OtherInsurance a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "12" ;
   hmis:dataDictionaryName "OtherInsurance" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:ADAP a owl:ObjectProperty ;
@@ -2719,7 +2719,7 @@ hmis:ADAP a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "3" ;
   hmis:dataDictionaryName "ADAP" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:NoADAPReason a owl:ObjectProperty ;
@@ -2729,7 +2729,7 @@ hmis:NoADAPReason a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "B" ;
   hmis:dataDictionaryName "NoADAPReason" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#W3> .
+hmis:linkedVocabulary hmis:NoAssistanceReason .
 
 
 hmis:RyanWhiteMedDent a owl:ObjectProperty ;
@@ -2739,7 +2739,7 @@ hmis:RyanWhiteMedDent a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "4" ;
   hmis:dataDictionaryName "RyanWhiteMedDent" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:NoRyanWhiteReason a owl:ObjectProperty ;
@@ -2749,7 +2749,7 @@ hmis:NoRyanWhiteReason a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "C" ;
   hmis:dataDictionaryName "NoRyanWhiteReason" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#W3> .
+hmis:linkedVocabulary hmis:NoAssistanceReason .
 
 
 hmis:ConnectionWithSOAR a owl:ObjectProperty ;
@@ -2759,7 +2759,7 @@ hmis:ConnectionWithSOAR a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "ConnectionWithSOAR" ;
   hmis:CSVExportTable "IncomeBenefits" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:DomesticViolenceSurvivor a owl:ObjectProperty ;
@@ -2769,7 +2769,7 @@ hmis:DomesticViolenceSurvivor a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2" ;
   hmis:dataDictionaryName "DomesticViolenceSurvivor" ;
   hmis:CSVExportTable "HealthAndDV" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:WhenOccurred a owl:ObjectProperty ;
@@ -2779,7 +2779,7 @@ hmis:WhenOccurred a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "WhenOccurred" ;
   hmis:CSVExportTable "HealthAndDV" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#4.11.A> .
+hmis:linkedVocabulary hmis:WhenDVOccurred .
 
 
 hmis:CurrentlyFleeing a owl:ObjectProperty ;
@@ -2789,7 +2789,7 @@ hmis:CurrentlyFleeing a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "B" ;
   hmis:dataDictionaryName "CurrentlyFleeing" ;
   hmis:CSVExportTable "HealthAndDV" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:GeneralHealthStatus a owl:ObjectProperty ;
@@ -2799,7 +2799,7 @@ hmis:GeneralHealthStatus a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "GeneralHealthStatus" ;
   hmis:CSVExportTable "HealthAndDV" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#R7.1> .
+hmis:linkedVocabulary hmis:HealthStatus .
 
 
 hmis:DentalHealthStatus a owl:ObjectProperty ;
@@ -2809,7 +2809,7 @@ hmis:DentalHealthStatus a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "DentalHealthStatus" ;
   hmis:CSVExportTable "HealthAndDV" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#R7.1> .
+hmis:linkedVocabulary hmis:HealthStatus .
 
 
 hmis:MentalHealthStatus a owl:ObjectProperty ;
@@ -2819,7 +2819,7 @@ hmis:MentalHealthStatus a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "MentalHealthStatus" ;
   hmis:CSVExportTable "HealthAndDV" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#R7.1> .
+hmis:linkedVocabulary hmis:HealthStatus .
 
 
 hmis:PregnancyStatus a owl:ObjectProperty ;
@@ -2829,7 +2829,7 @@ hmis:PregnancyStatus a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "PregnancyStatus" ;
   hmis:CSVExportTable "HealthAndDV" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:LastGradeCompleted a owl:ObjectProperty ;
@@ -2839,7 +2839,7 @@ hmis:LastGradeCompleted a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "LastGradeCompleted" ;
   hmis:CSVExportTable "EmploymentEducation" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#R4.1> .
+hmis:linkedVocabulary hmis:LastGradeCompleted .
 
 
 hmis:SchoolStatus a owl:ObjectProperty ;
@@ -2849,7 +2849,7 @@ hmis:SchoolStatus a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "1" ;
   hmis:dataDictionaryName "SchoolStatus" ;
   hmis:CSVExportTable "EmploymentEducation" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#R5.1> .
+hmis:linkedVocabulary hmis:SchoolStatus .
 
 
 hmis:Employed a owl:ObjectProperty ;
@@ -2859,7 +2859,7 @@ hmis:Employed a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2" ;
   hmis:dataDictionaryName "Employed" ;
   hmis:CSVExportTable "EmploymentEducation" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:EmploymentType a owl:ObjectProperty ;
@@ -2869,7 +2869,7 @@ hmis:EmploymentType a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "EmploymentType" ;
   hmis:CSVExportTable "EmploymentEducation" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#R6.A> .
+hmis:linkedVocabulary hmis:EmploymentType .
 
 
 hmis:NotEmployedReason a owl:ObjectProperty ;
@@ -2879,7 +2879,7 @@ hmis:NotEmployedReason a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "B" ;
   hmis:dataDictionaryName "NotEmployedReason" ;
   hmis:CSVExportTable "EmploymentEducation" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#R6.B> .
+hmis:linkedVocabulary hmis:NotEmployedReason .
 
 
 hmis:TCellCountAvailable a owl:ObjectProperty ;
@@ -2889,7 +2889,7 @@ hmis:TCellCountAvailable a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2" ;
   hmis:dataDictionaryName "TCellCountAvailable" ;
   hmis:CSVExportTable "Disabilities" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:TCellSource a owl:ObjectProperty ;
@@ -2899,7 +2899,7 @@ hmis:TCellSource a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "B" ;
   hmis:dataDictionaryName "TCellSource" ;
   hmis:CSVExportTable "Disabilities" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#W4.B> .
+hmis:linkedVocabulary hmis:TCellSourceViralLoadSource .
 
 
 hmis:ViralLoadAvailable a owl:ObjectProperty ;
@@ -2909,7 +2909,7 @@ hmis:ViralLoadAvailable a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "3" ;
   hmis:dataDictionaryName "ViralLoadAvailable" ;
   hmis:CSVExportTable "Disabilities" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#W4.3> .
+hmis:linkedVocabulary hmis:ViralLoadAvailable .
 
 
 hmis:ViralLoadSource a owl:ObjectProperty ;
@@ -2919,7 +2919,7 @@ hmis:ViralLoadSource a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "D" ;
   hmis:dataDictionaryName "ViralLoadSource" ;
   hmis:CSVExportTable "Disabilities" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#W4.B> .
+hmis:linkedVocabulary hmis:TCellSourceViralLoadSource .
 
 
 hmis:AntiRetroviral a owl:ObjectProperty ;
@@ -2929,7 +2929,7 @@ hmis:AntiRetroviral a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2" ;
   hmis:dataDictionaryName "AntiRetroviral" ;
   hmis:CSVExportTable "Disabilities" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:ReferralOutcome a owl:ObjectProperty ;
@@ -2938,7 +2938,7 @@ hmis:ReferralOutcome a owl:ObjectProperty ;
   hmis:dataElementNumber "P2" ;
   hmis:dataDictionaryName "ReferralOutcome" ;
   hmis:CSVExportTable "Services" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#P2.A> .
+hmis:linkedVocabulary hmis:PATHReferralOutcome .
 
 
 hmis:CurrentLivingSituation a owl:ObjectProperty ;
@@ -2948,7 +2948,7 @@ hmis:CurrentLivingSituation a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2" ;
   hmis:dataDictionaryName "CurrentLivingSituation" ;
   hmis:CSVExportTable "CurrentLivingSituation" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#3.12.1> .
+hmis:linkedVocabulary hmis:Living_Situation_Option_List .
 
 
 hmis:CLSSubsidyType a owl:ObjectProperty ;
@@ -2958,7 +2958,7 @@ hmis:CLSSubsidyType a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "CLSSubsidyType" ;
   hmis:CSVExportTable "CurrentLivingSituation" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#3.12.A> .
+hmis:linkedVocabulary hmis:RentalSubsidyTypes .
 
 
 hmis:LeaveSituation14Days a owl:ObjectProperty ;
@@ -2968,7 +2968,7 @@ hmis:LeaveSituation14Days a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "B" ;
   hmis:dataDictionaryName "LeaveSituation14Days" ;
   hmis:CSVExportTable "CurrentLivingSituation" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:SubsequentResidence a owl:ObjectProperty ;
@@ -2978,7 +2978,7 @@ hmis:SubsequentResidence a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "C" ;
   hmis:dataDictionaryName "SubsequentResidence" ;
   hmis:CSVExportTable "CurrentLivingSituation" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:ResourcesToObtain a owl:ObjectProperty ;
@@ -2988,7 +2988,7 @@ hmis:ResourcesToObtain a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "D" ;
   hmis:dataDictionaryName "ResourcesToObtain" ;
   hmis:CSVExportTable "CurrentLivingSituation" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:LeaseOwn60Day a owl:ObjectProperty ;
@@ -2998,7 +2998,7 @@ hmis:LeaseOwn60Day a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "E" ;
   hmis:dataDictionaryName "LeaseOwn60Day" ;
   hmis:CSVExportTable "CurrentLivingSituation" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:MovedTwoOrMore a owl:ObjectProperty ;
@@ -3008,7 +3008,7 @@ hmis:MovedTwoOrMore a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "F" ;
   hmis:dataDictionaryName "MovedTwoOrMore" ;
   hmis:CSVExportTable "CurrentLivingSituation" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.8> .
+hmis:linkedVocabulary hmis:ERROR .
 
 
 hmis:AssessmentType a owl:ObjectProperty ;
@@ -3018,7 +3018,7 @@ hmis:AssessmentType a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "3" ;
   hmis:dataDictionaryName "AssessmentType" ;
   hmis:CSVExportTable "Assessment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#4.19.3> .
+hmis:linkedVocabulary hmis:AssessmentType .
 
 
 hmis:AssessmentLevel a owl:ObjectProperty ;
@@ -3028,7 +3028,7 @@ hmis:AssessmentLevel a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "4" ;
   hmis:dataDictionaryName "AssessmentLevel" ;
   hmis:CSVExportTable "Assessment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#4.19.4> .
+hmis:linkedVocabulary hmis:AssessmentLevel .
 
 
 hmis:PrioritizationStatus a owl:ObjectProperty ;
@@ -3038,7 +3038,7 @@ hmis:PrioritizationStatus a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "7" ;
   hmis:dataDictionaryName "PrioritizationStatus" ;
   hmis:CSVExportTable "Assessment" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#4.19.7> .
+hmis:linkedVocabulary hmis:PrioritizationStatus .
 
 
 hmis:Event a owl:ObjectProperty ;
@@ -3048,7 +3048,7 @@ hmis:Event a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2" ;
   hmis:dataDictionaryName "Event" ;
   hmis:CSVExportTable "Event" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#4.20.2> .
+hmis:linkedVocabulary hmis:Event .
 
 
 hmis:ProbSolDivRRResult a owl:ObjectProperty ;
@@ -3058,7 +3058,7 @@ hmis:ProbSolDivRRResult a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "ProbSolDivRRResult" ;
   hmis:CSVExportTable "Event" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:ReferralCaseManageAfter a owl:ObjectProperty ;
@@ -3068,7 +3068,7 @@ hmis:ReferralCaseManageAfter a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "B" ;
   hmis:dataDictionaryName "ReferralCaseManageAfter" ;
   hmis:CSVExportTable "Event" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#1.7> .
+hmis:linkedVocabulary hmis:NoYesMissing .
 
 
 hmis:ReferralResult a owl:ObjectProperty ;
@@ -3078,7 +3078,7 @@ hmis:ReferralResult a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "D" ;
   hmis:dataDictionaryName "ReferralResult" ;
   hmis:CSVExportTable "Event" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#4.20.D> .
+hmis:linkedVocabulary hmis:ReferralResult .
 
 
 hmis:CurrentSchoolAttend a owl:ObjectProperty ;
@@ -3088,7 +3088,7 @@ hmis:CurrentSchoolAttend a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "2" ;
   hmis:dataDictionaryName "CurrentSchoolAttend" ;
   hmis:CSVExportTable "YouthEducationStatus" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#C3.2> .
+hmis:linkedVocabulary hmis:CurrentSchoolAttend .
 
 
 hmis:MostRecentEdStatus a owl:ObjectProperty ;
@@ -3098,7 +3098,7 @@ hmis:MostRecentEdStatus a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "A" ;
   hmis:dataDictionaryName "MostRecentEdStatus" ;
   hmis:CSVExportTable "YouthEducationStatus" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#C3.A> .
+hmis:linkedVocabulary hmis:MostRecentEdStatus .
 
 
 hmis:CurrentEdStatus a owl:ObjectProperty ;
@@ -3108,6 +3108,6 @@ hmis:CurrentEdStatus a owl:ObjectProperty ;
   hmis:dataElementFieldNumber "B" ;
   hmis:dataDictionaryName "CurrentEdStatus" ;
   hmis:CSVExportTable "YouthEducationStatus" ;
-hmis:linkedVocabulary <http://www.semanticweb.org/ontologies/FY2026/hmis/hmisDataElements#C3.B> .
+hmis:linkedVocabulary hmis:CurrentEdStatus .
 
 

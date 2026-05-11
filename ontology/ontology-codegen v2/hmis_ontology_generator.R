@@ -13,9 +13,11 @@ source("Ontology_functions.R")
 HMIS <- "http://www.semanticweb.org/61084/ontologies/2026/2/hmis#" #This will be the IRI for the ontology
 
 core_classes <- read_xlsx("datasource/SkosVocabulary.xlsx", sheet = 2)
-skos_vocabularies <- read_xlsx("datasource/SkosVocabulary.xlsx", sheet = 3)
-dataProperty <- read_xlsx("datasource/SkosVocabulary.xlsx", sheet = 4)
-objectProperty <- read_xlsx("datasource/SkosVocabulary.xlsx", sheet = 5)
+class_relationships <- read_xlsx("datasource/SkosVocabulary.xlsx", sheet = 3)
+skos_concepts <- read_xlsx("datasource/SkosVocabulary.xlsx", sheet = 4)
+skos_conceptScheme <- read_xlsx("datasource/SkosVocabulary.xlsx", sheet = 5)
+dataProperty <- read_xlsx("datasource/SkosVocabulary.xlsx", sheet = 6)
+objectProperty <- read_xlsx("datasource/SkosVocabulary.xlsx", sheet = 7)
 
 # Step 3: ---
 #Set the prefixes and create the owl files for the foundation layers
@@ -47,11 +49,11 @@ dir.create(dated_dir, recursive = TRUE, showWarnings = FALSE)
 
 {
 #Set the core classes
-writeLines(c(ttl_header, classes),
+writeLines(c(ttl_header, classes, coreClassObjProps),
            file.path(dated_dir,paste0("hmis_coreClasses",date_Filetag,".ttl")),useBytes = TRUE) 
 
 #Add the Skos vocabularies (HMIS Data Lists)
-writeLines(c(ttl_header, skosClasses,skosConcept,skosConceptScheme),
+writeLines(c(ttl_header, skosClasses,skosConceptScheme,skosConcept),
            file.path(dated_dir,paste0("hmis_skosVocabularies",date_Filetag,".ttl")),useBytes = TRUE) 
 
 #Add in the HMIS Data Elements (Data and object properties)
@@ -59,7 +61,7 @@ writeLines(c(ttl_header, dataProp, objProp),
            file.path(dated_dir,paste0("hmis_dataPropertiesObjectProperties",date_Filetag,".ttl")), useBytes = TRUE)
 
 #Full RDF/OWL of HMIS Ontology
-writeLines(c(ttl_header,classes,skosConceptScheme,skosConcept,dataProp,objProp),
+writeLines(c(ttl_header,classes,coreClassObjProps, skosConceptScheme,skosConcept,dataProp,objProp),
            file.path(dated_dir,paste0("hmis_ontology",date_Filetag,".ttl")), useBytes = TRUE)
 }
 }

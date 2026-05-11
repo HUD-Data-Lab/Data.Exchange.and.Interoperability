@@ -2,29 +2,36 @@
 objectProperty2 <- objectProperty %>%
   mutate(across(everything(), ~ nb2sp(as.character(.x))))
 
- objProp <- objectProperty2 %>%
+
+objProp <- objectProperty2 %>%
   rowwise() %>%
-  mutate(block = {  
+  mutate(block = {
     subj <- paste0("hmis:", ttl_local(Name))
     
     lines <- c(
       paste0(subj, " a owl:ObjectProperty ;"),
       paste0("  rdfs:domain hmis:", ttl_local(Class), " ;"),
-      paste0("  rdfs:range skos:Concept ;") #Should this be skos:ConceptScheme?
+      paste0("  rdfs:range skos:Concept ;")
     )
     
-    # metadata as literals (only include if nonblank)
-    if (!is_blank(DataElement))   lines <- c(lines, paste0("  hmis:dataElementNumber ", ttl_lit(DataElement), " ;"))
-    if (!is_blank(FieldNumber))   lines <- c(lines, paste0("  hmis:dataElementFieldNumber ", ttl_lit(FieldNumber), " ;"))
-    if (!is_blank(Name))          lines <- c(lines, paste0("  hmis:dataDictionaryName ", ttl_lit(Name), " ;"))
-    if (!is_blank(CSVTable))      lines <- c(lines, paste0("  hmis:CSVExportTable ", ttl_lit(CSVTable), " ;"))
+    if (!is_blank(DataElement))
+      lines <- c(lines, paste0("  hmis:dataElementNumber ", ttl_lit(DataElement), " ;"))
     
-    if (!is_blank(inScheme)) {
-      iri <- clean_iri(inScheme)
-      lines <- c(lines, paste0("  hmis:linkedVocabulary <", iri, "> ;"))
-    }
+    if (!is_blank(FieldNumber))
+      lines <- c(lines, paste0("  hmis:dataElementFieldNumber ", ttl_lit(FieldNumber), " ;"))
     
-    # force the final line to end with "." no matter what
+    if (!is_blank(Name))
+      lines <- c(lines, paste0("  hmis:dataDictionaryName ", ttl_lit(Name), " ;"))
+    
+    if (!is_blank(CSVTable))
+      lines <- c(lines, paste0("  hmis:CSVExportTable ", ttl_lit(CSVTable), " ;"))
+    
+    if (!is_blank(ConceptScheme))
+      lines <- c(
+        lines,
+        paste0("  hmis:linkedVocabulary hmis:", ttl_local(ConceptScheme), " ;")
+      )
+    
     last <- sub(";\\s*$", ".", trimws(lines[length(lines)]))
     body <- c(lines[-length(lines)], last)
     
@@ -32,5 +39,6 @@ objectProperty2 <- objectProperty %>%
   }) %>%
   ungroup() %>%
   pull(block)
+
 
 

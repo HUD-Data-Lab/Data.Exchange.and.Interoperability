@@ -1,74 +1,64 @@
 # normalize all cells to character and remove NBSP
-skos_vocabularies2 <- skos_vocabularies %>% 
+skos_concepts2 <- skos_concepts %>% 
+  mutate(across(everything(), ~ nb2sp(as.character(.x))))
+
+skos_conceptScheme2 <- skos_conceptScheme %>% 
   mutate(across(everything(), ~ nb2sp(as.character(.x))))
 
 
-skosClasses <- skos_vocabularies2 %>%
-  select(Class) %>% 
-  filter(!is.na(Class)) %>% 
-    rowwise() %>%
-    mutate(block = {
-      subj <- paste0(Class)
-      
-      lines <- c(
-        paste0(subj, " a owl:Class ;"),
-        paste0("  rdfs:label ", ttl_lit(Class), " ;")
-      )
+skosClasses <- {
+  lines <- c(
+    "skos:Concept a owl:Class ;",
+    paste0("  rdfs:label ", ttl_lit("Concept"), " ."),
+    "",
+    "skos:ConceptScheme a owl:Class ;",
+    paste0("  rdfs:label ", ttl_lit("ConceptScheme"), " ."),
+    "",
+    "skos:Concept owl:disjointWith skos:ConceptScheme ."
+  )
   
-      # Force final predicate to end with "."
-      last <- sub(";\\s*$", ".", trimws(lines[length(lines)]))
-      body <- c(lines[-length(lines)], last)
-      
-      paste0(paste(body, collapse = "\n"), "\n\n")
-    }) %>%
-    ungroup() %>%
-    pull(block)
-  
-  
-skosConcept <- skos_vocabularies2 %>%
+  paste0(paste(lines, collapse = "\n"), "\n\n")
+}
+
+skosConceptScheme <- skos_conceptScheme2 %>%
   rowwise() %>%
   mutate(block = {
     
-    # Subject = the class being declared
-    subj <- paste0("hmis:",ttl_local(Text))
+    subj <- paste0("hmis:",ttl_local(Scheme))
     
     lines <- c(
-      paste0(subj," rdfs:type ","skos:Concept", " ;"),
-      paste0("  skos:prefLabel ",Text,"@en ;"),
-      paste0("  skos:notation ",Value," ;"),
-      paste0("  skos:notation ",Value," ;")#,
-      #paste0("  skos:inScheme",`skos:inScheme`," ;") #This needs to work
+      paste0(subj, " a skos:ConceptScheme ;"),
+      paste0("  skos:prefLabel ", ttl_lit(PrefLabel), " ;"),
+      paste0("  hmis:csvList ", ttl_lit(CSVList), " ;")
+      
     )
     
-    # Force final predicate to end with "."
-    last <- sub(";\\s*$", ".", trimws(lines[length(lines)]))
-    body <- c(lines[-length(lines)], last)
+    lines[length(lines)] <- sub(";\\s*$", ".", lines[length(lines)])
     
-    paste0(paste(body, collapse = "\n"), "\n\n")
+    paste0(paste(lines, collapse = "\n"), "\n")
   }) %>%
   ungroup() %>%
   pull(block)
 
-skosConceptScheme <- skos_vocabularies2 %>%
+
+skosConcept <- skos_concepts2 %>%
   rowwise() %>%
   mutate(block = {
     
-    # Subject = the class being declared
-    subj <- paste0("hmis:",ttl_local(List))
+    subj <- paste0("hmis:",ttl_local(PrefLabel))
     
     lines <- c(
-      paste0(subj," rdfs:type ","skos:ConceptScheme", " ;"),
-      paste0("  skos:prefLabel ",Text,"@en ;"),
-      paste0("  skos:notation ",Value," ;"),
-      paste0("  skos:notation ",Value," ;")
+      paste0(subj, " a skos:Concept ;"),
+      paste0("  skos:prefLabel ", ttl_lit(PrefLabel), " ;"),
+      paste0("  skos:notation ", ttl_lit(Notation), " ;"),
+      paste0("  skos:inScheme hmis:", Scheme, " ;")
     )
     
-    # Force final predicate to end with "."
-    last <- sub(";\\s*$", ".", trimws(lines[length(lines)]))
-    body <- c(lines[-length(lines)], last)
+    lines[length(lines)] <- sub(";\\s*$", ".", lines[length(lines)])
     
-    paste0(paste(body, collapse = "\n"), "\n\n")
+    paste0(paste(lines, collapse = "\n"), "\n")
   }) %>%
   ungroup() %>%
   pull(block)
+
 

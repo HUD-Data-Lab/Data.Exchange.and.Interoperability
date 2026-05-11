@@ -33,6 +33,7 @@ env/
 *.wasm
 pkg/
 
+
 # IDE
 .vscode/
 .idea/
@@ -42,3 +43,4 @@ pkg/
 # OS
 .DS_Store
 Thumbs.db
+.positai
