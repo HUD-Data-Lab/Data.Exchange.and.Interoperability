@@ -9,12 +9,15 @@ skos_conceptScheme2 <- skos_conceptScheme %>%
 skosClasses <- {
   lines <- c(
     "skos:Concept a owl:Class ;",
-    paste0("  rdfs:label ", ttl_lit("Concept"), " ."),
+    paste0("  rdfs:label ", ttl_lit("Concept"), " ;"),
+    "  owl:disjointWith skos:ConceptScheme .",
     "",
     "skos:ConceptScheme a owl:Class ;",
     paste0("  rdfs:label ", ttl_lit("ConceptScheme"), " ."),
     "",
-    "skos:Concept owl:disjointWith skos:ConceptScheme ."
+    "skos:inScheme a owl:ObjectProperty ;",
+    "  rdfs:domain skos:Concept ;",
+    "  rdfs:range skos:ConceptScheme ."
   )
   
   paste0(paste(lines, collapse = "\n"), "\n\n")
