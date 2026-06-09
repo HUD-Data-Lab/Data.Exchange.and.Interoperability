@@ -1,0 +1,3274 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#"
+     xml:base="http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:shacl="http://www.w3.org/ns/shacl#"
+     xmlns:terms="http://purl.org/dc/terms/"
+     xmlns:ontology="http://hmis.hud.gov/ontology#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6">
+        <terms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-01-28</terms:created>
+        <terms:creator>ICF HMIS Team</terms:creator>
+        <terms:description xml:lang="en">Core class and property definitions for HMIS data standards (FY2026)</terms:description>
+        <terms:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-02-13</terms:modified>
+        <terms:publisher>U.S. Department of Housing and Urban Development</terms:publisher>
+        <terms:title xml:lang="en">HMIS Ontology - Structure Layer</terms:title>
+        <rdfs:comment xml:lang="en">This ontology defines the structural layer of HMIS data standards, including classes, object properties, and datatype properties. It is designed to work in conjunction with SKOS vocabularies (semantics) and SHACL constraints (validation).</rdfs:comment>
+        <owl:versionInfo>0.7</owl:versionInfo>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#linkedVocabulary -->
+
+    <owl:AnnotationProperty rdf:about="http://hmis.hud.gov/ontology#linkedVocabulary">
+        <rdfs:comment xml:lang="en">Links a datatype property to its corresponding SKOS ConceptScheme for enumerated values</rdfs:comment>
+        <rdfs:label xml:lang="en">linked vocabulary</rdfs:label>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/created -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/created"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/creator -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/creator"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/description -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/description"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/identifier -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/identifier"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/modified -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/modified"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/publisher -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/publisher"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/source -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/source"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/title -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/title"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#altLabel -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#altLabel"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#definition -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#definition"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#example -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#example"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#inScheme -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#inScheme"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#notation -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#notation"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#note -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#note"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#prefLabel -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#prefLabel"/>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#datatype -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#datatype"/>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#maxCount -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#maxCount"/>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#maxLength -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#maxLength"/>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#message -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#message"/>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#minCount -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#minCount"/>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#minLength -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#minLength"/>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#path -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#path"/>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#pattern -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#pattern"/>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#property -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#property"/>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#select -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#select"/>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#severity -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#severity"/>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#sparql -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#sparql"/>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#targetClass -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#targetClass"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/2001/XMLSchema#date -->
+
+    <rdfs:Datatype rdf:about="http://www.w3.org/2001/XMLSchema#date"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ceParticipationOf -->
+
+    <owl:ObjectProperty rdf:about="http://hmis.hud.gov/ontology#ceParticipationOf">
+        <owl:inverseOf rdf:resource="http://hmis.hud.gov/ontology#hasCEParticipation"/>
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#CEParticipation"/>
+        <rdfs:range rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:comment xml:lang="en">Links a CE participation record to its project</rdfs:comment>
+        <rdfs:label xml:lang="en">CE participation of</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#configures -->
+
+    <owl:ObjectProperty rdf:about="http://hmis.hud.gov/ontology#configures">
+        <owl:inverseOf rdf:resource="http://hmis.hud.gov/ontology#hasConfiguration"/>
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#SubProject"/>
+        <rdfs:range rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:comment xml:lang="en">Links a sub-project configuration to the project it configures</rdfs:comment>
+        <rdfs:label xml:lang="en">configures</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#during -->
+
+    <owl:ObjectProperty rdf:about="http://hmis.hud.gov/ontology#during">
+        <owl:inverseOf rdf:resource="http://hmis.hud.gov/ontology#hasSubEnrollment"/>
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#SubEnrollment"/>
+        <rdfs:range rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:comment xml:lang="en">Links a sub-enrollment event to the enrollment it occurred during</rdfs:comment>
+        <rdfs:label xml:lang="en">during</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#enrollmentOf -->
+
+    <owl:ObjectProperty rdf:about="http://hmis.hud.gov/ontology#enrollmentOf">
+        <owl:inverseOf rdf:resource="http://hmis.hud.gov/ontology#hasEnrollment"/>
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:comment xml:lang="en">Links an enrollment to the client enrolled</rdfs:comment>
+        <rdfs:label xml:lang="en">enrollment of</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#fundSourceOf -->
+
+    <owl:ObjectProperty rdf:about="http://hmis.hud.gov/ontology#fundSourceOf">
+        <owl:inverseOf rdf:resource="http://hmis.hud.gov/ontology#hasFundSource"/>
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#FundSource"/>
+        <rdfs:range rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:comment xml:lang="en">Links a funding source to the project it funds</rdfs:comment>
+        <rdfs:label xml:lang="en">fund source of</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#hasCEParticipation -->
+
+    <owl:ObjectProperty rdf:about="http://hmis.hud.gov/ontology#hasCEParticipation">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:range rdf:resource="http://hmis.hud.gov/ontology#CEParticipation"/>
+        <rdfs:comment xml:lang="en">Links a project to its Coordinated Entry participation record</rdfs:comment>
+        <rdfs:label xml:lang="en">has CE participation</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#hasConfiguration -->
+
+    <owl:ObjectProperty rdf:about="http://hmis.hud.gov/ontology#hasConfiguration">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:range rdf:resource="http://hmis.hud.gov/ontology#SubProject"/>
+        <rdfs:comment xml:lang="en">Links a project to its configuration data</rdfs:comment>
+        <rdfs:label xml:lang="en">has configuration</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#hasEnrollment -->
+
+    <owl:ObjectProperty rdf:about="http://hmis.hud.gov/ontology#hasEnrollment">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:comment xml:lang="en">Links a client to their enrollments</rdfs:comment>
+        <rdfs:label xml:lang="en">has enrollment</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#hasFundSource -->
+
+    <owl:ObjectProperty rdf:about="http://hmis.hud.gov/ontology#hasFundSource">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:range rdf:resource="http://hmis.hud.gov/ontology#FundSource"/>
+        <rdfs:comment xml:lang="en">Links a project to its funding sources</rdfs:comment>
+        <rdfs:label xml:lang="en">has fund source</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#hasHMISParticipation -->
+
+    <owl:ObjectProperty rdf:about="http://hmis.hud.gov/ontology#hasHMISParticipation">
+        <owl:inverseOf rdf:resource="http://hmis.hud.gov/ontology#hmisParticipationOf"/>
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:range rdf:resource="http://hmis.hud.gov/ontology#HMISParticipation"/>
+        <rdfs:comment xml:lang="en">Links a project to its HMIS participation record</rdfs:comment>
+        <rdfs:label xml:lang="en">has HMIS participation</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#hasMember -->
+
+    <owl:ObjectProperty rdf:about="http://hmis.hud.gov/ontology#hasMember">
+        <owl:inverseOf rdf:resource="http://hmis.hud.gov/ontology#memberOf"/>
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Household"/>
+        <rdfs:range rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:comment xml:lang="en">Links a household to member enrollments</rdfs:comment>
+        <rdfs:label xml:lang="en">has member</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#hasSubEnrollment -->
+
+    <owl:ObjectProperty rdf:about="http://hmis.hud.gov/ontology#hasSubEnrollment">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://hmis.hud.gov/ontology#SubEnrollment"/>
+        <rdfs:comment xml:lang="en">Links an enrollment to events that occurred during it</rdfs:comment>
+        <rdfs:label xml:lang="en">has sub-enrollment</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#hmisParticipationOf -->
+
+    <owl:ObjectProperty rdf:about="http://hmis.hud.gov/ontology#hmisParticipationOf">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#HMISParticipation"/>
+        <rdfs:range rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:comment xml:lang="en">Links an HMIS participation record to its project</rdfs:comment>
+        <rdfs:label xml:lang="en">HMIS participation of</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#inProject -->
+
+    <owl:ObjectProperty rdf:about="http://hmis.hud.gov/ontology#inProject">
+        <owl:inverseOf rdf:resource="http://hmis.hud.gov/ontology#projectOf"/>
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:comment xml:lang="en">Links an enrollment to the project providing services</rdfs:comment>
+        <rdfs:label xml:lang="en">in project</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#memberOf -->
+
+    <owl:ObjectProperty rdf:about="http://hmis.hud.gov/ontology#memberOf">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://hmis.hud.gov/ontology#Household"/>
+        <rdfs:comment xml:lang="en">Links an enrollment to its household</rdfs:comment>
+        <rdfs:label xml:lang="en">member of</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#operatedBy -->
+
+    <owl:ObjectProperty rdf:about="http://hmis.hud.gov/ontology#operatedBy">
+        <owl:inverseOf rdf:resource="http://hmis.hud.gov/ontology#operates"/>
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:range rdf:resource="http://hmis.hud.gov/ontology#Organization"/>
+        <rdfs:comment xml:lang="en">Links a project to the organization operating it</rdfs:comment>
+        <rdfs:label xml:lang="en">operated by</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#operates -->
+
+    <owl:ObjectProperty rdf:about="http://hmis.hud.gov/ontology#operates">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Organization"/>
+        <rdfs:range rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:comment xml:lang="en">Links an organization to projects it operates</rdfs:comment>
+        <rdfs:label xml:lang="en">operates</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#projectOf -->
+
+    <owl:ObjectProperty rdf:about="http://hmis.hud.gov/ontology#projectOf">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:range rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:comment xml:lang="en">Links a project to enrollments within it</rdfs:comment>
+        <rdfs:label xml:lang="en">project of</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#AccessPoint -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#AccessPoint">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#CEParticipation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#YesNoReasonsScheme"/>
+        <terms:identifier>4.19.3</terms:identifier>
+        <rdfs:comment xml:lang="en">Whether the project is a Coordinated Entry access point</rdfs:comment>
+        <rdfs:label xml:lang="en">Access Point</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#AmIndAKNative -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#AmIndAKNative">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#NoYesReasonsScheme"/>
+        <terms:identifier>3.05.1</terms:identifier>
+        <rdfs:label xml:lang="en">American Indian, Alaska Native, or Indigenous</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Asian -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#Asian">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#NoYesReasonsScheme"/>
+        <terms:identifier>3.05.2</terms:identifier>
+        <rdfs:label xml:lang="en">Asian</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#BlackAfAmerican -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#BlackAfAmerican">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#NoYesReasonsScheme"/>
+        <terms:identifier>3.05.3</terms:identifier>
+        <rdfs:label xml:lang="en">Black, African American, or African</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#CEParticipationID -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#CEParticipationID">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#CEParticipation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>4.19.A</terms:identifier>
+        <rdfs:comment xml:lang="en">Unique identifier for CE participation record</rdfs:comment>
+        <rdfs:label xml:lang="en">CE Participation ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#CEParticipationStatusEndDate -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#CEParticipationStatusEndDate">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#CEParticipation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <terms:identifier>4.19.2</terms:identifier>
+        <rdfs:label xml:lang="en">CE Participation Status End Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#CEParticipationStatusStartDate -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#CEParticipationStatusStartDate">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#CEParticipation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <terms:identifier>4.19.1</terms:identifier>
+        <rdfs:label xml:lang="en">CE Participation Status Start Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ClientEnrolledInPATH -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#ClientEnrolledInPATH">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#NoYesScheme"/>
+        <terms:identifier>3.22</terms:identifier>
+        <rdfs:label xml:lang="en">Client Enrolled in PATH</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ContinuumProject -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#ContinuumProject">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#NoYesScheme"/>
+        <terms:identifier>2.02.5</terms:identifier>
+        <rdfs:label xml:lang="en">Continuum Project</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#CrisisAssessment -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#CrisisAssessment">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#CEParticipation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#YesNoReasonsScheme"/>
+        <terms:identifier>4.19.5</terms:identifier>
+        <rdfs:comment xml:lang="en">Whether project conducts crisis needs assessments</rdfs:comment>
+        <rdfs:label xml:lang="en">Crisis Assessment</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#DOB -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#DOB">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <terms:identifier>3.04.1</terms:identifier>
+        <rdfs:label xml:lang="en">Date of Birth</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#DOBDataQuality -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#DOBDataQuality">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#DOBDataQualityScheme"/>
+        <terms:identifier>3.04.2</terms:identifier>
+        <rdfs:label xml:lang="en">DOB Data Quality</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#DateCreated -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#DateCreated">
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <terms:identifier>Universal.1</terms:identifier>
+        <rdfs:comment xml:lang="en">Timestamp when record was created in source system</rdfs:comment>
+        <rdfs:label xml:lang="en">Date Created</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#DateDeleted -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#DateDeleted">
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <terms:identifier>Universal.3</terms:identifier>
+        <rdfs:comment xml:lang="en">Timestamp when record was deleted (soft delete)</rdfs:comment>
+        <rdfs:label xml:lang="en">Date Deleted</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#DateOfEngagement -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#DateOfEngagement">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <terms:identifier>3.20</terms:identifier>
+        <rdfs:label xml:lang="en">Date of Engagement</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#DateOfPATHStatus -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#DateOfPATHStatus">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <terms:identifier>3.21</terms:identifier>
+        <rdfs:label xml:lang="en">Date of PATH Status</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#DateProvided -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#DateProvided">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Service"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <terms:identifier>P3.1</terms:identifier>
+        <rdfs:comment xml:lang="en">Date the service was provided to the client</rdfs:comment>
+        <rdfs:label xml:lang="en">Date Provided</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#DateToStreetESSH -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#DateToStreetESSH">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <terms:identifier>3.917.5</terms:identifier>
+        <rdfs:label xml:lang="en">Date to Street ES SH</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#DateUpdated -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#DateUpdated">
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <terms:identifier>Universal.2</terms:identifier>
+        <rdfs:comment xml:lang="en">Timestamp when record was last updated in source system</rdfs:comment>
+        <rdfs:label xml:lang="en">Date Updated</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Destination -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#Destination">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#DestinationScheme"/>
+        <terms:identifier>3.12.1</terms:identifier>
+        <rdfs:comment xml:lang="en">Living situation at project exit</rdfs:comment>
+        <rdfs:label xml:lang="en">Destination</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#DestinationSubsidyType -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#DestinationSubsidyType">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#DestinationSubsidyTypeScheme"/>
+        <terms:identifier>3.12.2</terms:identifier>
+        <rdfs:label xml:lang="en">Destination Subsidy Type</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#DifferentIdentityText -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#DifferentIdentityText">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>3.06.2</terms:identifier>
+        <rdfs:comment xml:lang="en">Free text for gender identity not captured by standard options</rdfs:comment>
+        <rdfs:label xml:lang="en">Different Identity Text</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#DisablingCondition -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#DisablingCondition">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#YesNoReasonsScheme"/>
+        <terms:identifier>3.08</terms:identifier>
+        <rdfs:label xml:lang="en">Disabling Condition</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#EndDate -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#EndDate">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#FundSource"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <terms:identifier>4.04.4</terms:identifier>
+        <rdfs:comment xml:lang="en">End date of funding period</rdfs:comment>
+        <rdfs:label xml:lang="en">End Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#EnrollmentCoC -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#EnrollmentCoC">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#CoCScheme"/>
+        <terms:identifier>3.16</terms:identifier>
+        <rdfs:comment xml:lang="en">CoC code at time of enrollment</rdfs:comment>
+        <rdfs:label xml:lang="en">Enrollment CoC</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#EnrollmentID -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#EnrollmentID">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>R1</terms:identifier>
+        <rdfs:comment xml:lang="en">Unique identifier for this enrollment</rdfs:comment>
+        <rdfs:label xml:lang="en">Enrollment ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#EntryDate -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#EntryDate">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <terms:identifier>3.10</terms:identifier>
+        <rdfs:label xml:lang="en">Entry Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ExitDate -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#ExitDate">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <terms:identifier>3.11</terms:identifier>
+        <rdfs:label xml:lang="en">Exit Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ExportID -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#ExportID">
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>Universal.5</terms:identifier>
+        <rdfs:comment xml:lang="en">Unique identifier for the HMIS data export batch</rdfs:comment>
+        <rdfs:label xml:lang="en">Export ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#FAAmount -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#FAAmount">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Service"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <terms:identifier>P3.6</terms:identifier>
+        <rdfs:comment xml:lang="en">Dollar amount of financial assistance provided</rdfs:comment>
+        <rdfs:label xml:lang="en">Financial Assistance Amount</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#FirstName -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#FirstName">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>3.02.1</terms:identifier>
+        <rdfs:label xml:lang="en">First Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Funder -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#Funder">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#FundSource"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#FunderScheme"/>
+        <terms:identifier>4.04.1</terms:identifier>
+        <rdfs:comment xml:lang="en">Federal funding program</rdfs:comment>
+        <rdfs:label xml:lang="en">Funder</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#FunderID -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#FunderID">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#FundSource"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>4.04.A</terms:identifier>
+        <rdfs:label xml:lang="en">Funder ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Gender -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#Gender">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#GenderScheme"/>
+        <terms:identifier>3.06.1</terms:identifier>
+        <rdfs:label xml:lang="en">Gender</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#GrantID -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#GrantID">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#FundSource"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>4.04.2</terms:identifier>
+        <rdfs:label xml:lang="en">Grant ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#HMISParticipationID -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#HMISParticipationID">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#HMISParticipation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>4.20.A</terms:identifier>
+        <rdfs:comment xml:lang="en">Unique identifier for HMIS participation record</rdfs:comment>
+        <rdfs:label xml:lang="en">HMIS Participation ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#HMISParticipationStatusEndDate -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#HMISParticipationStatusEndDate">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#HMISParticipation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <terms:identifier>4.20.2</terms:identifier>
+        <rdfs:label xml:lang="en">HMIS Participation Status End Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#HMISParticipationStatusStartDate -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#HMISParticipationStatusStartDate">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#HMISParticipation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <terms:identifier>4.20.1</terms:identifier>
+        <rdfs:label xml:lang="en">HMIS Participation Status Start Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#HMISParticipationType -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#HMISParticipationType">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#HMISParticipation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#HMISParticipationTypeScheme"/>
+        <terms:identifier>4.20.3</terms:identifier>
+        <rdfs:comment xml:lang="en">Type of HMIS participation (standard, comparable database)</rdfs:comment>
+        <rdfs:label xml:lang="en">HMIS Participation Type</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#HispanicLatinaeo -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#HispanicLatinaeo">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#NoYesReasonsScheme"/>
+        <terms:identifier>3.05.4</terms:identifier>
+        <rdfs:label xml:lang="en">Hispanic/Latina/e/o</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#HouseholdID -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#HouseholdID">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>3.14</terms:identifier>
+        <rdfs:label xml:lang="en">Household ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#HouseholdType -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#HouseholdType">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Household"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#HouseholdTypeScheme"/>
+        <terms:identifier>3.15.3</terms:identifier>
+        <rdfs:label xml:lang="en">Household Type</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#HousingAssessment -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#HousingAssessment">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#CEParticipation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#YesNoReasonsScheme"/>
+        <terms:identifier>4.19.6</terms:identifier>
+        <rdfs:comment xml:lang="en">Whether project conducts housing assessments</rdfs:comment>
+        <rdfs:label xml:lang="en">Housing Assessment</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#HousingType -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#HousingType">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#HousingTypeScheme"/>
+        <terms:identifier>2.02.7</terms:identifier>
+        <rdfs:label xml:lang="en">Housing Type</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#LOSUnderThreshold -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#LOSUnderThreshold">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#YesNoReasonsScheme"/>
+        <terms:identifier>3.917.3</terms:identifier>
+        <rdfs:label xml:lang="en">Approximate Date Homelessness Started</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#LastName -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#LastName">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>3.02.3</terms:identifier>
+        <rdfs:label xml:lang="en">Last Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#LengthOfStay -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#LengthOfStay">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#LengthOfStayScheme"/>
+        <terms:identifier>3.917.2</terms:identifier>
+        <rdfs:label xml:lang="en">Length of Stay</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#LivingSituation -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#LivingSituation">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#LivingSituationScheme"/>
+        <terms:identifier>3.917.1</terms:identifier>
+        <rdfs:comment xml:lang="en">Living situation immediately prior to project entry</rdfs:comment>
+        <rdfs:label xml:lang="en">Living Situation</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#MidEastNAfrican -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#MidEastNAfrican">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#NoYesReasonsScheme"/>
+        <terms:identifier>3.05.5</terms:identifier>
+        <rdfs:label xml:lang="en">Middle Eastern or North African</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#MiddleName -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#MiddleName">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>3.02.2</terms:identifier>
+        <rdfs:label xml:lang="en">Middle Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#MonthsHomelessPastThreeYears -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#MonthsHomelessPastThreeYears">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#MonthsHomelessScheme"/>
+        <terms:identifier>3.917.7</terms:identifier>
+        <rdfs:label xml:lang="en">Months Homeless Past Three Years</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#MoveInDate -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#MoveInDate">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <terms:identifier>3.12</terms:identifier>
+        <rdfs:label xml:lang="en">Move-In Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#NameDataQuality -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#NameDataQuality">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#NameDataQualityScheme"/>
+        <terms:identifier>3.02.5</terms:identifier>
+        <rdfs:label xml:lang="en">Name Data Quality</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#NameSuffix -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#NameSuffix">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>3.02.4</terms:identifier>
+        <rdfs:label xml:lang="en">Name Suffix</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#NativeHIPacific -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#NativeHIPacific">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#NoYesReasonsScheme"/>
+        <terms:identifier>3.05.6</terms:identifier>
+        <rdfs:label xml:lang="en">Native Hawaiian or Pacific Islander</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#OperatingEndDate -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#OperatingEndDate">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <terms:identifier>2.02.4</terms:identifier>
+        <rdfs:label xml:lang="en">Operating End Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#OperatingStartDate -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#OperatingStartDate">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <terms:identifier>2.02.3</terms:identifier>
+        <rdfs:label xml:lang="en">Operating Start Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#OrganizationCommonName -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#OrganizationCommonName">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Organization"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>2.05.2</terms:identifier>
+        <rdfs:label xml:lang="en">Organization Common Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#OrganizationID -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#OrganizationID">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Organization"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>2.04</terms:identifier>
+        <rdfs:label xml:lang="en">Organization ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#OrganizationName -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#OrganizationName">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Organization"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>2.05.1</terms:identifier>
+        <rdfs:label xml:lang="en">Organization Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#OtherTypeProvided -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#OtherTypeProvided">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Service"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>P3.4</terms:identifier>
+        <rdfs:comment xml:lang="en">Free text description when TypeProvided is &apos;Other&apos;</rdfs:comment>
+        <rdfs:label xml:lang="en">Other Type Provided</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#PITCount -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#PITCount">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#PITCountScheme"/>
+        <terms:identifier>2.02.9</terms:identifier>
+        <rdfs:label xml:lang="en">PIT Count</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#PercentAMI -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#PercentAMI">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#PercentAMIScheme"/>
+        <terms:identifier>V7.1</terms:identifier>
+        <rdfs:label xml:lang="en">Percent AMI</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#PersonalID -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#PersonalID">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>3.01</terms:identifier>
+        <rdfs:comment xml:lang="en">Unique identifier for client across all enrollments</rdfs:comment>
+        <rdfs:label xml:lang="en">Personal ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#PreventionAssessment -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#PreventionAssessment">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#CEParticipation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#YesNoReasonsScheme"/>
+        <terms:identifier>4.19.4</terms:identifier>
+        <rdfs:comment xml:lang="en">Whether project conducts prevention assessments</rdfs:comment>
+        <rdfs:label xml:lang="en">Prevention Assessment</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#PreviousStreetESSH -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#PreviousStreetESSH">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#YesNoReasonsScheme"/>
+        <terms:identifier>3.917.4</terms:identifier>
+        <rdfs:label xml:lang="en">Previous Street ES SH</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectCoC -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#ProjectCoC">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#CoCScheme"/>
+        <terms:identifier>2.03</terms:identifier>
+        <rdfs:label xml:lang="en">Project CoC</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectCommonName -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#ProjectCommonName">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>2.02.2</terms:identifier>
+        <rdfs:label xml:lang="en">Project Common Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectID -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#ProjectID">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>2.01</terms:identifier>
+        <rdfs:label xml:lang="en">Project ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectName -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#ProjectName">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>2.02.1</terms:identifier>
+        <rdfs:label xml:lang="en">Project Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectType -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#ProjectType">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#ProjectTypeScheme"/>
+        <terms:identifier>2.02.6</terms:identifier>
+        <rdfs:label xml:lang="en">Project Type</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#RaceNone -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#RaceNone">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#RaceNoneScheme"/>
+        <terms:identifier>3.05.8</terms:identifier>
+        <rdfs:comment xml:lang="en">Client has not identified a race</rdfs:comment>
+        <rdfs:label xml:lang="en">Race None</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ReasonNotEnrolled -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#ReasonNotEnrolled">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#ReasonNotEnrolledScheme"/>
+        <terms:identifier>3.23</terms:identifier>
+        <rdfs:label xml:lang="en">Reason Not Enrolled</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#RecordType -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#RecordType">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Service"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#RecordTypeScheme"/>
+        <terms:identifier>P3.2</terms:identifier>
+        <rdfs:comment xml:lang="en">Type of service record (12 = Service, 13 = Financial Assistance, 141 = Bed Night)</rdfs:comment>
+        <rdfs:label xml:lang="en">Record Type</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ReferralOutcome -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#ReferralOutcome">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Service"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#ReferralOutcomeScheme"/>
+        <terms:identifier>P3.7</terms:identifier>
+        <rdfs:comment xml:lang="en">Result of referral service</rdfs:comment>
+        <rdfs:label xml:lang="en">Referral Outcome</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ReferralSource -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#ReferralSource">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#ReferralSourceScheme"/>
+        <terms:identifier>P2</terms:identifier>
+        <rdfs:label xml:lang="en">Referral Source</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#RelationshipToHoH -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#RelationshipToHoH">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#RelationshipScheme"/>
+        <terms:identifier>3.15.1</terms:identifier>
+        <rdfs:label xml:lang="en">Relationship to Head of Household</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#SSN -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#SSN">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>3.03.1</terms:identifier>
+        <rdfs:label xml:lang="en">Social Security Number</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#SSNDataQuality -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#SSNDataQuality">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#SSNDataQualityScheme"/>
+        <terms:identifier>3.03.2</terms:identifier>
+        <rdfs:label xml:lang="en">SSN Data Quality</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ServiceID -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#ServiceID">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Service"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>P3.A</terms:identifier>
+        <rdfs:comment xml:lang="en">Unique identifier for this service record</rdfs:comment>
+        <rdfs:label xml:lang="en">Service ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#StartDate -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#StartDate">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#FundSource"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <terms:identifier>4.04.3</terms:identifier>
+        <rdfs:comment xml:lang="en">Start date of funding period</rdfs:comment>
+        <rdfs:label xml:lang="en">Start Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#SubTypeProvided -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#SubTypeProvided">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Service"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#ServiceSubTypeScheme"/>
+        <terms:identifier>P3.5</terms:identifier>
+        <rdfs:comment xml:lang="en">Specific sub-category of financial assistance (PATH, RHY, HOPWA)</rdfs:comment>
+        <rdfs:label xml:lang="en">Sub-Type Provided</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#TargetPopulation -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#TargetPopulation">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#TargetPopulationScheme"/>
+        <terms:identifier>2.02.8</terms:identifier>
+        <rdfs:label xml:lang="en">Target Population</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#TimesHomelessPastThreeYears -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#TimesHomelessPastThreeYears">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#TimesHomelessScheme"/>
+        <terms:identifier>3.917.6</terms:identifier>
+        <rdfs:label xml:lang="en">Times Homeless Past Three Years</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#TypeProvided -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#TypeProvided">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Service"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#ServiceTypeScheme"/>
+        <terms:identifier>P3.3</terms:identifier>
+        <rdfs:comment xml:lang="en">Category of service provided</rdfs:comment>
+        <rdfs:label xml:lang="en">Type Provided</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#UserID -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#UserID">
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>Universal.4</terms:identifier>
+        <rdfs:comment xml:lang="en">ID of user who created or last updated the record</rdfs:comment>
+        <rdfs:label xml:lang="en">User ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#VeteranStatus -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#VeteranStatus">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#YesNoReasonsScheme"/>
+        <terms:identifier>3.07</terms:identifier>
+        <rdfs:label xml:lang="en">Veteran Status</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#VictimServiceProvider -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#VictimServiceProvider">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Organization"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#NoYesScheme"/>
+        <terms:identifier>2.05.3</terms:identifier>
+        <rdfs:label xml:lang="en">Victim Service Provider</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#White -->
+
+    <owl:DatatypeProperty rdf:about="http://hmis.hud.gov/ontology#White">
+        <rdfs:domain rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <ontology:linkedVocabulary rdf:resource="http://hmis.hud.gov/ontology#NoYesReasonsScheme"/>
+        <terms:identifier>3.05.7</terms:identifier>
+        <rdfs:label xml:lang="en">White</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Assessment -->
+
+    <owl:Class rdf:about="http://hmis.hud.gov/ontology#Assessment">
+        <rdfs:subClassOf rdf:resource="http://hmis.hud.gov/ontology#SubEnrollment"/>
+        <rdfs:comment xml:lang="en">Data collection point during enrollment (entry, update, annual, exit, post-exit)</rdfs:comment>
+        <rdfs:label xml:lang="en">Assessment</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#CEParticipation -->
+
+    <owl:Class rdf:about="http://hmis.hud.gov/ontology#CEParticipation">
+        <rdfs:subClassOf rdf:resource="http://hmis.hud.gov/ontology#SubProject"/>
+        <terms:identifier>4.19</terms:identifier>
+        <rdfs:comment xml:lang="en">Records a project&apos;s participation in the Coordinated Entry system, including access points and referral mechanisms</rdfs:comment>
+        <rdfs:label xml:lang="en">Coordinated Entry Participation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Client -->
+
+    <owl:Class rdf:about="http://hmis.hud.gov/ontology#Client">
+        <rdfs:comment xml:lang="en">Person receiving homeless services</rdfs:comment>
+        <rdfs:label xml:lang="en">Client</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#CurrentLivingSituation -->
+
+    <owl:Class rdf:about="http://hmis.hud.gov/ontology#CurrentLivingSituation">
+        <rdfs:subClassOf rdf:resource="http://hmis.hud.gov/ontology#SubEnrollment"/>
+        <rdfs:comment xml:lang="en">Point-in-time record of where client is currently staying</rdfs:comment>
+        <rdfs:label xml:lang="en">Current Living Situation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Disability -->
+
+    <owl:Class rdf:about="http://hmis.hud.gov/ontology#Disability">
+        <rdfs:subClassOf rdf:resource="http://hmis.hud.gov/ontology#Assessment"/>
+        <rdfs:comment xml:lang="en">Disability information collected at assessment data collection stages</rdfs:comment>
+        <rdfs:label xml:lang="en">Disability</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Enrollment -->
+
+    <owl:Class rdf:about="http://hmis.hud.gov/ontology#Enrollment">
+        <rdfs:comment xml:lang="en">Episode of service delivery for a client in a project</rdfs:comment>
+        <rdfs:label xml:lang="en">Enrollment</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#FundSource -->
+
+    <owl:Class rdf:about="http://hmis.hud.gov/ontology#FundSource">
+        <rdfs:subClassOf rdf:resource="http://hmis.hud.gov/ontology#SubProject"/>
+        <rdfs:comment xml:lang="en">Funding source for a project (CoC, ESG, HOPWA, etc.)</rdfs:comment>
+        <rdfs:label xml:lang="en">Funder</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#HMISParticipation -->
+
+    <owl:Class rdf:about="http://hmis.hud.gov/ontology#HMISParticipation">
+        <rdfs:subClassOf rdf:resource="http://hmis.hud.gov/ontology#SubProject"/>
+        <terms:identifier>4.20</terms:identifier>
+        <rdfs:comment xml:lang="en">Records a project&apos;s participation in the HMIS system, including participation type and status dates</rdfs:comment>
+        <rdfs:label xml:lang="en">HMIS Participation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#HealthAndDV -->
+
+    <owl:Class rdf:about="http://hmis.hud.gov/ontology#HealthAndDV">
+        <rdfs:subClassOf rdf:resource="http://hmis.hud.gov/ontology#Assessment"/>
+        <rdfs:comment xml:lang="en">Health conditions and domestic violence information collected at assessment data collection stages</rdfs:comment>
+        <rdfs:label xml:lang="en">Health and DV</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Household -->
+
+    <owl:Class rdf:about="http://hmis.hud.gov/ontology#Household">
+        <rdfs:comment xml:lang="en">Group of related clients enrolled together</rdfs:comment>
+        <rdfs:label xml:lang="en">Household</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#IncomeAndBenefits -->
+
+    <owl:Class rdf:about="http://hmis.hud.gov/ontology#IncomeAndBenefits">
+        <rdfs:subClassOf rdf:resource="http://hmis.hud.gov/ontology#Assessment"/>
+        <rdfs:comment xml:lang="en">Income sources and benefit programs collected at assessment data collection stages</rdfs:comment>
+        <rdfs:label xml:lang="en">Income and Benefits</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Inventory -->
+
+    <owl:Class rdf:about="http://hmis.hud.gov/ontology#Inventory">
+        <rdfs:subClassOf rdf:resource="http://hmis.hud.gov/ontology#SubProject"/>
+        <rdfs:comment xml:lang="en">Beds, units, and rooms available in project</rdfs:comment>
+        <rdfs:label xml:lang="en">Inventory</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Organization -->
+
+    <owl:Class rdf:about="http://hmis.hud.gov/ontology#Organization">
+        <rdfs:comment xml:lang="en">Agency operating homeless services projects</rdfs:comment>
+        <rdfs:label xml:lang="en">Organization</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Project -->
+
+    <owl:Class rdf:about="http://hmis.hud.gov/ontology#Project">
+        <rdfs:comment xml:lang="en">Service program or location</rdfs:comment>
+        <rdfs:label xml:lang="en">Project</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Service -->
+
+    <owl:Class rdf:about="http://hmis.hud.gov/ontology#Service">
+        <rdfs:subClassOf rdf:resource="http://hmis.hud.gov/ontology#SubEnrollment"/>
+        <rdfs:comment xml:lang="en">Service provided to client during enrollment</rdfs:comment>
+        <rdfs:label xml:lang="en">Service</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#SubEnrollment -->
+
+    <owl:Class rdf:about="http://hmis.hud.gov/ontology#SubEnrollment">
+        <rdfs:comment xml:lang="en">Abstract class for data collected during an enrollment (assessments, services, etc.)</rdfs:comment>
+        <rdfs:label xml:lang="en">Sub-Enrollment</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#SubProject -->
+
+    <owl:Class rdf:about="http://hmis.hud.gov/ontology#SubProject">
+        <rdfs:comment xml:lang="en">Abstract class for project configuration data (inventory, funding, CE participation, HMIS participation)</rdfs:comment>
+        <rdfs:label xml:lang="en">Sub-Project</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#Concept -->
+
+    <owl:Class rdf:about="http://www.w3.org/2004/02/skos/core#Concept"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#ConceptScheme -->
+
+    <owl:Class rdf:about="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#NodeShape -->
+
+    <owl:Class rdf:about="http://www.w3.org/ns/shacl#NodeShape"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ClientShape -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#ClientShape">
+        <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+        <rdfs:comment>Validation rules for Client entity</rdfs:comment>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#MidEastNAfrican"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+                <shacl:sparql>
+                    <rdf:Description>
+                        <shacl:message>MidEastNAfrican value {$value} is invalid. Must be from YesNoReasonsScheme.</shacl:message>
+                        <shacl:select>
+                SELECT $this ?value WHERE {
+                    $this hmis:MidEastNAfrican ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:YesNoReasonsScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            </shacl:select>
+                    </rdf:Description>
+                </shacl:sparql>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#HispanicLatinaeo"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+                <shacl:sparql>
+                    <rdf:Description>
+                        <shacl:message>HispanicLatinaeo value {$value} is invalid. Must be from YesNoReasonsScheme.</shacl:message>
+                        <shacl:select>
+                SELECT $this ?value WHERE {
+                    $this hmis:HispanicLatinaeo ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:YesNoReasonsScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            </shacl:select>
+                    </rdf:Description>
+                </shacl:sparql>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#NativeHIPacific"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+                <shacl:sparql>
+                    <rdf:Description>
+                        <shacl:message>NativeHIPacific value {$value} is invalid. Must be from YesNoReasonsScheme.</shacl:message>
+                        <shacl:select>
+                SELECT $this ?value WHERE {
+                    $this hmis:NativeHIPacific ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:YesNoReasonsScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            </shacl:select>
+                    </rdf:Description>
+                </shacl:sparql>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#RaceNone"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+                <shacl:sparql>
+                    <rdf:Description>
+                        <shacl:message>RaceNone value {$value} is invalid. Must be from RaceNoneScheme.</shacl:message>
+                        <shacl:select>
+                SELECT $this ?value WHERE {
+                    $this hmis:RaceNone ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:RaceNoneScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            </shacl:select>
+                    </rdf:Description>
+                </shacl:sparql>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#White"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+                <shacl:sparql>
+                    <rdf:Description>
+                        <shacl:message>White value {$value} is invalid. Must be from YesNoReasonsScheme.</shacl:message>
+                        <shacl:select>
+                SELECT $this ?value WHERE {
+                    $this hmis:White ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:YesNoReasonsScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            </shacl:select>
+                    </rdf:Description>
+                </shacl:sparql>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#VeteranStatus"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+                <shacl:sparql>
+                    <rdf:Description>
+                        <shacl:message>VeteranStatus value {$value} is invalid. Must be from YesNoReasonsScheme.</shacl:message>
+                        <shacl:select>
+                SELECT $this ?value WHERE {
+                    $this hmis:VeteranStatus ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:YesNoReasonsScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            </shacl:select>
+                    </rdf:Description>
+                </shacl:sparql>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <shacl:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:maxCount>
+                <shacl:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</shacl:minCount>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#Gender"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+                <shacl:sparql>
+                    <rdf:Description>
+                        <shacl:message>Gender value {$value} is invalid. Must be from GenderScheme (0-6, 8, 9, or 99).</shacl:message>
+                        <shacl:select>
+                SELECT $this ?value WHERE {
+                    $this hmis:Gender ?value .
+                    FILTER NOT EXISTS {
+                        ?concept a skos:Concept ;
+                                 skos:inScheme hmis:GenderScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            </shacl:select>
+                    </rdf:Description>
+                </shacl:sparql>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <shacl:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:maxCount>
+                <shacl:message>FirstName is required</shacl:message>
+                <shacl:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minCount>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#FirstName"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <shacl:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:maxCount>
+                <shacl:maxLength rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">32</shacl:maxLength>
+                <shacl:message>PersonalID is required and must be 1-32 characters</shacl:message>
+                <shacl:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minCount>
+                <shacl:minLength rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minLength>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#PersonalID"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <shacl:message>SSN must be in format XXX-XX-XXXX or XXXXXXXXX</shacl:message>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#SSN"/>
+                <shacl:pattern>^[0-9]{3}-[0-9]{2}-[0-9]{4}$|^[0-9]{9}$</shacl:pattern>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Warning"/>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <shacl:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:maxCount>
+                <shacl:message>LastName is required</shacl:message>
+                <shacl:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minCount>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#LastName"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <shacl:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:maxCount>
+                <shacl:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minCount>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#NameDataQuality"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+                <shacl:sparql>
+                    <rdf:Description>
+                        <shacl:message>NameDataQuality value {$value} is invalid. Must be from NameDataQualityScheme.</shacl:message>
+                        <shacl:select>
+                SELECT $this ?value WHERE {
+                    $this hmis:NameDataQuality ?value .
+                    FILTER NOT EXISTS {
+                        ?concept a skos:Concept ;
+                                 skos:inScheme hmis:NameDataQualityScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            </shacl:select>
+                    </rdf:Description>
+                </shacl:sparql>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+                <shacl:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:maxCount>
+                <shacl:message>DOB is required</shacl:message>
+                <shacl:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minCount>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#DOB"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <shacl:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:maxCount>
+                <shacl:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minCount>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#SSNDataQuality"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+                <shacl:sparql>
+                    <rdf:Description>
+                        <shacl:message>SSNDataQuality value {$value} is invalid. Must be from SSNDataQualityScheme.</shacl:message>
+                        <shacl:select>
+                SELECT $this ?value WHERE {
+                    $this hmis:SSNDataQuality ?value .
+                    FILTER NOT EXISTS {
+                        ?concept a skos:Concept ;
+                                 skos:inScheme hmis:SSNDataQualityScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            </shacl:select>
+                    </rdf:Description>
+                </shacl:sparql>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <shacl:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:maxCount>
+                <shacl:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minCount>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#DOBDataQuality"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+                <shacl:sparql>
+                    <rdf:Description>
+                        <shacl:message>DOBDataQuality value {$value} is invalid. Must be from DOBDataQualityScheme.</shacl:message>
+                        <shacl:select>
+                SELECT $this ?value WHERE {
+                    $this hmis:DOBDataQuality ?value .
+                    FILTER NOT EXISTS {
+                        ?concept a skos:Concept ;
+                                 skos:inScheme hmis:DOBDataQualityScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            </shacl:select>
+                    </rdf:Description>
+                </shacl:sparql>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#AmIndAKNative"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+                <shacl:sparql>
+                    <rdf:Description>
+                        <shacl:message>AmIndAKNative value {$value} is invalid. Must be from YesNoReasonsScheme.</shacl:message>
+                        <shacl:select>
+                SELECT $this ?value WHERE {
+                    $this hmis:AmIndAKNative ?value .
+                    FILTER NOT EXISTS {
+                        ?concept a skos:Concept ;
+                                 skos:inScheme hmis:YesNoReasonsScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            </shacl:select>
+                    </rdf:Description>
+                </shacl:sparql>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#BlackAfAmerican"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+                <shacl:sparql>
+                    <rdf:Description>
+                        <shacl:message>BlackAfAmerican value {$value} is invalid. Must be from YesNoReasonsScheme.</shacl:message>
+                        <shacl:select>
+                SELECT $this ?value WHERE {
+                    $this hmis:BlackAfAmerican ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:YesNoReasonsScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            </shacl:select>
+                    </rdf:Description>
+                </shacl:sparql>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#Asian"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+                <shacl:sparql>
+                    <rdf:Description>
+                        <shacl:message>Asian value {$value} is invalid. Must be from YesNoReasonsScheme.</shacl:message>
+                        <shacl:select>
+                SELECT $this ?value WHERE {
+                    $this hmis:Asian ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:YesNoReasonsScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            </shacl:select>
+                    </rdf:Description>
+                </shacl:sparql>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:sparql>
+            <rdf:Description>
+                <shacl:message>DOB cannot be in the future</shacl:message>
+                <shacl:select>
+            SELECT $this WHERE {
+                $this hmis:DOB ?dob .
+                FILTER(?dob &gt; NOW())
+            }
+        </shacl:select>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:sparql>
+        <shacl:targetClass rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#CoC-CA-500 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#CoC-CA-500">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#CoCScheme"/>
+        <skos:notation>CA-500</skos:notation>
+        <skos:prefLabel xml:lang="en">San Jose/Santa Clara City &amp; County CoC</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#CoC-CA-600 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#CoC-CA-600">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#CoCScheme"/>
+        <skos:notation>CA-600</skos:notation>
+        <skos:prefLabel xml:lang="en">Los Angeles City &amp; County CoC</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#CoC-NY-600 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#CoC-NY-600">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#CoCScheme"/>
+        <skos:notation>NY-600</skos:notation>
+        <skos:prefLabel xml:lang="en">New York City CoC</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#CoCScheme -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#CoCScheme">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+        <terms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-02-12</terms:created>
+        <terms:description xml:lang="en">Geographic CoC identifiers</terms:description>
+        <terms:identifier>4.05.1</terms:identifier>
+        <terms:publisher>U.S. Department of Housing and Urban Development</terms:publisher>
+        <terms:source rdf:resource="https://www.hudexchange.info/programs/coc/coc-geographic-areas/"/>
+        <terms:title xml:lang="en">Continuum of Care Codes</terms:title>
+        <skos:note xml:lang="en">Sample CoC codes - full list is 400+ codes</skos:note>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Destination-101 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Destination-101">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#DestinationScheme"/>
+        <skos:notation>101</skos:notation>
+        <skos:prefLabel xml:lang="en">Emergency shelter</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Destination-116 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Destination-116">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">Streets, vehicles, abandoned buildings</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#DestinationScheme"/>
+        <skos:notation>116</skos:notation>
+        <skos:prefLabel xml:lang="en">Place not meant for habitation</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Destination-410 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Destination-410">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#DestinationScheme"/>
+        <skos:notation>410</skos:notation>
+        <skos:prefLabel xml:lang="en">Rental by client, no ongoing housing subsidy</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Destination-435 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Destination-435">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#DestinationScheme"/>
+        <skos:notation>435</skos:notation>
+        <skos:prefLabel xml:lang="en">Staying or living with family, permanent tenure</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Destination-8 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Destination-8">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#DestinationScheme"/>
+        <skos:notation>8</skos:notation>
+        <skos:prefLabel xml:lang="en">Client doesn&apos;t know</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Destination-9 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Destination-9">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#DestinationScheme"/>
+        <skos:notation>9</skos:notation>
+        <skos:prefLabel xml:lang="en">Client prefers not to answer</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Destination-99 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Destination-99">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#DestinationScheme"/>
+        <skos:notation>99</skos:notation>
+        <skos:prefLabel xml:lang="en">Data not collected</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#DestinationScheme -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#DestinationScheme">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+        <terms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-02-12</terms:created>
+        <terms:description xml:lang="en">Living situation after project exit</terms:description>
+        <terms:identifier>3.917.1</terms:identifier>
+        <terms:publisher>U.S. Department of Housing and Urban Development</terms:publisher>
+        <terms:source rdf:resource="https://files.hudexchange.info/resources/documents/HMIS-CSV-Specifications-FY2026.pdf"/>
+        <terms:title xml:lang="en">Destination</terms:title>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#EnrollmentShape -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#EnrollmentShape">
+        <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+        <rdfs:comment>Validation rules for Enrollment entity</rdfs:comment>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <shacl:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:maxCount>
+                <shacl:maxLength rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">32</shacl:maxLength>
+                <shacl:message>EnrollmentID is required and must be 1-32 characters</shacl:message>
+                <shacl:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minCount>
+                <shacl:minLength rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minLength>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#EnrollmentID"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+                <shacl:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:maxCount>
+                <shacl:message>EntryDate is required</shacl:message>
+                <shacl:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minCount>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#EntryDate"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <shacl:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:maxCount>
+                <shacl:message>HouseholdID is required</shacl:message>
+                <shacl:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minCount>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#HouseholdID"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <shacl:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:maxCount>
+                <shacl:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minCount>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#RelationshipToHoH"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+                <shacl:sparql>
+                    <rdf:Description>
+                        <shacl:message>RelationshipToHoH value {$value} is invalid. Must be from RelationshipScheme (1-5).</shacl:message>
+                        <shacl:select>
+                SELECT $this ?value WHERE {
+                    $this hmis:RelationshipToHoH ?value .
+                    FILTER NOT EXISTS {
+                        ?concept a skos:Concept ;
+                                 skos:inScheme hmis:RelationshipScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            </shacl:select>
+                    </rdf:Description>
+                </shacl:sparql>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <shacl:message>EnrollmentCoC must be in format XX-NNN (e.g., CA-500)</shacl:message>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#EnrollmentCoC"/>
+                <shacl:pattern>^[A-Z]{2}-[0-9]{3}$</shacl:pattern>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Info"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Warning"/>
+                <shacl:sparql>
+                    <rdf:Description>
+                        <shacl:message>EnrollmentCoC value {$value} is not a recognized CoC code.</shacl:message>
+                        <shacl:select>
+                SELECT $this ?value WHERE {
+                    $this hmis:EnrollmentCoC ?value .
+                    FILTER NOT EXISTS {
+                        ?concept a skos:Concept ;
+                                 skos:inScheme hmis:CoCScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            </shacl:select>
+                    </rdf:Description>
+                </shacl:sparql>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#DisablingCondition"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+                <shacl:sparql>
+                    <rdf:Description>
+                        <shacl:message>DisablingCondition value {$value} is invalid. Must be from YesNoReasonsScheme.</shacl:message>
+                        <shacl:select>
+                SELECT $this ?value WHERE {
+                    $this hmis:DisablingCondition ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:YesNoReasonsScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            </shacl:select>
+                    </rdf:Description>
+                </shacl:sparql>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#Destination"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+                <shacl:sparql>
+                    <rdf:Description>
+                        <shacl:message>Destination value {$value} is invalid. Must be from DestinationScheme.</shacl:message>
+                        <shacl:select>
+                SELECT $this ?value WHERE {
+                    $this hmis:Destination ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:DestinationScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            </shacl:select>
+                    </rdf:Description>
+                </shacl:sparql>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:sparql>
+            <rdf:Description>
+                <shacl:message>EntryDate cannot be in the future</shacl:message>
+                <shacl:select>
+            SELECT $this WHERE {
+                $this hmis:EntryDate ?entry .
+                FILTER(?entry &gt; NOW())
+            }
+        </shacl:select>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:sparql>
+        <shacl:sparql>
+            <rdf:Description>
+                <shacl:message>ExitDate must be greater than or equal to EntryDate</shacl:message>
+                <shacl:select>
+            SELECT $this WHERE {
+                $this hmis:EntryDate ?entry ;
+                      hmis:ExitDate ?exit .
+                FILTER(?exit &lt; ?entry)
+            }
+        </shacl:select>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:sparql>
+        <shacl:targetClass rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Funder-2 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Funder-2">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:altLabel xml:lang="en">CoC PSH</skos:altLabel>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#FunderScheme"/>
+        <skos:notation>2</skos:notation>
+        <skos:prefLabel xml:lang="en">HUD: CoC - Permanent Supportive Housing</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Funder-3 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Funder-3">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:altLabel xml:lang="en">CoC RRH</skos:altLabel>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#FunderScheme"/>
+        <skos:notation>3</skos:notation>
+        <skos:prefLabel xml:lang="en">HUD: CoC - Rapid Re-Housing</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Funder-7 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Funder-7">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:altLabel xml:lang="en">ESG ES</skos:altLabel>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#FunderScheme"/>
+        <skos:notation>7</skos:notation>
+        <skos:prefLabel xml:lang="en">HUD: ESG - Emergency Shelter</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Funder-8 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Funder-8">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:altLabel xml:lang="en">ESG HP</skos:altLabel>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#FunderScheme"/>
+        <skos:notation>8</skos:notation>
+        <skos:prefLabel xml:lang="en">HUD: ESG - Homelessness Prevention</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Funder-9 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Funder-9">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:altLabel xml:lang="en">ESG RRH</skos:altLabel>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#FunderScheme"/>
+        <skos:notation>9</skos:notation>
+        <skos:prefLabel xml:lang="en">HUD: ESG - Rapid Rehousing</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#FunderScheme -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#FunderScheme">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+        <terms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-02-12</terms:created>
+        <terms:description xml:lang="en">Federal funding programs for homeless services</terms:description>
+        <terms:identifier>4.02.A</terms:identifier>
+        <terms:publisher>U.S. Department of Housing and Urban Development</terms:publisher>
+        <terms:source rdf:resource="https://files.hudexchange.info/resources/documents/HMIS-CSV-Specifications-FY2026.pdf"/>
+        <terms:title xml:lang="en">Funding Sources</terms:title>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Gender-0 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Gender-0">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">A person whose gender identity is female</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#GenderScheme"/>
+        <skos:notation>0</skos:notation>
+        <skos:prefLabel xml:lang="en">Female</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Gender-1 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Gender-1">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">A person whose gender identity is male</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#GenderScheme"/>
+        <skos:notation>1</skos:notation>
+        <skos:prefLabel xml:lang="en">Male</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Gender-2 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Gender-2">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">A person whose gender identity is different from sex assigned at birth</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#GenderScheme"/>
+        <skos:notation>2</skos:notation>
+        <skos:prefLabel xml:lang="en">Transgender</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Gender-3 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Gender-3">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">A person who is unsure of or exploring their gender identity</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#GenderScheme"/>
+        <skos:notation>3</skos:notation>
+        <skos:prefLabel xml:lang="en">Questioning</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Gender-4 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Gender-4">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">A person whose gender identity is neither exclusively male nor female</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#GenderScheme"/>
+        <skos:notation>4</skos:notation>
+        <skos:prefLabel xml:lang="en">Non-Binary</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Gender-5 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Gender-5">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">Gender identity specific to cultural tradition</skos:definition>
+        <skos:example xml:lang="en">Two-Spirit, Hijra, Fa&apos;afafine</skos:example>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#GenderScheme"/>
+        <skos:notation>5</skos:notation>
+        <skos:prefLabel xml:lang="en">Culturally Specific Identity</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Gender-6 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Gender-6">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">Gender identity not represented by other categories</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#GenderScheme"/>
+        <skos:notation>6</skos:notation>
+        <skos:prefLabel xml:lang="en">Different Identity</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Gender-8 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Gender-8">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#GenderScheme"/>
+        <skos:notation>8</skos:notation>
+        <skos:prefLabel xml:lang="en">Client doesn&apos;t know</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Gender-9 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Gender-9">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#GenderScheme"/>
+        <skos:notation>9</skos:notation>
+        <skos:prefLabel xml:lang="en">Client prefers not to answer</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Gender-99 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Gender-99">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#GenderScheme"/>
+        <skos:notation>99</skos:notation>
+        <skos:prefLabel xml:lang="en">Data not collected</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#GenderScheme -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#GenderScheme">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+        <terms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-02-12</terms:created>
+        <terms:description xml:lang="en">Record the gender identity of each client</terms:description>
+        <terms:identifier>3.06.1</terms:identifier>
+        <terms:publisher>U.S. Department of Housing and Urban Development</terms:publisher>
+        <terms:source rdf:resource="https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf"/>
+        <terms:title xml:lang="en">Gender Identity</terms:title>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#HPDateOfEngagementRule -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#HPDateOfEngagementRule">
+        <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+        <rdfs:comment>Homelessness Prevention projects require DateOfEngagement</rdfs:comment>
+        <shacl:sparql>
+            <rdf:Description>
+                <shacl:message>Homelessness Prevention enrollments (ProjectType 12) must have DateOfEngagement.</shacl:message>
+                <shacl:select>
+            SELECT $this WHERE {
+                $this a hmis:Enrollment ;
+                      hmis:inProject ?project .
+                ?project hmis:ProjectType 12 .
+                
+                FILTER NOT EXISTS {
+                    $this hmis:DateOfEngagement ?date .
+                }
+            }
+        </shacl:select>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:sparql>
+        <shacl:targetClass rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#HouseholdHeadRule -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#HouseholdHeadRule">
+        <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+        <rdfs:comment>Each household must have exactly one Head of Household</rdfs:comment>
+        <shacl:sparql>
+            <rdf:Description>
+                <shacl:message>Household {$this} must have exactly one member with RelationshipToHoH = 1 (Self).</shacl:message>
+                <shacl:select>
+            SELECT $this (COUNT(?hoh) as ?hohCount) WHERE {
+                $this a hmis:Household ;
+                      hmis:hasMember ?enrollment .
+                ?enrollment hmis:RelationshipToHoH 1 .
+            }
+            GROUP BY $this
+            HAVING (?hohCount != 1)
+        </shacl:select>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:sparql>
+        <shacl:targetClass rdf:resource="http://hmis.hud.gov/ontology#Household"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#LongTermNoExitRule -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#LongTermNoExitRule">
+        <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+        <rdfs:comment>Flag enrollments open &gt;1 year for review</rdfs:comment>
+        <shacl:sparql>
+            <rdf:Description>
+                <shacl:message>Enrollment has been open for over 1 year without exit. Verify enrollment is still active.</shacl:message>
+                <shacl:select>
+            SELECT $this WHERE {
+                $this a hmis:Enrollment ;
+                      hmis:EntryDate ?entry .
+                FILTER NOT EXISTS { $this hmis:ExitDate ?exit }
+                FILTER(?entry &lt; NOW() - &quot;P365D&quot;^^xsd:duration)
+            }
+        </shacl:select>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Info"/>
+            </rdf:Description>
+        </shacl:sparql>
+        <shacl:targetClass rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#MissingSSNRule -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#MissingSSNRule">
+        <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+        <rdfs:comment>Track clients with missing SSN for data quality</rdfs:comment>
+        <shacl:sparql>
+            <rdf:Description>
+                <shacl:message>Client is missing SSN. Consider collecting if possible.</shacl:message>
+                <shacl:select>
+            SELECT $this WHERE {
+                $this a hmis:Client .
+                FILTER NOT EXISTS { $this hmis:SSN ?ssn }
+            }
+        </shacl:select>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Info"/>
+            </rdf:Description>
+        </shacl:sparql>
+        <shacl:targetClass rdf:resource="http://hmis.hud.gov/ontology#Client"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#NoYes-0 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#NoYes-0">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#NoYesScheme"/>
+        <skos:notation>0</skos:notation>
+        <skos:prefLabel xml:lang="en">No</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#NoYes-1 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#NoYes-1">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#NoYesScheme"/>
+        <skos:notation>1</skos:notation>
+        <skos:prefLabel xml:lang="en">Yes</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#NoYesScheme -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#NoYesScheme">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+        <terms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-02-12</terms:created>
+        <terms:identifier>1.7</terms:identifier>
+        <terms:publisher>U.S. Department of Housing and Urban Development</terms:publisher>
+        <terms:source rdf:resource="https://files.hudexchange.info/resources/documents/HMIS-CSV-Specifications-FY2026.pdf"/>
+        <terms:title xml:lang="en">No/Yes</terms:title>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#PSHDisablingConditionRule -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#PSHDisablingConditionRule">
+        <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+        <rdfs:comment>PSH projects require disabling condition</rdfs:comment>
+        <shacl:sparql>
+            <rdf:Description>
+                <shacl:message>Permanent Supportive Housing enrollments (ProjectType 3) require DisablingCondition = 1 (Yes).</shacl:message>
+                <shacl:select>
+            SELECT $this WHERE {
+                $this a hmis:Enrollment ;
+                      hmis:inProject ?project ;
+                      hmis:DisablingCondition ?disability .
+                ?project hmis:ProjectType 3 .
+                
+                FILTER(?disability != 1)
+            }
+        </shacl:select>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:sparql>
+        <shacl:targetClass rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectShape -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#ProjectShape">
+        <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+        <rdfs:comment>Validation rules for Project entity</rdfs:comment>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <shacl:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:maxCount>
+                <shacl:message>ProjectID is required</shacl:message>
+                <shacl:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minCount>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#ProjectID"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <shacl:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:maxCount>
+                <shacl:message>ProjectName is required</shacl:message>
+                <shacl:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minCount>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#ProjectName"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <shacl:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:maxCount>
+                <shacl:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minCount>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#ProjectType"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+                <shacl:sparql>
+                    <rdf:Description>
+                        <shacl:message>ProjectType value {$value} is invalid. Must be from ProjectTypeScheme (0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14).</shacl:message>
+                        <shacl:select>
+                SELECT $this ?value WHERE {
+                    $this hmis:ProjectType ?value .
+                    FILTER NOT EXISTS {
+                        ?concept a skos:Concept ;
+                                 skos:inScheme hmis:ProjectTypeScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            </shacl:select>
+                    </rdf:Description>
+                </shacl:sparql>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+                <shacl:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:maxCount>
+                <shacl:message>OperatingStartDate is required</shacl:message>
+                <shacl:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minCount>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#OperatingStartDate"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <shacl:message>ProjectCoC must be in format XX-NNN</shacl:message>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#ProjectCoC"/>
+                <shacl:pattern>^[A-Z]{2}-[0-9]{3}$</shacl:pattern>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Warning"/>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:sparql>
+            <rdf:Description>
+                <shacl:message>OperatingEndDate must be greater than or equal to OperatingStartDate</shacl:message>
+                <shacl:select>
+            SELECT $this WHERE {
+                $this hmis:OperatingStartDate ?start ;
+                      hmis:OperatingEndDate ?end .
+                FILTER(?end &lt; ?start)
+            }
+        </shacl:select>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:sparql>
+        <shacl:targetClass rdf:resource="http://hmis.hud.gov/ontology#Project"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectType-0 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#ProjectType-0">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:altLabel xml:lang="en">ES - Entry Exit</skos:altLabel>
+        <skos:definition xml:lang="en">Emergency shelter with entry and exit date tracking</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#ProjectTypeScheme"/>
+        <skos:notation>0</skos:notation>
+        <skos:prefLabel xml:lang="en">Emergency Shelter - Entry Exit</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectType-1 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#ProjectType-1">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:altLabel xml:lang="en">ES - NbN</skos:altLabel>
+        <skos:definition xml:lang="en">Emergency shelter with night-by-night bed tracking</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#ProjectTypeScheme"/>
+        <skos:notation>1</skos:notation>
+        <skos:prefLabel xml:lang="en">Emergency Shelter - Night-by-Night</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectType-10 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#ProjectType-10">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">Permanent housing with voluntary supportive services</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#ProjectTypeScheme"/>
+        <skos:notation>10</skos:notation>
+        <skos:prefLabel xml:lang="en">Permanent Housing - Housing with Services</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectType-11 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#ProjectType-11">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">Daytime drop-in facility providing services but not overnight lodging</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#ProjectTypeScheme"/>
+        <skos:notation>11</skos:notation>
+        <skos:prefLabel xml:lang="en">Day Shelter</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectType-12 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#ProjectType-12">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:altLabel xml:lang="en">HP</skos:altLabel>
+        <skos:definition xml:lang="en">Services to prevent imminent homelessness</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#ProjectTypeScheme"/>
+        <skos:notation>12</skos:notation>
+        <skos:prefLabel xml:lang="en">Homelessness Prevention</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectType-13 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#ProjectType-13">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:altLabel xml:lang="en">RRH</skos:altLabel>
+        <skos:definition xml:lang="en">Short-term rental assistance and services to rapidly house homeless households</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#ProjectTypeScheme"/>
+        <skos:notation>13</skos:notation>
+        <skos:prefLabel xml:lang="en">Rapid Re-Housing</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectType-14 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#ProjectType-14">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:altLabel xml:lang="en">CE</skos:altLabel>
+        <skos:definition xml:lang="en">Coordinated assessment and referral system</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#ProjectTypeScheme"/>
+        <skos:notation>14</skos:notation>
+        <skos:prefLabel xml:lang="en">Coordinated Entry</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectType-2 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#ProjectType-2">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:altLabel xml:lang="en">TH</skos:altLabel>
+        <skos:definition xml:lang="en">Transitional housing for up to 24 months</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#ProjectTypeScheme"/>
+        <skos:notation>2</skos:notation>
+        <skos:prefLabel xml:lang="en">Transitional Housing</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectType-3 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#ProjectType-3">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:altLabel xml:lang="en">PSH</skos:altLabel>
+        <skos:definition xml:lang="en">Permanent housing with supportive services for homeless persons with disabilities</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#ProjectTypeScheme"/>
+        <skos:notation>3</skos:notation>
+        <skos:prefLabel xml:lang="en">Permanent Supportive Housing</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectType-4 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#ProjectType-4">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:altLabel xml:lang="en">SO</skos:altLabel>
+        <skos:definition xml:lang="en">Services provided to unsheltered homeless people on streets/in parks</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#ProjectTypeScheme"/>
+        <skos:notation>4</skos:notation>
+        <skos:prefLabel xml:lang="en">Street Outreach</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectType-6 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#ProjectType-6">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">Supportive services without housing component</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#ProjectTypeScheme"/>
+        <skos:notation>6</skos:notation>
+        <skos:prefLabel xml:lang="en">Services Only</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectType-7 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#ProjectType-7">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">Project type not categorized elsewhere</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#ProjectTypeScheme"/>
+        <skos:notation>7</skos:notation>
+        <skos:prefLabel xml:lang="en">Other</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectType-8 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#ProjectType-8">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:altLabel xml:lang="en">SH</skos:altLabel>
+        <skos:definition xml:lang="en">Private or semi-private long-term housing for hard-to-serve homeless</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#ProjectTypeScheme"/>
+        <skos:notation>8</skos:notation>
+        <skos:prefLabel xml:lang="en">Safe Haven</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectType-9 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#ProjectType-9">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">Permanent housing without supportive services</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#ProjectTypeScheme"/>
+        <skos:notation>9</skos:notation>
+        <skos:prefLabel xml:lang="en">Permanent Housing - Housing Only</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ProjectTypeScheme -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#ProjectTypeScheme">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+        <terms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-02-12</terms:created>
+        <terms:description xml:lang="en">Classification of HMIS projects by program model</terms:description>
+        <terms:identifier>2.02.6</terms:identifier>
+        <terms:publisher>U.S. Department of Housing and Urban Development</terms:publisher>
+        <terms:source rdf:resource="https://files.hudexchange.info/resources/documents/HMIS-CSV-Specifications-FY2026.pdf"/>
+        <terms:title xml:lang="en">Project Types</terms:title>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Relationship-1 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Relationship-1">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">The person is the head of household</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#RelationshipScheme"/>
+        <skos:notation>1</skos:notation>
+        <skos:prefLabel xml:lang="en">Self (head of household)</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Relationship-2 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Relationship-2">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">The person is a child of the head of household</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#RelationshipScheme"/>
+        <skos:notation>2</skos:notation>
+        <skos:prefLabel xml:lang="en">Head of household&apos;s child</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Relationship-3 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Relationship-3">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">The person is married to or partnered with the head of household</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#RelationshipScheme"/>
+        <skos:notation>3</skos:notation>
+        <skos:prefLabel xml:lang="en">Head of household&apos;s spouse or partner</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Relationship-4 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Relationship-4">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">The person is related to but not spouse/partner/child of head of household</skos:definition>
+        <skos:example xml:lang="en">Parent, sibling, grandchild, aunt, uncle, cousin</skos:example>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#RelationshipScheme"/>
+        <skos:notation>4</skos:notation>
+        <skos:prefLabel xml:lang="en">Head of household&apos;s other relation member</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#Relationship-5 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#Relationship-5">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">The person is not related to the head of household</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#RelationshipScheme"/>
+        <skos:notation>5</skos:notation>
+        <skos:prefLabel xml:lang="en">Other: non-relation member</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#RelationshipScheme -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#RelationshipScheme">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+        <terms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-02-12</terms:created>
+        <terms:identifier>3.15.1</terms:identifier>
+        <terms:publisher>U.S. Department of Housing and Urban Development</terms:publisher>
+        <terms:source rdf:resource="https://files.hudexchange.info/resources/documents/HMIS-CSV-Specifications-FY2026.pdf"/>
+        <terms:title xml:lang="en">Relationship to Head of Household</terms:title>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#ServicesOnlyDateOfEngagementRule -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#ServicesOnlyDateOfEngagementRule">
+        <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+        <rdfs:comment>Services Only projects require DateOfEngagement</rdfs:comment>
+        <shacl:sparql>
+            <rdf:Description>
+                <shacl:message>Services Only enrollments (ProjectType 6) must have DateOfEngagement.</shacl:message>
+                <shacl:select>
+            SELECT $this WHERE {
+                $this a hmis:Enrollment ;
+                      hmis:inProject ?project .
+                ?project hmis:ProjectType 6 .
+                
+                FILTER NOT EXISTS {
+                    $this hmis:DateOfEngagement ?date .
+                }
+            }
+        </shacl:select>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:sparql>
+        <shacl:targetClass rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#StreetOutreachDateOfEngagementRule -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#StreetOutreachDateOfEngagementRule">
+        <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+        <rdfs:comment>Street Outreach projects require DateOfEngagement</rdfs:comment>
+        <shacl:sparql>
+            <rdf:Description>
+                <shacl:message>Street Outreach enrollments (ProjectType 4) must have DateOfEngagement.</shacl:message>
+                <shacl:select>
+            SELECT $this WHERE {
+                $this a hmis:Enrollment ;
+                      hmis:inProject ?project .
+                ?project hmis:ProjectType 4 .
+                
+                FILTER NOT EXISTS {
+                    $this hmis:DateOfEngagement ?date .
+                }
+            }
+        </shacl:select>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:sparql>
+        <shacl:targetClass rdf:resource="http://hmis.hud.gov/ontology#Enrollment"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#UniversalMetadataShape -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#UniversalMetadataShape">
+        <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+        <rdfs:comment>Metadata required for all HMIS records</rdfs:comment>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+                <shacl:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:maxCount>
+                <shacl:message>DateUpdated is required for all records</shacl:message>
+                <shacl:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minCount>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#DateUpdated"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <shacl:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:maxCount>
+                <shacl:message>UserID is required for all records</shacl:message>
+                <shacl:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minCount>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#UserID"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:property>
+            <rdf:Description>
+                <shacl:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+                <shacl:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:maxCount>
+                <shacl:message>DateCreated is required for all records</shacl:message>
+                <shacl:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</shacl:minCount>
+                <shacl:path rdf:resource="http://hmis.hud.gov/ontology#DateCreated"/>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:property>
+        <shacl:sparql>
+            <rdf:Description>
+                <shacl:message>DateUpdated must be greater than or equal to DateCreated</shacl:message>
+                <shacl:select>
+            SELECT $this WHERE {
+                $this hmis:DateCreated ?created ;
+                      hmis:DateUpdated ?updated .
+                FILTER(?updated &lt; ?created)
+            }
+        </shacl:select>
+                <shacl:severity rdf:resource="http://www.w3.org/ns/shacl#Violation"/>
+            </rdf:Description>
+        </shacl:sparql>
+        <shacl:targetClass rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#YesNoReasons-0 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#YesNoReasons-0">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#YesNoReasonsScheme"/>
+        <skos:notation>0</skos:notation>
+        <skos:prefLabel xml:lang="en">No</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#YesNoReasons-1 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#YesNoReasons-1">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#YesNoReasonsScheme"/>
+        <skos:notation>1</skos:notation>
+        <skos:prefLabel xml:lang="en">Yes</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#YesNoReasons-8 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#YesNoReasons-8">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">The client does not know the answer</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#YesNoReasonsScheme"/>
+        <skos:notation>8</skos:notation>
+        <skos:prefLabel xml:lang="en">Client doesn&apos;t know</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#YesNoReasons-9 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#YesNoReasons-9">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">The client knows but chooses not to disclose</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#YesNoReasonsScheme"/>
+        <skos:notation>9</skos:notation>
+        <skos:prefLabel xml:lang="en">Client prefers not to answer</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#YesNoReasons-99 -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#YesNoReasons-99">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">Information was not collected</skos:definition>
+        <skos:inScheme rdf:resource="http://hmis.hud.gov/ontology#YesNoReasonsScheme"/>
+        <skos:notation>99</skos:notation>
+        <skos:prefLabel xml:lang="en">Data not collected</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://hmis.hud.gov/ontology#YesNoReasonsScheme -->
+
+    <owl:NamedIndividual rdf:about="http://hmis.hud.gov/ontology#YesNoReasonsScheme">
+        <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+        <terms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-02-12</terms:created>
+        <terms:identifier>1.8</terms:identifier>
+        <terms:publisher>U.S. Department of Housing and Urban Development</terms:publisher>
+        <terms:source rdf:resource="https://files.hudexchange.info/resources/documents/HMIS-CSV-Specifications-FY2026.pdf"/>
+        <terms:title xml:lang="en">Yes/No/Reasons for Missing Data</terms:title>
+        <skos:note xml:lang="en">This list is reused across multiple data elements for consistent missing data handling</skos:note>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+

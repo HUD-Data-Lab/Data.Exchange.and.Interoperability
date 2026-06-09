@@ -1,0 +1,1 @@
+{"Collections":[{"sheetName":"HMIS Ontology Cellfie","startColumn":"A","endColumn":"G","startRow":"2","endRow":"+","comment":"","rule":"Class: @A*\nSubClassOf: ResponseOption","active":true},{"sheetName":"HMIS Ontology Cellfie","startColumn":"A","endColumn":"G","startRow":"2","endRow":"+","comment":"","rule":"Individual:@F*\nTypes: @A*","active":true}]}
