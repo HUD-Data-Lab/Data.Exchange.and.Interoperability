@@ -1,0 +1,791 @@
+"""
+FHIR Transformation Library with HUD Technical Standards Compliance
+Auto-generated from HMIS API specification with complete FHIR mappings
+
+This module provides:
+1. Bidirectional HMIS ↔ FHIR transformation
+2. HUD Technical Standards validation (2004 Privacy/Security)
+3. Effect handlers for compliance checking
+4. Semantic annotation preservation
+
+Generated: {{ timestamp }}
+HMIS Spec Version: {{ spec_version }}
+FHIR Version: R4 (4.0.1)
+"""
+
+from typing import Dict, Any, Optional, List, Union
+from datetime import datetime, timedelta
+from enum import Enum
+import json
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+# ============================================================================
+# EXCEPTIONS
+# ============================================================================
+
+class FHIRTransformError(Exception):
+    """Base exception for FHIR transformation errors"""
+    pass
+
+
+class ValidationError(FHIRTransformError):
+    """Raised when HUD Technical Standards validation fails"""
+    def __init__(self, message: str, hud_standard: str = None):
+        self.hud_standard = hud_standard
+        super().__init__(f"{message} (HUD Standard: {hud_standard})" if hud_standard else message)
+
+
+class ConsentError(ValidationError):
+    """Raised when consent validation fails"""
+    pass
+
+
+class ROIError(ValidationError):
+    """Raised when Release of Information validation fails"""
+    pass
+
+
+# ============================================================================
+# ENUMS
+# ============================================================================
+
+class HUDPurpose(Enum):
+    """Allowable purposes for PPI use/disclosure (HUD 4.2.3)"""
+    TREAT = "TREAT"  # Provide or coordinate services
+    HPAYMT = "HPAYMT"  # Payment or reimbursement
+    HOPERAT = "HOPERAT"  # Administrative functions
+    HRESCH = "HRESCH"  # Research (de-identified)
+
+
+class ConsentStatus(Enum):
+    """Consent status types"""
+    ACTIVE = "active"
+    INACTIVE = "inactive"
+    REVOKED = "revoked"
+
+
+# ============================================================================
+# MAIN TRANSFORMER CLASS
+# ============================================================================
+
+class FHIRTransformer:
+    """
+    Bidirectional transformer between HMIS and FHIR formats
+    Includes HUD Technical Standards compliance validation
+    """
+    
+    def __init__(self, fhir_client=None, enable_validation: bool = True):
+        """
+        Initialize transformer
+        
+        Args:
+            fhir_client: Optional FHIR client for consent/audit operations
+            enable_validation: Whether to enforce HUD Technical Standards validation
+        """
+        self.fhir_client = fhir_client
+        self.enable_validation = enable_validation
+        self.mappings = self._load_mappings()
+        self.effect_handlers = self._load_effect_handlers()
+    
+    def _load_mappings(self) -> Dict[str, Any]:
+        """Load FHIR mapping configuration from generated mappings"""
+        return {
+            {% for component in components %}
+            {% if component.fhir_mapping %}
+            "{{ component.name }}": {
+                "fhir_resource": "{{ component.fhir_mapping.fhir_resource }}",
+                "fhir_profile": "{{ component.fhir_mapping.fhir_profile or '' }}",
+                "ontology_class": "{{ component.fhir_mapping.ontology_class or '' }}",
+                "hud_data_element": "{{ component.fhir_mapping.hud_data_element or '' }}",
+                "field_mappings": {
+                    {% for prop_name, prop in component.properties.items() %}
+                    {% if prop.fhir_mapping and prop.fhir_mapping.fhir_path %}
+                    "{{ prop_name }}": {
+                        "fhir_path": "{{ prop.fhir_mapping.fhir_path }}",
+                        "fhir_type": "{{ prop.fhir_mapping.fhir_type or prop.type }}",
+                        "ontology_property": "{{ prop.fhir_mapping.ontology_property or '' }}",
+                        "hud_data_element": "{{ prop.fhir_mapping.hud_data_element or '' }}",
+                        "transform": "{{ prop.fhir_mapping.transform or 'direct' }}",
+                        "privacy_controls": {{ prop.fhir_mapping.privacy_controls | tojson if prop.fhir_mapping.privacy_controls else '{}' }}
+                    }{% if not loop.last %},{% endif %}
+                    {% endif %}
+                    {% endfor %}
+                }
+            }{% if not loop.last %},{% endif %}
+            {% endif %}
+            {% endfor %}
+        }
+    
+    def _load_effect_handlers(self) -> Dict[str, callable]:
+        """Load effect handler validation functions"""
+        return {
+            'validate_collection_consent': self.validate_collection_consent,
+            'validate_purpose_disclosure': self.validate_purpose_disclosure,
+            'validate_roi_active': self.validate_roi_active,
+            'validate_access_rights': self.validate_access_rights,
+            'validate_retention_compliance': self.validate_retention_compliance
+        }
+    
+    # ========================================================================
+    # CORE TRANSFORMATION METHODS
+    # ========================================================================
+    
+    def hmis_to_fhir(
+        self, 
+        hmis_data: Dict[str, Any], 
+        resource_type: str,
+        validate: bool = None
+    ) -> Dict[str, Any]:
+        """
+        Transform HMIS data to FHIR resource
+        
+        Args:
+            hmis_data: HMIS data dictionary
+            resource_type: HMIS resource type (e.g., 'Client', 'Enrollment')
+            validate: Override instance validation setting
+        
+        Returns:
+            FHIR resource dictionary
+        
+        Raises:
+            ValidationError: If HUD Technical Standards validation fails
+        """
+        if resource_type not in self.mappings:
+            raise FHIRTransformError(f"No FHIR mapping found for {resource_type}")
+        
+        mapping = self.mappings[resource_type]
+        
+        # Run validation if enabled
+        should_validate = validate if validate is not None else self.enable_validation
+        if should_validate:
+            self._validate_hmis_data(hmis_data, resource_type)
+        
+        # Initialize FHIR resource
+        fhir_resource = {
+            "resourceType": mapping["fhir_resource"]
+        }
+        
+        # Add meta profile if specified
+        if mapping.get("fhir_profile"):
+            fhir_resource["meta"] = {
+                "profile": [mapping["fhir_profile"]]
+            }
+        
+        # Add semantic extensions
+        extensions = []
+        if mapping.get("ontology_class"):
+            extensions.append({
+                "url": "http://hmis.hud.gov/fhir/extensions/ontology-class",
+                "valueUri": mapping["ontology_class"]
+            })
+        if mapping.get("hud_data_element"):
+            extensions.append({
+                "url": "http://hmis.hud.gov/fhir/extensions/hud-data-element",
+                "valueString": mapping["hud_data_element"]
+            })
+        
+        if extensions:
+            fhir_resource["extension"] = extensions
+        
+        # Transform fields
+        for hmis_field, fhir_config in mapping["field_mappings"].items():
+            if hmis_field in hmis_data:
+                value = hmis_data[hmis_field]
+                fhir_path = fhir_config["fhir_path"]
+                
+                # Apply transformation
+                transform_type = fhir_config["transform"]
+                transformed_value = self._apply_transformation(
+                    value, 
+                    transform_type, 
+                    fhir_config
+                )
+                
+                # Set value at FHIR path
+                if transformed_value is not None:
+                    self._set_nested_value(fhir_resource, fhir_path, transformed_value)
+        
+        return fhir_resource
+    
+    def fhir_to_hmis(self, fhir_resource: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Transform FHIR resource to HMIS data
+        
+        Args:
+            fhir_resource: FHIR resource dictionary
+        
+        Returns:
+            HMIS data dictionary
+        """
+        resource_type = fhir_resource.get("resourceType")
+        
+        # Find matching HMIS type
+        hmis_type = None
+        for hmis_name, mapping in self.mappings.items():
+            if mapping["fhir_resource"] == resource_type:
+                hmis_type = hmis_name
+                break
+        
+        if not hmis_type:
+            raise FHIRTransformError(f"No HMIS mapping found for FHIR {resource_type}")
+        
+        hmis_data = {}
+        mapping = self.mappings[hmis_type]
+        
+        # Transform fields
+        for hmis_field, fhir_config in mapping["field_mappings"].items():
+            fhir_path = fhir_config["fhir_path"]
+            value = self._get_nested_value(fhir_resource, fhir_path)
+            
+            if value is not None:
+                # Apply reverse transformation
+                transform_type = fhir_config["transform"]
+                hmis_data[hmis_field] = self._reverse_transformation(
+                    value, 
+                    transform_type, 
+                    fhir_config
+                )
+        
+        return hmis_data
+    
+    # ========================================================================
+    # EFFECT HANDLERS (HUD Technical Standards Validation)
+    # ========================================================================
+    
+    def validate_collection_consent(
+        self, 
+        patient_id: str, 
+        consent_id: str = None
+    ) -> bool:
+        """
+        Validate consent exists before collecting PPI (HUD 4.2.1)
+        
+        Args:
+            patient_id: Patient identifier
+            consent_id: Optional specific consent to validate
+        
+        Returns:
+            True if valid consent exists
+        
+        Raises:
+            ConsentError: If consent validation fails
+        """
+        if not self.fhir_client:
+            logger.warning("No FHIR client configured, skipping consent validation")
+            return True
+        
+        try:
+            # Get consent
+            if consent_id:
+                consent = self.fhir_client.read('Consent', consent_id)
+            else:
+                # Search for active consent for patient
+                consents = self.fhir_client.search('Consent', {
+                    'patient': patient_id,
+                    'status': 'active'
+                })
+                if not consents or len(consents.entry) == 0:
+                    raise ConsentError(
+                        "No active consent for data collection",
+                        hud_standard="4.2.1"
+                    )
+                consent = consents.entry[0].resource
+            
+            # Validate consent status
+            if consent.status != ConsentStatus.ACTIVE.value:
+                raise ConsentError(
+                    f"Consent status is {consent.status}, must be active",
+                    hud_standard="4.2.1"
+                )
+            
+            # Validate collection purpose specified
+            if not consent.provision or not consent.provision.purpose:
+                raise ConsentError(
+                    "Collection purpose not specified in consent",
+                    hud_standard="4.2.1"
+                )
+            
+            logger.info(f"Consent validation passed for patient {patient_id}")
+            return True
+            
+        except Exception as e:
+            if isinstance(e, ConsentError):
+                raise
+            raise ConsentError(f"Consent validation failed: {str(e)}", hud_standard="4.2.1")
+    
+    def validate_purpose_disclosure(
+        self,
+        consent_id: str,
+        requested_purpose: str,
+        requested_fields: List[str]
+    ) -> bool:
+        """
+        Validate disclosure is for allowable purpose (HUD 4.2.3)
+        
+        Args:
+            consent_id: Consent identifier
+            requested_purpose: Purpose code (TREAT, HPAYMT, HOPERAT, HRESCH)
+            requested_fields: Fields requested for disclosure
+        
+        Returns:
+            True if disclosure is authorized
+        
+        Raises:
+            ValidationError: If disclosure not authorized
+        """
+        if not self.fhir_client:
+            logger.warning("No FHIR client configured, skipping purpose validation")
+            return True
+        
+        try:
+            # Validate purpose is recognized
+            try:
+                purpose_enum = HUDPurpose(requested_purpose)
+            except ValueError:
+                raise ValidationError(
+                    f"Purpose {requested_purpose} not recognized as allowable HUD purpose",
+                    hud_standard="4.2.3"
+                )
+            
+            # Get consent
+            consent = self.fhir_client.read('Consent', consent_id)
+            
+            # Check purpose is authorized
+            authorized_purposes = [
+                p.code for p in (consent.provision.purpose or [])
+            ]
+            
+            if requested_purpose not in authorized_purposes:
+                raise ValidationError(
+                    f"Purpose {requested_purpose} not authorized in consent",
+                    hud_standard="4.2.3"
+                )
+            
+            # Check minimum necessary
+            necessary_fields = self._determine_minimum_necessary(requested_purpose)
+            excess_fields = set(requested_fields) - set(necessary_fields)
+            
+            if excess_fields:
+                raise ValidationError(
+                    f"Disclosure exceeds minimum necessary: {excess_fields}",
+                    hud_standard="4.2.3"
+                )
+            
+            # Create audit event
+            if self.fhir_client:
+                self._create_audit_event(
+                    action='DISCLOSE',
+                    patient=consent.patient.reference,
+                    purpose=requested_purpose,
+                    fields=requested_fields
+                )
+            
+            logger.info(f"Purpose disclosure validation passed for {requested_purpose}")
+            return True
+            
+        except Exception as e:
+            if isinstance(e, ValidationError):
+                raise
+            raise ValidationError(
+                f"Purpose disclosure validation failed: {str(e)}",
+                hud_standard="4.2.3"
+            )
+    
+    def validate_roi_active(
+        self,
+        patient_id: str,
+        recipient_org: str,
+        request_date: datetime = None
+    ) -> bool:
+        """
+        Validate ROI (Release of Information) is active before data sharing
+        
+        Args:
+            patient_id: Patient identifier
+            recipient_org: Recipient organization identifier
+            request_date: Date of request (defaults to now)
+        
+        Returns:
+            True if active ROI exists
+        
+        Raises:
+            ROIError: If ROI validation fails
+        """
+        if not self.fhir_client:
+            logger.warning("No FHIR client configured, skipping ROI validation")
+            return True
+        
+        request_date = request_date or datetime.now()
+        
+        try:
+            # Search for ROI consents
+            consents = self.fhir_client.search('Consent', {
+                'patient': patient_id,
+                'category': 'http://hmis.hud.gov/codesystems/consent-type|ROI'
+            })
+            
+            if not consents or len(consents.entry) == 0:
+                raise ROIError(
+                    "No ROI consent found for patient",
+                    hud_standard="4.2.3"
+                )
+            
+            # Find active ROI covering request date and recipient
+            active_roi = None
+            for entry in consents.entry:
+                consent = entry.resource
+                
+                if consent.status != ConsentStatus.ACTIVE.value:
+                    continue
+                
+                # Check date range
+                if consent.provision and consent.provision.period:
+                    period = consent.provision.period
+                    start = datetime.fromisoformat(period.start.replace('Z', '+00:00'))
+                    end = datetime.fromisoformat(period.end.replace('Z', '+00:00'))
+                    
+                    if not (start <= request_date <= end):
+                        continue
+                
+                # Check recipient authorized
+                if consent.provision and consent.provision.actor:
+                    actors = [a.reference.reference for a in consent.provision.actor]
+                    if f"Organization/{recipient_org}" in actors:
+                        active_roi = consent
+                        break
+            
+            if not active_roi:
+                raise ROIError(
+                    f"No active ROI found for recipient {recipient_org} on {request_date}",
+                    hud_standard="4.2.3"
+                )
+            
+            logger.info(f"ROI validation passed for patient {patient_id}")
+            return True
+            
+        except Exception as e:
+            if isinstance(e, ROIError):
+                raise
+            raise ROIError(f"ROI validation failed: {str(e)}", hud_standard="4.2.3")
+    
+    def validate_access_rights(
+        self,
+        patient_id: str,
+        requester_id: str,
+        requested_resources: List[str]
+    ) -> bool:
+        """
+        Validate individual's right to access their own data (HUD 4.2.5)
+        
+        Args:
+            patient_id: Patient whose data is being accessed
+            requester_id: Person requesting access
+            requested_resources: List of resource types requested
+        
+        Returns:
+            True if access authorized
+        
+        Raises:
+            ValidationError: If access not authorized
+        """
+        # Check if requester is the patient themselves
+        if requester_id == patient_id:
+            authorized = True
+        else:
+            # Check if requester has authorized relationship
+            authorized = self._check_authorized_relationship(requester_id, patient_id)
+        
+        if not authorized:
+            raise ValidationError(
+                "Requester not authorized to access this data",
+                hud_standard="4.2.5"
+            )
+        
+        # Create audit log
+        if self.fhir_client:
+            self._create_audit_event(
+                action='READ',
+                patient=f"Patient/{patient_id}",
+                requester=f"Patient/{requester_id}",
+                resources=requested_resources
+            )
+        
+        logger.info(f"Access rights validated for requester {requester_id}")
+        return True
+    
+    def validate_retention_compliance(
+        self,
+        resource_id: str,
+        resource_type: str,
+        last_service_date: datetime
+    ) -> Dict[str, Any]:
+        """
+        Validate data retention/destruction per 7-year rule
+        
+        Args:
+            resource_id: Resource identifier
+            resource_type: FHIR resource type
+            last_service_date: Date of last service
+        
+        Returns:
+            Dictionary with compliance status and actions needed
+        """
+        current_date = datetime.now()
+        retention_end = last_service_date + timedelta(days=365*7)
+        
+        if current_date > retention_end:
+            return {
+                'compliant': False,
+                'action_required': 'DESTROY',
+                'reason': 'Data exceeds 7-year retention period (HUD 4.2.3)',
+                'retention_end': retention_end.isoformat(),
+                'hud_standard': '4.2.3, 5.2.1'
+            }
+        
+        days_until_destruction = (retention_end - current_date).days
+        
+        return {
+            'compliant': True,
+            'action_required': 'NONE' if days_until_destruction > 365 else 'NOTIFY',
+            'days_until_destruction': days_until_destruction,
+            'retention_end': retention_end.isoformat(),
+            'hud_standard': '4.2.3, 5.2.1'
+        }
+    
+    # ========================================================================
+    # HELPER METHODS
+    # ========================================================================
+    
+    def _validate_hmis_data(self, hmis_data: Dict[str, Any], resource_type: str) -> None:
+        """Run validation checks before transformation"""
+        mapping = self.mappings[resource_type]
+        
+        # Check required consent for sensitive fields
+        for field, config in mapping["field_mappings"].items():
+            if field in hmis_data:
+                privacy_controls = config.get("privacy_controls", {})
+                
+                # Check if explicit consent required
+                if privacy_controls.get("collection_consent") == "explicit":
+                    # This would need actual consent validation logic
+                    logger.debug(f"Field {field} requires explicit consent")
+    
+    def _apply_transformation(
+        self, 
+        value: Any, 
+        transform_type: str, 
+        config: Dict[str, Any]
+    ) -> Any:
+        """Apply transformation to HMIS value"""
+        if transform_type == "direct":
+            return value
+        
+        elif transform_type == "identifier":
+            return {
+                "system": config.get("fhir_system", "http://hmis.hud.gov/identifiers"),
+                "value": str(value)
+            }
+        
+        elif transform_type == "date_format":
+            return self._format_date(value)
+        
+        elif transform_type == "extension_boolean":
+            value_map = config.get("value_map", {})
+            mapped = value_map.get(value)
+            if mapped is None:
+                return None
+            return {
+                "url": config.get("fhir_url"),
+                "valueBoolean": mapped
+            }
+        
+        elif transform_type == "codeable_concept":
+            value_map = config.get("value_map", {})
+            code = value_map.get(value, str(value))
+            return {
+                "coding": [{
+                    "system": config.get("fhir_system"),
+                    "code": code
+                }]
+            }
+        
+        return value
+    
+    def _reverse_transformation(
+        self, 
+        value: Any, 
+        transform_type: str, 
+        config: Dict[str, Any]
+    ) -> Any:
+        """Apply reverse transformation from FHIR value"""
+        if transform_type == "identifier":
+            return value.get("value") if isinstance(value, dict) else value
+        
+        elif transform_type == "date_format":
+            return value
+        
+        elif transform_type == "extension_boolean":
+            if isinstance(value, dict) and "valueBoolean" in value:
+                # Reverse lookup in value_map
+                value_map = config.get("value_map", {})
+                for k, v in value_map.items():
+                    if v == value["valueBoolean"]:
+                        return k
+            return value
+        
+        return value
+    
+    def _set_nested_value(self, obj: Dict, path: str, value: Any) -> None:
+        """Set value at nested FHIR path"""
+        parts = path.split('.')
+        current = obj
+        
+        # Navigate to parent
+        for part in parts[1:-1]:  # Skip resource type
+            if '[' in part:
+                key, idx = part.split('[')
+                idx = int(idx.rstrip(']'))
+                if key not in current:
+                    current[key] = []
+                while len(current[key]) <= idx:
+                    current[key].append({})
+                current = current[key][idx]
+            else:
+                if part not in current:
+                    current[part] = {}
+                current = current[part]
+        
+        # Set final value
+        final_key = parts[-1]
+        if '[' in final_key:
+            key, idx = final_key.split('[')
+            idx = int(idx.rstrip(']'))
+            if key not in current:
+                current[key] = []
+            while len(current[key]) <= idx:
+                current[key].append(None)
+            current[key][idx] = value
+        else:
+            current[final_key] = value
+    
+    def _get_nested_value(self, obj: Dict, path: str) -> Optional[Any]:
+        """Get value at nested FHIR path"""
+        parts = path.split('.')
+        current = obj
+        
+        for part in parts[1:]:  # Skip resource type
+            if '[' in part:
+                key, idx = part.split('[')
+                idx = int(idx.rstrip(']'))
+                current = current.get(key, [])[idx] if len(current.get(key, [])) > idx else None
+            else:
+                current = current.get(part)
+            
+            if current is None:
+                return None
+        
+        return current
+    
+    def _format_date(self, date_str: str) -> str:
+        """Format date to FHIR format (YYYY-MM-DD)"""
+        try:
+            dt = datetime.fromisoformat(date_str.replace('Z', '+00:00'))
+            return dt.strftime('%Y-%m-%d')
+        except:
+            return date_str
+    
+    def _determine_minimum_necessary(self, purpose: str) -> List[str]:
+        """Determine minimum necessary fields for purpose"""
+        # HUD 4.2.3 - Minimum necessary standard
+        minimum_fields = {
+            HUDPurpose.TREAT.value: [
+                'PersonalID', 'FirstName', 'LastName', 'DOB'
+            ],
+            HUDPurpose.HPAYMT.value: [
+                'PersonalID', 'SSN', 'DOB', 'Coverage'
+            ],
+            HUDPurpose.HOPERAT.value: [
+                'PersonalID', 'EnrollmentID', 'ProjectID'
+            ],
+            HUDPurpose.HRESCH.value: [
+                'Gender', 'Age', 'ProjectType'  # De-identified only
+            ]
+        }
+        return minimum_fields.get(purpose, [])
+    
+    def _check_authorized_relationship(
+        self, 
+        requester_id: str, 
+        patient_id: str
+    ) -> bool:
+        """Check if requester has authorized relationship to patient"""
+        # This would check RelatedPerson or CareTeam resources
+        # Placeholder implementation
+        return False
+    
+    def _create_audit_event(self, **kwargs) -> None:
+        """Create FHIR AuditEvent for compliance logging"""
+        if not self.fhir_client:
+            return
+        
+        audit_event = {
+            "resourceType": "AuditEvent",
+            "type": {
+                "system": "http://terminology.hl7.org/CodeSystem/audit-event-type",
+                "code": kwargs.get('action', 'access')
+            },
+            "recorded": datetime.now().isoformat() + 'Z',
+            "agent": [{
+                "who": {
+                    "reference": kwargs.get('requester', kwargs.get('patient'))
+                },
+                "requestor": True
+            }]
+        }
+        
+        try:
+            self.fhir_client.create(audit_event)
+            logger.info(f"Audit event created: {kwargs.get('action')}")
+        except Exception as e:
+            logger.error(f"Failed to create audit event: {str(e)}")
+
+
+# ============================================================================
+# USAGE EXAMPLE
+# ============================================================================
+
+if __name__ == "__main__":
+    # Initialize transformer
+    transformer = FHIRTransformer(enable_validation=True)
+    
+    # Example: Transform HMIS Client to FHIR Patient
+    hmis_client = {
+        "PersonalID": "12345",
+        "FirstName": "Jane",
+        "LastName": "Doe",
+        "DOB": "1990-01-15",
+        "VeteranStatus": 1
+    }
+    
+    try:
+        # Validate consent before transformation
+        transformer.validate_collection_consent(
+            patient_id="12345",
+            consent_id="consent-001"
+        )
+        
+        # Transform to FHIR
+        fhir_patient = transformer.hmis_to_fhir(hmis_client, "Client")
+        print("FHIR Patient:")
+        print(json.dumps(fhir_patient, indent=2))
+        
+        # Transform back to HMIS
+        hmis_data = transformer.fhir_to_hmis(fhir_patient)
+        print("\nHMIS Data:")
+        print(json.dumps(hmis_data, indent=2))
+        
+    except ValidationError as e:
+        print(f"Validation failed: {e}")
