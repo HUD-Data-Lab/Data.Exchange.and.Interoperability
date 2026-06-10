@@ -1,0 +1,303 @@
+openapi: 3.0.3
+info:
+  title: Ontology API
+  version: 0.1.0
+paths:
+  /client"s:
+    get:
+      summary: List Client"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Client"'
+  /enrollment"s:
+    get:
+      summary: List Enrollment"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Enrollment"'
+  /household"s:
+    get:
+      summary: List Household"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Household"'
+  /organization"s:
+    get:
+      summary: List Organization"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization"'
+  /project"s:
+    get:
+      summary: List Project"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project"'
+  /nas:
+    get:
+      summary: List NA
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NA'
+  /sub-enrollment"s:
+    get:
+      summary: List Sub-Enrollment"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sub-Enrollment"'
+  /configuration"s:
+    get:
+      summary: List Configuration"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Configuration"'
+  /current living situation"s:
+    get:
+      summary: List Current Living Situation"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Current Living Situation"'
+  /assessment"s:
+    get:
+      summary: List Assessment"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Assessment"'
+  /service"s:
+    get:
+      summary: List Service"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service"'
+  /coordinated entry participation"s:
+    get:
+      summary: List Coordinated Entry Participation"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Coordinated Entry Participation"'
+  /funder"s:
+    get:
+      summary: List Funder"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Funder"'
+  /hmis participation"s:
+    get:
+      summary: List HMIS Participation"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HMIS Participation"'
+  /inventory"s:
+    get:
+      summary: List Inventory"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Inventory"'
+components:
+  schemas:
+    Client":
+      type: object
+      properties:
+        has enrollment":
+          $ref: '#/components/schemas/Enrollment"'
+        NA:
+          type: string
+          type: string
+    Enrollment":
+      type: object
+      properties:
+        enrollment of":
+          $ref: '#/components/schemas/Client"'
+        has sub-enrollment":
+          $ref: '#/components/schemas/Sub-Enrollment"'
+        NA:
+          type: string
+          type: string
+        member of":
+          $ref: '#/components/schemas/Household"'
+    Household":
+      type: object
+      properties:
+        NA:
+          type: string
+          type: string
+    Organization":
+      type: object
+      properties:
+        operates":
+          $ref: '#/components/schemas/Project"'
+        NA:
+          type: string
+          type: string
+    Project":
+      type: object
+      properties:
+        has configuration":
+          $ref: '#/components/schemas/Configuration"'
+        has CE participation":
+          $ref: '#/components/schemas/Coordinated Entry Participation"'
+        has fund source":
+          $ref: '#/components/schemas/Funder"'
+        NA:
+          type: string
+          type: string
+        has HMIS participation":
+          $ref: '#/components/schemas/HMIS Participation"'
+        operated by":
+          $ref: '#/components/schemas/Organization"'
+        project of":
+          $ref: '#/components/schemas/Enrollment"'
+    NA:
+      type: object
+      properties:
+        NA:
+          type: string
+          type: string
+    Sub-Enrollment":
+      type: object
+      properties:
+        during":
+          $ref: '#/components/schemas/Enrollment"'
+    Configuration":
+      type: object
+      properties:
+        configures":
+          $ref: '#/components/schemas/Project"'
+    Current Living Situation":
+      type: object
+      properties:
+        NA:
+          type: string
+          type: string
+    Assessment":
+      type: object
+      properties:
+        NA:
+          type: string
+          type: string
+    Service":
+      type: object
+      properties:
+        NA:
+          type: string
+          type: string
+    Coordinated Entry Participation":
+      type: object
+      properties:
+        CE participation of":
+          $ref: '#/components/schemas/Project"'
+        NA:
+          type: string
+          type: string
+    Funder":
+      type: object
+      properties:
+        fund source of":
+          $ref: '#/components/schemas/Project"'
+        NA:
+          type: string
+          type: string
+    HMIS Participation":
+      type: object
+      properties:
+        HMIS participation of":
+          $ref: '#/components/schemas/Project"'
+        NA:
+          type: string
+          type: string
+    Inventory":
+      type: object
+      properties:
+        NA:
+          type: string
+          type: string
