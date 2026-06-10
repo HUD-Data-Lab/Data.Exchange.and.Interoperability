@@ -35,7 +35,7 @@ pkg/
 
 # IDE
 .venv
-.vscode/
+.vscode
 .idea/
 *.swp
 *.swo
