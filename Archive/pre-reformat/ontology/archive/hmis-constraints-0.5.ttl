@@ -1,0 +1,758 @@
+@prefix hmis: <http://hmis.hud.gov/ontology#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+#################################################################
+#    HMIS FY2026 SHACL Constraints - Validation Layer
+#################################################################
+#
+# This file contains validation rules for HMIS data following HUD standards.
+#
+#################################################################
+
+<http://hmis.hud.gov/constraints> rdf:type sh:Schema ;
+    dcterms:title "HMIS FY2026 SHACL Validation Rules"@en ;
+    dcterms:description "Data governance layer enforcing HUD HMIS Data Standards compliance"@en ;
+    dcterms:publisher "U.S. Department of Housing and Urban Development"@en ;
+    dcterms:created "2026-01-28"^^xsd:date ;
+    dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    rdfs:comment "Validation rules follow RuleML patterns with explicit IF-THEN logic. Rules embody Peircean symbolic signs - conventional agreements about data validity."@en .
+
+#################################################################
+#    Universal Constraints (Apply to All Entities)
+#################################################################
+
+hmis:TemporalCoherenceShape a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment, hmis:Assessment, hmis:Service, hmis:CurrentLivingSituation ;
+    dcterms:title "Temporal Coherence Rules"@en ;
+    dcterms:description "Universal temporal logic constraints ensuring dates follow physical time ordering"@en ;
+    rdfs:comment "IF entity has DateCreated AND DateUpdated THEN DateUpdated >= DateCreated"@en ;
+    
+    # Rule: DateUpdated must be >= DateCreated
+    sh:property [
+        sh:path hmis:DateUpdated ;
+        sh:minInclusive [
+            sh:path hmis:DateCreated
+        ] ;
+        sh:message "DateUpdated must be greater than or equal to DateCreated"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: DateCreated cannot be in the future
+    sh:property [
+        sh:path hmis:DateCreated ;
+        sh:maxInclusive "now"^^xsd:dateTime ;
+        sh:message "DateCreated cannot be in the future"@en ;
+        sh:severity sh:Violation ;
+    ] .
+
+#################################################################
+#    Client Validation Rules
+#################################################################
+
+hmis:ClientShape a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+    dcterms:identifier "Client-Validation" ;
+    dcterms:title "Client Data Validation Rules"@en ;
+    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#section3> ;
+    
+    # Rule: PersonalID is required (cardinality exactly 1)
+    sh:property [
+        sh:path hmis:PersonalID ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:minLength 1 ;
+        sh:maxLength 32 ;
+        sh:message "PersonalID is required and must be a string between 1-32 characters"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: FirstName is required
+    sh:property [
+        sh:path hmis:FirstName ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:maxLength 50 ;
+        sh:message "FirstName is required and must be 50 characters or less"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: LastName is required
+    sh:property [
+        sh:path hmis:LastName ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:maxLength 50 ;
+        sh:message "LastName is required and must be 50 characters or less"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: DOB is required
+    sh:property [
+        sh:path hmis:DOB ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:date ;
+        sh:message "Date of Birth is required"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: DOB cannot be in the future
+    sh:property [
+        sh:path hmis:DOB ;
+        sh:maxInclusive "today"^^xsd:date ;
+        sh:message "Date of Birth cannot be in the future"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: SSN must match pattern IF provided
+    # IF SSN is present THEN it must be exactly 9 digits
+    sh:property [
+        sh:path hmis:SSN ;
+        sh:maxCount 1 ;
+        sh:or (
+            [ sh:datatype xsd:string ;
+              sh:pattern "^[0-9]{9}$" ]
+            [ sh:hasValue "" ]  # Allow empty string
+        ) ;
+        sh:message "SSN must be exactly 9 digits (no dashes or spaces) or empty"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: Gender must link to valid SKOS concept
+    sh:property [
+        sh:path hmis:Gender ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:in (0 1 2 3 4 5 6 8 9 99) ;
+        sh:message "Gender must be a valid code from GenderScheme (0,1,2,3,4,5,6,8,9,99)"@en ;
+        sh:severity sh:Violation ;
+        dcterms:source hmis:GenderScheme ;
+    ] ;
+    
+    # Rule: VeteranStatus must link to valid SKOS concept
+    sh:property [
+        sh:path hmis:VeteranStatus ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:in (0 1 8 9 99) ;
+        sh:message "VeteranStatus must be a valid code from YesNoReasonsScheme (0,1,8,9,99)"@en ;
+        sh:severity sh:Violation ;
+        dcterms:source hmis:YesNoReasonsScheme ;
+    ] .
+
+#################################################################
+#    Enrollment Validation Rules
+#################################################################
+
+hmis:EnrollmentShape a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+    dcterms:identifier "Enrollment-Validation" ;
+    dcterms:title "Enrollment Data Validation Rules"@en ;
+    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#section3> ;
+    rdfs:comment "Core transactional entity validation. Enrollment is the central record in HMIS."@en ;
+    
+    # Rule: EnrollmentID is required (cardinality exactly 1)
+    sh:property [
+        sh:path hmis:EnrollmentID ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:minLength 1 ;
+        sh:maxLength 32 ;
+        sh:message "EnrollmentID is required and must be a string between 1-32 characters"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: EntryDate is required
+    sh:property [
+        sh:path hmis:EntryDate ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:date ;
+        sh:message "EntryDate is required for every enrollment"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: EntryDate cannot be in the future
+    sh:property [
+        sh:path hmis:EntryDate ;
+        sh:maxInclusive "today"^^xsd:date ;
+        sh:message "EntryDate cannot be in the future"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: IF ExitDate exists THEN ExitDate >= EntryDate
+    # RuleML: IF enrollment.ExitDate IS NOT NULL THEN enrollment.ExitDate >= enrollment.EntryDate
+    sh:sparql [
+        sh:message "ExitDate must be greater than or equal to EntryDate"@en ;
+        sh:severity sh:Violation ;
+        sh:prefixes hmis:, xsd: ;
+        sh:select """
+            SELECT ?this
+            WHERE {
+                ?this hmis:EntryDate ?entryDate .
+                ?this hmis:ExitDate ?exitDate .
+                FILTER (?exitDate < ?entryDate)
+            }
+        """ ;
+    ] ;
+    
+    # Rule: IF ExitDate exists THEN ExitDate <= today
+    sh:property [
+        sh:path hmis:ExitDate ;
+        sh:maxInclusive "today"^^xsd:date ;
+        sh:message "ExitDate cannot be in the future"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: RelationshipToHoH is required
+    sh:property [
+        sh:path hmis:RelationshipToHoH ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:in (1 2 3 4 5) ;
+        sh:message "RelationshipToHoH is required and must be valid code (1,2,3,4,5)"@en ;
+        sh:severity sh:Violation ;
+        dcterms:source hmis:RelationshipScheme ;
+    ] ;
+    
+    # Rule: DisablingCondition must be from valid vocabulary
+    sh:property [
+        sh:path hmis:DisablingCondition ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:in (0 1 8 9 99) ;
+        sh:message "DisablingCondition must be valid code from YesNoReasonsScheme"@en ;
+        sh:severity sh:Violation ;
+        dcterms:source hmis:YesNoReasonsScheme ;
+    ] ;
+    
+    # Rule: Enrollment must link to exactly one Client
+    sh:property [
+        sh:path [ sh:inversePath hmis:hasEnrollment ] ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class hmis:Client ;
+        sh:message "Enrollment must be linked to exactly one Client"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: Enrollment must link to exactly one Project
+    sh:property [
+        sh:path hmis:inProject ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class hmis:Project ;
+        sh:message "Enrollment must be linked to exactly one Project"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: Enrollment must link to exactly one Household
+    sh:property [
+        sh:path hmis:memberOf ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class hmis:Household ;
+        sh:message "Enrollment must be linked to exactly one Household"@en ;
+        sh:severity sh:Violation ;
+    ] .
+
+#################################################################
+#    Household Composition Rules
+#################################################################
+
+hmis:HouseholdShape a sh:NodeShape ;
+    sh:targetClass hmis:Household ;
+    dcterms:identifier "Household-Validation" ;
+    dcterms:title "Household Composition Rules"@en ;
+    dcterms:description "Ensures household structural integrity and head-of-household uniqueness"@en ;
+    
+    # Rule: HouseholdID is required
+    sh:property [
+        sh:path hmis:HouseholdID ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "HouseholdID is required"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: Household must have at least one member (enrollment)
+    sh:property [
+        sh:path [ sh:inversePath hmis:memberOf ] ;
+        sh:minCount 1 ;
+        sh:class hmis:Enrollment ;
+        sh:message "Household must have at least one enrollment member"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: Household must link to exactly one Project
+    sh:property [
+        sh:path hmis:inProject ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class hmis:Project ;
+        sh:message "Household must be linked to exactly one Project"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: Household must have exactly ONE head of household (RelationshipToHoH=1)
+    # RuleML: IF household.members.count > 0 THEN household.members[RelationshipToHoH=1].count == 1
+    sh:sparql [
+        sh:message "Household must have exactly one member with RelationshipToHoH=1 (Head of Household)"@en ;
+        sh:severity sh:Violation ;
+        sh:prefixes hmis:, xsd: ;
+        sh:select """
+            SELECT ?this
+            WHERE {
+                ?this a hmis:Household .
+                {
+                    SELECT ?this (COUNT(?hoh) as ?hohCount)
+                    WHERE {
+                        ?enrollment hmis:memberOf ?this .
+                        OPTIONAL {
+                            ?enrollment hmis:RelationshipToHoH ?rel .
+                            FILTER (?rel = 1)
+                            BIND(?enrollment AS ?hoh)
+                        }
+                    }
+                    GROUP BY ?this
+                }
+                FILTER (?hohCount != 1)
+            }
+        """ ;
+    ] .
+
+#################################################################
+#    Project Validation Rules
+#################################################################
+
+hmis:ProjectShape a sh:NodeShape ;
+    sh:targetClass hmis:Project ;
+    dcterms:identifier "Project-Validation" ;
+    dcterms:title "Project Configuration Validation Rules"@en ;
+    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#section2> ;
+    
+    # Rule: ProjectID is required
+    sh:property [
+        sh:path hmis:ProjectID ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:maxLength 32 ;
+        sh:message "ProjectID is required and must be 32 characters or less"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: ProjectName is required
+    sh:property [
+        sh:path hmis:ProjectName ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:maxLength 100 ;
+        sh:message "ProjectName is required and must be 100 characters or less"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: ProjectType is required and must be valid
+    sh:property [
+        sh:path hmis:ProjectType ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:in (0 1 2 3 4 6 7 8 9 10 11 12 13 14) ;
+        sh:message "ProjectType is required and must be valid code from ProjectTypeScheme"@en ;
+        sh:severity sh:Violation ;
+        dcterms:source hmis:ProjectTypeScheme ;
+    ] ;
+    
+    # Rule: Project must be operated by exactly one Organization
+    sh:property [
+        sh:path hmis:operatedBy ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class hmis:Organization ;
+        sh:message "Project must be operated by exactly one Organization"@en ;
+        sh:severity sh:Violation ;
+    ] .
+
+#################################################################
+#    Conditional Validation Rules (IF-THEN Logic)
+#################################################################
+
+hmis:ProjectTypeConditionalShape a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+    dcterms:identifier "ProjectType-Conditional-Rules" ;
+    dcterms:title "Project Type-Specific Conditional Validation"@en ;
+    dcterms:description "Rules that apply only when specific project types are involved"@en ;
+    rdfs:comment "RuleML pattern: IF enrollment.project.ProjectType = X THEN require field Y"@en ;
+    
+    # Rule: IF ProjectType IN (1,4,8,0) THEN DateOfEngagement is required
+    # RuleML: IF enrollment.project.projectType IN [1,4,8,0] THEN enrollment.dateOfEngagement IS NOT NULL
+    sh:sparql [
+        sh:message "DateOfEngagement is required for Street Outreach (4), Emergency Shelter Entry-Exit (1), Emergency Shelter Night-by-Night (0), and Safe Haven (8) projects"@en ;
+        sh:severity sh:Violation ;
+        sh:prefixes hmis:, xsd: ;
+        sh:select """
+            SELECT ?this
+            WHERE {
+                ?this a hmis:Enrollment .
+                ?this hmis:inProject ?project .
+                ?project hmis:ProjectType ?projectType .
+                FILTER (?projectType IN (0, 1, 4, 8))
+                FILTER NOT EXISTS {
+                    ?this hmis:DateOfEngagement ?doeDate .
+                }
+            }
+        """ ;
+    ] ;
+    
+    # Rule: IF ProjectType=13 (RRH) THEN DateOfEngagement is required
+    sh:sparql [
+        sh:message "DateOfEngagement is required for Rapid Re-Housing (ProjectType=13) projects per PATH/RHY requirements"@en ;
+        sh:severity sh:Violation ;
+        sh:prefixes hmis:, xsd: ;
+        sh:select """
+            SELECT ?this
+            WHERE {
+                ?this a hmis:Enrollment .
+                ?this hmis:inProject ?project .
+                ?project hmis:ProjectType 13 .
+                FILTER NOT EXISTS {
+                    ?this hmis:DateOfEngagement ?doeDate .
+                }
+            }
+        """ ;
+    ] ;
+    
+    # Rule: IF ProjectType=3 (PSH) THEN DisablingCondition MUST = 1 (Yes)
+    # RuleML: IF enrollment.project.projectType = 3 THEN enrollment.disablingCondition = 1
+    sh:sparql [
+        sh:message "Permanent Supportive Housing (ProjectType=3) requires DisablingCondition=1 (Yes) - disability is required for entry"@en ;
+        sh:severity sh:Violation ;
+        sh:prefixes hmis:, xsd: ;
+        sh:select """
+            SELECT ?this
+            WHERE {
+                ?this a hmis:Enrollment .
+                ?this hmis:inProject ?project .
+                ?project hmis:ProjectType 3 .
+                ?this hmis:DisablingCondition ?disabling .
+                FILTER (?disabling != 1)
+            }
+        """ ;
+    ] .
+
+#################################################################
+#    Exit Assessment Rules
+#################################################################
+
+hmis:ExitAssessmentShape a sh:NodeShape ;
+    sh:targetClass hmis:ExitAssessment ;
+    dcterms:identifier "ExitAssessment-Validation" ;
+    dcterms:title "Exit Assessment and Enrollment Termination Rules"@en ;
+    dcterms:description "Ensures synchronization between exit assessment and enrollment exit date"@en ;
+    rdfs:comment "Exit is a data collection stage, not a separate class. ExitAssessment must sync with Enrollment.ExitDate."@en ;
+    
+    # Rule: AssessmentDate is required
+    sh:property [
+        sh:path hmis:AssessmentDate ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:date ;
+        sh:message "AssessmentDate is required for exit assessments"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: Destination is required at exit
+    sh:property [
+        sh:path hmis:Destination ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:message "Destination is required for exit assessments"@en ;
+        sh:severity sh:Violation ;
+        dcterms:source hmis:DestinationScheme ;
+    ] ;
+    
+    # Rule: IF ExitAssessment exists THEN Enrollment MUST have ExitDate
+    # RuleML: IF exitAssessment.enrollment = X THEN X.exitDate IS NOT NULL
+    sh:sparql [
+        sh:message "If an ExitAssessment exists, the enrollment must have an ExitDate"@en ;
+        sh:severity sh:Violation ;
+        sh:prefixes hmis:, xsd: ;
+        sh:select """
+            SELECT ?this
+            WHERE {
+                ?this a hmis:ExitAssessment .
+                ?this hmis:during ?enrollment .
+                FILTER NOT EXISTS {
+                    ?enrollment hmis:ExitDate ?exitDate .
+                }
+            }
+        """ ;
+    ] ;
+    
+    # Rule: ExitAssessment.AssessmentDate SHOULD match Enrollment.ExitDate
+    # RuleML: IF exitAssessment.enrollment = X THEN exitAssessment.assessmentDate = X.exitDate
+    sh:sparql [
+        sh:message "ExitAssessment.AssessmentDate should match the enrollment's ExitDate"@en ;
+        sh:severity sh:Warning ;  # Warning, not Violation - allows slight mismatches
+        sh:prefixes hmis:, xsd: ;
+        sh:select """
+            SELECT ?this
+            WHERE {
+                ?this a hmis:ExitAssessment .
+                ?this hmis:during ?enrollment .
+                ?this hmis:AssessmentDate ?assessDate .
+                ?enrollment hmis:ExitDate ?exitDate .
+                FILTER (?assessDate != ?exitDate)
+            }
+        """ ;
+    ] .
+
+#################################################################
+#    Enrollment Exit Synchronization Rules
+#################################################################
+
+hmis:EnrollmentExitSyncShape a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+    dcterms:identifier "Enrollment-Exit-Sync" ;
+    dcterms:title "Enrollment Exit Synchronization Rules"@en ;
+    dcterms:description "Ensures that if enrollment has ExitDate, appropriate exit assessment exists"@en ;
+    
+    # Rule: IF Enrollment has ExitDate THEN must have ExitAssessment
+    # RuleML: IF enrollment.exitDate IS NOT NULL THEN EXISTS exitAssessment WHERE exitAssessment.enrollment = enrollment
+    sh:sparql [
+        sh:message "If an enrollment has an ExitDate, it must have a corresponding ExitAssessment"@en ;
+        sh:severity sh:Violation ;
+        sh:prefixes hmis:, xsd: ;
+        sh:select """
+            SELECT ?this
+            WHERE {
+                ?this a hmis:Enrollment .
+                ?this hmis:ExitDate ?exitDate .
+                FILTER NOT EXISTS {
+                    ?exitAssessment a hmis:ExitAssessment .
+                    ?exitAssessment hmis:during ?this .
+                }
+            }
+        """ ;
+    ] .
+
+#################################################################
+#    Assessment Temporal Rules
+#################################################################
+
+hmis:AssessmentShape a sh:NodeShape ;
+    sh:targetClass hmis:Assessment ;
+    dcterms:identifier "Assessment-Validation" ;
+    dcterms:title "Assessment Temporal and Structural Rules"@en ;
+    
+    # Rule: AssessmentDate is required
+    sh:property [
+        sh:path hmis:AssessmentDate ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:date ;
+        sh:message "AssessmentDate is required for all assessments"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: AssessmentDate cannot be in the future
+    sh:property [
+        sh:path hmis:AssessmentDate ;
+        sh:maxInclusive "today"^^xsd:date ;
+        sh:message "AssessmentDate cannot be in the future"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: Assessment must be linked to exactly one Enrollment
+    sh:property [
+        sh:path hmis:during ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class hmis:Enrollment ;
+        sh:message "Assessment must be linked to exactly one Enrollment"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: IF Assessment exists THEN AssessmentDate must be between EntryDate and ExitDate (if ExitDate exists)
+    # RuleML: IF assessment.enrollment.entryDate <= assessment.assessmentDate <= assessment.enrollment.exitDate (if exists)
+    sh:sparql [
+        sh:message "AssessmentDate must be between the enrollment's EntryDate and ExitDate (if exit date exists)"@en ;
+        sh:severity sh:Violation ;
+        sh:prefixes hmis:, xsd: ;
+        sh:select """
+            SELECT ?this
+            WHERE {
+                ?this a hmis:Assessment .
+                ?this hmis:during ?enrollment .
+                ?this hmis:AssessmentDate ?assessDate .
+                ?enrollment hmis:EntryDate ?entryDate .
+                
+                # Check if assessment date is before entry
+                FILTER (?assessDate < ?entryDate)
+                
+                OPTIONAL {
+                    # If exit date exists, check if assessment is after exit
+                    ?enrollment hmis:ExitDate ?exitDate .
+                    FILTER (?assessDate > ?exitDate)
+                }
+            }
+        """ ;
+    ] .
+
+#################################################################
+#    SubEnrollment Generic Rules
+#################################################################
+
+hmis:SubEnrollmentShape a sh:NodeShape ;
+    sh:targetClass hmis:SubEnrollment ;
+    dcterms:identifier "SubEnrollment-Validation" ;
+    dcterms:title "Generic SubEnrollment Entity Rules"@en ;
+    dcterms:description "Validation rules applying to all SubEnrollment entities (Assessment, Service, CLS, etc.)"@en ;
+    
+    # Rule: InformationDate is required for SubEnrollment entities
+    sh:property [
+        sh:path hmis:InformationDate ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:date ;
+        sh:message "InformationDate is required for all SubEnrollment records"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: InformationDate cannot be in the future
+    sh:property [
+        sh:path hmis:InformationDate ;
+        sh:maxInclusive "today"^^xsd:date ;
+        sh:message "InformationDate cannot be in the future"@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rule: SubEnrollment must be linked to an Enrollment
+    sh:sparql [
+        sh:message "SubEnrollment entities must be linked to an Enrollment"@en ;
+        sh:severity sh:Violation ;
+        sh:prefixes hmis:, xsd: ;
+        sh:select """
+            SELECT ?this
+            WHERE {
+                ?this a hmis:SubEnrollment .
+                FILTER NOT EXISTS {
+                    {?this hmis:during ?enrollment} UNION
+                    {?this hmis:trackedIn ?enrollment} UNION
+                    {?this hmis:occursIn ?enrollment}
+                }
+            }
+        """ ;
+    ] .
+
+#################################################################
+#    Data Quality Rules (Warnings)
+#################################################################
+
+hmis:DataQualityWarningShape a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+    dcterms:identifier "Data-Quality-Warnings" ;
+    dcterms:title "Data Quality Recommendations (Non-Critical)"@en ;
+    dcterms:description "Best practice recommendations that generate warnings rather than violations"@en ;
+    
+    # Warning: SSN should be provided if possible (not required but recommended)
+    sh:property [
+        sh:path hmis:SSN ;
+        sh:minCount 1 ;
+        sh:message "SSN is strongly recommended for data quality - consider collecting if client is willing to provide"@en ;
+        sh:severity sh:Warning ;
+    ] ;
+    
+    # Warning: Missing data values (8,9,99) should be used sparingly
+    sh:sparql [
+        sh:message "Client has multiple missing data responses (8,9,99) - consider follow-up to collect complete information"@en ;
+        sh:severity sh:Info ;
+        sh:prefixes hmis:, xsd: ;
+        sh:select """
+            SELECT ?this
+            WHERE {
+                ?this a hmis:Client .
+                {
+                    SELECT ?this (COUNT(?missing) as ?missingCount)
+                    WHERE {
+                        {?this hmis:Gender ?val . FILTER (?val IN (8,9,99))} UNION
+                        {?this hmis:VeteranStatus ?val . FILTER (?val IN (8,9,99))}
+                        BIND(?val AS ?missing)
+                    }
+                    GROUP BY ?this
+                }
+                FILTER (?missingCount >= 2)
+            }
+        """ ;
+    ] .
+
+#################################################################
+#    Design Notes
+#################################################################
+
+# 1. RULEML-STYLE IF-THEN PATTERNS
+#    Every constraint follows explicit conditional logic:
+#    - sh:sparql with FILTER conditions = IF clause
+#    - Constraint itself = THEN clause
+#    - Example: IF projectType=3 THEN disablingCondition=1
+
+# 2. SYMBOLIC LOGIC 
+#    Constraints are symbols - conventional agreements about validity
+#    - "ExitDate > EntryDate" is a symbol (conventional rule)
+#    - Not natural law (like gravity) - it's a human-imposed convention
+#    - Symbols mediate between structure (OWL) and data (instances)
+
+# 3. CLOSED-WORLD ASSUMPTION
+#    Only explicitly permitted patterns are valid
+#    - Gender IN (0,1,2,3,4,5,6,8,9,99) - anything else is invalid
+#    - This is the "frame" around the picture
+
+# 4. SEVERITY LEVELS
+#    - Violation: Data quality issue, must be fixed
+#    - Warning: Best practice recommendation, should be addressed
+#    - Info: Informational notice, no action required
+#    This allows graduated response to validation failures
+
+# 5. SPARQL FOR COMPLEX LOGIC
+#    sh:sparql enables rich IF-THEN-ELSE patterns:
+#    - Cross-entity validation (enrollment/assessment sync)
+#    - Aggregation constraints (exactly one HoH per household)
+#    - Temporal coherence (date ordering across entities)
+#    - Conditional requirements (IF projectType=X THEN field Y required)
+
+# 6. DCTERMS SOURCE LINKS
+#    Each NodeShape links back to HUD documentation
+#    Shows the INDEXICAL relationship: rule → policy document
+#    Provides audit trail for "why does this rule exist?"
+
+# 7. THREE-LAYER INDEPENDENCE
+#    Structure (OWL): Defines what entities/properties can exist
+#    Semantics (SKOS): Defines what enumerated values mean
+#    Governance (SHACL): Defines what combinations are valid
+#    This file (governance) can evolve without touching structure/semantics
+#    Example: Change PSH disability requirement without changing ProjectType vocabulary
+
+# 8. VALIDATION WORKFLOW
+#    1. Load structure ontology (hmis-structure.ttl)
+#    2. Load vocabularies (hmis-vocabularies.ttl) 
+#    3. Load instance data (HMIS records)
+#    4. Run SHACL validation (this file)
+#    5. Generate validation report with violations/warnings
+#    Clean separation of concerns enables modular validation

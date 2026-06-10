@@ -1,0 +1,94 @@
+{
+  "uuid": "{{ spec.title | lower | replace(' ', '-') }}-env",
+  "lastMigration": 32,
+  "name": "{{ name }}",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3000,
+  "hostname": "localhost",
+  "folders": [],
+  "routes": [
+    {% for route in routes %}
+    {
+      "uuid": "{{ route.uuid }}",
+      "type": "http",
+      "documentation": "{{ route.documentation | replace('"', '\\"') }}",
+      "method": "{{ route.method }}",
+      "endpoint": "{{ route.endpoint }}",
+      "responses": [
+        {% for response in route.responses %}
+        {
+          "uuid": "{{ response.uuid }}",
+          "body": {{ response.body | tojson }},
+          "latency": 0,
+          "statusCode": {{ response.statusCode }},
+          "label": "{{ response.label }}",
+          "headers": [
+            {% for header in response.headers %}
+            {
+              "key": "{{ header.key }}",
+              "value": "{{ header.value }}"
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id"
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+      ],
+      "enabled": true,
+      "responseMode": null
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ],
+  "rootChildren": [
+    {% for route in routes %}
+    {
+      "type": "route",
+      "uuid": "{{ route.uuid }}"
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "*"
+    }
+  ],
+  "proxyReqHeaders": [],
+  "proxyResHeaders": [],
+  "data": []
+}

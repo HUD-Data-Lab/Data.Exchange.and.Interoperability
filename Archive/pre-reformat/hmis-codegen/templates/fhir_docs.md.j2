@@ -1,0 +1,490 @@
+# FHIR R4 Integration for HMIS API
+
+**Generated:** {{ timestamp }}  
+**HMIS Spec Version:** {{ spec_version }}  
+**FHIR Version:** {{ fhir_version }}  
+**HUD Technical Standards:** {{ hud_technical_standards }}
+
+---
+
+## Overview
+
+This document describes the FHIR R4 integration for the HMIS API, including:
+- Resource mappings between HMIS and FHIR
+- HUD Technical Standards compliance via effect handlers
+- Usage examples for common scenarios
+- Security and privacy considerations
+
+## Quick Start
+```python
+from fhir_transformer import FHIRTransformer
+
+# Initialize transformer
+transformer = FHIRTransformer(enable_validation=True)
+
+# HMIS → FHIR
+hmis_client = {"PersonalID": "12345", "FirstName": "Jane", "LastName": "Doe"}
+fhir_patient = transformer.hmis_to_fhir(hmis_client, "Client")
+
+# FHIR → HMIS
+hmis_data = transformer.fhir_to_hmis(fhir_patient)
+```
+
+---
+
+## Resource Mappings
+
+{% for hmis_name, mapping in resource_mappings.items() %}
+### {{ hmis_name }} → {{ mapping.fhir_resource }}
+
+**FHIR Profile:** {{ mapping.fhir_profile or 'N/A' }}  
+**Ontology Class:** {{ mapping.ontology_class or 'N/A' }}  
+**HUD Data Element:** {{ mapping.hud_data_element or 'N/A' }}
+
+#### Field Mappings
+
+| HMIS Field | FHIR Path | Transform | HUD Element |
+|------------|-----------|-----------|-------------|
+{% for field_name, field_mapping in mapping.field_mappings.items() %}
+| `{{ field_name }}` | `{{ field_mapping.fhir_path }}` | {{ field_mapping.transform }} | {{ field_mapping.hud_data_element or 'N/A' }} |
+{% endfor %}
+
+#### Example Transformation
+
+**HMIS Input:**
+```json
+{
+{% for field_name in mapping.field_mappings.keys() %}
+  "{{ field_name }}": "{{ '{{' }} example_{{ field_name | lower }} {{ '}}' }}"{% if not loop.last %},{% endif %}
+{% endfor %}
+}
+```
+
+**FHIR Output:**
+```json
+{
+  "resourceType": "{{ mapping.fhir_resource }}",
+  "meta": {
+    "profile": ["{{ mapping.fhir_profile }}"]
+  },
+  "identifier": [...],
+  // ... full FHIR resource structure
+}
+```
+
+---
+
+{% endfor %}
+
+## HUD Technical Standards Compliance
+
+This integration enforces HUD 2004 Technical Standards through effect handlers:
+
+{% for handler_name, handler_data in effect_handlers.items() %}
+### {{ handler_name }}
+
+**Description:** {{ handler_data.description }}  
+**HUD Standard:** {{ handler_data.hud_standard }}  
+**FHIR Resources:** {{ handler_data.fhir_resources | join(', ') }}
+
+**Usage:**
+```python
+try:
+    transformer.{{ handler_name }}(
+        patient_id="12345",
+        # ... additional parameters
+    )
+except ValidationError as e:
+    print(f"Validation failed: {e}")
+    print(f"HUD Standard: {e.hud_standard}")
+```
+
+{% if handler_data.validation_rules %}
+**Validation Rules:**
+{% for rule in handler_data.validation_rules %}
+- {{ rule.rule }}
+  - Check: `{{ rule.check }}`
+{% endfor %}
+{% endif %}
+
+---
+
+{% endfor %}
+
+## Common Use Cases
+
+### Use Case 1: Client Data Submission to Medicaid
+```python
+from fhir_transformer import FHIRTransformer
+from datetime import datetime
+import requests
+
+transformer = FHIRTransformer()
+
+# Step 1: Validate ROI is active
+transformer.validate_roi_active(
+    patient_id="12345",
+    recipient_org="state-medicaid",
+    request_date=datetime.now()
+)
+
+# Step 2: Transform HMIS data to FHIR
+hmis_client = {
+    "PersonalID": "12345",
+    "FirstName": "Jane",
+    "LastName": "Doe",
+    "DOB": "1990-01-15",
+    "SSN": "123-45-6789",
+    "VeteranStatus": 0
+}
+
+fhir_patient = transformer.hmis_to_fhir(hmis_client, "Client")
+
+# Step 3: Create transaction bundle
+bundle = {
+    "resourceType": "Bundle",
+    "type": "transaction",
+    "entry": [
+        {
+            "resource": fhir_patient,
+            "request": {"method": "POST", "url": "Patient"}
+        }
+    ]
+}
+
+# Step 4: Submit to Medicaid FHIR API
+response = requests.post(
+    "https://medicaid.state.gov/fhir",
+    json=bundle,
+    headers={
+        "Authorization": f"Bearer {medicaid_token}",
+        "Content-Type": "application/fhir+json"
+    }
+)
+
+print(f"Medicaid submission: {response.status_code}")
+```
+
+### Use Case 2: Import FHIR Patient to HMIS
+```python
+# Receive FHIR Patient from external system
+fhir_patient = external_fhir_api.get_patient("patient-123")
+
+# Validate we have consent to import
+transformer.validate_collection_consent(
+    patient_id=fhir_patient["identifier"][0]["value"],
+    consent_id="consent-456"
+)
+
+# Transform to HMIS format
+hmis_client = transformer.fhir_to_hmis(fhir_patient)
+
+# Create in HMIS database
+hmis_api.create_client(hmis_client)
+```
+
+### Use Case 3: Data Retention Compliance Check
+```python
+from datetime import datetime
+
+# Check if enrollment data should be destroyed
+result = transformer.validate_retention_compliance(
+    resource_id="enrollment-789",
+    resource_type="EpisodeOfCare",
+    last_service_date=datetime(2017, 6, 15)
+)
+
+if result['action_required'] == 'DESTROY':
+    print(f"⚠️  Data retention period exceeded")
+    print(f"   Last service: {result['retention_end']}")
+    print(f"   Action: Securely destroy this record")
+    
+    # Trigger secure data destruction workflow
+    data_destruction_service.queue_for_destruction(
+        resource_id="enrollment-789",
+        reason="7-year retention period exceeded (HUD 4.2.3)"
+    )
+```
+
+---
+
+## Security & Privacy
+
+### OAuth 2.0 Scopes
+
+The FHIR API uses SMART on FHIR OAuth 2.0 scopes aligned with HUD allowable purposes:
+
+| Scope | HUD Purpose | Description |
+|-------|-------------|-------------|
+| `patient/*.read` | TREAT | Read patient data for service coordination |
+| `patient/*.write` | TREAT | Update patient data for service provision |
+| `system/*.read` | HOPERAT | System-level read for reporting/admin |
+
+### Consent Management
+
+All data collection and sharing requires active consent per HUD 4.2.1:
+```python
+# Before collecting data
+transformer.validate_collection_consent(
+    patient_id="12345",
+    consent_id="consent-001"
+)
+
+# Before sharing data
+transformer.validate_purpose_disclosure(
+    consent_id="consent-001",
+    requested_purpose="TREAT",
+    requested_fields=["FirstName", "LastName", "DOB"]
+)
+```
+
+### Audit Logging
+
+All data access is automatically logged via FHIR AuditEvent resources:
+```json
+{
+  "resourceType": "AuditEvent",
+  "type": {
+    "system": "http://terminology.hl7.org/CodeSystem/audit-event-type",
+    "code": "rest",
+    "display": "RESTful Operation"
+  },
+  "action": "R",
+  "recorded": "2025-11-07T14:30:00Z",
+  "agent": [{
+    "who": {
+      "reference": "Patient/12345"
+    },
+    "requestor": true
+  }],
+  "source": {
+    "observer": {
+      "display": "HMIS API"
+    }
+  }
+}
+```
+
+---
+
+## Error Handling
+
+The transformer raises specific exceptions for different violation types:
+```python
+from fhir_transformer import (
+    FHIRTransformer,
+    ValidationError,
+    ConsentError,
+    ROIError
+)
+
+transformer = FHIRTransformer()
+
+try:
+    transformer.validate_collection_consent(
+        patient_id="12345",
+        consent_id="consent-001"
+    )
+except ConsentError as e:
+    # HUD 4.2.1 violation
+    print(f"Consent validation failed: {e}")
+    print(f"HUD Standard violated: {e.hud_standard}")
+
+try:
+    transformer.validate_roi_active(
+        patient_id="12345",
+        recipient_org="external-org"
+    )
+except ROIError as e:
+    # HUD 4.2.3 violation (ROI specific)
+    print(f"ROI validation failed: {e}")
+
+try:
+    transformer.validate_purpose_disclosure(
+        consent_id="consent-001",
+        requested_purpose="HRESCH",  # Research
+        requested_fields=["SSN", "FirstName", "LastName"]
+    )
+except ValidationError as e:
+    # HUD 4.2.3 violation (purpose/minimum necessary)
+    print(f"Disclosure validation failed: {e}")
+```
+
+---
+
+## Transformation Rules
+
+{% for transform_name, transform_data in transformations.items() %}
+### {{ transform_name }}
+
+**Description:** {{ transform_data.description }}
+
+{% if transform_data.python_function %}
+**Implementation:**
+```python
+{{ transform_data.python_function }}
+```
+{% endif %}
+
+---
+
+{% endfor %}
+
+## FHIR Extensions
+
+This integration defines custom FHIR extensions for HMIS-specific data:
+
+| Extension URL | Purpose | Value Type |
+|---------------|---------|------------|
+| `http://hmis.hud.gov/fhir/extensions/veteran-status` | Veteran status | boolean |
+| `http://hmis.hud.gov/fhir/extensions/household-id` | Household identifier | Identifier |
+| `http://hmis.hud.gov/fhir/extensions/relationship-to-hoh` | Relationship to Head of Household | Coding |
+| `http://hmis.hud.gov/fhir/extensions/roi-status` | Release of Information status | Reference(Consent) |
+| `http://hmis.hud.gov/fhir/extensions/operating-period` | Project operating period | Period |
+| `http://hmis.hud.gov/fhir/extensions/ontology-class` | Links to HMIS ontology class | uri |
+| `http://hmis.hud.gov/fhir/extensions/hud-data-element` | HUD data element reference | string |
+
+---
+
+## Testing
+
+### Unit Tests
+```python
+import pytest
+from fhir_transformer import FHIRTransformer
+
+def test_hmis_to_fhir_client():
+    transformer = FHIRTransformer(enable_validation=False)
+    
+    hmis_client = {
+        "PersonalID": "12345",
+        "FirstName": "Jane",
+        "LastName": "Doe",
+        "DOB": "1990-01-15"
+    }
+    
+    fhir_patient = transformer.hmis_to_fhir(hmis_client, "Client")
+    
+    assert fhir_patient["resourceType"] == "Patient"
+    assert fhir_patient["name"][0]["given"][0] == "Jane"
+    assert fhir_patient["name"][0]["family"] == "Doe"
+    assert fhir_patient["birthDate"] == "1990-01-15"
+
+def test_fhir_to_hmis_roundtrip():
+    transformer = FHIRTransformer(enable_validation=False)
+    
+    original_data = {
+        "PersonalID": "12345",
+        "FirstName": "Jane",
+        "LastName": "Doe"
+    }
+    
+    # HMIS → FHIR → HMIS
+    fhir_patient = transformer.hmis_to_fhir(original_data, "Client")
+    roundtrip_data = transformer.fhir_to_hmis(fhir_patient)
+    
+    assert roundtrip_data["PersonalID"] == "12345"
+    assert roundtrip_data["FirstName"] == "Jane"
+    assert roundtrip_data["LastName"] == "Doe"
+```
+
+### Integration Tests
+```python
+def test_medicaid_submission_workflow():
+    """Test complete Medicaid submission workflow"""
+    transformer = FHIRTransformer()
+    
+    # Mock FHIR client
+    class MockFHIRClient:
+        def read(self, resource_type, id):
+            return MockConsent(status="active")
+    
+    transformer.fhir_client = MockFHIRClient()
+    
+    # Validate consent
+    transformer.validate_collection_consent(
+        patient_id="12345",
+        consent_id="consent-001"
+    )
+    
+    # Transform data
+    hmis_client = {"PersonalID": "12345", "FirstName": "Jane"}
+    fhir_patient = transformer.hmis_to_fhir(hmis_client, "Client")
+    
+    # Verify FHIR structure
+    assert fhir_patient["resourceType"] == "Patient"
+    assert "identifier" in fhir_patient
+```
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+**Problem:** `ConsentError: No active consent for data collection`
+
+**Solution:** Ensure an active Consent resource exists for the patient:
+```python
+# Check consent status
+consent = fhir_client.read("Consent", "consent-001")
+print(f"Consent status: {consent.status}")
+
+# If inactive, create new consent
+if consent.status != "active":
+    create_new_consent(patient_id="12345")
+```
+
+**Problem:** `ValidationError: Disclosure exceeds minimum necessary`
+
+**Solution:** Request only the minimum fields needed for the purpose:
+```python
+# Instead of requesting all fields
+transformer.validate_purpose_disclosure(
+    consent_id="consent-001",
+    requested_purpose="HPAYMT",
+    requested_fields=["PersonalID", "SSN", "DOB", "Coverage"]  # ✅ Minimum necessary
+)
+```
+
+**Problem:** `ROIError: No active ROI found for recipient`
+
+**Solution:** Create ROI consent that includes the recipient organization:
+```python
+roi_consent = {
+    "resourceType": "Consent",
+    "status": "active",
+    "category": [{
+        "coding": [{
+            "system": "http://hmis.hud.gov/codesystems/consent-type",
+            "code": "ROI"
+        }]
+    }],
+    "provision": {
+        "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+        },
+        "actor": [{
+            "reference": {
+                "reference": "Organization/medicaid-agency"
+            }
+        }]
+    }
+}
+```
+
+---
+
+## References
+
+- **HUD FY2026 HMIS Data Standards**: [HUD Exchange](https://www.hudexchange.info/programs/hmis/)
+- **HUD 2004 Technical Standards**: [Federal Register 04-17097](https://www.govinfo.gov/content/pkg/FR-2004-07-30/pdf/04-17097.pdf)
+- **FHIR R4 Specification**: [HL7 FHIR R4](https://hl7.org/fhir/R4/)
+- **US Core Implementation Guide**: [US Core v3.1.1](https://www.hl7.org/fhir/us/core/)
+- **SMART on FHIR**: [SMART Health IT](https://smarthealthit.org/)
+
+---
+
+**Generated by:** hmis-codegen v{{ version }}  
+**Timestamp:** {{ timestamp }}

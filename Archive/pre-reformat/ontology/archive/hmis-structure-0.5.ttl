@@ -1,0 +1,512 @@
+@prefix hmis: <http://hmis.hud.gov/ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+#################################################################
+#    Ontology Metadata
+#################################################################
+
+<http://hmis.hud.gov/ontology> rdf:type owl:Ontology ;
+    dcterms:title "HMIS FY2026 Core Structure Ontology"@en ;
+    dcterms:description """The structural layer of the HMIS ontology - defines core entities and their relationships.
+    
+The structure centers on Enrollment as the foundational transactional entity."""@en ;
+    dcterms:creator "HUD Data Lab - ICF HMIS Team"@en ;
+    dcterms:created "2026-01-28"^^xsd:date ;
+    dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    owl:versionInfo "FY2026-v1.0"@en ;
+    rdfs:comment "Hello, world!"@en .
+
+#################################################################
+#    Annotation Properties
+#################################################################
+
+hmis:linkedVocabulary rdf:type owl:AnnotationProperty ;
+    rdfs:label "linked vocabulary"@en ;
+    rdfs:comment "Links a datatype property to its corresponding SKOS ConceptScheme"@en .
+
+hmis:hudIdentifier rdf:type owl:AnnotationProperty ;
+    rdfs:label "HUD identifier"@en ;
+    rdfs:comment "Official HUD Data Dictionary element identifier (e.g., '3.01', '2.02.6')"@en .
+
+#################################################################
+#    Object Properties - Core Spine
+#################################################################
+# These form the central blackboard-drawable graph:
+# [Client] --hasEnrollment--> [Enrollment] --enrolledIn--> [Project] --operatedBy--> [Organization]
+
+###  Client ↔ Enrollment
+hmis:hasEnrollment rdf:type owl:ObjectProperty ;
+    rdfs:label "has enrollment"@en ;
+    rdfs:comment "A client has one or more enrollments in projects. Core spine relationship."@en ;
+    rdfs:domain hmis:Client ;
+    rdfs:range hmis:Enrollment ;
+    owl:inverseOf hmis:isEnrollmentOf .
+
+hmis:isEnrollmentOf rdf:type owl:ObjectProperty ;
+    rdfs:label "is enrollment of"@en ;
+    rdfs:comment "An enrollment belongs to a specific client."@en ;
+    rdfs:domain hmis:Enrollment ;
+    rdfs:range hmis:Client .
+
+###  Enrollment ↔ Project
+hmis:enrolledIn rdf:type owl:ObjectProperty ;
+    rdfs:label "enrolled in"@en ;
+    rdfs:comment "An enrollment occurs within a specific project. Core spine relationship."@en ;
+    rdfs:domain hmis:Enrollment ;
+    rdfs:range hmis:Project ;
+    owl:inverseOf hmis:hasEnrollment_Project .
+
+hmis:hasEnrollment_Project rdf:type owl:ObjectProperty ;
+    rdfs:label "has enrollment"@en ;
+    rdfs:comment "A project contains multiple enrollments."@en ;
+    rdfs:domain hmis:Project ;
+    rdfs:range hmis:Enrollment .
+
+###  Project ↔ Organization
+hmis:operatedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "operated by"@en ;
+    rdfs:comment "A project is operated by an organization. Core spine relationship."@en ;
+    rdfs:domain hmis:Project ;
+    rdfs:range hmis:Organization ;
+    owl:inverseOf hmis:operates .
+
+hmis:operates rdf:type owl:ObjectProperty ;
+    rdfs:label "operates"@en ;
+    rdfs:comment "An organization operates one or more projects."@en ;
+    rdfs:domain hmis:Organization ;
+    rdfs:range hmis:Project .
+
+#################################################################
+#    Object Properties - Household Relationships
+#################################################################
+
+###  Enrollment ↔ Household
+hmis:memberOf rdf:type owl:ObjectProperty ;
+    rdfs:label "member of"@en ;
+    rdfs:comment "An enrollment is part of a household group."@en ;
+    rdfs:domain hmis:Enrollment ;
+    rdfs:range hmis:Household ;
+    owl:inverseOf hmis:hasMember .
+
+hmis:hasMember rdf:type owl:ObjectProperty ;
+    rdfs:label "has member"@en ;
+    rdfs:comment "A household has one or more enrollment members."@en ;
+    rdfs:domain hmis:Household ;
+    rdfs:range hmis:Enrollment .
+
+###  Household ↔ Project
+hmis:inProject rdf:type owl:ObjectProperty ;
+    rdfs:label "in project"@en ;
+    rdfs:comment "A household is enrolled in a specific project."@en ;
+    rdfs:domain hmis:Household ;
+    rdfs:range hmis:Project ;
+    owl:inverseOf hmis:hasHousehold .
+
+hmis:hasHousehold rdf:type owl:ObjectProperty ;
+    rdfs:label "has household"@en ;
+    rdfs:comment "A project contains households."@en ;
+    rdfs:domain hmis:Project ;
+    rdfs:range hmis:Household .
+
+#################################################################
+#    Object Properties - Assessment/Event Tracking
+#################################################################
+# SubEnrollment entities (assessments, events, CLS) occur DURING enrollment
+
+###  Assessment ↔ Enrollment
+hmis:hasAssessment rdf:type owl:ObjectProperty ;
+    rdfs:label "has assessment"@en ;
+    rdfs:comment "An enrollment has assessments conducted during it."@en ;
+    rdfs:domain hmis:Enrollment ;
+    rdfs:range hmis:Assessment ;
+    owl:inverseOf hmis:isAssessmentOf .
+
+hmis:isAssessmentOf rdf:type owl:ObjectProperty ;
+    rdfs:label "is assessment of"@en ;
+    rdfs:comment "An assessment occurs during a specific enrollment."@en ;
+    rdfs:domain hmis:Assessment ;
+    rdfs:range hmis:Enrollment .
+
+###  CEAssessment ↔ Enrollment
+hmis:hasCEAssessment rdf:type owl:ObjectProperty ;
+    rdfs:label "has CE assessment"@en ;
+    rdfs:comment "An enrollment has coordinated entry assessments."@en ;
+    rdfs:domain hmis:Enrollment ;
+    rdfs:range hmis:CEAssessment ;
+    owl:inverseOf hmis:isCEAssessmentOf .
+
+hmis:isCEAssessmentOf rdf:type owl:ObjectProperty ;
+    rdfs:label "is CE assessment of"@en ;
+    rdfs:domain hmis:CEAssessment ;
+    rdfs:range hmis:Enrollment .
+
+###  CEEvent ↔ Enrollment
+hmis:hasCEEvent rdf:type owl:ObjectProperty ;
+    rdfs:label "has CE event"@en ;
+    rdfs:comment "An enrollment has coordinated entry events."@en ;
+    rdfs:domain hmis:Enrollment ;
+    rdfs:range hmis:CEEvent ;
+    owl:inverseOf hmis:isCEEventOf .
+
+hmis:isCEEventOf rdf:type owl:ObjectProperty ;
+    rdfs:label "is CE event of"@en ;
+    rdfs:domain hmis:CEEvent ;
+    rdfs:range hmis:Enrollment .
+
+###  CurrentLivingSituation ↔ Enrollment
+hmis:hasCLS rdf:type owl:ObjectProperty ;
+    rdfs:label "has current living situation"@en ;
+    rdfs:comment "An enrollment has CLS updates tracking point-in-time status."@en ;
+    rdfs:domain hmis:Enrollment ;
+    rdfs:range hmis:CurrentLivingSituation ;
+    owl:inverseOf hmis:isCLSOf .
+
+hmis:isCLSOf rdf:type owl:ObjectProperty ;
+    rdfs:label "is CLS of"@en ;
+    rdfs:domain hmis:CurrentLivingSituation ;
+    rdfs:range hmis:Enrollment .
+
+#################################################################
+#    Object Properties - Project Configuration
+#################################################################
+# SubProject entities configure how a project operates
+
+###  CEParticipation ↔ Project
+hmis:hasCEParticipation rdf:type owl:ObjectProperty ;
+    rdfs:label "has CE participation"@en ;
+    rdfs:comment "A project has coordinated entry participation configuration."@en ;
+    rdfs:domain hmis:Project ;
+    rdfs:range hmis:CEParticipation ;
+    owl:inverseOf hmis:isCEParticipationOf .
+
+hmis:isCEParticipationOf rdf:type owl:ObjectProperty ;
+    rdfs:label "is CE participation of"@en ;
+    rdfs:domain hmis:CEParticipation ;
+    rdfs:range hmis:Project .
+
+###  Inventory ↔ Project
+hmis:hasInventory rdf:type owl:ObjectProperty ;
+    rdfs:label "has inventory"@en ;
+    rdfs:comment "A project has bed/unit inventory configuration."@en ;
+    rdfs:domain hmis:Project ;
+    rdfs:range hmis:Inventory ;
+    owl:inverseOf hmis:isInventoryOf .
+
+hmis:isInventoryOf rdf:type owl:ObjectProperty ;
+    rdfs:label "is inventory of"@en ;
+    rdfs:domain hmis:Inventory ;
+    rdfs:range hmis:Project .
+
+###  Funder ↔ Project
+hmis:fundedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "funded by"@en ;
+    rdfs:comment "A project is funded by one or more funding sources."@en ;
+    rdfs:domain hmis:Project ;
+    rdfs:range hmis:Funder ;
+    owl:inverseOf hmis:funds .
+
+hmis:funds rdf:type owl:ObjectProperty ;
+    rdfs:label "funds"@en ;
+    rdfs:domain hmis:Funder ;
+    rdfs:range hmis:Project .
+
+#################################################################
+#    Data Properties
+#################################################################
+# Note: Enumerated values (Gender, ProjectType, etc.) store INTEGER codes
+# that link to SKOS Concepts via hmis:linkedVocabulary annotation
+
+### Client Properties
+
+hmis:PersonalID rdf:type owl:DatatypeProperty ;
+    rdfs:label "Personal ID"@en ;
+    rdfs:domain hmis:Client ;
+    rdfs:range xsd:string ;
+    hmis:hudIdentifier "3.01" .
+
+hmis:FirstName rdf:type owl:DatatypeProperty ;
+    rdfs:label "First Name"@en ;
+    rdfs:domain hmis:Client ;
+    rdfs:range xsd:string ;
+    hmis:hudIdentifier "3.01.1" .
+
+hmis:LastName rdf:type owl:DatatypeProperty ;
+    rdfs:label "Last Name"@en ;
+    rdfs:domain hmis:Client ;
+    rdfs:range xsd:string ;
+    hmis:hudIdentifier "3.01.4" .
+
+hmis:DOB rdf:type owl:DatatypeProperty ;
+    rdfs:label "Date of Birth"@en ;
+    rdfs:domain hmis:Client ;
+    rdfs:range xsd:date ;
+    hmis:hudIdentifier "3.03.1" .
+
+hmis:SSN rdf:type owl:DatatypeProperty ;
+    rdfs:label "Social Security Number"@en ;
+    rdfs:comment "May be hashed for privacy"@en ;
+    rdfs:domain hmis:Client ;
+    rdfs:range xsd:string ;
+    hmis:hudIdentifier "3.02" .
+
+hmis:Gender rdf:type owl:DatatypeProperty ;
+    rdfs:label "Gender"@en ;
+    rdfs:domain hmis:Client ;
+    rdfs:range xsd:integer ;
+    hmis:hudIdentifier "3.06.1" ;
+    hmis:linkedVocabulary hmis:GenderScheme .
+
+hmis:VeteranStatus rdf:type owl:DatatypeProperty ;
+    rdfs:label "Veteran Status"@en ;
+    rdfs:domain hmis:Client ;
+    rdfs:range xsd:integer ;
+    hmis:hudIdentifier "3.07" ;
+    hmis:linkedVocabulary hmis:YesNoReasonsScheme .
+
+### Enrollment Properties
+
+hmis:EnrollmentID rdf:type owl:DatatypeProperty ;
+    rdfs:label "Enrollment ID"@en ;
+    rdfs:domain hmis:Enrollment ;
+    rdfs:range xsd:string ;
+    hmis:hudIdentifier "3.12" .
+
+hmis:EntryDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "Entry Date"@en ;
+    rdfs:domain hmis:Enrollment ;
+    rdfs:range xsd:date ;
+    hmis:hudIdentifier "3.10" .
+
+hmis:EnrollmentCoC rdf:type owl:DatatypeProperty ;
+    rdfs:label "Enrollment CoC"@en ;
+    rdfs:domain hmis:Enrollment ;
+    rdfs:range xsd:string ;
+    hmis:hudIdentifier "3.14" .
+
+hmis:RelationshipToHoH rdf:type owl:DatatypeProperty ;
+    rdfs:label "Relationship to Head of Household"@en ;
+    rdfs:domain hmis:Enrollment ;
+    rdfs:range xsd:integer ;
+    hmis:hudIdentifier "3.15" ;
+    hmis:linkedVocabulary hmis:RelationshipScheme .
+
+### Project Properties
+
+hmis:ProjectID rdf:type owl:DatatypeProperty ;
+    rdfs:label "Project ID"@en ;
+    rdfs:domain hmis:Project ;
+    rdfs:range xsd:string ;
+    hmis:hudIdentifier "2.02" .
+
+hmis:ProjectName rdf:type owl:DatatypeProperty ;
+    rdfs:label "Project Name"@en ;
+    rdfs:domain hmis:Project ;
+    rdfs:range xsd:string ;
+    hmis:hudIdentifier "2.02.1" .
+
+hmis:ProjectType rdf:type owl:DatatypeProperty ;
+    rdfs:label "Project Type"@en ;
+    rdfs:domain hmis:Project ;
+    rdfs:range xsd:integer ;
+    hmis:hudIdentifier "2.02.6" ;
+    hmis:linkedVocabulary hmis:ProjectTypeScheme .
+
+### Organization Properties
+
+hmis:OrganizationID rdf:type owl:DatatypeProperty ;
+    rdfs:label "Organization ID"@en ;
+    rdfs:domain hmis:Organization ;
+    rdfs:range xsd:string ;
+    hmis:hudIdentifier "2.01" .
+
+hmis:OrganizationName rdf:type owl:DatatypeProperty ;
+    rdfs:label "Organization Name"@en ;
+    rdfs:domain hmis:Organization ;
+    rdfs:range xsd:string ;
+    hmis:hudIdentifier "2.01.1" .
+
+### Household Properties
+
+hmis:HouseholdID rdf:type owl:DatatypeProperty ;
+    rdfs:label "Household ID"@en ;
+    rdfs:domain hmis:Household ;
+    rdfs:range xsd:string .
+
+### Metadata Properties (common across all entities)
+
+hmis:DateCreated rdf:type owl:DatatypeProperty ;
+    rdfs:label "Date Created"@en ;
+    rdfs:range xsd:dateTime .
+
+hmis:DateUpdated rdf:type owl:DatatypeProperty ;
+    rdfs:label "Date Updated"@en ;
+    rdfs:range xsd:dateTime .
+
+hmis:DateDeleted rdf:type owl:DatatypeProperty ;
+    rdfs:label "Date Deleted"@en ;
+    rdfs:comment "Soft delete timestamp for data exchange"@en ;
+    rdfs:range xsd:dateTime .
+
+hmis:UserID rdf:type owl:DatatypeProperty ;
+    rdfs:label "User ID"@en ;
+    rdfs:comment "User who created/modified the record"@en ;
+    rdfs:range xsd:string .
+
+#################################################################
+#    Classes - Core Domain Entities
+#################################################################
+
+###  Person (abstract parent)
+hmis:Person rdf:type owl:Class ;
+    rdfs:label "Person"@en ;
+    rdfs:comment "Abstract parent class for people in HMIS"@en .
+
+###  Client
+hmis:Client rdf:type owl:Class ;
+    rdfs:subClassOf hmis:Person ;
+    rdfs:label "Client"@en ;
+    rdfs:comment "A person receiving homeless services"@en .
+
+###  Enrollment (central transactional entity)
+hmis:Enrollment rdf:type owl:Class ;
+    rdfs:label "Enrollment"@en ;
+    rdfs:comment "A period of service within a project. The central entity - everything connects through enrollment."@en .
+
+###  Project
+hmis:Project rdf:type owl:Class ;
+    rdfs:label "Project"@en ;
+    rdfs:comment "A program providing homeless services"@en .
+
+###  Organization
+hmis:Organization rdf:type owl:Class ;
+    rdfs:label "Organization"@en ;
+    rdfs:comment "An entity operating one or more projects"@en .
+
+###  Household
+hmis:Household rdf:type owl:Class ;
+    rdfs:label "Household"@en ;
+    rdfs:comment "A group of people enrolled together"@en .
+
+#################################################################
+#    Classes - SubEnrollment Entities
+#################################################################
+# These occur DURING enrollment - assessments, events, tracking
+
+###  SubEnrollment (abstract parent)
+hmis:SubEnrollment rdf:type owl:Class ;
+    rdfs:label "SubEnrollment"@en ;
+    rdfs:comment "Abstract parent for entities that occur during an enrollment"@en .
+
+###  Assessment
+hmis:Assessment rdf:type owl:Class ;
+    rdfs:subClassOf hmis:SubEnrollment ;
+    rdfs:label "Assessment"@en ;
+    rdfs:comment "An assessment event during enrollment"@en .
+
+###  CEAssessment
+hmis:CEAssessment rdf:type owl:Class ;
+    rdfs:subClassOf hmis:SubEnrollment ;
+    rdfs:label "Coordinated Entry Assessment"@en ;
+    rdfs:comment "A coordinated entry assessment"@en .
+
+###  CEEvent
+hmis:CEEvent rdf:type owl:Class ;
+    rdfs:subClassOf hmis:SubEnrollment ;
+    rdfs:label "Coordinated Entry Event"@en ;
+    rdfs:comment "A coordinated entry event"@en .
+
+###  CurrentLivingSituation
+hmis:CurrentLivingSituation rdf:type owl:Class ;
+    rdfs:subClassOf hmis:SubEnrollment ;
+    rdfs:label "Current Living Situation"@en ;
+    rdfs:comment "Point-in-time update on client living situation"@en .
+
+#################################################################
+#    Classes - SubProject Entities
+#################################################################
+# These configure how a project operates
+
+###  SubProject (abstract parent)
+hmis:SubProject rdf:type owl:Class ;
+    rdfs:label "SubProject"@en ;
+    rdfs:comment "Abstract parent for project configuration entities"@en .
+
+###  CEParticipation
+hmis:CEParticipation rdf:type owl:Class ;
+    rdfs:subClassOf hmis:SubProject ;
+    rdfs:label "Coordinated Entry Participation"@en ;
+    rdfs:comment "Configuration for project's CE participation"@en .
+
+###  Inventory
+hmis:Inventory rdf:type owl:Class ;
+    rdfs:subClassOf hmis:SubProject ;
+    rdfs:label "Inventory"@en ;
+    rdfs:comment "Bed and unit inventory for a project"@en .
+
+###  Funder
+hmis:Funder rdf:type owl:Class ;
+    rdfs:label "Funder"@en ;
+    rdfs:comment "A funding source for a project"@en .
+
+#################################################################
+#    Classes - Metadata Entities
+#################################################################
+
+###  CoC
+hmis:CoC rdf:type owl:Class ;
+    rdfs:label "Continuum of Care"@en ;
+    rdfs:comment "Geographic region coordinating homeless services"@en .
+
+#################################################################
+#    SKOS ConceptScheme Stubs
+#################################################################
+# These are fully defined in hmis-vocabularies.ttl
+# Listed here for documentation only
+
+hmis:GenderScheme rdf:type skos:ConceptScheme ;
+    rdfs:label "Gender Identity"@en ;
+    hmis:hudIdentifier "3.06.1" .
+
+hmis:ProjectTypeScheme rdf:type skos:ConceptScheme ;
+    rdfs:label "HUD Project Types"@en ;
+    hmis:hudIdentifier "2.02.6" .
+
+hmis:YesNoReasonsScheme rdf:type skos:ConceptScheme ;
+    rdfs:label "Yes/No with Reasons for Missing Data"@en ;
+    hmis:hudIdentifier "1.8" .
+
+hmis:RelationshipScheme rdf:type skos:ConceptScheme ;
+    rdfs:label "Relationship to Head of Household"@en ;
+    hmis:hudIdentifier "3.15" .
+
+#################################################################
+#    Design Notes
+#################################################################
+
+# 1. BLACKBOARD-DRAWABLE
+#    The core spine can be drawn in 10 seconds:
+#    [Client] --hasEnrollment--> [Enrollment] --enrolledIn--> [Project] --operatedBy--> [Organization]
+
+# 2. ENROLLMENT-CENTRIC
+#    Enrollment is the central transactional entity. Everything connects through it.
+#    This matches CSV export structure and operational reality.
+
+# 3. NO SLOT ABSTRACTION
+#    This uses direct datatype properties, not abstract slot classes.
+#    Keeps it simple and drawable.
+
+# 4. FLAT CLASS HIERARCHY
+#    No AdultEnrollment/YouthEnrollment subclasses.
+#    Age constraints belong in SHACL, not OWL structure.
+
+# 5. ENUMERATED VALUES → SKOS
+#    Gender, ProjectType, etc. store integers that link to SKOS Concepts.
+#    The integer matches skos:notation in the vocabulary layer.
+
+# 6. VALIDATION → SHACL
+#    Constraints like "ExitDate > EntryDate" belong in hmis-constraints.ttl.

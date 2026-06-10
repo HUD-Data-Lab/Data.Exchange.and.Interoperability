@@ -1,0 +1,1088 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix hmis: <http://hmis.hud.gov/ontology#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <http://www.w3.org/2002/07/owl#> .
+
+[ rdf:type owl:Ontology
+ ] .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/created
+dcterms:created rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/identifier
+dcterms:identifier rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/license
+dcterms:license rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/modified
+dcterms:modified rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/publisher
+dcterms:publisher rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/source
+dcterms:source rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/spatial
+dcterms:spatial rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+dcterms:title rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#altLabel
+skos:altLabel rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#broader
+skos:broader rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#definition
+skos:definition rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#hasTopConcept
+skos:hasTopConcept rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#inScheme
+skos:inScheme rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#notation
+skos:notation rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#note
+skos:note rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#prefLabel
+skos:prefLabel rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#topConceptOf
+skos:topConceptOf rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.w3.org/2004/02/skos/core#Concept
+skos:Concept rdf:type owl:Class .
+
+
+###  http://www.w3.org/2004/02/skos/core#ConceptScheme
+skos:ConceptScheme rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://hmis.hud.gov/ontology#CoC-CA-500
+hmis:CoC-CA-500 rdf:type owl:NamedIndividual ,
+                         skos:Concept ;
+                dcterms:source <https://www.hudexchange.info/programs/coc/coc-geographic-codes/> ;
+                dcterms:spatial "Santa Clara County, California"@en ;
+                skos:altLabel "Santa Clara CoC"@en ;
+                skos:definition "Continuum of Care serving San Jose, Santa Clara City and County, California."@en ;
+                skos:inScheme hmis:CoCScheme ;
+                skos:notation "CA-500" ;
+                skos:prefLabel "San Jose/Santa Clara City & County CoC"@en .
+
+
+###  http://hmis.hud.gov/ontology#CoC-CA-600
+hmis:CoC-CA-600 rdf:type owl:NamedIndividual ,
+                         skos:Concept ;
+                dcterms:source <https://www.hudexchange.info/programs/coc/coc-geographic-codes/> ;
+                dcterms:spatial "Los Angeles County, California"@en ;
+                skos:altLabel "LA CoC"@en ;
+                skos:definition "Continuum of Care serving Los Angeles City and County, California."@en ;
+                skos:inScheme hmis:CoCScheme ;
+                skos:notation "CA-600" ;
+                skos:prefLabel "Los Angeles City & County CoC"@en .
+
+
+###  http://hmis.hud.gov/ontology#CoC-NY-600
+hmis:CoC-NY-600 rdf:type owl:NamedIndividual ,
+                         skos:Concept ;
+                dcterms:source <https://www.hudexchange.info/programs/coc/coc-geographic-codes/> ;
+                dcterms:spatial "New York City, New York"@en ;
+                skos:altLabel "NYC CoC"@en ;
+                skos:definition "Continuum of Care serving New York City (all five boroughs), New York."@en ;
+                skos:inScheme hmis:CoCScheme ;
+                skos:notation "NY-600" ;
+                skos:prefLabel "New York City CoC"@en .
+
+
+###  http://hmis.hud.gov/ontology#CoCScheme
+hmis:CoCScheme rdf:type owl:NamedIndividual ,
+                        skos:ConceptScheme ;
+               dcterms:created "2026-01-28"^^xsd:date ;
+               dcterms:description "HUD-designated Continuum of Care geographic codes"@en ;
+               dcterms:identifier "CoC-Codes" ;
+               dcterms:publisher "U.S. Department of Housing and Urban Development"@en ;
+               dcterms:source <https://www.hudexchange.info/programs/coc/coc-geographic-codes/> ;
+               dcterms:title "Continuum of Care Codes"@en ;
+               skos:definition "Geographic identifiers for Continuum of Care planning regions as designated by HUD."@en ;
+               skos:note "Complete list available at HUD Exchange. Codes follow pattern XX-### where XX is state and ### is numeric identifier."@en ;
+               skos:prefLabel "CoC Codes"@en .
+
+
+###  http://hmis.hud.gov/ontology#Destination-101
+hmis:Destination-101 rdf:type owl:NamedIndividual ,
+                              skos:Concept ;
+                     dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#appendixA> ;
+                     skos:broader hmis:DestinationCategory-Permanent ;
+                     skos:definition "Client moved from one HOPWA-funded project to a HOPWA-funded permanent housing project."@en ;
+                     skos:inScheme hmis:DestinationScheme ;
+                     skos:notation "101" ;
+                     skos:prefLabel "Moved from one HOPWA funded project to HOPWA PH"@en ;
+                     skos:topConceptOf hmis:DestinationScheme .
+
+
+###  http://hmis.hud.gov/ontology#Destination-116
+hmis:Destination-116 rdf:type owl:NamedIndividual ,
+                              skos:Concept ;
+                     dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#appendixA> ;
+                     skos:broader hmis:DestinationCategory-Temporary ;
+                     skos:definition "Client moved from one HOPWA-funded project to a HOPWA-funded transitional housing project."@en ;
+                     skos:inScheme hmis:DestinationScheme ;
+                     skos:notation "116" ;
+                     skos:prefLabel "Moved from one HOPWA funded project to HOPWA TH"@en ;
+                     skos:topConceptOf hmis:DestinationScheme .
+
+
+###  http://hmis.hud.gov/ontology#Destination-17
+hmis:Destination-17 rdf:type owl:NamedIndividual ,
+                             skos:Concept ;
+                    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#appendixA> ;
+                    skos:definition "A destination not covered by other categories."@en ;
+                    skos:inScheme hmis:DestinationScheme ;
+                    skos:notation "17" ;
+                    skos:note "Use sparingly. Should be accompanied by explanation in OtherDestination field."@en ;
+                    skos:prefLabel "Other"@en ;
+                    skos:topConceptOf hmis:DestinationScheme .
+
+
+###  http://hmis.hud.gov/ontology#Destination-204
+hmis:Destination-204 rdf:type owl:NamedIndividual ,
+                              skos:Concept ;
+                     dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#appendixA> ;
+                     skos:altLabel "Psychiatric Facility"@en ;
+                     skos:broader hmis:DestinationCategory-Institutional ;
+                     skos:definition "Client moved to a psychiatric hospital or psychiatric treatment facility."@en ;
+                     skos:inScheme hmis:DestinationScheme ;
+                     skos:notation "204" ;
+                     skos:prefLabel "Psychiatric hospital or other psychiatric facility"@en ;
+                     skos:topConceptOf hmis:DestinationScheme .
+
+
+###  http://hmis.hud.gov/ontology#Destination-24
+hmis:Destination-24 rdf:type owl:NamedIndividual ,
+                             skos:Concept ;
+                    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#appendixA> ;
+                    skos:definition "Client died while enrolled in the project."@en ;
+                    skos:inScheme hmis:DestinationScheme ;
+                    skos:notation "24" ;
+                    skos:note "Special exit reason. Destination category not applicable."@en ;
+                    skos:prefLabel "Deceased"@en ;
+                    skos:topConceptOf hmis:DestinationScheme .
+
+
+###  http://hmis.hud.gov/ontology#Destination-30
+hmis:Destination-30 rdf:type owl:NamedIndividual ,
+                             skos:Concept ;
+                    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#appendixA> ;
+                    skos:definition "Client exited without completing an exit interview, destination unknown."@en ;
+                    skos:inScheme hmis:DestinationScheme ;
+                    skos:notation "30" ;
+                    skos:note "Common in Night-by-Night shelters where exit is determined by non-attendance."@en ;
+                    skos:prefLabel "No exit interview completed"@en ;
+                    skos:topConceptOf hmis:DestinationScheme .
+
+
+###  http://hmis.hud.gov/ontology#Destination-332
+hmis:Destination-332 rdf:type owl:NamedIndividual ,
+                              skos:Concept ;
+                     dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#appendixA> ;
+                     skos:broader hmis:DestinationCategory-Temporary ;
+                     skos:definition "Staying with family or friends (not a crisis situation), temporary arrangement."@en ;
+                     skos:inScheme hmis:DestinationScheme ;
+                     skos:notation "332" ;
+                     skos:prefLabel "Host Home (non-crisis)"@en ;
+                     skos:topConceptOf hmis:DestinationScheme .
+
+
+###  http://hmis.hud.gov/ontology#Destination-37
+hmis:Destination-37 rdf:type owl:NamedIndividual ,
+                             skos:Concept ;
+                    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#appendixA> ;
+                    skos:definition "Staff attempted to determine destination but were unable to do so."@en ;
+                    skos:inScheme hmis:DestinationScheme ;
+                    skos:notation "37" ;
+                    skos:prefLabel "Worker unable to determine"@en ;
+                    skos:topConceptOf hmis:DestinationScheme .
+
+
+###  http://hmis.hud.gov/ontology#Destination-422
+hmis:Destination-422 rdf:type owl:NamedIndividual ,
+                              skos:Concept ;
+                     dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#appendixA> ;
+                     skos:altLabel "Homeless"@en ,
+                                   "Unsheltered"@en ;
+                     skos:broader hmis:DestinationCategory-Homeless ;
+                     skos:definition "Client exited to a place not meant for human habitation (e.g., street, vehicle, abandoned building)."@en ;
+                     skos:inScheme hmis:DestinationScheme ;
+                     skos:notation "422" ;
+                     skos:note "Negative outcome - client returned to homelessness."@en ;
+                     skos:prefLabel "Departed for unsheltered homeless situation"@en ;
+                     skos:topConceptOf hmis:DestinationScheme .
+
+
+###  http://hmis.hud.gov/ontology#Destination-435
+hmis:Destination-435 rdf:type owl:NamedIndividual ,
+                              skos:Concept ;
+                     dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#appendixA> ;
+                     skos:altLabel "Emergency Shelter"@en ;
+                     skos:broader hmis:DestinationCategory-Homeless ;
+                     skos:definition "Client exited to an emergency shelter."@en ;
+                     skos:inScheme hmis:DestinationScheme ;
+                     skos:notation "435" ;
+                     skos:note "Still experiencing homelessness at exit."@en ;
+                     skos:prefLabel "Departed for emergency shelter"@en ;
+                     skos:topConceptOf hmis:DestinationScheme .
+
+
+###  http://hmis.hud.gov/ontology#Destination-8
+hmis:Destination-8 rdf:type owl:NamedIndividual ,
+                            skos:Concept ;
+                   dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=15> ;
+                   skos:definition "The client does not know where they will be staying after exit."@en ;
+                   skos:inScheme hmis:DestinationScheme ;
+                   skos:notation "8" ;
+                   skos:prefLabel "Client doesn't know"@en ;
+                   skos:topConceptOf hmis:DestinationScheme .
+
+
+###  http://hmis.hud.gov/ontology#Destination-9
+hmis:Destination-9 rdf:type owl:NamedIndividual ,
+                            skos:Concept ;
+                   dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=15> ;
+                   skos:definition "The client knows their destination but prefers not to disclose it."@en ;
+                   skos:inScheme hmis:DestinationScheme ;
+                   skos:notation "9" ;
+                   skos:prefLabel "Client prefers not to answer"@en ;
+                   skos:topConceptOf hmis:DestinationScheme .
+
+
+###  http://hmis.hud.gov/ontology#Destination-99
+hmis:Destination-99 rdf:type owl:NamedIndividual ,
+                             skos:Concept ;
+                    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=15> ;
+                    skos:definition "Destination information was not collected during exit process."@en ;
+                    skos:inScheme hmis:DestinationScheme ;
+                    skos:notation "99" ;
+                    skos:prefLabel "Data not collected"@en ;
+                    skos:topConceptOf hmis:DestinationScheme .
+
+
+###  http://hmis.hud.gov/ontology#DestinationCategory-Homeless
+hmis:DestinationCategory-Homeless rdf:type owl:NamedIndividual ,
+                                           skos:Concept ;
+                                  skos:definition "Destinations where client continues to experience homelessness (negative outcomes)."@en ;
+                                  skos:inScheme hmis:DestinationScheme ;
+                                  skos:prefLabel "Experiencing Homelessness"@en .
+
+
+###  http://hmis.hud.gov/ontology#DestinationCategory-Institutional
+hmis:DestinationCategory-Institutional rdf:type owl:NamedIndividual ,
+                                                skos:Concept ;
+                                       skos:definition "Destinations representing institutional care (hospitals, treatment facilities, incarceration)."@en ;
+                                       skos:inScheme hmis:DestinationScheme ;
+                                       skos:prefLabel "Institutional Settings"@en .
+
+
+###  http://hmis.hud.gov/ontology#DestinationCategory-Permanent
+hmis:DestinationCategory-Permanent rdf:type owl:NamedIndividual ,
+                                            skos:Concept ;
+                                   skos:definition "Destinations representing permanent housing (positive outcomes)."@en ;
+                                   skos:inScheme hmis:DestinationScheme ;
+                                   skos:note "Used for System Performance Measure calculations."@en ;
+                                   skos:prefLabel "Permanent Housing Situations"@en .
+
+
+###  http://hmis.hud.gov/ontology#DestinationCategory-Temporary
+hmis:DestinationCategory-Temporary rdf:type owl:NamedIndividual ,
+                                            skos:Concept ;
+                                   skos:definition "Destinations representing temporary housing arrangements."@en ;
+                                   skos:inScheme hmis:DestinationScheme ;
+                                   skos:prefLabel "Temporary Housing Situations"@en .
+
+
+###  http://hmis.hud.gov/ontology#DestinationScheme
+hmis:DestinationScheme rdf:type owl:NamedIndividual ,
+                                skos:ConceptScheme ;
+                       dcterms:created "2026-01-28"^^xsd:date ;
+                       dcterms:description "The living situation that the client moved to at program exit"@en ;
+                       dcterms:identifier "3.12" ;
+                       dcterms:publisher "U.S. Department of Housing and Urban Development"@en ;
+                       dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=76> ;
+                       dcterms:title "Destination at Program Exit"@en ;
+                       skos:definition "Record where the client is going when they exit the project. Used to track housing outcomes and system performance."@en ;
+                       skos:hasTopConcept hmis:Destination-101 ,
+                                          hmis:Destination-116 ,
+                                          hmis:Destination-118 ,
+                                          hmis:Destination-17 ,
+                                          hmis:Destination-204 ,
+                                          hmis:Destination-205 ,
+                                          hmis:Destination-206 ,
+                                          hmis:Destination-207 ,
+                                          hmis:Destination-225 ,
+                                          hmis:Destination-24 ,
+                                          hmis:Destination-30 ,
+                                          hmis:Destination-302 ,
+                                          hmis:Destination-314 ,
+                                          hmis:Destination-329 ,
+                                          hmis:Destination-332 ,
+                                          hmis:Destination-37 ,
+                                          hmis:Destination-422 ,
+                                          hmis:Destination-435 ,
+                                          hmis:Destination-8 ,
+                                          hmis:Destination-9 ,
+                                          hmis:Destination-99 ;
+                       skos:note "See Appendix A - Living Situation Option List in FY2026 Data Standards for complete enumeration."@en ;
+                       skos:prefLabel "Exit Destination"@en .
+
+
+###  http://hmis.hud.gov/ontology#Funder-1
+hmis:Funder-1 rdf:type owl:NamedIndividual ,
+                       skos:Concept ;
+              dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=44> ;
+              skos:altLabel "CoC SHP"@en ;
+              skos:definition "HUD Continuum of Care Supportive Housing Program funding."@en ;
+              skos:inScheme hmis:FunderScheme ;
+              skos:notation "1" ;
+              skos:prefLabel "HUD: CoC - Supportive Housing Program (SHP)"@en ;
+              skos:topConceptOf hmis:FunderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Funder-10
+hmis:Funder-10 rdf:type owl:NamedIndividual ,
+                        skos:Concept ;
+               dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=44> ;
+               skos:altLabel "VOCA"@en ;
+               skos:definition "Department of Justice Victims of Crime Act funding."@en ;
+               skos:inScheme hmis:FunderScheme ;
+               skos:notation "10" ;
+               skos:prefLabel "DOJ: VOCA - Victims of Crime Act"@en ;
+               skos:topConceptOf hmis:FunderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Funder-11
+hmis:Funder-11 rdf:type owl:NamedIndividual ,
+                        skos:Concept ;
+               dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=44> ;
+               skos:altLabel "VAWA"@en ;
+               skos:definition "Department of Justice Violence Against Women Act funding."@en ;
+               skos:inScheme hmis:FunderScheme ;
+               skos:notation "11" ;
+               skos:prefLabel "DOJ: VAWA - Violence Against Women Act"@en ;
+               skos:topConceptOf hmis:FunderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Funder-2
+hmis:Funder-2 rdf:type owl:NamedIndividual ,
+                       skos:Concept ;
+              dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=44> ;
+              skos:altLabel "CoC S+C"@en ;
+              skos:definition "HUD Continuum of Care Shelter Plus Care funding."@en ;
+              skos:inScheme hmis:FunderScheme ;
+              skos:notation "2" ;
+              skos:prefLabel "HUD: CoC - Shelter Plus Care (S+C)"@en ;
+              skos:topConceptOf hmis:FunderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Funder-3
+hmis:Funder-3 rdf:type owl:NamedIndividual ,
+                       skos:Concept ;
+              dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=44> ;
+              skos:altLabel "CoC SRO"@en ;
+              skos:definition "HUD Continuum of Care Single Room Occupancy funding."@en ;
+              skos:inScheme hmis:FunderScheme ;
+              skos:notation "3" ;
+              skos:prefLabel "HUD: CoC - Single Room Occupancy (SRO)"@en ;
+              skos:topConceptOf hmis:FunderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Funder-30
+hmis:Funder-30 rdf:type owl:NamedIndividual ,
+                        skos:Concept ;
+               dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=44> ;
+               skos:altLabel "SSVF"@en ;
+               skos:definition "Veterans Affairs Supportive Services for Veteran Families funding."@en ;
+               skos:inScheme hmis:FunderScheme ;
+               skos:notation "30" ;
+               skos:prefLabel "VA: SSVF - Supportive Services for Veteran Families"@en ;
+               skos:topConceptOf hmis:FunderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Funder-33
+hmis:Funder-33 rdf:type owl:NamedIndividual ,
+                        skos:Concept ;
+               dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=44> ;
+               skos:altLabel "CRS"@en ;
+               skos:definition "Veterans Affairs Contract Residential Services funding."@en ;
+               skos:inScheme hmis:FunderScheme ;
+               skos:notation "33" ;
+               skos:prefLabel "VA: CRS - Contract Residential Services"@en ;
+               skos:topConceptOf hmis:FunderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Funder-4
+hmis:Funder-4 rdf:type owl:NamedIndividual ,
+                       skos:Concept ;
+              dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=44> ;
+              skos:altLabel "CoC Collaborative"@en ;
+              skos:definition "HUD Continuum of Care Collaborative funding (post-2012 consolidated program)."@en ;
+              skos:inScheme hmis:FunderScheme ;
+              skos:notation "4" ;
+              skos:prefLabel "HUD: CoC - Collaborative"@en ;
+              skos:topConceptOf hmis:FunderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Funder-5
+hmis:Funder-5 rdf:type owl:NamedIndividual ,
+                       skos:Concept ;
+              dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=44> ;
+              skos:altLabel "ESG"@en ;
+              skos:definition "HUD Emergency Solutions Grant funding."@en ;
+              skos:inScheme hmis:FunderScheme ;
+              skos:notation "5" ;
+              skos:prefLabel "HUD: ESG - Emergency Shelter Grants"@en ;
+              skos:topConceptOf hmis:FunderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Funder-6
+hmis:Funder-6 rdf:type owl:NamedIndividual ,
+                       skos:Concept ;
+              dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=44> ;
+              skos:altLabel "HOPWA"@en ;
+              skos:definition "HUD Housing Opportunities for Persons with AIDS funding."@en ;
+              skos:inScheme hmis:FunderScheme ;
+              skos:notation "6" ;
+              skos:prefLabel "HUD: HOPWA - Housing Opportunities for Persons with AIDS"@en ;
+              skos:topConceptOf hmis:FunderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Funder-7
+hmis:Funder-7 rdf:type owl:NamedIndividual ,
+                       skos:Concept ;
+              dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=44> ;
+              skos:altLabel "PATH"@en ;
+              skos:definition "Health and Human Services PATH program funding."@en ;
+              skos:inScheme hmis:FunderScheme ;
+              skos:notation "7" ;
+              skos:prefLabel "HHS: PATH - Projects for Assistance in Transition from Homelessness"@en ;
+              skos:topConceptOf hmis:FunderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Funder-8
+hmis:Funder-8 rdf:type owl:NamedIndividual ,
+                       skos:Concept ;
+              dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=44> ;
+              skos:altLabel "RHY"@en ;
+              skos:definition "Health and Human Services Runaway and Homeless Youth program funding."@en ;
+              skos:inScheme hmis:FunderScheme ;
+              skos:notation "8" ;
+              skos:prefLabel "HHS: RHY - Runaway and Homeless Youth"@en ;
+              skos:topConceptOf hmis:FunderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Funder-9
+hmis:Funder-9 rdf:type owl:NamedIndividual ,
+                       skos:Concept ;
+              dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=44> ;
+              skos:altLabel "FVPSA"@en ;
+              skos:definition "Department of Justice Family Violence Prevention and Services Act funding."@en ;
+              skos:inScheme hmis:FunderScheme ;
+              skos:notation "9" ;
+              skos:prefLabel "DOJ: FVPSA - Family Violence Prevention and Services Act"@en ;
+              skos:topConceptOf hmis:FunderScheme .
+
+
+###  http://hmis.hud.gov/ontology#FunderScheme
+hmis:FunderScheme rdf:type owl:NamedIndividual ,
+                           skos:ConceptScheme ;
+                  dcterms:created "2026-01-28"^^xsd:date ;
+                  dcterms:description "Federal and other funding sources for homeless assistance projects"@en ;
+                  dcterms:identifier "2.06.1" ;
+                  dcterms:publisher "U.S. Department of Housing and Urban Development"@en ;
+                  dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=44> ;
+                  dcterms:title "Funding Sources"@en ;
+                  skos:definition "Classification of funding sources supporting homeless assistance projects."@en ;
+                  skos:hasTopConcept hmis:Funder-1 ,
+                                     hmis:Funder-10 ,
+                                     hmis:Funder-11 ,
+                                     hmis:Funder-2 ,
+                                     hmis:Funder-3 ,
+                                     hmis:Funder-30 ,
+                                     hmis:Funder-33 ,
+                                     hmis:Funder-4 ,
+                                     hmis:Funder-5 ,
+                                     hmis:Funder-6 ,
+                                     hmis:Funder-7 ,
+                                     hmis:Funder-8 ,
+                                     hmis:Funder-9 ;
+                  skos:prefLabel "Funders"@en .
+
+
+###  http://hmis.hud.gov/ontology#Gender-0
+hmis:Gender-0 rdf:type owl:NamedIndividual ,
+                       skos:Concept ;
+              dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=68> ;
+              skos:definition "A person whose gender identity is female. Gender identity is distinct from sex assigned at birth."@en ;
+              skos:inScheme hmis:GenderScheme ;
+              skos:notation "0" ;
+              skos:prefLabel "Female"@en ;
+              skos:topConceptOf hmis:GenderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Gender-1
+hmis:Gender-1 rdf:type owl:NamedIndividual ,
+                       skos:Concept ;
+              dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=68> ;
+              skos:definition "A person whose gender identity is male. Gender identity is distinct from sex assigned at birth."@en ;
+              skos:inScheme hmis:GenderScheme ;
+              skos:notation "1" ;
+              skos:prefLabel "Male"@en ;
+              skos:topConceptOf hmis:GenderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Gender-2
+hmis:Gender-2 rdf:type owl:NamedIndividual ,
+                       skos:Concept ;
+              dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=68> ;
+              skos:definition "A person whose gender identity is different from the sex they were assigned at birth."@en ;
+              skos:inScheme hmis:GenderScheme ;
+              skos:notation "2" ;
+              skos:prefLabel "Transgender"@en ;
+              skos:topConceptOf hmis:GenderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Gender-3
+hmis:Gender-3 rdf:type owl:NamedIndividual ,
+                       skos:Concept ;
+              dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=68> ;
+              skos:definition "A person who is unsure of or exploring their gender identity."@en ;
+              skos:inScheme hmis:GenderScheme ;
+              skos:notation "3" ;
+              skos:prefLabel "Questioning"@en ;
+              skos:topConceptOf hmis:GenderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Gender-4
+hmis:Gender-4 rdf:type owl:NamedIndividual ,
+                       skos:Concept ;
+              dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=68> ;
+              skos:definition "A person whose gender identity is neither exclusively male nor female."@en ;
+              skos:inScheme hmis:GenderScheme ;
+              skos:notation "4" ;
+              skos:prefLabel "Non-Binary"@en ;
+              skos:topConceptOf hmis:GenderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Gender-5
+hmis:Gender-5 rdf:type owl:NamedIndividual ,
+                       skos:Concept ;
+              dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=68> ;
+              skos:altLabel "Two-Spirit"@en ;
+              skos:definition "A person whose gender identity is specific to their cultural tradition. Examples include Two-Spirit (Native American/Indigenous cultures), Hijra (South Asian cultures), or other culturally specific gender identities."@en ;
+              skos:inScheme hmis:GenderScheme ;
+              skos:notation "5" ;
+              skos:prefLabel "Culturally Specific"@en ;
+              skos:topConceptOf hmis:GenderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Gender-6
+hmis:Gender-6 rdf:type owl:NamedIndividual ,
+                       skos:Concept ;
+              dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=68> ;
+              skos:definition "A person whose gender identity is not represented by the other categories provided."@en ;
+              skos:inScheme hmis:GenderScheme ;
+              skos:notation "6" ;
+              skos:prefLabel "Different Identity"@en ;
+              skos:topConceptOf hmis:GenderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Gender-8
+hmis:Gender-8 rdf:type owl:NamedIndividual ,
+                       skos:Concept ;
+              dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=15> ;
+              skos:definition "The client does not know their gender identity."@en ;
+              skos:inScheme hmis:GenderScheme ;
+              skos:notation "8" ;
+              skos:note "Missing data category - use only when client explicitly states they don't know."@en ;
+              skos:prefLabel "Client doesn't know"@en ;
+              skos:topConceptOf hmis:GenderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Gender-9
+hmis:Gender-9 rdf:type owl:NamedIndividual ,
+                       skos:Concept ;
+              dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=15> ;
+              skos:definition "The client knows their gender identity but prefers not to disclose it."@en ;
+              skos:inScheme hmis:GenderScheme ;
+              skos:notation "9" ;
+              skos:note "Missing data category - client must explicitly decline to answer; staff cannot select on their behalf."@en ;
+              skos:prefLabel "Client prefers not to answer"@en ;
+              skos:topConceptOf hmis:GenderScheme .
+
+
+###  http://hmis.hud.gov/ontology#Gender-99
+hmis:Gender-99 rdf:type owl:NamedIndividual ,
+                        skos:Concept ;
+               dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=15> ;
+               skos:definition "The gender identity information was not collected during the enrollment or data collection process."@en ;
+               skos:inScheme hmis:GenderScheme ;
+               skos:notation "99" ;
+               skos:note "Missing data category - indicates the worker did not record the information, not that the client declined."@en ;
+               skos:prefLabel "Data not collected"@en ;
+               skos:topConceptOf hmis:GenderScheme .
+
+
+###  http://hmis.hud.gov/ontology#GenderScheme
+hmis:GenderScheme rdf:type owl:NamedIndividual ,
+                           skos:ConceptScheme ;
+                  dcterms:created "2026-01-28"^^xsd:date ;
+                  dcterms:description "Gender identity of clients served in HMIS projects"@en ;
+                  dcterms:identifier "3.06.1" ;
+                  dcterms:modified "2026-01-28"^^xsd:date ;
+                  dcterms:publisher "U.S. Department of Housing and Urban Development"@en ;
+                  dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=68> ;
+                  dcterms:title "Gender Identity"@en ;
+                  skos:definition "Record the gender identity of each client. If a person prefers not to provide a response or says they don't know, do not select any response other than 'Client doesn't know' or 'Client prefers not to answer' on the person's behalf."@en ;
+                  skos:hasTopConcept hmis:Gender-0 ,
+                                     hmis:Gender-1 ,
+                                     hmis:Gender-2 ,
+                                     hmis:Gender-3 ,
+                                     hmis:Gender-4 ,
+                                     hmis:Gender-5 ,
+                                     hmis:Gender-6 ,
+                                     hmis:Gender-8 ,
+                                     hmis:Gender-9 ,
+                                     hmis:Gender-99 ;
+                  skos:prefLabel "Gender Identity"@en .
+
+
+###  http://hmis.hud.gov/ontology#ProjectType-0
+hmis:ProjectType-0 rdf:type owl:NamedIndividual ,
+                            skos:Concept ;
+                   dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=32> ;
+                   skos:altLabel "ES - NbN"@en ,
+                                 "NbN"@en ;
+                   skos:definition "Emergency shelter where clients are enrolled night-by-night with no formal entry or exit. Each night of stay is tracked individually."@en ;
+                   skos:inScheme hmis:ProjectTypeScheme ;
+                   skos:notation "0" ;
+                   skos:note "High-volume, low-barrier shelters. Entry/exit may be automatic based on bed use. Distinct from Entry-Exit (ProjectType-1)."@en ;
+                   skos:prefLabel "Emergency Shelter - Night-by-Night"@en ;
+                   skos:topConceptOf hmis:ProjectTypeScheme .
+
+
+###  http://hmis.hud.gov/ontology#ProjectType-1
+hmis:ProjectType-1 rdf:type owl:NamedIndividual ,
+                            skos:Concept ;
+                   dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=32> ;
+                   skos:altLabel "ES - Entry Exit"@en ;
+                   skos:definition "Emergency shelter projects where clients stay for a short period with a defined entry and exit. Provides temporary shelter with supportive services."@en ;
+                   skos:inScheme hmis:ProjectTypeScheme ;
+                   skos:notation "1" ;
+                   skos:note "Clients have specific enrollment and exit dates. Typical stay duration tracked for planning purposes."@en ;
+                   skos:prefLabel "Emergency Shelter - Entry Exit"@en ;
+                   skos:topConceptOf hmis:ProjectTypeScheme .
+
+
+###  http://hmis.hud.gov/ontology#ProjectType-10
+hmis:ProjectType-10 rdf:type owl:NamedIndividual ,
+                             skos:Concept ;
+                    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=32> ;
+                    skos:altLabel "Permanent Housing with Services"@en ;
+                    skos:definition "Permanent housing with rental assistance and supportive services, but disability not required for entry."@en ;
+                    skos:inScheme hmis:ProjectTypeScheme ;
+                    skos:notation "10" ;
+                    skos:note "Differs from PSH (ProjectType-3) - no disability requirement. Services are provided but may not be mandatory."@en ;
+                    skos:prefLabel "PH - Housing with Services"@en ;
+                    skos:topConceptOf hmis:ProjectTypeScheme .
+
+
+###  http://hmis.hud.gov/ontology#ProjectType-11
+hmis:ProjectType-11 rdf:type owl:NamedIndividual ,
+                             skos:Concept ;
+                    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=32> ;
+                    skos:definition "Facility providing daytime shelter and supportive services to persons experiencing homelessness. Does not provide overnight accommodations."@en ;
+                    skos:inScheme hmis:ProjectTypeScheme ;
+                    skos:notation "11" ;
+                    skos:note "Daytime services only. May provide meals, showers, laundry, case management during daytime hours."@en ;
+                    skos:prefLabel "Day Shelter"@en ;
+                    skos:topConceptOf hmis:ProjectTypeScheme .
+
+
+###  http://hmis.hud.gov/ontology#ProjectType-12
+hmis:ProjectType-12 rdf:type owl:NamedIndividual ,
+                             skos:Concept ;
+                    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=32> ;
+                    skos:altLabel "HP"@en ;
+                    skos:definition "Housing relocation and stabilization services and short- and/or medium-term rental assistance to prevent individuals and families from becoming homeless."@en ;
+                    skos:inScheme hmis:ProjectTypeScheme ;
+                    skos:notation "12" ;
+                    skos:note "Serves persons at-risk of homelessness, not currently homeless. Prevention focus."@en ;
+                    skos:prefLabel "Homelessness Prevention"@en ;
+                    skos:topConceptOf hmis:ProjectTypeScheme .
+
+
+###  http://hmis.hud.gov/ontology#ProjectType-13
+hmis:ProjectType-13 rdf:type owl:NamedIndividual ,
+                             skos:Concept ;
+                    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=32> ;
+                    skos:altLabel "RRH"@en ,
+                                  "Rapid Re-Housing"@en ;
+                    skos:definition "Housing relocation and stabilization services and short- and/or medium-term rental assistance to help individuals and families move quickly out of homelessness into permanent housing."@en ;
+                    skos:inScheme hmis:ProjectTypeScheme ;
+                    skos:notation "13" ;
+                    skos:note "Time-limited rental assistance (typically 3-24 months). Focus on rapid housing placement and stabilization."@en ;
+                    skos:prefLabel "PH - Rapid Re-Housing"@en ;
+                    skos:topConceptOf hmis:ProjectTypeScheme .
+
+
+###  http://hmis.hud.gov/ontology#ProjectType-14
+hmis:ProjectType-14 rdf:type owl:NamedIndividual ,
+                             skos:Concept ;
+                    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=32> ;
+                    skos:altLabel "CE"@en ;
+                    skos:definition "Coordinated assessment and referral system covering a defined geographic area. Assesses needs, prioritizes clients, and matches to appropriate housing and service interventions."@en ;
+                    skos:inScheme hmis:ProjectTypeScheme ;
+                    skos:notation "14" ;
+                    skos:note "Process-focused project type. May operate multiple access points across the CoC."@en ;
+                    skos:prefLabel "Coordinated Entry"@en ;
+                    skos:topConceptOf hmis:ProjectTypeScheme .
+
+
+###  http://hmis.hud.gov/ontology#ProjectType-2
+hmis:ProjectType-2 rdf:type owl:NamedIndividual ,
+                            skos:Concept ;
+                   dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=32> ;
+                   skos:altLabel "TH"@en ;
+                   skos:definition "Housing provided for up to 24 months with supportive services to help individuals and families experiencing homelessness move into permanent housing."@en ;
+                   skos:inScheme hmis:ProjectTypeScheme ;
+                   skos:notation "2" ;
+                   skos:note "Time-limited housing with intensive services. Maximum 24-month stay under HUD regulations."@en ;
+                   skos:prefLabel "Transitional Housing"@en ;
+                   skos:topConceptOf hmis:ProjectTypeScheme .
+
+
+###  http://hmis.hud.gov/ontology#ProjectType-3
+hmis:ProjectType-3 rdf:type owl:NamedIndividual ,
+                            skos:Concept ;
+                   dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=32> ;
+                   skos:altLabel "PH - Permanent Supportive Housing"@en ,
+                                 "PSH"@en ;
+                   skos:definition "Permanent housing with indefinite leasing or rental assistance and supportive services for persons with disabilities experiencing chronic homelessness."@en ;
+                   skos:inScheme hmis:ProjectTypeScheme ;
+                   skos:notation "3" ;
+                   skos:note "No time limit on assistance. Disability required for entry. Designed for chronically homeless individuals and families."@en ;
+                   skos:prefLabel "Permanent Supportive Housing"@en ;
+                   skos:topConceptOf hmis:ProjectTypeScheme .
+
+
+###  http://hmis.hud.gov/ontology#ProjectType-4
+hmis:ProjectType-4 rdf:type owl:NamedIndividual ,
+                            skos:Concept ;
+                   dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=32> ;
+                   skos:altLabel "SO"@en ;
+                   skos:definition "Essential services provided to unsheltered persons to help them move into emergency shelter, transitional housing, or permanent housing."@en ;
+                   skos:inScheme hmis:ProjectTypeScheme ;
+                   skos:notation "4" ;
+                   skos:note "Services provided in places not meant for human habitation. Focus on initial engagement and connection to shelter/housing."@en ;
+                   skos:prefLabel "Street Outreach"@en ;
+                   skos:topConceptOf hmis:ProjectTypeScheme .
+
+
+###  http://hmis.hud.gov/ontology#ProjectType-6
+hmis:ProjectType-6 rdf:type owl:NamedIndividual ,
+                            skos:Concept ;
+                   dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=32> ;
+                   skos:definition "Projects providing supportive services without housing or shelter. May include case management, employment assistance, or other services."@en ;
+                   skos:inScheme hmis:ProjectTypeScheme ;
+                   skos:notation "6" ;
+                   skos:note "No housing or shelter component. Services may be provided to persons in any living situation."@en ;
+                   skos:prefLabel "Services Only"@en ;
+                   skos:topConceptOf hmis:ProjectTypeScheme .
+
+
+###  http://hmis.hud.gov/ontology#ProjectType-7
+hmis:ProjectType-7 rdf:type owl:NamedIndividual ,
+                            skos:Concept ;
+                   dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=32> ;
+                   skos:definition "Projects that do not fit other HUD-defined project type categories."@en ;
+                   skos:inScheme hmis:ProjectTypeScheme ;
+                   skos:notation "7" ;
+                   skos:note "Use sparingly. Should have clear justification for why project doesn't fit standard types."@en ;
+                   skos:prefLabel "Other"@en ;
+                   skos:topConceptOf hmis:ProjectTypeScheme .
+
+
+###  http://hmis.hud.gov/ontology#ProjectType-8
+hmis:ProjectType-8 rdf:type owl:NamedIndividual ,
+                            skos:Concept ;
+                   dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=32> ;
+                   skos:altLabel "SH"@en ;
+                   skos:definition "Supportive housing serving hard-to-reach persons experiencing homelessness with severe mental illness who are unwilling or unable to participate in traditional supportive services."@en ;
+                   skos:inScheme hmis:ProjectTypeScheme ;
+                   skos:notation "8" ;
+                   skos:note "Low-barrier, harm-reduction approach. Privacy and limited requirements for participation."@en ;
+                   skos:prefLabel "Safe Haven"@en ;
+                   skos:topConceptOf hmis:ProjectTypeScheme .
+
+
+###  http://hmis.hud.gov/ontology#ProjectType-9
+hmis:ProjectType-9 rdf:type owl:NamedIndividual ,
+                            skos:Concept ;
+                   dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=32> ;
+                   skos:altLabel "Permanent Housing - Housing Only"@en ;
+                   skos:definition "Permanent housing with rental assistance but without required supportive services."@en ;
+                   skos:inScheme hmis:ProjectTypeScheme ;
+                   skos:notation "9" ;
+                   skos:note "Tenant-based rental assistance. Services available but not required."@en ;
+                   skos:prefLabel "PH - Housing Only"@en ;
+                   skos:topConceptOf hmis:ProjectTypeScheme .
+
+
+###  http://hmis.hud.gov/ontology#ProjectTypeScheme
+hmis:ProjectTypeScheme rdf:type owl:NamedIndividual ,
+                                skos:ConceptScheme ;
+                       dcterms:created "2026-01-28"^^xsd:date ;
+                       dcterms:description "Classification of homeless assistance project types as defined by HUD"@en ;
+                       dcterms:identifier "2.02.6" ;
+                       dcterms:publisher "U.S. Department of Housing and Urban Development"@en ;
+                       dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=32> ;
+                       dcterms:title "HUD Project Types"@en ;
+                       skos:definition "The primary type of project as defined by federal funding source and HUD program regulations."@en ;
+                       skos:hasTopConcept hmis:ProjectType-1 ,
+                                          hmis:ProjectType-10 ,
+                                          hmis:ProjectType-11 ,
+                                          hmis:ProjectType-12 ,
+                                          hmis:ProjectType-13 ,
+                                          hmis:ProjectType-14 ,
+                                          hmis:ProjectType-2 ,
+                                          hmis:ProjectType-3 ,
+                                          hmis:ProjectType-4 ,
+                                          hmis:ProjectType-6 ,
+                                          hmis:ProjectType-7 ,
+                                          hmis:ProjectType-8 ,
+                                          hmis:ProjectType-9 ;
+                       skos:prefLabel "Project Types"@en .
+
+
+###  http://hmis.hud.gov/ontology#Relationship-1
+hmis:Relationship-1 rdf:type owl:NamedIndividual ,
+                             skos:Concept ;
+                    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=81> ;
+                    skos:altLabel "Head of Household"@en ,
+                                  "HoH"@en ;
+                    skos:definition "The person designated as head of household. Each household must have exactly one person with this relationship."@en ;
+                    skos:inScheme hmis:RelationshipScheme ;
+                    skos:notation "1" ;
+                    skos:note "Required for one and only one member per household. Typically the adult member or the person who initiated services."@en ;
+                    skos:prefLabel "Self (head of household)"@en ;
+                    skos:topConceptOf hmis:RelationshipScheme .
+
+
+###  http://hmis.hud.gov/ontology#Relationship-2
+hmis:Relationship-2 rdf:type owl:NamedIndividual ,
+                             skos:Concept ;
+                    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=81> ;
+                    skos:altLabel "Child"@en ;
+                    skos:definition "The biological, adopted, or foster child of the head of household."@en ;
+                    skos:inScheme hmis:RelationshipScheme ;
+                    skos:notation "2" ;
+                    skos:prefLabel "Head of household's child"@en ;
+                    skos:topConceptOf hmis:RelationshipScheme .
+
+
+###  http://hmis.hud.gov/ontology#Relationship-3
+hmis:Relationship-3 rdf:type owl:NamedIndividual ,
+                             skos:Concept ;
+                    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=81> ;
+                    skos:altLabel "Partner"@en ,
+                                  "Spouse"@en ;
+                    skos:definition "The spouse (married) or partner (domestic partnership, significant other) of the head of household."@en ;
+                    skos:inScheme hmis:RelationshipScheme ;
+                    skos:notation "3" ;
+                    skos:prefLabel "Head of household's spouse or partner"@en ;
+                    skos:topConceptOf hmis:RelationshipScheme .
+
+
+###  http://hmis.hud.gov/ontology#Relationship-4
+hmis:Relationship-4 rdf:type owl:NamedIndividual ,
+                             skos:Concept ;
+                    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=81> ;
+                    skos:altLabel "Other Relation"@en ;
+                    skos:definition "Any other family relation to the head of household (e.g., parent, sibling, grandchild, aunt, uncle, cousin)."@en ;
+                    skos:inScheme hmis:RelationshipScheme ;
+                    skos:notation "4" ;
+                    skos:prefLabel "Head of household's other relation member"@en ;
+                    skos:topConceptOf hmis:RelationshipScheme .
+
+
+###  http://hmis.hud.gov/ontology#Relationship-5
+hmis:Relationship-5 rdf:type owl:NamedIndividual ,
+                             skos:Concept ;
+                    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=81> ;
+                    skos:altLabel "Non-Relation"@en ;
+                    skos:definition "A person with no family relation to the head of household but enrolled as part of the household (e.g., friend, roommate)."@en ;
+                    skos:inScheme hmis:RelationshipScheme ;
+                    skos:notation "5" ;
+                    skos:note "Used for households of unrelated individuals staying together."@en ;
+                    skos:prefLabel "Other: non-relation member"@en ;
+                    skos:topConceptOf hmis:RelationshipScheme .
+
+
+###  http://hmis.hud.gov/ontology#RelationshipScheme
+hmis:RelationshipScheme rdf:type owl:NamedIndividual ,
+                                 skos:ConceptScheme ;
+                        dcterms:created "2026-01-28"^^xsd:date ;
+                        dcterms:description "Relationship of household members to the designated head of household"@en ;
+                        dcterms:identifier "3.15.1" ;
+                        dcterms:publisher "U.S. Department of Housing and Urban Development"@en ;
+                        dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=81> ;
+                        dcterms:title "Relationship to Head of Household"@en ;
+                        skos:definition "Specifies the relationship of household members to the Head of Household to facilitate reporting on household composition."@en ;
+                        skos:hasTopConcept hmis:Relationship-1 ,
+                                           hmis:Relationship-2 ,
+                                           hmis:Relationship-3 ,
+                                           hmis:Relationship-4 ,
+                                           hmis:Relationship-5 ;
+                        skos:prefLabel "Relationship to HoH"@en .
+
+
+###  http://hmis.hud.gov/ontology#YesNoReasons-0
+hmis:YesNoReasons-0 rdf:type owl:NamedIndividual ,
+                             skos:Concept ;
+                    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=15> ;
+                    skos:definition "No, without additional context."@en ;
+                    skos:inScheme hmis:YesNoReasonsScheme ;
+                    skos:notation "0" ;
+                    skos:prefLabel "No"@en ;
+                    skos:topConceptOf hmis:YesNoReasonsScheme .
+
+
+###  http://hmis.hud.gov/ontology#YesNoReasons-1
+hmis:YesNoReasons-1 rdf:type owl:NamedIndividual ,
+                             skos:Concept ;
+                    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=15> ;
+                    skos:definition "Yes, without additional context."@en ;
+                    skos:inScheme hmis:YesNoReasonsScheme ;
+                    skos:notation "1" ;
+                    skos:prefLabel "Yes"@en ;
+                    skos:topConceptOf hmis:YesNoReasonsScheme .
+
+
+###  http://hmis.hud.gov/ontology#YesNoReasons-8
+hmis:YesNoReasons-8 rdf:type owl:NamedIndividual ,
+                             skos:Concept ;
+                    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=15> ;
+                    skos:definition "The client does not know the answer to the question."@en ;
+                    skos:inScheme hmis:YesNoReasonsScheme ;
+                    skos:notation "8" ;
+                    skos:note "Missing data category. Client explicitly states lack of knowledge."@en ;
+                    skos:prefLabel "Client doesn't know"@en ;
+                    skos:topConceptOf hmis:YesNoReasonsScheme .
+
+
+###  http://hmis.hud.gov/ontology#YesNoReasons-9
+hmis:YesNoReasons-9 rdf:type owl:NamedIndividual ,
+                             skos:Concept ;
+                    dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=15> ;
+                    skos:definition "The client knows the information but prefers not to provide it."@en ;
+                    skos:inScheme hmis:YesNoReasonsScheme ;
+                    skos:notation "9" ;
+                    skos:note "Missing data category. Staff must not select this option on client's behalf."@en ;
+                    skos:prefLabel "Client prefers not to answer"@en ;
+                    skos:topConceptOf hmis:YesNoReasonsScheme .
+
+
+###  http://hmis.hud.gov/ontology#YesNoReasons-99
+hmis:YesNoReasons-99 rdf:type owl:NamedIndividual ,
+                              skos:Concept ;
+                     dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=15> ;
+                     skos:definition "The worker did not record the information. May be because client was unavailable or question was not asked."@en ;
+                     skos:inScheme hmis:YesNoReasonsScheme ;
+                     skos:notation "99" ;
+                     skos:note "Missing data category. Distinct from client-initiated missing responses (8, 9)."@en ;
+                     skos:prefLabel "Data not collected"@en ;
+                     skos:topConceptOf hmis:YesNoReasonsScheme .
+
+
+###  http://hmis.hud.gov/ontology#YesNoReasonsScheme
+hmis:YesNoReasonsScheme rdf:type owl:NamedIndividual ,
+                                 skos:ConceptScheme ;
+                        dcterms:created "2026-01-28"^^xsd:date ;
+                        dcterms:description "Standard boolean response with additional options for missing data, used across multiple data elements"@en ;
+                        dcterms:identifier "1.8" ;
+                        dcterms:publisher "U.S. Department of Housing and Urban Development"@en ;
+                        dcterms:source <https://files.hudexchange.info/resources/documents/HMIS-Data-Dictionary-2026.pdf#page=15> ;
+                        dcterms:title "Yes/No with Reasons for Missing Data"@en ;
+                        skos:definition "Boolean response pattern with structured missing data categories. Used for veteran status, disabling condition, and other yes/no questions requiring missing data capture."@en ;
+                        skos:hasTopConcept hmis:YesNoReasons-0 ,
+                                           hmis:YesNoReasons-1 ,
+                                           hmis:YesNoReasons-8 ,
+                                           hmis:YesNoReasons-9 ,
+                                           hmis:YesNoReasons-99 ;
+                        skos:prefLabel "Yes/No/Missing"@en .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+<http://hmis.hud.gov/vocabularies> dcterms:created "2026-01-28"^^xsd:date ;
+                                   dcterms:description "Complete set of SKOS ConceptSchemes for HUD HMIS Data Standards FY2026"@en ;
+                                   dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+                                   dcterms:publisher "U.S. Department of Housing and Urban Development"@en ;
+                                   dcterms:title "HMIS FY2026 Controlled Vocabularies"@en ;
+                                   skos:prefLabel "HMIS Vocabularies Collection"@en .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

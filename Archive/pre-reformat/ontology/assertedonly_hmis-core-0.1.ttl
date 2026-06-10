@@ -1,0 +1,1264 @@
+@prefix : <http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix shacl: <http://www.w3.org/ns/shacl#> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix ontology: <http://hmis.hud.gov/ontology#> .
+@base <http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#> .
+
+<http://www.semanticweb.org/65225/ontologies/2026/1/hmis/ontology/core> rdf:type owl:Ontology ;
+                                                                         owl:versionIRI <http://www.semanticweb.org/65225/ontologies/2026/1/hmis/ontology/core/v0.1> ;
+                                                                         terms:created "2026-01-28"^^xsd:date ;
+                                                                         terms:creator "ICF HMIS Team" ;
+                                                                         terms:description "Core class and property definitions for HMIS data standards (FY2026)"@en ;
+                                                                         terms:modified "2026-03-17" ;
+                                                                         terms:publisher "U.S. Department of Housing and Urban Development" ;
+                                                                         terms:title "HMIS Ontology - Structure Layer"@en ;
+                                                                         rdfs:comment "This ontology defines the structural layer of HMIS data standards, including classes, object properties, and datatype properties. It is designed to work in conjunction with SKOS vocabularies (semantics) and SHACL constraints (validation)."@en ;
+                                                                         owl:versionInfo "0.7" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/created
+terms:created rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+terms:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+terms:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/identifier
+terms:identifier rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/modified
+terms:modified rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/publisher
+terms:publisher rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/source
+terms:source rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+terms:title rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#altLabel
+skos:altLabel rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#definition
+skos:definition rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#example
+skos:example rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#inScheme
+skos:inScheme rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#notation
+skos:notation rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#note
+skos:note rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#prefLabel
+skos:prefLabel rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#datatype
+shacl:datatype rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#maxCount
+shacl:maxCount rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#maxLength
+shacl:maxLength rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#message
+shacl:message rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#minCount
+shacl:minCount rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#minLength
+shacl:minLength rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#path
+shacl:path rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#pattern
+shacl:pattern rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#property
+shacl:property rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#select
+shacl:select rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#severity
+shacl:severity rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#sparql
+shacl:sparql rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#targetClass
+shacl:targetClass rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://hmis.hud.gov/ontology#ceParticipationOf
+ontology:ceParticipationOf rdf:type owl:ObjectProperty ;
+                           rdfs:subPropertyOf ontology:configurationOf ;
+                           owl:inverseOf ontology:hasCEParticipation ;
+                           rdfs:domain ontology:CEParticipation ;
+                           rdfs:range ontology:Project ;
+                           rdfs:comment "Links a CE participation record to its project"@en ;
+                           rdfs:label "CE participation of"@en .
+
+
+###  http://hmis.hud.gov/ontology#clientOf
+ontology:clientOf rdf:type owl:ObjectProperty ;
+                  owl:inverseOf ontology:hasClient ;
+                  rdfs:domain ontology:Client ;
+                  rdfs:range ontology:Enrollment ;
+                  rdfs:comment "Links a client to their enrollments"@en ;
+                  rdfs:label "has enrollment"@en .
+
+
+###  http://hmis.hud.gov/ontology#configurationOf
+ontology:configurationOf rdf:type owl:ObjectProperty ;
+                         owl:inverseOf ontology:hasConfiguration ;
+                         rdfs:domain ontology:SubProject ;
+                         rdfs:range ontology:Project ;
+                         rdfs:comment "Links a sub-project configuration to the project it configures"@en ;
+                         rdfs:label "configures"@en .
+
+
+###  http://hmis.hud.gov/ontology#fundSourceOf
+ontology:fundSourceOf rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf ontology:configurationOf ;
+                      owl:inverseOf ontology:hasFundSource ;
+                      rdfs:domain ontology:FundSource ;
+                      rdfs:range ontology:Project ;
+                      rdfs:comment "Links a funding source to the project it funds"@en ;
+                      rdfs:label "fund source of"@en .
+
+
+###  http://hmis.hud.gov/ontology#hasCEParticipation
+ontology:hasCEParticipation rdf:type owl:ObjectProperty ;
+                            rdfs:subPropertyOf ontology:hasConfiguration ;
+                            rdfs:domain ontology:Project ;
+                            rdfs:range ontology:CEParticipation ;
+                            rdfs:comment "Links a project to its Coordinated Entry participation record"@en ;
+                            rdfs:label "has CE participation"@en .
+
+
+###  http://hmis.hud.gov/ontology#hasClient
+ontology:hasClient rdf:type owl:ObjectProperty ;
+                   rdfs:domain ontology:Enrollment ;
+                   rdfs:range ontology:Client ;
+                   rdfs:comment "Links an enrollment to the client enrolled"@en ;
+                   rdfs:label "enrollment of"@en .
+
+
+###  http://hmis.hud.gov/ontology#hasConfiguration
+ontology:hasConfiguration rdf:type owl:ObjectProperty ;
+                          rdfs:domain ontology:Project ;
+                          rdfs:range ontology:SubProject ;
+                          rdfs:comment "Links a project to its configuration data"@en ;
+                          rdfs:label "has configuration"@en .
+
+
+###  http://hmis.hud.gov/ontology#hasFundSource
+ontology:hasFundSource rdf:type owl:ObjectProperty ;
+                       rdfs:subPropertyOf ontology:hasConfiguration ;
+                       rdfs:domain ontology:Project ;
+                       rdfs:range ontology:FundSource ;
+                       rdfs:comment "Links a project to its funding sources"@en ;
+                       rdfs:label "has fund source"@en .
+
+
+###  http://hmis.hud.gov/ontology#hasHMISParticipation
+ontology:hasHMISParticipation rdf:type owl:ObjectProperty ;
+                              rdfs:subPropertyOf ontology:hasConfiguration ;
+                              owl:inverseOf ontology:hmisParticipationOf ;
+                              rdfs:domain ontology:Project ;
+                              rdfs:range ontology:HMISParticipation ;
+                              rdfs:comment "Links a project to its HMIS participation record"@en ;
+                              rdfs:label "has HMIS participation"@en .
+
+
+###  http://hmis.hud.gov/ontology#hasHousehold
+ontology:hasHousehold rdf:type owl:ObjectProperty ;
+                      owl:inverseOf ontology:householdOf ;
+                      rdfs:domain ontology:Household ;
+                      rdfs:range ontology:Enrollment ;
+                      rdfs:comment "Links a household to member enrollments"@en ;
+                      rdfs:label "has member"@en .
+
+
+###  http://hmis.hud.gov/ontology#hasOrganization
+ontology:hasOrganization rdf:type owl:ObjectProperty ;
+                         owl:inverseOf ontology:organizationOf ;
+                         rdfs:domain ontology:Project ;
+                         rdfs:range ontology:Organization ;
+                         rdfs:comment "Links a project to the organization operating it"@en ;
+                         rdfs:label "operated by"@en .
+
+
+###  http://hmis.hud.gov/ontology#hasPart
+ontology:hasPart rdf:type owl:ObjectProperty ;
+                 owl:inverseOf ontology:partOf ;
+                 rdfs:domain ontology:Enrollment ;
+                 rdfs:range ontology:SubEnrollment ;
+                 rdfs:comment "Links an enrollment to events that occurred during it"@en ;
+                 rdfs:label "has sub-enrollment"@en .
+
+
+###  http://hmis.hud.gov/ontology#hasProject
+ontology:hasProject rdf:type owl:ObjectProperty ;
+                    owl:inverseOf ontology:projectOf ;
+                    rdfs:domain ontology:Enrollment ;
+                    rdfs:range ontology:Project ;
+                    rdfs:comment "Links an enrollment to the project providing services"@en ;
+                    rdfs:label "in project"@en .
+
+
+###  http://hmis.hud.gov/ontology#hmisParticipationOf
+ontology:hmisParticipationOf rdf:type owl:ObjectProperty ;
+                             rdfs:subPropertyOf ontology:configurationOf ;
+                             rdfs:domain ontology:HMISParticipation ;
+                             rdfs:range ontology:Project ;
+                             rdfs:comment "Links an HMIS participation record to its project"@en ;
+                             rdfs:label "HMIS participation of"@en .
+
+
+###  http://hmis.hud.gov/ontology#householdOf
+ontology:householdOf rdf:type owl:ObjectProperty ;
+                     rdfs:domain ontology:Enrollment ;
+                     rdfs:range ontology:Household ;
+                     rdfs:comment "Links an enrollment to its household"@en ;
+                     rdfs:label "member of"@en .
+
+
+###  http://hmis.hud.gov/ontology#organizationOf
+ontology:organizationOf rdf:type owl:ObjectProperty ;
+                        rdfs:domain ontology:Organization ;
+                        rdfs:range ontology:Project ;
+                        rdfs:comment "Links an organization to projects it operates"@en ;
+                        rdfs:label "operates"@en .
+
+
+###  http://hmis.hud.gov/ontology#partOf
+ontology:partOf rdf:type owl:ObjectProperty ;
+                rdfs:domain ontology:SubEnrollment ;
+                rdfs:range ontology:Enrollment ;
+                rdfs:comment "Links a sub-enrollment event to the enrollment it occurred during"@en ;
+                rdfs:label "during"@en .
+
+
+###  http://hmis.hud.gov/ontology#projectOf
+ontology:projectOf rdf:type owl:ObjectProperty ;
+                   rdfs:domain ontology:Project ;
+                   rdfs:range ontology:Enrollment ;
+                   rdfs:comment "Links a project to enrollments within it"@en ;
+                   rdfs:label "project of"@en .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#BenefitOf
+:BenefitOf rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :subPartOf ;
+           owl:inverseOf :hasBenefit ;
+           rdfs:domain :Benefit ;
+           rdfs:range ontology:EnrollAssessment .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#DisabilityOf
+:DisabilityOf rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf :subPartOf ;
+              owl:inverseOf :hasDisability ;
+              rdfs:domain :Disability ;
+              rdfs:range ontology:EnrollAssessment .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#HealthInsuranceOf
+:HealthInsuranceOf rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf :subPartOf ;
+                   owl:inverseOf :hasHealthInsurance ;
+                   rdfs:domain :HealthInsurance ;
+                   rdfs:range ontology:EnrollAssessment .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#IncomeOf
+:IncomeOf rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :subPartOf ;
+          owl:inverseOf :hasIncome ;
+          rdfs:domain :Income ;
+          rdfs:range ontology:EnrollAssessment .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#ceAssessmentOf
+:ceAssessmentOf rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf ontology:partOf ;
+                owl:inverseOf :hasCEAssessment .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#ceEventOf
+:ceEventOf rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf ontology:partOf ;
+           owl:inverseOf :hasCEEvent .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#ceQuestionOf
+:ceQuestionOf rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf :measurementOf ;
+              owl:inverseOf :hasCEQuestion .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#ceResultOf
+:ceResultOf rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :measurementOf ;
+            owl:inverseOf :hasCEResult .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#currentLivingSituationOf
+:currentLivingSituationOf rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf ontology:partOf ;
+                          owl:inverseOf :hasCurrentLivingSituation .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#enrollAssessmentOf
+:enrollAssessmentOf rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf ontology:partOf ;
+                    owl:inverseOf :hasEnrollAssessment .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#geographyOf
+:geographyOf rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf ontology:configurationOf ;
+             owl:inverseOf :hasGeography .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#hasBenefit
+:hasBenefit rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :hasSubpart ;
+            rdfs:domain ontology:EnrollAssessment ;
+            rdfs:range :Benefit .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#hasCEAssessment
+:hasCEAssessment rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf ontology:hasPart ;
+                 rdfs:domain ontology:Enrollment ;
+                 rdfs:range :CEAssessment .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#hasCEEvent
+:hasCEEvent rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf ontology:hasPart ;
+            rdfs:domain ontology:Enrollment ;
+            rdfs:range :CEEvent .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#hasCEQuestion
+:hasCEQuestion rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf :hasMeasurement ;
+               rdfs:domain :CEAssessment ;
+               rdfs:range :CEQuestion .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#hasCEResult
+:hasCEResult rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :hasMeasurement ;
+             rdfs:domain :CEAssessment ;
+             rdfs:range :CEResult .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#hasCurrentLivingSituation
+:hasCurrentLivingSituation rdf:type owl:ObjectProperty ;
+                           rdfs:subPropertyOf ontology:hasPart ;
+                           rdfs:domain ontology:Enrollment ;
+                           rdfs:range ontology:CurrentLivingSituation .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#hasDisability
+:hasDisability rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf :hasSubpart ;
+               rdfs:domain ontology:EnrollAssessment ;
+               rdfs:range :Disability .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#hasEnrollAssessment
+:hasEnrollAssessment rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf ontology:hasPart ;
+                     rdfs:domain ontology:Enrollment ;
+                     rdfs:range ontology:EnrollAssessment .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#hasGeography
+:hasGeography rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf ontology:hasConfiguration ;
+              rdfs:domain ontology:Project ;
+              rdfs:range :Geography .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#hasHealthInsurance
+:hasHealthInsurance rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf :hasSubpart ;
+                    rdfs:domain ontology:EnrollAssessment ;
+                    rdfs:range :HealthInsurance .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#hasIncome
+:hasIncome rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :hasSubpart ;
+           rdfs:domain ontology:EnrollAssessment ;
+           rdfs:range :Income .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#hasInventory
+:hasInventory rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf ontology:hasConfiguration ;
+              owl:inverseOf :inventoryOf ;
+              rdfs:domain ontology:Project ;
+              rdfs:range ontology:Inventory .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#hasMeasurement
+:hasMeasurement rdf:type owl:ObjectProperty ;
+                owl:inverseOf :measurementOf ;
+                rdfs:domain :CEAssessment ;
+                rdfs:range :SubCEAssessment .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#hasResidentialAffiliation
+:hasResidentialAffiliation rdf:type owl:ObjectProperty ;
+                           owl:inverseOf :residentiallyAffilitatedWith ;
+                           rdfs:domain ontology:Project ;
+                           rdfs:range ontology:Project .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#hasService
+:hasService rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf ontology:hasPart ;
+            owl:inverseOf :serviceOf ;
+            rdfs:domain ontology:Enrollment ;
+            rdfs:range ontology:Service .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#hasSubpart
+:hasSubpart rdf:type owl:ObjectProperty ;
+            owl:inverseOf :subPartOf ;
+            rdfs:domain ontology:EnrollAssessment ;
+            rdfs:range :SubEnrollAssessment .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#inventoryOf
+:inventoryOf rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf ontology:configurationOf .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#measurementOf
+:measurementOf rdf:type owl:ObjectProperty .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#residentiallyAffilitatedWith
+:residentiallyAffilitatedWith rdf:type owl:ObjectProperty ;
+                              rdfs:comment "Intention is that this would be a property limited to SSOs, whereas the inverse would be limited to residential projects." .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#serviceOf
+:serviceOf rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf ontology:partOf .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#subPartOf
+:subPartOf rdf:type owl:ObjectProperty ;
+           rdfs:domain :SubEnrollAssessment ;
+           rdfs:range ontology:EnrollAssessment .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://hmis.hud.gov/ontology#CEParticipation
+ontology:CEParticipation rdf:type owl:Class ;
+                         rdfs:subClassOf ontology:SubProject ;
+                         terms:identifier "4.19" ;
+                         rdfs:comment "Records a project's participation in the Coordinated Entry system, including access points and referral mechanisms"@en ;
+                         rdfs:label "Coordinated Entry Participation"@en .
+
+
+###  http://hmis.hud.gov/ontology#Client
+ontology:Client rdf:type owl:Class ;
+                rdfs:comment "Person receiving homeless services"@en ;
+                rdfs:label "Client"@en .
+
+
+###  http://hmis.hud.gov/ontology#CurrentLivingSituation
+ontology:CurrentLivingSituation rdf:type owl:Class ;
+                                rdfs:subClassOf ontology:SubEnrollment ;
+                                rdfs:comment "Point-in-time record of where client is currently staying"@en ;
+                                rdfs:label "Current Living Situation"@en .
+
+
+###  http://hmis.hud.gov/ontology#EnrollAssessment
+ontology:EnrollAssessment rdf:type owl:Class ;
+                          rdfs:subClassOf ontology:SubEnrollment ;
+                          rdfs:comment "Data collection point during enrollment (entry, update, annual, exit, post-exit)"@en ;
+                          rdfs:label "Assessment"@en .
+
+
+###  http://hmis.hud.gov/ontology#Enrollment
+ontology:Enrollment rdf:type owl:Class ;
+                    rdfs:comment "Episode of service delivery for a client in a project"@en ;
+                    rdfs:label "Enrollment"@en .
+
+
+###  http://hmis.hud.gov/ontology#FundSource
+ontology:FundSource rdf:type owl:Class ;
+                    rdfs:subClassOf ontology:SubProject ;
+                    rdfs:comment "Funding source for a project (CoC, ESG, HOPWA, etc.)"@en ;
+                    rdfs:label "Funder"@en .
+
+
+###  http://hmis.hud.gov/ontology#HMISParticipation
+ontology:HMISParticipation rdf:type owl:Class ;
+                           rdfs:subClassOf ontology:SubProject ;
+                           terms:identifier "4.20" ;
+                           rdfs:comment "Records a project's participation in the HMIS system, including participation type and status dates"@en ;
+                           rdfs:label "HMIS Participation"@en .
+
+
+###  http://hmis.hud.gov/ontology#Household
+ontology:Household rdf:type owl:Class ;
+                   rdfs:comment "Group of related clients enrolled together"@en ;
+                   rdfs:label "Household"@en .
+
+
+###  http://hmis.hud.gov/ontology#Inventory
+ontology:Inventory rdf:type owl:Class ;
+                   rdfs:subClassOf ontology:SubProject ;
+                   rdfs:comment "Beds, units, and rooms available in project"@en ;
+                   rdfs:label "Inventory"@en .
+
+
+###  http://hmis.hud.gov/ontology#Organization
+ontology:Organization rdf:type owl:Class ;
+                      rdfs:comment "Agency operating homeless services projects"@en ;
+                      rdfs:label "Organization"@en .
+
+
+###  http://hmis.hud.gov/ontology#Project
+ontology:Project rdf:type owl:Class ;
+                 rdfs:comment "Service program or location"@en ;
+                 rdfs:label "Project"@en .
+
+
+###  http://hmis.hud.gov/ontology#Service
+ontology:Service rdf:type owl:Class ;
+                 rdfs:subClassOf ontology:SubEnrollment ;
+                 rdfs:comment "Service provided to client during enrollment"@en ;
+                 rdfs:label "Service"@en .
+
+
+###  http://hmis.hud.gov/ontology#SubEnrollment
+ontology:SubEnrollment rdf:type owl:Class ;
+                       rdfs:comment "Abstract class for data collected during an enrollment (assessments, services, etc.)"@en ;
+                       rdfs:label "Sub-Enrollment"@en .
+
+
+###  http://hmis.hud.gov/ontology#SubProject
+ontology:SubProject rdf:type owl:Class ;
+                    rdfs:comment "Abstract class for project configuration data (inventory, funding, CE participation, HMIS participation)"@en ;
+                    rdfs:label "Configuration"@en .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#Benefit
+:Benefit rdf:type owl:Class ;
+         rdfs:subClassOf :SubEnrollAssessment .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#CEAssessment
+:CEAssessment rdf:type owl:Class ;
+              rdfs:subClassOf ontology:SubEnrollment .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#CEEvent
+:CEEvent rdf:type owl:Class ;
+         rdfs:subClassOf ontology:SubEnrollment .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#CEQuestion
+:CEQuestion rdf:type owl:Class ;
+            rdfs:subClassOf :SubCEAssessment ;
+            owl:disjointWith :CEResult .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#CEResult
+:CEResult rdf:type owl:Class ;
+          rdfs:subClassOf :SubCEAssessment .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#Disability
+:Disability rdf:type owl:Class ;
+            rdfs:subClassOf :SubEnrollAssessment .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#Geography
+:Geography rdf:type owl:Class ;
+           rdfs:subClassOf ontology:SubProject .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#HealthInsurance
+:HealthInsurance rdf:type owl:Class ;
+                 rdfs:subClassOf :SubEnrollAssessment .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#Income
+:Income rdf:type owl:Class ;
+        rdfs:subClassOf :SubEnrollAssessment .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#SubCEAssessment
+:SubCEAssessment rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#SubEnrollAssessment
+:SubEnrollAssessment rdf:type owl:Class ;
+                     rdfs:comment "What differentiates these from SubCEAssessment is that these will inherit the data collection stage, whereas data collection stage does not apply to CE Assessments or their subcomponents." .
+
+
+###  http://www.semanticweb.org/65225/ontologies/2026/1/hmis-test-ontology-6#User
+:User rdf:type owl:Class .
+
+
+[ shacl:datatype xsd:string ;
+  shacl:message "EnrollmentCoC must be in format XX-NNN (e.g., CA-500)" ;
+  shacl:pattern "^[A-Z]{2}-[0-9]{3}$" ;
+  shacl:severity shacl:Info ,
+                 shacl:Warning ;
+  shacl:sparql [ shacl:message "EnrollmentCoC value {$value} is not a recognized CoC code." ;
+                 shacl:select """
+                SELECT $this ?value WHERE {
+                    $this hmis:EnrollmentCoC ?value .
+                    FILTER NOT EXISTS {
+                        ?concept a skos:Concept ;
+                                 skos:inScheme hmis:CoCScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            """
+               ]
+] .
+
+[ shacl:datatype xsd:integer ;
+   shacl:maxCount 1 ;
+   shacl:minCount 1 ;
+   shacl:severity shacl:Violation ;
+   shacl:sparql [ shacl:message "RelationshipToHoH value {$value} is invalid. Must be from RelationshipScheme (1-5)." ;
+                  shacl:select """
+                SELECT $this ?value WHERE {
+                    $this hmis:RelationshipToHoH ?value .
+                    FILTER NOT EXISTS {
+                        ?concept a skos:Concept ;
+                                 skos:inScheme hmis:RelationshipScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            """
+                ]
+ ] .
+
+[ shacl:message "ExitDate must be greater than or equal to EntryDate" ;
+   shacl:select """
+            SELECT $this WHERE {
+                $this hmis:EntryDate ?entry ;
+                      hmis:ExitDate ?exit .
+                FILTER(?exit < ?entry)
+            }
+        """ ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:message "EntryDate cannot be in the future" ;
+   shacl:select """
+            SELECT $this WHERE {
+                $this hmis:EntryDate ?entry .
+                FILTER(?entry > NOW())
+            }
+        """ ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:datatype xsd:integer ;
+   shacl:maxCount 1 ;
+   shacl:minCount 0 ;
+   shacl:severity shacl:Violation ;
+   shacl:sparql [ shacl:message "Gender value {$value} is invalid. Must be from GenderScheme (0-6, 8, 9, or 99)." ;
+                  shacl:select """
+                SELECT $this ?value WHERE {
+                    $this hmis:Gender ?value .
+                    FILTER NOT EXISTS {
+                        ?concept a skos:Concept ;
+                                 skos:inScheme hmis:GenderScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            """
+                ]
+ ] .
+
+[ shacl:datatype xsd:string ;
+   shacl:message "SSN must be in format XXX-XX-XXXX or XXXXXXXXX" ;
+   shacl:pattern "^[0-9]{3}-[0-9]{2}-[0-9]{4}$|^[0-9]{9}$" ;
+   shacl:severity shacl:Warning
+ ] .
+
+[ shacl:datatype xsd:integer ;
+   shacl:severity shacl:Violation ;
+   shacl:sparql [ shacl:message "Destination value {$value} is invalid. Must be from DestinationScheme." ;
+                  shacl:select """
+                SELECT $this ?value WHERE {
+                    $this hmis:Destination ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:DestinationScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            """
+                ]
+ ] .
+
+[ shacl:message "Homelessness Prevention enrollments (ProjectType 12) must have DateOfEngagement." ;
+   shacl:select """
+            SELECT $this WHERE {
+                $this a hmis:Enrollment ;
+                      hmis:inProject ?project .
+                ?project hmis:ProjectType 12 .
+                
+                FILTER NOT EXISTS {
+                    $this hmis:DateOfEngagement ?date .
+                }
+            }
+        """ ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:datatype xsd:string ;
+   shacl:maxCount 1 ;
+   shacl:message "UserID is required for all records" ;
+   shacl:minCount 1 ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:datatype xsd:integer ;
+   shacl:maxCount 1 ;
+   shacl:minCount 1 ;
+   shacl:severity shacl:Violation ;
+   shacl:sparql [ shacl:message "SSNDataQuality value {$value} is invalid. Must be from SSNDataQualityScheme." ;
+                  shacl:select """
+                SELECT $this ?value WHERE {
+                    $this hmis:SSNDataQuality ?value .
+                    FILTER NOT EXISTS {
+                        ?concept a skos:Concept ;
+                                 skos:inScheme hmis:SSNDataQualityScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            """
+                ]
+ ] .
+
+[ shacl:message "Permanent Supportive Housing enrollments (ProjectType 3) require DisablingCondition = 1 (Yes)." ;
+   shacl:select """
+            SELECT $this WHERE {
+                $this a hmis:Enrollment ;
+                      hmis:inProject ?project ;
+                      hmis:DisablingCondition ?disability .
+                ?project hmis:ProjectType 3 .
+                
+                FILTER(?disability != 1)
+            }
+        """ ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:message "Street Outreach enrollments (ProjectType 4) must have DateOfEngagement." ;
+   shacl:select """
+            SELECT $this WHERE {
+                $this a hmis:Enrollment ;
+                      hmis:inProject ?project .
+                ?project hmis:ProjectType 4 .
+                
+                FILTER NOT EXISTS {
+                    $this hmis:DateOfEngagement ?date .
+                }
+            }
+        """ ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:datatype xsd:integer ;
+   shacl:maxCount 1 ;
+   shacl:minCount 1 ;
+   shacl:severity shacl:Violation ;
+   shacl:sparql [ shacl:message "NameDataQuality value {$value} is invalid. Must be from NameDataQualityScheme." ;
+                  shacl:select """
+                SELECT $this ?value WHERE {
+                    $this hmis:NameDataQuality ?value .
+                    FILTER NOT EXISTS {
+                        ?concept a skos:Concept ;
+                                 skos:inScheme hmis:NameDataQualityScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            """
+                ]
+ ] .
+
+[ shacl:datatype xsd:string ;
+   shacl:message "ProjectCoC must be in format XX-NNN" ;
+   shacl:pattern "^[A-Z]{2}-[0-9]{3}$" ;
+   shacl:severity shacl:Warning
+ ] .
+
+[ shacl:datatype xsd:string ;
+   shacl:maxCount 1 ;
+   shacl:message "HouseholdID is required" ;
+   shacl:minCount 1 ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:datatype xsd:date ;
+   shacl:maxCount 1 ;
+   shacl:message "OperatingStartDate is required" ;
+   shacl:minCount 1 ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:datatype xsd:integer ;
+   shacl:severity shacl:Violation ;
+   shacl:sparql [ shacl:message "MidEastNAfrican value {$value} is invalid. Must be from YesNoReasonsScheme." ;
+                  shacl:select """
+                SELECT $this ?value WHERE {
+                    $this hmis:MidEastNAfrican ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:YesNoReasonsScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            """
+                ]
+ ] .
+
+[ shacl:datatype xsd:dateTime ;
+   shacl:maxCount 1 ;
+   shacl:message "DateCreated is required for all records" ;
+   shacl:minCount 1 ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:datatype xsd:date ;
+   shacl:maxCount 1 ;
+   shacl:message "EntryDate is required" ;
+   shacl:minCount 1 ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:datatype xsd:dateTime ;
+   shacl:maxCount 1 ;
+   shacl:message "DateUpdated is required for all records" ;
+   shacl:minCount 1 ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:datatype xsd:integer ;
+   shacl:severity shacl:Violation ;
+   shacl:sparql [ shacl:message "HispanicLatinaeo value {$value} is invalid. Must be from YesNoReasonsScheme." ;
+                  shacl:select """
+                SELECT $this ?value WHERE {
+                    $this hmis:HispanicLatinaeo ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:YesNoReasonsScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            """
+                ]
+ ] .
+
+[ shacl:datatype xsd:integer ;
+   shacl:severity shacl:Violation ;
+   shacl:sparql [ shacl:message "DisablingCondition value {$value} is invalid. Must be from YesNoReasonsScheme." ;
+                  shacl:select """
+                SELECT $this ?value WHERE {
+                    $this hmis:DisablingCondition ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:YesNoReasonsScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            """
+                ]
+ ] .
+
+[ shacl:datatype xsd:string ;
+   shacl:maxCount 1 ;
+   shacl:message "FirstName is required" ;
+   shacl:minCount 1 ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:message "Client is missing SSN. Consider collecting if possible." ;
+   shacl:select """
+            SELECT $this WHERE {
+                $this a hmis:Client .
+                FILTER NOT EXISTS { $this hmis:SSN ?ssn }
+            }
+        """ ;
+   shacl:severity shacl:Info
+ ] .
+
+[ shacl:datatype xsd:integer ;
+   shacl:severity shacl:Violation ;
+   shacl:sparql [ shacl:message "White value {$value} is invalid. Must be from YesNoReasonsScheme." ;
+                  shacl:select """
+                SELECT $this ?value WHERE {
+                    $this hmis:White ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:YesNoReasonsScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            """
+                ]
+ ] .
+
+[ shacl:datatype xsd:integer ;
+   shacl:severity shacl:Violation ;
+   shacl:sparql [ shacl:message "RaceNone value {$value} is invalid. Must be from RaceNoneScheme." ;
+                  shacl:select """
+                SELECT $this ?value WHERE {
+                    $this hmis:RaceNone ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:RaceNoneScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            """
+                ]
+ ] .
+
+[ shacl:datatype xsd:integer ;
+   shacl:maxCount 1 ;
+   shacl:minCount 1 ;
+   shacl:severity shacl:Violation ;
+   shacl:sparql [ shacl:message "ProjectType value {$value} is invalid. Must be from ProjectTypeScheme (0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14)." ;
+                  shacl:select """
+                SELECT $this ?value WHERE {
+                    $this hmis:ProjectType ?value .
+                    FILTER NOT EXISTS {
+                        ?concept a skos:Concept ;
+                                 skos:inScheme hmis:ProjectTypeScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            """
+                ]
+ ] .
+
+[ shacl:message "OperatingEndDate must be greater than or equal to OperatingStartDate" ;
+   shacl:select """
+            SELECT $this WHERE {
+                $this hmis:OperatingStartDate ?start ;
+                      hmis:OperatingEndDate ?end .
+                FILTER(?end < ?start)
+            }
+        """ ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:datatype xsd:date ;
+   shacl:maxCount 1 ;
+   shacl:message "DOB is required" ;
+   shacl:minCount 1 ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:datatype xsd:integer ;
+   shacl:severity shacl:Violation ;
+   shacl:sparql [ shacl:message "AmIndAKNative value {$value} is invalid. Must be from YesNoReasonsScheme." ;
+                  shacl:select """
+                SELECT $this ?value WHERE {
+                    $this hmis:AmIndAKNative ?value .
+                    FILTER NOT EXISTS {
+                        ?concept a skos:Concept ;
+                                 skos:inScheme hmis:YesNoReasonsScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            """
+                ]
+ ] .
+
+[ shacl:datatype xsd:string ;
+   shacl:maxCount 1 ;
+   shacl:message "ProjectName is required" ;
+   shacl:minCount 1 ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:datatype xsd:string ;
+   shacl:maxCount 1 ;
+   shacl:message "ProjectID is required" ;
+   shacl:minCount 1 ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:datatype xsd:integer ;
+   shacl:severity shacl:Violation ;
+   shacl:sparql [ shacl:message "BlackAfAmerican value {$value} is invalid. Must be from YesNoReasonsScheme." ;
+                  shacl:select """
+                SELECT $this ?value WHERE {
+                    $this hmis:BlackAfAmerican ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:YesNoReasonsScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            """
+                ]
+ ] .
+
+[ shacl:datatype xsd:integer ;
+   shacl:maxCount 1 ;
+   shacl:minCount 1 ;
+   shacl:severity shacl:Violation ;
+   shacl:sparql [ shacl:message "DOBDataQuality value {$value} is invalid. Must be from DOBDataQualityScheme." ;
+                  shacl:select """
+                SELECT $this ?value WHERE {
+                    $this hmis:DOBDataQuality ?value .
+                    FILTER NOT EXISTS {
+                        ?concept a skos:Concept ;
+                                 skos:inScheme hmis:DOBDataQualityScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            """
+                ]
+ ] .
+
+[ shacl:datatype xsd:integer ;
+   shacl:severity shacl:Violation ;
+   shacl:sparql [ shacl:message "VeteranStatus value {$value} is invalid. Must be from YesNoReasonsScheme." ;
+                  shacl:select """
+                SELECT $this ?value WHERE {
+                    $this hmis:VeteranStatus ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:YesNoReasonsScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            """
+                ]
+ ] .
+
+[ shacl:message "Household {$this} must have exactly one member with RelationshipToHoH = 1 (Self)." ;
+   shacl:select """
+            SELECT $this (COUNT(?hoh) as ?hohCount) WHERE {
+                $this a hmis:Household ;
+                      hmis:hasMember ?enrollment .
+                ?enrollment hmis:RelationshipToHoH 1 .
+            }
+            GROUP BY $this
+            HAVING (?hohCount != 1)
+        """ ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:datatype xsd:string ;
+   shacl:maxCount 1 ;
+   shacl:maxLength 32 ;
+   shacl:message "EnrollmentID is required and must be 1-32 characters" ;
+   shacl:minCount 1 ;
+   shacl:minLength 1 ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:datatype xsd:integer ;
+   shacl:severity shacl:Violation ;
+   shacl:sparql [ shacl:message "NativeHIPacific value {$value} is invalid. Must be from YesNoReasonsScheme." ;
+                  shacl:select """
+                SELECT $this ?value WHERE {
+                    $this hmis:NativeHIPacific ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:YesNoReasonsScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            """
+                ]
+ ] .
+
+[ shacl:message "DOB cannot be in the future" ;
+   shacl:select """
+            SELECT $this WHERE {
+                $this hmis:DOB ?dob .
+                FILTER(?dob > NOW())
+            }
+        """ ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:datatype xsd:string ;
+   shacl:maxCount 1 ;
+   shacl:message "LastName is required" ;
+   shacl:minCount 1 ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:message "Enrollment has been open for over 1 year without exit. Verify enrollment is still active." ;
+   shacl:select """
+            SELECT $this WHERE {
+                $this a hmis:Enrollment ;
+                      hmis:EntryDate ?entry .
+                FILTER NOT EXISTS { $this hmis:ExitDate ?exit }
+                FILTER(?entry < NOW() - \"P365D\"^^xsd:duration)
+            }
+        """ ;
+   shacl:severity shacl:Info
+ ] .
+
+[ shacl:message "Services Only enrollments (ProjectType 6) must have DateOfEngagement." ;
+   shacl:select """
+            SELECT $this WHERE {
+                $this a hmis:Enrollment ;
+                      hmis:inProject ?project .
+                ?project hmis:ProjectType 6 .
+                
+                FILTER NOT EXISTS {
+                    $this hmis:DateOfEngagement ?date .
+                }
+            }
+        """ ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:datatype xsd:integer ;
+   shacl:severity shacl:Violation ;
+   shacl:sparql [ shacl:message "Asian value {$value} is invalid. Must be from YesNoReasonsScheme." ;
+                  shacl:select """
+                SELECT $this ?value WHERE {
+                    $this hmis:Asian ?value .
+                    FILTER NOT EXISTS {
+                        ?concept skos:inScheme hmis:YesNoReasonsScheme ;
+                                 skos:notation ?value .
+                    }
+                }
+            """
+                ]
+ ] .
+
+[ shacl:datatype xsd:string ;
+   shacl:maxCount 1 ;
+   shacl:maxLength 32 ;
+   shacl:message "PersonalID is required and must be 1-32 characters" ;
+   shacl:minCount 1 ;
+   shacl:minLength 1 ;
+   shacl:severity shacl:Violation
+ ] .
+
+[ shacl:message "DateUpdated must be greater than or equal to DateCreated" ;
+   shacl:select """
+            SELECT $this WHERE {
+                $this hmis:DateCreated ?created ;
+                      hmis:DateUpdated ?updated .
+                FILTER(?updated < ?created)
+            }
+        """ ;
+   shacl:severity shacl:Violation
+ ] .
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+   owl:members ( ontology:Client
+                 ontology:Enrollment
+                 ontology:Household
+                 ontology:Organization
+                 ontology:Project
+                 ontology:SubEnrollment
+                 ontology:SubProject
+                 :SubCEAssessment
+                 :SubEnrollAssessment
+                 :User
+               )
+ ] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( ontology:CurrentLivingSituation
+                ontology:EnrollAssessment
+                ontology:Service
+                :CEAssessment
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Benefit
+                :Disability
+                :HealthInsurance
+                :Income
+              )
+] .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
