@@ -188,7 +188,7 @@ generate_openapi <- function(ttl_file, output_file) {
 }
 
 # Example usage
-generate_openapi("output/Output_20260604_150242/hmis_ontology0604T1502_42.ttl", "generated_openapi.yaml")
+#generate_openapi("output/Output_20260604_150242/hmis_ontology0604T1502_42.ttl", "generated_openapi.yaml")
 
 
 

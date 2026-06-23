@@ -9,11 +9,11 @@ skos_conceptScheme2 <- skos_conceptScheme %>%
 skosClasses <- {
   lines <- c(
     "skos:Concept a owl:Class ;",
-    paste0("  rdfs:label ", ttl_lit("Concept"), " ;"),
+    paste0("  rdfs:label ", ttl_lit("Concept"), "@en ;"),
     "  owl:disjointWith skos:ConceptScheme .",
     "",
     "skos:ConceptScheme a owl:Class ;",
-    paste0("  rdfs:label ", ttl_lit("ConceptScheme"), " ."),
+    paste0("  rdfs:label ", ttl_lit("ConceptScheme"), "@en ."),
     "",
     "skos:inScheme a owl:ObjectProperty ;",
     "  rdfs:domain skos:Concept ;",
@@ -31,8 +31,8 @@ skosConceptScheme <- skos_conceptScheme2 %>%
     
     lines <- c(
       paste0(subj, " a skos:ConceptScheme ;"),
-      paste0("  skos:prefLabel ", ttl_lit(PrefLabel), " ;"),
-      paste0("  hmis:csvList ", ttl_lit(CSVList), " ;")
+      paste0("  skos:prefLabel ", ttl_lit(PrefLabel), "@en ;"),
+      paste0("  hmis:csvList ", ttl_lit(CSVList), "@en ;")
       
     )
     
@@ -52,8 +52,8 @@ skosConcept <- skos_concepts2 %>%
     
     lines <- c(
       paste0(subj, " a skos:Concept ;"),
-      paste0("  skos:prefLabel ", ttl_lit(PrefLabel), " ;"),
-      paste0("  skos:notation ", ttl_lit(Notation), " ;"),
+      paste0("  skos:prefLabel ", ttl_lit(PrefLabel), "@en ;"),
+      paste0("  skos:notation ", ttl_lit(Notation), "^^xsd:integer ;"),
       paste0("  skos:inScheme hmis:", Scheme, " ;")
     )
     

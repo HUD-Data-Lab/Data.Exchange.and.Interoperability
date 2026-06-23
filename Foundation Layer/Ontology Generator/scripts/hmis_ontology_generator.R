@@ -4,7 +4,7 @@
 
 # Step 1: ----
 #Load the functions used in creating the owl files. These set the strings to allowable characters
-source("Ontology_functions.R")
+source("Ontology Generator/scripts/Ontology_functions.R")
 
   
 # Step 2: ----
@@ -12,12 +12,12 @@ source("Ontology_functions.R")
 
 HMIS <- "http://www.semanticweb.org/61084/ontologies/2026/2/hmis#" #This will be the IRI for the ontology
 
-core_classes <- read_xlsx("datasource/SkosVocabulary.xlsx", sheet = 2)
-class_relationships <- read_xlsx("datasource/SkosVocabulary.xlsx", sheet = 3)
-skos_concepts <- read_xlsx("datasource/SkosVocabulary.xlsx", sheet = 4)
-skos_conceptScheme <- read_xlsx("datasource/SkosVocabulary.xlsx", sheet = 5)
-dataProperty <- read_xlsx("datasource/SkosVocabulary.xlsx", sheet = 6)
-objectProperty <- read_xlsx("datasource/SkosVocabulary.xlsx", sheet = 7)
+core_classes <- read_xlsx("Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 2)
+class_relationships <- read_xlsx("Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 3)
+skos_concepts <- read_xlsx("Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 4)
+skos_conceptScheme <- read_xlsx("Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 5)
+dataProperty <- read_xlsx("Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 6)
+objectProperty <- read_xlsx("Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 7)
 
 # Step 3: ---
 #Set the prefixes and create the owl files for the foundation layers
@@ -32,17 +32,17 @@ ttl_header <- c(
   ""
 )
 
-source("hmis_coreClasses_generator.R")
-source("hmis_dataProperty_generator.R")
-source("hmis_objectProperty_generator.R")
-source("hmis_skosVocabularies.R")
+source("Ontology Generator/scripts/hmis_coreClasses_generator.R")
+source("Ontology Generator/scripts/hmis_dataProperty_generator.R")
+source("Ontology Generator/scripts/hmis_objectProperty_generator.R")
+source("Ontology Generator/scripts/hmis_skosVocabularies.R")
 
 #Step 4 ----
 #Generate the ontology files
 {
 date_Foldertag <- format(Sys.time(), "%Y%m%d_%H%M%S") #or "%Y%m%d" for just the date no time
 date_Filetag <- format(Sys.time(), "%m%dT%H%M_%S") #or "%Y%m%d" for just the date no time
-dated_dir <- file.path("output", paste0("Output_", date_Foldertag))
+dated_dir <- file.path("Ontology Generator/output", paste0("Output_", date_Foldertag))
 # Ensure directories exist
 dir.create(dated_dir, recursive = TRUE, showWarnings = FALSE)
 }
