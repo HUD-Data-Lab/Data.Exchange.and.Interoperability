@@ -33,7 +33,7 @@ ttl_header <- c(
 )
 
 source("Ontology Generator/scripts/hmis_coreClasses_generator.R")
-source("Ontology Generator/scripts/hmis_dataProperty_generator.R")
+source("Ontology Generator/scripts/hmis_dataProperty_generator.R")  
 source("Ontology Generator/scripts/hmis_objectProperty_generator.R")
 source("Ontology Generator/scripts/hmis_skosVocabularies.R")
 
