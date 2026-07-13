@@ -1,0 +1,4405 @@
+
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix hmis: <http://www.semanticweb.org/61084/ontologies/2026/2/hmis#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+hmis:LeaseOwn60DayShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CurrentLivingSituation ;
+
+    sh:property [
+        sh:path hmis:LeaseOwn60Day ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "LeaseOwn60Day must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:JuvenileJusticeYearsShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:JuvenileJusticeYears ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:RHYNumberofYears ;
+            ]
+        ] ;
+
+        sh:message "JuvenileJusticeYears must be a valid value from the RHYNumberofYears vocabulary." ;
+    ] .
+
+hmis:DependentUnder6Shape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:DependentUnder6 ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:DependentUnder6 ;
+            ]
+        ] ;
+
+        sh:message "DependentUnder6 must be a valid value from the DependentUnder6 vocabulary." ;
+    ] .
+
+hmis:FormerWardChildWelfareShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:FormerWardChildWelfare ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "FormerWardChildWelfare must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:CounselingReceivedShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:CounselingReceived ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "CounselingReceived must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:TANFChildCareShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Benefit ;
+
+    sh:property [
+        sh:path hmis:TANFChildCare ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "TANFChildCare must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:PregnancyStatusShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthAndDV ;
+
+    sh:property [
+        sh:path hmis:PregnancyStatus ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "PregnancyStatus must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:SCHIPShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:SCHIP ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "SCHIP must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:AnnualPercentAMIShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:AnnualPercentAMI ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:AnnualPercentAMI ;
+            ]
+        ] ;
+
+        sh:message "AnnualPercentAMI must be a valid value from the AnnualPercentAMI vocabulary." ;
+    ] .
+
+hmis:EligibleForRHYShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:EligibleForRHY ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "EligibleForRHY must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:TCellCountAvailableShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Disability ;
+
+    sh:property [
+        sh:path hmis:TCellCountAvailable ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "TCellCountAvailable must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:AlimonyShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Income ;
+
+    sh:property [
+        sh:path hmis:Alimony ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "Alimony must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:GeneralHealthStatusShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthAndDV ;
+
+    sh:property [
+        sh:path hmis:GeneralHealthStatus ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:HealthStatus ;
+            ]
+        ] ;
+
+        sh:message "GeneralHealthStatus must be a valid value from the HealthStatus vocabulary." ;
+    ] .
+
+hmis:AvailabilityShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Inventory ;
+
+    sh:property [
+        sh:path hmis:Availability ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:Availability ;
+            ]
+        ] ;
+
+        sh:message "Availability must be a valid value from the Availability vocabulary." ;
+    ] .
+
+hmis:AccessPointShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEParticipation ;
+
+    sh:property [
+        sh:path hmis:AccessPoint ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "AccessPoint must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:DisablingConditionShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:DisablingCondition ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "DisablingCondition must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:DisabledHoHShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:DisabledHoH ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "DisabledHoH must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:MentalHealthConsultationShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:MentalHealthConsultation ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:MentalHeathConsultation ;
+            ]
+        ] ;
+
+        sh:message "MentalHealthConsultation must be a valid value from the MentalHeathConsultation vocabulary." ;
+    ] .
+
+hmis:HH5PlusShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:HH5Plus ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "HH5Plus must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:TANFTransportationShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Benefit ;
+
+    sh:property [
+        sh:path hmis:TANFTransportation ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "TANFTransportation must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:NoEmployerProvidedReasonShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:NoEmployerProvidedReason ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:ReasonNotInsured ;
+            ]
+        ] ;
+
+        sh:message "NoEmployerProvidedReason must be a valid value from the ReasonNotInsured vocabulary." ;
+    ] .
+
+hmis:ProjectTypeShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Project ;
+
+    sh:property [
+        sh:path hmis:ProjectType ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:ProjectType ;
+            ]
+        ] ;
+
+        sh:message "ProjectType must be a valid value from the ProjectType vocabulary." ;
+    ] .
+
+hmis:ResourcesToObtainShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CurrentLivingSituation ;
+
+    sh:property [
+        sh:path hmis:ResourcesToObtain ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "ResourcesToObtain must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:AssessmentLevelShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEAssessment ;
+
+    sh:property [
+        sh:path hmis:AssessmentLevel ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:AssessmentLevel ;
+            ]
+        ] ;
+
+        sh:message "AssessmentLevel must be a valid value from the AssessmentLevel vocabulary." ;
+    ] .
+
+hmis:BlackAfAmericanShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:BlackAfAmerican ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "BlackAfAmerican must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:IndianHealthServicesShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:IndianHealthServices ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "IndianHealthServices must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:CurrentLivingSituationShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CurrentLivingSituation ;
+
+    sh:property [
+        sh:path hmis:CurrentLivingSituation ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:LivingSituationOptionList ;
+            ]
+        ] ;
+
+        sh:message "CurrentLivingSituation must be a valid value from the LivingSituationOptionList vocabulary." ;
+    ] .
+
+hmis:AmIndAKNativeShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:AmIndAKNative ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "AmIndAKNative must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:LeaveSituation14DaysShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CurrentLivingSituation ;
+
+    sh:property [
+        sh:path hmis:LeaveSituation14Days ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "LeaveSituation14Days must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:PrivateDisabilityShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Income ;
+
+    sh:property [
+        sh:path hmis:PrivateDisability ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "PrivateDisability must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:RentalSubsidyTypeShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:RentalSubsidyType ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:RentalSubsidyTypes ;
+            ]
+        ] ;
+
+        sh:message "RentalSubsidyType must be a valid value from the RentalSubsidyTypes vocabulary." ;
+    ] .
+
+hmis:WorkersCompShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Income ;
+
+    sh:property [
+        sh:path hmis:WorkersComp ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "WorkersComp must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:InsuranceFromAnySourceShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:InsuranceFromAnySource ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "InsuranceFromAnySource must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:ClientLeaseholderShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:ClientLeaseholder ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "ClientLeaseholder must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:SexShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:Sex ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:Sex ;
+            ]
+        ] ;
+
+        sh:message "Sex must be a valid value from the Sex vocabulary." ;
+    ] .
+
+hmis:ViralLoadAvailableShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Disability ;
+
+    sh:property [
+        sh:path hmis:ViralLoadAvailable ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:ViralLoadAvailable ;
+            ]
+        ] ;
+
+        sh:message "ViralLoadAvailable must be a valid value from the ViralLoadAvailable vocabulary." ;
+    ] .
+
+hmis:DestinationShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:Destination ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:LivingSituationOptionList ;
+            ]
+        ] ;
+
+        sh:message "Destination must be a valid value from the LivingSituationOptionList vocabulary." ;
+    ] .
+
+hmis:EventShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEEvent ;
+
+    sh:property [
+        sh:path hmis:Event ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:Event ;
+            ]
+        ] ;
+
+        sh:message "Event must be a valid value from the Event vocabulary." ;
+    ] .
+
+hmis:EarlyExitReasonShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:EarlyExitReason ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:ExpelledReason ;
+            ]
+        ] ;
+
+        sh:message "EarlyExitReason must be a valid value from the ExpelledReason vocabulary." ;
+    ] .
+
+hmis:IncarceratedParentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:IncarceratedParent ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "IncarceratedParent must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:MedicaidShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:Medicaid ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "Medicaid must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:FormerWardJuvenileJusticeShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:FormerWardJuvenileJustice ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "FormerWardJuvenileJustice must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:MonthsHomelessPastThreeYearsShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:MonthsHomelessPastThreeYears ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:MonthsHomelessPastThreeYears ;
+            ]
+        ] ;
+
+        sh:message "MonthsHomelessPastThreeYears must be a valid value from the MonthsHomelessPastThreeYears vocabulary." ;
+    ] .
+
+hmis:NotEmployedReasonShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EmploymentEducation ;
+
+    sh:property [
+        sh:path hmis:NotEmployedReason ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NotEmployedReason ;
+            ]
+        ] ;
+
+        sh:message "NotEmployedReason must be a valid value from the NotEmployedReason vocabulary." ;
+    ] .
+
+hmis:MilitaryBranchShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:MilitaryBranch ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:MilitaryBranch ;
+            ]
+        ] ;
+
+        sh:message "MilitaryBranch must be a valid value from the MilitaryBranch vocabulary." ;
+    ] .
+
+hmis:IncomeFromAnySourceShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Income ;
+
+    sh:property [
+        sh:path hmis:IncomeFromAnySource ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "IncomeFromAnySource must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:VAMCStationShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:VAMCStation ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:VAMCStationNumber ;
+            ]
+        ] ;
+
+        sh:message "VAMCStation must be a valid value from the VAMCStationNumber vocabulary." ;
+    ] .
+
+hmis:PhysicalDisabilityFamShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:PhysicalDisabilityFam ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "PhysicalDisabilityFam must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:CurrentlyFleeingShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthAndDV ;
+
+    sh:property [
+        sh:path hmis:CurrentlyFleeing ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "CurrentlyFleeing must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:EmailSocialMediaShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:EmailSocialMedia ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "EmailSocialMedia must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:SSDIShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Income ;
+
+    sh:property [
+        sh:path hmis:SSDI ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "SSDI must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:TANFShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Income ;
+
+    sh:property [
+        sh:path hmis:TANF ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "TANF must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:PostExitCounselingPlanShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:PostExitCounselingPlan ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "PostExitCounselingPlan must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:ResidentialAffiliationShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Project ;
+
+    sh:property [
+        sh:path hmis:ResidentialAffiliation ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "ResidentialAffiliation must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:TargetScreenReqdShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:TargetScreenReqd ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "TargetScreenReqd must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:CoercedToContinueWorkShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:CoercedToContinueWork ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "CoercedToContinueWork must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:ReceivesReferralsShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEParticipation ;
+
+    sh:property [
+        sh:path hmis:ReceivesReferrals ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "ReceivesReferrals must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:HousingTypeShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Project ;
+
+    sh:property [
+        sh:path hmis:HousingType ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:HousingType ;
+            ]
+        ] ;
+
+        sh:message "HousingType must be a valid value from the HousingType vocabulary." ;
+    ] .
+
+hmis:IncarceratedAdultShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:IncarceratedAdult ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:IncarceratedAdult ;
+            ]
+        ] ;
+
+        sh:message "IncarceratedAdult must be a valid value from the IncarceratedAdult vocabulary." ;
+    ] .
+
+hmis:WhenOccurredShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthAndDV ;
+
+    sh:property [
+        sh:path hmis:WhenOccurred ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:WhenDVOccurred ;
+            ]
+        ] ;
+
+        sh:message "WhenOccurred must be a valid value from the WhenDVOccurred vocabulary." ;
+    ] .
+
+hmis:AsianShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:Asian ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "Asian must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:NoADAPReasonShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Service ;
+
+    sh:property [
+        sh:path hmis:NoADAPReason ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoAssistanceReason ;
+            ]
+        ] ;
+
+        sh:message "NoADAPReason must be a valid value from the NoAssistanceReason vocabulary." ;
+    ] .
+
+hmis:ReferralOutcomeShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Service ;
+
+    sh:property [
+        sh:path hmis:ReferralOutcome ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:PATHReferralOutcome ;
+            ]
+        ] ;
+
+        sh:message "ReferralOutcome must be a valid value from the PATHReferralOutcome vocabulary." ;
+    ] .
+
+hmis:IraqOIFShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:IraqOIF ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "IraqOIF must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:AlcoholDrugUseDisorderFamShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:AlcoholDrugUseDisorderFam ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "AlcoholDrugUseDisorderFam must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:SexOffenderShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:SexOffender ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "SexOffender must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:UnemploymentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Income ;
+
+    sh:property [
+        sh:path hmis:Unemployment ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "Unemployment must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:DestinationSafeWorkerShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:DestinationSafeWorker ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:WorkerResponse ;
+            ]
+        ] ;
+
+        sh:message "DestinationSafeWorker must be a valid value from the WorkerResponse vocabulary." ;
+    ] .
+
+hmis:HouseholdTypeShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Inventory ;
+
+    sh:property [
+        sh:path hmis:HouseholdType ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:HouseholdType ;
+            ]
+        ] ;
+
+        sh:message "HouseholdType must be a valid value from the HouseholdType vocabulary." ;
+    ] .
+
+hmis:NoMedicareReasonShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:NoMedicareReason ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:ReasonNotInsured ;
+            ]
+        ] ;
+
+        sh:message "NoMedicareReason must be a valid value from the ReasonNotInsured vocabulary." ;
+    ] .
+
+hmis:PensionShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Income ;
+
+    sh:property [
+        sh:path hmis:Pension ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "Pension must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:TranslationNeededShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:TranslationNeeded ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "TranslationNeeded must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:LivingSituationShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:LivingSituation ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:LivingSituationOptionList ;
+            ]
+        ] ;
+
+        sh:message "LivingSituation must be a valid value from the LivingSituationOptionList vocabulary." ;
+    ] .
+
+hmis:MentalHealthDisorderFamShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:MentalHealthDisorderFam ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "MentalHealthDisorderFam must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:SSNDataQualityShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:SSNDataQuality ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:SSNDataQuality ;
+            ]
+        ] ;
+
+        sh:message "SSNDataQuality must be a valid value from the SSNDataQuality vocabulary." ;
+    ] .
+
+hmis:VietnamWarShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:VietnamWar ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "VietnamWar must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:InPersonGroupShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:InPersonGroup ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "InPersonGroup must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:HispanicLatinaoShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:HispanicLatinao ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "HispanicLatinao must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:GroupCounselingShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:GroupCounseling ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "GroupCounseling must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:FunderShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:FundSource ;
+
+    sh:property [
+        sh:path hmis:Funder ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:FundingSource ;
+            ]
+        ] ;
+
+        sh:message "Funder must be a valid value from the FundingSource vocabulary." ;
+    ] .
+
+hmis:SNAPShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Benefit ;
+
+    sh:property [
+        sh:path hmis:SNAP ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "SNAP must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:SubsequentResidenceShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CurrentLivingSituation ;
+
+    sh:property [
+        sh:path hmis:SubsequentResidence ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "SubsequentResidence must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:PreviousStreetESSHShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:PreviousStreetESSH ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "PreviousStreetESSH must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:ReferralResultShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEEvent ;
+
+    sh:property [
+        sh:path hmis:ReferralResult ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:ReferralResult ;
+            ]
+        ] ;
+
+        sh:message "ReferralResult must be a valid value from the ReferralResult vocabulary." ;
+    ] .
+
+hmis:HousingAssessmentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:HousingAssessment ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:HousingAssessmentAtExit ;
+            ]
+        ] ;
+
+        sh:message "HousingAssessment must be a valid value from the HousingAssessmentAtExit vocabulary." ;
+    ] .
+
+hmis:HousingAssessmentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:HousingAssessment ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:HousingAssessmentAtExit ;
+            ]
+        ] ;
+
+        sh:message "HousingAssessment must be a valid value from the HousingAssessmentAtExit vocabulary." ;
+    ] .
+
+hmis:HousingAssessmentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:HousingAssessment ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:HousingAssessmentAtExit ;
+            ]
+        ] ;
+
+        sh:message "HousingAssessment must be a valid value from the HousingAssessmentAtExit vocabulary." ;
+    ] .
+
+hmis:HousingAssessmentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:HousingAssessment ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:HousingAssessmentAtExit ;
+            ]
+        ] ;
+
+        sh:message "HousingAssessment must be a valid value from the HousingAssessmentAtExit vocabulary." ;
+    ] .
+
+hmis:HousingAssessmentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEParticipation ;
+
+    sh:property [
+        sh:path hmis:HousingAssessment ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:HousingAssessmentAtExit ;
+            ]
+        ] ;
+
+        sh:message "HousingAssessment must be a valid value from the HousingAssessmentAtExit vocabulary." ;
+    ] .
+
+hmis:HousingAssessmentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEParticipation ;
+
+    sh:property [
+        sh:path hmis:HousingAssessment ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:HousingAssessmentAtExit ;
+            ]
+        ] ;
+
+        sh:message "HousingAssessment must be a valid value from the HousingAssessmentAtExit vocabulary." ;
+    ] .
+
+hmis:HousingAssessmentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEParticipation ;
+
+    sh:property [
+        sh:path hmis:HousingAssessment ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:HousingAssessmentAtExit ;
+            ]
+        ] ;
+
+        sh:message "HousingAssessment must be a valid value from the HousingAssessmentAtExit vocabulary." ;
+    ] .
+
+hmis:HousingAssessmentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEParticipation ;
+
+    sh:property [
+        sh:path hmis:HousingAssessment ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:HousingAssessmentAtExit ;
+            ]
+        ] ;
+
+        sh:message "HousingAssessment must be a valid value from the HousingAssessmentAtExit vocabulary." ;
+    ] .
+
+hmis:HousingAssessmentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:HousingAssessment ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "HousingAssessment must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:HousingAssessmentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:HousingAssessment ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "HousingAssessment must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:HousingAssessmentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:HousingAssessment ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "HousingAssessment must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:HousingAssessmentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:HousingAssessment ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "HousingAssessment must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:HousingAssessmentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEParticipation ;
+
+    sh:property [
+        sh:path hmis:HousingAssessment ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "HousingAssessment must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:HousingAssessmentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEParticipation ;
+
+    sh:property [
+        sh:path hmis:HousingAssessment ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "HousingAssessment must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:HousingAssessmentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEParticipation ;
+
+    sh:property [
+        sh:path hmis:HousingAssessment ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "HousingAssessment must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:HousingAssessmentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEParticipation ;
+
+    sh:property [
+        sh:path hmis:HousingAssessment ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "HousingAssessment must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:HOHLeaseholderShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:HOHLeaseholder ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "HOHLeaseholder must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:NameDataQualityShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:NameDataQuality ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NameDataQuality ;
+            ]
+        ] ;
+
+        sh:message "NameDataQuality must be a valid value from the NameDataQuality vocabulary." ;
+    ] .
+
+hmis:ProjectCompletionStatusShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:ProjectCompletionStatus ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:ProjectCompletionStatus ;
+            ]
+        ] ;
+
+        sh:message "ProjectCompletionStatus must be a valid value from the ProjectCompletionStatus vocabulary." ;
+    ] .
+
+hmis:CoCPrioritizedShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:CoCPrioritized ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "CoCPrioritized must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:IraqONDShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:IraqOND ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "IraqOND must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:ChildWelfareYearsShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:ChildWelfareYears ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:RHYNumberofYears ;
+            ]
+        ] ;
+
+        sh:message "ChildWelfareYears must be a valid value from the RHYNumberofYears vocabulary." ;
+    ] .
+
+hmis:VictimServiceProviderShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Organization ;
+
+    sh:property [
+        sh:path hmis:VictimServiceProvider ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "VictimServiceProvider must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:ExchangeForSexPastThreeMonthsShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:ExchangeForSexPastThreeMonths ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "ExchangeForSexPastThreeMonths must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:GeographyTypeShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Geography ;
+
+    sh:property [
+        sh:path hmis:GeographyType ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:GeographyType ;
+            ]
+        ] ;
+
+        sh:message "GeographyType must be a valid value from the GeographyType vocabulary." ;
+    ] .
+
+hmis:AftercareProvidedShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:AftercareProvided ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:AftercareProvided ;
+            ]
+        ] ;
+
+        sh:message "AftercareProvided must be a valid value from the AftercareProvided vocabulary." ;
+    ] .
+
+hmis:VADisabilityServiceShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Income ;
+
+    sh:property [
+        sh:path hmis:VADisabilityService ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "VADisabilityService must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:PosPeerConnectionsShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:PosPeerConnections ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:WorkerResponse ;
+            ]
+        ] ;
+
+        sh:message "PosPeerConnections must be a valid value from the WorkerResponse vocabulary." ;
+    ] .
+
+hmis:OtherBenefitsSourceShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Benefit ;
+
+    sh:property [
+        sh:path hmis:OtherBenefitsSource ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "OtherBenefitsSource must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:OtherTheaterShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:OtherTheater ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "OtherTheater must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:RunawayYouthShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:RunawayYouth ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "RunawayYouth must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:ExchangeForSexShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:ExchangeForSex ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "ExchangeForSex must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:RelationshipToHoHShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Household ;
+
+    sh:property [
+        sh:path hmis:RelationshipToHoH ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:RelationshipToHoH ;
+            ]
+        ] ;
+
+        sh:message "RelationshipToHoH must be a valid value from the RelationshipToHoH vocabulary." ;
+    ] .
+
+hmis:DischargeStatusShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:DischargeStatus ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:DischargeStatus ;
+            ]
+        ] ;
+
+        sh:message "DischargeStatus must be a valid value from the DischargeStatus vocabulary." ;
+    ] .
+
+hmis:CurrentEdStatusShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:CurrentEdStatus ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:CurrentEdStatus ;
+            ]
+        ] ;
+
+        sh:message "CurrentEdStatus must be a valid value from the CurrentEdStatus vocabulary." ;
+    ] .
+
+hmis:RaceNoneShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:RaceNone ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:RaceNone ;
+            ]
+        ] ;
+
+        sh:message "RaceNone must be a valid value from the RaceNone vocabulary." ;
+    ] .
+
+hmis:RRHSubTypeShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Project ;
+
+    sh:property [
+        sh:path hmis:RRHSubType ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:RRHSubType ;
+            ]
+        ] ;
+
+        sh:message "RRHSubType must be a valid value from the RRHSubType vocabulary." ;
+    ] .
+
+hmis:ReasonNotEnrolledShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:ReasonNotEnrolled ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:ReasonNotEnrolled ;
+            ]
+        ] ;
+
+        sh:message "ReasonNotEnrolled must be a valid value from the ReasonNotEnrolled vocabulary." ;
+    ] .
+
+hmis:EmploymentTypeShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EmploymentEducation ;
+
+    sh:property [
+        sh:path hmis:EmploymentType ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:EmploymentType ;
+            ]
+        ] ;
+
+        sh:message "EmploymentType must be a valid value from the EmploymentType vocabulary." ;
+    ] .
+
+hmis:TimeToHousingLossShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:TimeToHousingLoss ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:TimeToHousingLoss ;
+            ]
+        ] ;
+
+        sh:message "TimeToHousingLoss must be a valid value from the TimeToHousingLoss vocabulary." ;
+    ] .
+
+hmis:EmployerProvidedShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:EmployerProvided ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "EmployerProvided must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:TelephoneShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:Telephone ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "Telephone must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:TargetPopulationShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Project ;
+
+    sh:property [
+        sh:path hmis:TargetPopulation ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:TargetPopulation ;
+            ]
+        ] ;
+
+        sh:message "TargetPopulation must be a valid value from the TargetPopulation vocabulary." ;
+    ] .
+
+hmis:UnemploymentFamShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:UnemploymentFam ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "UnemploymentFam must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:LaborExploitPastThreeMonthsShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:LaborExploitPastThreeMonths ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "LaborExploitPastThreeMonths must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:PreventionAssessmentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEParticipation ;
+
+    sh:property [
+        sh:path hmis:PreventionAssessment ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "PreventionAssessment must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:MentalHealthStatusShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthAndDV ;
+
+    sh:property [
+        sh:path hmis:MentalHealthStatus ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:HealthStatus ;
+            ]
+        ] ;
+
+        sh:message "MentalHealthStatus must be a valid value from the HealthStatus vocabulary." ;
+    ] .
+
+hmis:MidEastNAfricanShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:MidEastNAfrican ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "MidEastNAfrican must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:PosCommunityConnectionsShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:PosCommunityConnections ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:WorkerResponse ;
+            ]
+        ] ;
+
+        sh:message "PosCommunityConnections must be a valid value from the WorkerResponse vocabulary." ;
+    ] .
+
+hmis:LengthOfStayShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:LengthOfStay ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:LengthOfStay ;
+            ]
+        ] ;
+
+        sh:message "LengthOfStay must be a valid value from the LengthOfStay vocabulary." ;
+    ] .
+
+hmis:IndividualCounselingShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:IndividualCounseling ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "IndividualCounseling must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:CurrentSchoolAttendShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:CurrentSchoolAttend ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:CurrentSchoolAttend ;
+            ]
+        ] ;
+
+        sh:message "CurrentSchoolAttend must be a valid value from the CurrentSchoolAttend vocabulary." ;
+    ] .
+
+hmis:ADAPShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Service ;
+
+    sh:property [
+        sh:path hmis:ADAP ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "ADAP must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:GAShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Income ;
+
+    sh:property [
+        sh:path hmis:GA ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "GA must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:NoMedicaidReasonShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:NoMedicaidReason ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:ReasonNotInsured ;
+            ]
+        ] ;
+
+        sh:message "NoMedicaidReason must be a valid value from the ReasonNotInsured vocabulary." ;
+    ] .
+
+hmis:ESBedTypeShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Inventory ;
+
+    sh:property [
+        sh:path hmis:ESBedType ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:BedType ;
+            ]
+        ] ;
+
+        sh:message "ESBedType must be a valid value from the BedType vocabulary." ;
+    ] .
+
+hmis:CurrentPregnantShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:CurrentPregnant ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "CurrentPregnant must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:FamilyCounselingShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:FamilyCounseling ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "FamilyCounseling must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:ReasonNoServicesShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:ReasonNoServices ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:ReasonNoServices ;
+            ]
+        ] ;
+
+        sh:message "ReasonNoServices must be a valid value from the ReasonNoServices vocabulary." ;
+    ] .
+
+hmis:VHAServicesShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:VHAServices ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "VHAServices must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:COBRAShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:COBRA ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "COBRA must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:MedicareShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:Medicare ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "Medicare must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:ChildSupportShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Income ;
+
+    sh:property [
+        sh:path hmis:ChildSupport ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "ChildSupport must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:AskedOrForcedToExchangeForSexPastThreeMonthsShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:AskedOrForcedToExchangeForSexPastThreeMonths ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "AskedOrForcedToExchangeForSexPastThreeMonths must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:LiteralHomelessHistoryShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:LiteralHomelessHistory ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:LiteralHomelessHistory ;
+            ]
+        ] ;
+
+        sh:message "LiteralHomelessHistory must be a valid value from the LiteralHomelessHistory vocabulary." ;
+    ] .
+
+hmis:SocSecRetirementShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Income ;
+
+    sh:property [
+        sh:path hmis:SocSecRetirement ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "SocSecRetirement must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:NoPrivatePayReasonShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:NoPrivatePayReason ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:ReasonNotInsured ;
+            ]
+        ] ;
+
+        sh:message "NoPrivatePayReason must be a valid value from the ReasonNotInsured vocabulary." ;
+    ] .
+
+hmis:EvictionHistoryShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:EvictionHistory ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:EvictionHistory ;
+            ]
+        ] ;
+
+        sh:message "EvictionHistory must be a valid value from the EvictionHistory vocabulary." ;
+    ] .
+
+hmis:ViralLoadSourceShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Disability ;
+
+    sh:property [
+        sh:path hmis:ViralLoadSource ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:TCellSourceViralLoadSource ;
+            ]
+        ] ;
+
+        sh:message "ViralLoadSource must be a valid value from the TCellSourceViralLoadSource vocabulary." ;
+    ] .
+
+hmis:SubsidyAtRiskShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:SubsidyAtRisk ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "SubsidyAtRisk must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:WorldWarIIShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:WorldWarII ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "WorldWarII must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:ClientEnrolledInPATHShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:ClientEnrolledInPATH ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "ClientEnrolledInPATH must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:DirectServicesShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEParticipation ;
+
+    sh:property [
+        sh:path hmis:DirectServices ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "DirectServices must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:HOPWAMedAssistedLivingFacShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Project ;
+
+    sh:property [
+        sh:path hmis:HOPWAMedAssistedLivingFac ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:HOPWAMedAssistedLivingFac ;
+            ]
+        ] ;
+
+        sh:message "HOPWAMedAssistedLivingFac must be a valid value from the HOPWAMedAssistedLivingFac vocabulary." ;
+    ] .
+
+hmis:CountOfExchangeForSexShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:CountOfExchangeForSex ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:CountExchangeForSex ;
+            ]
+        ] ;
+
+        sh:message "CountOfExchangeForSex must be a valid value from the CountExchangeForSex vocabulary." ;
+    ] .
+
+hmis:NoRyanWhiteReasonShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Service ;
+
+    sh:property [
+        sh:path hmis:NoRyanWhiteReason ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoAssistanceReason ;
+            ]
+        ] ;
+
+        sh:message "NoRyanWhiteReason must be a valid value from the NoAssistanceReason vocabulary." ;
+    ] .
+
+hmis:EmployedShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EmploymentEducation ;
+
+    sh:property [
+        sh:path hmis:Employed ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "Employed must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:WorkplacePromiseDifferenceShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:WorkplacePromiseDifference ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "WorkplacePromiseDifference must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:NoIndianHealthServicesReasonShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:NoIndianHealthServicesReason ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:ReasonNotInsured ;
+            ]
+        ] ;
+
+        sh:message "NoIndianHealthServicesReason must be a valid value from the ReasonNotInsured vocabulary." ;
+    ] .
+
+hmis:WhiteShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:White ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "White must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:RyanWhiteMedDentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Service ;
+
+    sh:property [
+        sh:path hmis:RyanWhiteMedDent ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "RyanWhiteMedDent must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:AntiRetroviralShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Disability ;
+
+    sh:property [
+        sh:path hmis:AntiRetroviral ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "AntiRetroviral must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:SchoolStatusShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EmploymentEducation ;
+
+    sh:property [
+        sh:path hmis:SchoolStatus ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:SchoolStatus ;
+            ]
+        ] ;
+
+        sh:message "SchoolStatus must be a valid value from the SchoolStatus vocabulary." ;
+    ] .
+
+hmis:CMExitReasonShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:CMExitReason ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:CMExitReason ;
+            ]
+        ] ;
+
+        sh:message "CMExitReason must be a valid value from the CMExitReason vocabulary." ;
+    ] .
+
+hmis:PercentAMIShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:PercentAMI ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:PercentAMI ;
+            ]
+        ] ;
+
+        sh:message "PercentAMI must be a valid value from the PercentAMI vocabulary." ;
+    ] .
+
+hmis:DestinationSafeClientShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:DestinationSafeClient ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "DestinationSafeClient must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:DestinationSubsidyTypeShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:DestinationSubsidyType ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:RentalSubsidyTypes ;
+            ]
+        ] ;
+
+        sh:message "DestinationSubsidyType must be a valid value from the RentalSubsidyTypes vocabulary." ;
+    ] .
+
+hmis:DentalHealthStatusShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthAndDV ;
+
+    sh:property [
+        sh:path hmis:DentalHealthStatus ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:HealthStatus ;
+            ]
+        ] ;
+
+        sh:message "DentalHealthStatus must be a valid value from the HealthStatus vocabulary." ;
+    ] .
+
+hmis:BenefitsFromAnySourceShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Benefit ;
+
+    sh:property [
+        sh:path hmis:BenefitsFromAnySource ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "BenefitsFromAnySource must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:NoSCHIPReasonShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:NoSCHIPReason ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:ReasonNotInsured ;
+            ]
+        ] ;
+
+        sh:message "NoSCHIPReason must be a valid value from the ReasonNotInsured vocabulary." ;
+    ] .
+
+hmis:SingleParentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:SingleParent ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "SingleParent must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:OtherInsuranceShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:OtherInsurance ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "OtherInsurance must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:DesertStormShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:DesertStorm ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "DesertStorm must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:LOSUnderThresholdShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:LOSUnderThreshold ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "LOSUnderThreshold must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:LOSUnderThresholdShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:LOSUnderThreshold ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "LOSUnderThreshold must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:WICShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Benefit ;
+
+    sh:property [
+        sh:path hmis:WIC ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "WIC must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:VeteranStatusShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:VeteranStatus ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "VeteranStatus must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:EarnedShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Income ;
+
+    sh:property [
+        sh:path hmis:Earned ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "Earned must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:AssessmentTypeShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEAssessment ;
+
+    sh:property [
+        sh:path hmis:AssessmentType ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:AssessmentType ;
+            ]
+        ] ;
+
+        sh:message "AssessmentType must be a valid value from the AssessmentType vocabulary." ;
+    ] .
+
+hmis:ContinuumProjectShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Project ;
+
+    sh:property [
+        sh:path hmis:ContinuumProject ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "ContinuumProject must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:DomesticViolenceSurvivorShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthAndDV ;
+
+    sh:property [
+        sh:path hmis:DomesticViolenceSurvivor ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "DomesticViolenceSurvivor must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:PosAdultConnectionsShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:PosAdultConnections ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:WorkerResponse ;
+            ]
+        ] ;
+
+        sh:message "PosAdultConnections must be a valid value from the WorkerResponse vocabulary." ;
+    ] .
+
+hmis:StateHealthInsShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:StateHealthIns ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "StateHealthIns must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:CrisisAssessmentShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEParticipation ;
+
+    sh:property [
+        sh:path hmis:CrisisAssessment ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "CrisisAssessment must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:CLSSubsidyTypeShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CurrentLivingSituation ;
+
+    sh:property [
+        sh:path hmis:CLSSubsidyType ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:RentalSubsidyTypes ;
+            ]
+        ] ;
+
+        sh:message "CLSSubsidyType must be a valid value from the RentalSubsidyTypes vocabulary." ;
+    ] .
+
+hmis:NoStateHealthInsReasonShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:NoStateHealthInsReason ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:ReasonNotInsured ;
+            ]
+        ] ;
+
+        sh:message "NoStateHealthInsReason must be a valid value from the ReasonNotInsured vocabulary." ;
+    ] .
+
+hmis:HMISParticipationTypeShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HMISParticipation ;
+
+    sh:property [
+        sh:path hmis:HMISParticipationType ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:HMISParticipationType ;
+            ]
+        ] ;
+
+        sh:message "HMISParticipationType must be a valid value from the HMISParticipationType vocabulary." ;
+    ] .
+
+hmis:WorkplaceViolenceThreatsShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:WorkplaceViolenceThreats ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "WorkplaceViolenceThreats must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:OtherIncomeSourceShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Income ;
+
+    sh:property [
+        sh:path hmis:OtherIncomeSource ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "OtherIncomeSource must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:CriminalRecordShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:CriminalRecord ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "CriminalRecord must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:PrisonDischargeShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:PrisonDischarge ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "PrisonDischarge must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:AskedOrForcedToExchangeForSexShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:AskedOrForcedToExchangeForSex ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "AskedOrForcedToExchangeForSex must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:ConnectionWithSOARShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Service ;
+
+    sh:property [
+        sh:path hmis:ConnectionWithSOAR ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "ConnectionWithSOAR must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:TimesHomelessPastThreeYearsShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:TimesHomelessPastThreeYears ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:TimesHomelessPastThreeYears ;
+            ]
+        ] ;
+
+        sh:message "TimesHomelessPastThreeYears must be a valid value from the TimesHomelessPastThreeYears vocabulary." ;
+    ] .
+
+hmis:LastGradeCompletedShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EmploymentEducation ;
+
+    sh:property [
+        sh:path hmis:LastGradeCompleted ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:LastGradeCompleted ;
+            ]
+        ] ;
+
+        sh:message "LastGradeCompleted must be a valid value from the LastGradeCompleted vocabulary." ;
+    ] .
+
+hmis:TCellSourceShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Disability ;
+
+    sh:property [
+        sh:path hmis:TCellSource ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:TCellSourceViralLoadSource ;
+            ]
+        ] ;
+
+        sh:message "TCellSource must be a valid value from the TCellSourceViralLoadSource vocabulary." ;
+    ] .
+
+hmis:KoreanWarShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:KoreanWar ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "KoreanWar must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:InPersonIndividualShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:InPersonIndividual ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "InPersonIndividual must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:VADisabilityNonServiceShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Income ;
+
+    sh:property [
+        sh:path hmis:VADisabilityNonService ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "VADisabilityNonService must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:MostRecentEdStatusShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:MostRecentEdStatus ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:MostRecentEdStatus ;
+            ]
+        ] ;
+
+        sh:message "MostRecentEdStatus must be a valid value from the MostRecentEdStatus vocabulary." ;
+    ] .
+
+hmis:SSIShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Income ;
+
+    sh:property [
+        sh:path hmis:SSI ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "SSI must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:DOBDataQualityShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:DOBDataQuality ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:DOBDataQuality ;
+            ]
+        ] ;
+
+        sh:message "DOBDataQuality must be a valid value from the DOBDataQuality vocabulary." ;
+    ] .
+
+hmis:AfghanistanOEFShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:AfghanistanOEF ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "AfghanistanOEF must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:NativeHIPacificShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Client ;
+
+    sh:property [
+        sh:path hmis:NativeHIPacific ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYes ;
+            ]
+        ] ;
+
+        sh:message "NativeHIPacific must be a valid value from the NoYes vocabulary." ;
+    ] .
+
+hmis:SubsidyInformationShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:SubsidyInformation ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:SubsidyInformation ;
+            ]
+        ] ;
+
+        sh:message "SubsidyInformation must be a valid value from the SubsidyInformation vocabulary." ;
+    ] .
+
+hmis:SubsidyInformationShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:EnrollAssessment ;
+
+    sh:property [
+        sh:path hmis:SubsidyInformation ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:SubsidyInformation ;
+            ]
+        ] ;
+
+        sh:message "SubsidyInformation must be a valid value from the SubsidyInformation vocabulary." ;
+    ] .
+
+hmis:NoVHAReasonShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:NoVHAReason ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:ReasonNotInsured ;
+            ]
+        ] ;
+
+        sh:message "NoVHAReason must be a valid value from the ReasonNotInsured vocabulary." ;
+    ] .
+
+hmis:PrioritizationStatusShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEAssessment ;
+
+    sh:property [
+        sh:path hmis:PrioritizationStatus ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:PrioritizationStatus ;
+            ]
+        ] ;
+
+        sh:message "PrioritizationStatus must be a valid value from the PrioritizationStatus vocabulary." ;
+    ] .
+
+hmis:PrivatePayShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:PrivatePay ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "PrivatePay must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:ReferralCaseManageAfterShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEEvent ;
+
+    sh:property [
+        sh:path hmis:ReferralCaseManageAfter ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "ReferralCaseManageAfter must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:InsufficientIncomeShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:InsufficientIncome ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "InsufficientIncome must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:MovedTwoOrMoreShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CurrentLivingSituation ;
+
+    sh:property [
+        sh:path hmis:MovedTwoOrMore ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesReasonsForMissing ;
+            ]
+        ] ;
+
+        sh:message "MovedTwoOrMore must be a valid value from the NoYesReasonsForMissing vocabulary." ;
+    ] .
+
+hmis:OtherTANFShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Benefit ;
+
+    sh:property [
+        sh:path hmis:OtherTANF ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "OtherTANF must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+
+hmis:ReferralSourceShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:Enrollment ;
+
+    sh:property [
+        sh:path hmis:ReferralSource ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:ReferralSource ;
+            ]
+        ] ;
+
+        sh:message "ReferralSource must be a valid value from the ReferralSource vocabulary." ;
+    ] .
+
+hmis:NoCOBRAReasonShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:HealthInsurance ;
+
+    sh:property [
+        sh:path hmis:NoCOBRAReason ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:ReasonNotInsured ;
+            ]
+        ] ;
+
+        sh:message "NoCOBRAReason must be a valid value from the ReasonNotInsured vocabulary." ;
+    ] .
+
+hmis:ProbSolDivRRResultShape
+    a sh:NodeShape ;
+    sh:targetClass hmis:CEEvent ;
+
+    sh:property [
+        sh:path hmis:ProbSolDivRRResult ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:NoYesMissing ;
+            ]
+        ] ;
+
+        sh:message "ProbSolDivRRResult must be a valid value from the NoYesMissing vocabulary." ;
+    ] .
+

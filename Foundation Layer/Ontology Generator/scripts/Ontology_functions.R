@@ -2,7 +2,8 @@ library(tidyverse)
 library(readxl)
 library(stringr)
 library(yaml)
-
+library(purrr)
+library(glue)
 
 # Functions to clean up text
 nb2sp <- function(x) gsub("\u00A0", " ", x, fixed = TRUE) #non-breaking to space
@@ -190,6 +191,90 @@ generate_openapi <- function(ttl_file, output_file) {
 # Example usage
 #generate_openapi("output/Output_20260604_150242/hmis_ontology0604T1502_42.ttl", "generated_openapi.yaml")
 
+
+
+generate_shape <- function(property,
+                           domain,
+                           scheme,
+                           de = NA,
+                           field = NA) {
+  
+  glue(
+    '
+hmis:{property}Shape
+    a sh:NodeShape ;
+    sh:targetClass hmis:{domain} ;
+
+    sh:property [
+        sh:path hmis:{property} ;
+
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+
+        sh:node [
+            sh:property [
+                sh:path skos:inScheme ;
+                sh:hasValue hmis:{scheme} ;
+            ]
+        ] ;
+
+        sh:message "{property} must be a valid value from the {scheme} vocabulary." ;
+    ] .
+
+'
+  )
+}
+
+
+get_field_definition <- function(
+    search_by,
+    field_name,
+    metadata,
+    graph) {
+  
+  row <- if (search_by == "Data Element Name"){
+    metadata %>%
+      filter(dataDictionaryName == field_name)
+  } else if (search_by == "Data Element Number") {
+    metadata %>%
+      filter(dataElementNumberAndField == field_name)
+  }
+  
+  if(nrow(row) == 0)
+    stop("Field not found")
+  
+  if(row$field_type[1] == "Enumeration") {
+    
+    scheme <- row$scheme[1]
+    
+    query <- glue::glue('
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?concept ?notation ?label
+WHERE {{
+
+  ?concept skos:inScheme <{scheme}> .
+
+  OPTIONAL {{ ?concept skos:notation ?notation }}
+  OPTIONAL {{ ?concept skos:prefLabel ?label }}
+
+}}
+')
+     
+    values <- rdf_query(graph, query)
+    
+    return(values)
+    
+  } else {
+    
+    return(
+      tibble::tibble(
+        datatype = row$range[1]
+      )
+    )
+    
+  }
+}
 
 
 
