@@ -29,7 +29,15 @@ ttl_header <- c(
   "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .",
   "@prefix owl:  <http://www.w3.org/2002/07/owl#> .",
   "@prefix skos: <http://www.w3.org/2004/02/skos/core#> .",
+  "@prefix dct: <http://purl.org/dc/terms/> .",
+  paste0("@base <", HMIS, "> ."),
+  "",
+  "<http://www.semanticweb.org/61084/ontologies/2026/2/hmis> rdf:type owl:Ontology ;",
+  "  dct:description \"Ontology representing HMIS data standards.\"@en ;" ,
+  "  dct:title \"HMIS Ontology\"@en ;", 
+  "  rdfs:seeAlso <https://www.hudexchange.info/resource/3824/hmis-data-dictionary/> .",
   ""
+
 )
 
 source("Ontology Generator/scripts/hmis_coreClasses_generator.R")
