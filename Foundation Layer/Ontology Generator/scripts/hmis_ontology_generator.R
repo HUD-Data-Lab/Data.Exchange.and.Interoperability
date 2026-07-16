@@ -4,7 +4,7 @@
 
 # Step 1: ----
 #Load the functions used in creating the owl files. These set the strings to allowable characters
-source("Ontology Generator/scripts/Ontology_functions.R")
+source("Foundation Layer/Ontology Generator/scripts/Ontology_functions.R")
 
   
 # Step 2: ----
@@ -12,12 +12,12 @@ source("Ontology Generator/scripts/Ontology_functions.R")
 
 HMIS <- "http://www.semanticweb.org/61084/ontologies/2026/2/hmis#" #This will be the IRI for the ontology
 
-core_classes <- read_xlsx("Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 2)
-class_relationships <- read_xlsx("Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 3)
-skos_concepts <- read_xlsx("Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 4)
-skos_conceptScheme <- read_xlsx("Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 5)
-dataProperty <- read_xlsx("Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 6)
-objectProperty <- read_xlsx("Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 7)
+core_classes <- read_xlsx("Foundation Layer/Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 2)
+class_relationships <- read_xlsx("Foundation Layer/Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 3)
+skos_concepts <- read_xlsx("Foundation Layer/Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 4)
+skos_conceptScheme <- read_xlsx("Foundation Layer/Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 5)
+dataProperty <- read_xlsx("Foundation Layer/Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 6)
+objectProperty <- read_xlsx("Foundation Layer/Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 7)
 
 # Step 3: ---
 #Set the prefixes and create the owl files for the foundation layers
@@ -32,20 +32,24 @@ ttl_header <- c(
   ""
 )
 
-source("Ontology Generator/scripts/hmis_coreClasses_generator.R")
-source("Ontology Generator/scripts/hmis_dataProperty_generator.R")  
-source("Ontology Generator/scripts/hmis_objectProperty_generator.R")
-source("Ontology Generator/scripts/hmis_skosVocabularies.R")
+source("Foundation Layer/Ontology Generator/scripts/hmis_coreClasses_generator.R")
+source("Foundation Layer/Ontology Generator/scripts/hmis_dataProperty_generator.R")  
+source("Foundation Layer/Ontology Generator/scripts/hmis_objectProperty_generator.R")
+source("Foundation Layer/Ontology Generator/scripts/hmis_skosVocabularies.R")
 
 #Step 4 ----
 #Generate the ontology files
 {
+ontology_version <- "v1.0.0-beta" #format for version numbering is: "v[major].[minor].[patch]" [-beta] is only used for the initial development of v1.0.0
 date_Foldertag <- format(Sys.time(), "%Y%m%d_%H%M%S") #or "%Y%m%d" for just the date no time
 date_Filetag <- format(Sys.time(), "%m%dT%H%M_%S") #or "%Y%m%d" for just the date no time
-dated_dir <- file.path("Ontology Generator/output", paste0("Output_", date_Foldertag))
+dated_dir <- file.path("Foundation Layer/Ontology Generator/output", paste0("Output_", date_Foldertag))
+Final_Ontology <- file.path("Artifacts/Ontology", paste0("Output_", ontology_version))
 # Ensure directories exist
 dir.create(dated_dir, recursive = TRUE, showWarnings = FALSE)
+dir.create(Final_Ontology, recursive = TRUE, showWarnings = FALSE)
 }
+
 
 {
 #Set the core classes
@@ -64,6 +68,14 @@ writeLines(c(ttl_header, dataProp, objProp),
 writeLines(c(ttl_header,classes,coreClassObjProps, skosConceptScheme,skosConcept,dataProp,objProp),
            file.path(dated_dir,paste0("hmis_ontology",date_Filetag,".ttl")), useBytes = TRUE)
 }
+
+#Create the ontology file that the Translation Layer will use
+{
+  writeLines(c(ttl_header,classes,coreClassObjProps, skosConceptScheme,skosConcept,dataProp,objProp),
+             file.path(Final_Ontology,paste0("hmis_ontology",ontology_version,".ttl")), useBytes = TRUE)
+}
+
+
 }
 
 
