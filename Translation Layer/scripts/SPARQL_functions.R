@@ -57,13 +57,13 @@ get_field_definition <- function(
     query <- glue::glue('
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-SELECT ?concept ?notation ?label
+SELECT ?concept ?notation ?altlabel
 WHERE {{
 
   ?concept skos:inScheme <{scheme}> .
 
   OPTIONAL {{ ?concept skos:notation ?notation }}
-  OPTIONAL {{ ?concept skos:prefLabel ?label }}
+  OPTIONAL {{ ?concept skos:altLabel ?altlabel }}
 
 }}
 ')
@@ -158,4 +158,47 @@ build_resource_schema <- function(fields,
     type = "object",
     properties = properties
   )
+}
+
+## Added to perform a quick QA check in translator.
+## Definitely more verbose than it needs to be, but it works!
+
+check_skos_notation_integrity <- function(df) {
+  
+    multi_notation <- clean_vocab_values %>% 
+      select(c("concept", "notation")) %>% 
+      unique(.) %>%
+      count(concept) %>% 
+      filter(n > 1)
+    
+    ct_multi_notation <- nrow(multi_notation) 
+    
+    if( ct_multi_notation == 0) {
+      message("All concepts have only one notation")
+    } else {
+      
+      message(glue("{ct_multi_notation} concepts have multiple associated notations")) 
+      
+      choices <- c("Yes", "No") 
+      ans <- menu(choices, title = "Save and view details?")
+      print(choices[ans]) 
+      
+      if (choices[ans] == "Yes") {
+      vocab_w_multi_notation <<- clean_vocab_values %>% 
+        filter(concept %in% multi_notation$concept) %>% 
+        mutate(scheme_name = str_replace(scheme, "^.*[#/]", "")) %>%
+        group_by(concept, notation) %>% 
+        summarize(
+          count_scheme = n() ,
+          list_scheme = toString(scheme_name),
+        ) %>% 
+        group_by(concept, count_scheme, list_scheme) %>%
+        summarize(
+          count_notation = n(),
+          list_notation = toString(unique(notation))
+        )
+      view(vocab_w_multi_notation)
+      }
+      
+    } 
 }
