@@ -7,6 +7,7 @@ library(tidyverse)
 library(rdflib)
 library(yaml)
 library(here)
+library(glue)
 
 ## Custom Functions
 source(paste0(here(),"/Translation Layer/scripts/SPARQL_functions.R"))
@@ -49,13 +50,14 @@ query_vocab <- '
 PREFIX hmis: <http://www.semanticweb.org/61084/ontologies/2026/2/hmis#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-SELECT ?scheme ?concept ?label ?notation
+SELECT ?scheme ?concept ?preflabel ?notation ?altlabel
 WHERE {
 
   ?concept skos:inScheme ?scheme .
 
-  OPTIONAL { ?concept skos:prefLabel ?label . }
+  OPTIONAL { ?concept skos:prefLabel ?preflabel . }
   OPTIONAL { ?concept skos:notation ?notation . }
+  OPTIONAL { ?concept skos:altLabel ?altlabel . }
 }
 '
 
@@ -109,11 +111,23 @@ clean_vocab_values <- vocab_values %>%
   )
 
 
+# Quality Assurance Checks ----
+
+## Confirm SKOS vocabulary does not apply multiple notations to same skos:Concept.
+## If it does, offer to return the detailed list.
+  ## Note: For ShinyApp that allows for extension of ontology, should add
+  ## in a STOP that prevents folks from re-using labels.
+
+check_skos_notation_integrity(clean_vocab_values)
 
 
-# Individual Field Testing ----
 
-## Manual process of drilling down on a single field
+
+# DEV REFERENCE ITEMS ----
+
+## Individual Field Testing ----
+
+### Manual process of drilling down on a single field
 
 field <- clean_MetaData %>%
   filter(property == "LivingSituation")
@@ -130,7 +144,7 @@ schema <- list(
 
 
 
-## Exploration of vocabulary
+### Exploration of vocabulary
 
 multi_notation <- clean_vocab_values %>% 
   select(c("concept", "notation")) %>% 
@@ -155,7 +169,7 @@ vocab_w_multi_notation <- clean_vocab_values %>%
 qa_destination <- paste0(here(),"/Translation Layer")
 write.csv(vocab_w_multi_notation, file = paste0(qa_destination,"/vocab_w_multi_notation.csv"))
 
-## Test of 'get_field_definition' function
+### Test of 'get_field_definition' function
 
 view(get_field_definition(
   "Data Element Name", #Options here are "Data Element Name" OR "Data Element Number"
@@ -167,7 +181,7 @@ view(get_field_definition(
 
 
 
-#### SKIP for now ----
+## YAML translation snippets ----
 
 
 # In a YAML file, we can flag something 

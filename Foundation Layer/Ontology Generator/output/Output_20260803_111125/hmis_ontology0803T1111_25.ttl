@@ -907,6 +907,60 @@ hmis:CurrentEdStatus a skos:ConceptScheme ;
   skos:prefLabel "CurrentEdStatus"@en ;
   hmis:csvList "C3.B"@en .
 
+hmis:Heterosexual a skos:Concept ;
+  skos:prefLabel "Heterosexual"@en ;
+  skos:altLabel "Heterosexual"@en ;
+  skos:notation "1"^^xsd:integer ;
+  skos:inScheme hmis:NA .
+
+hmis:Gay a skos:Concept ;
+  skos:prefLabel "Gay"@en ;
+  skos:altLabel "Gay"@en ;
+  skos:notation "2"^^xsd:integer ;
+  skos:inScheme hmis:NA .
+
+hmis:Lesbian a skos:Concept ;
+  skos:prefLabel "Lesbian"@en ;
+  skos:altLabel "Lesbian"@en ;
+  skos:notation "3"^^xsd:integer ;
+  skos:inScheme hmis:NA .
+
+hmis:Bisexual a skos:Concept ;
+  skos:prefLabel "Bisexual"@en ;
+  skos:altLabel "Bisexual"@en ;
+  skos:notation "4"^^xsd:integer ;
+  skos:inScheme hmis:NA .
+
+hmis:Questioning_unsure a skos:Concept ;
+  skos:prefLabel "Questioning / unsure"@en ;
+  skos:altLabel "Questioning / unsure"@en ;
+  skos:notation "5"^^xsd:integer ;
+  skos:inScheme hmis:NA .
+
+hmis:Client_doesn_t_know a skos:Concept ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
+  skos:notation "8"^^xsd:integer ;
+  skos:inScheme hmis:NA .
+
+hmis:Client_prefers_not_to_answer a skos:Concept ;
+  skos:prefLabel "Client prefers not to answer"@en ;
+  skos:altLabel "Client prefers not to answer"@en ;
+  skos:notation "9"^^xsd:integer ;
+  skos:inScheme hmis:NA .
+
+hmis:Data_not_collected a skos:Concept ;
+  skos:prefLabel "Data not collected"@en ;
+  skos:altLabel "Data not collected"@en ;
+  skos:notation "99"^^xsd:integer ;
+  skos:inScheme hmis:NA .
+
+hmis:Other a skos:Concept ;
+  skos:prefLabel "Other"@en ;
+  skos:altLabel "Other"@en ;
+  skos:notation "6"^^xsd:integer ;
+  skos:inScheme hmis:NA .
+
 hmis:No a skos:Concept ;
   skos:prefLabel "No"@en ;
   skos:altLabel "No"@en ;
@@ -2083,8 +2137,8 @@ hmis:Rental_assistance a skos:Concept ;
   skos:notation "1"^^xsd:integer ;
   skos:inScheme hmis:HOPWAFinancialAssistance .
 
-hmis:Security_deposits_HOPWAFinancialAssistance a skos:Concept ;
-  skos:prefLabel "Security deposits_HOPWAFinancialAssistance"@en ;
+hmis:Security_deposits a skos:Concept ;
+  skos:prefLabel "Security deposits"@en ;
   skos:altLabel "Security deposits"@en ;
   skos:notation "2"^^xsd:integer ;
   skos:inScheme hmis:HOPWAFinancialAssistance .
@@ -3229,8 +3283,8 @@ hmis:Housing_eligibility_determination a skos:Concept ;
   skos:notation "10"^^xsd:integer ;
   skos:inScheme hmis:PATHServices .
 
-hmis:Security_deposits_PATHServices a skos:Concept ;
-  skos:prefLabel "Security deposits_PATHServices"@en ;
+hmis:Security_deposits a skos:Concept ;
+  skos:prefLabel "Security deposits"@en ;
   skos:altLabel "Security deposits"@en ;
   skos:notation "11"^^xsd:integer ;
   skos:inScheme hmis:PATHServices .
