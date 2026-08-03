@@ -146,6 +146,15 @@ schema <- list(
 
 ### Exploration of vocabulary
 
+single_row_schema_map <- clean_vocab_values %>% 
+  mutate(scheme_name = str_replace(scheme, "^.*[#/]", "")) %>%
+  group_by(concept, notation) %>% 
+  summarize(
+    count_scheme_matches = n() ,
+    count_distinct_scheme = n_distinct(scheme_name),
+    list_scheme = toString(unique(scheme_name))
+  )
+
 multi_notation <- clean_vocab_values %>% 
   select(c("concept", "notation")) %>% 
   unique(.) %>%

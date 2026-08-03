@@ -57,13 +57,13 @@ get_field_definition <- function(
     query <- glue::glue('
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-SELECT ?concept ?notation ?label
+SELECT ?concept ?notation ?altlabel
 WHERE {{
 
   ?concept skos:inScheme <{scheme}> .
 
   OPTIONAL {{ ?concept skos:notation ?notation }}
-  OPTIONAL {{ ?concept skos:prefLabel ?label }}
+  OPTIONAL {{ ?concept skos:altLabel ?altlabel }}
 
 }}
 ')
