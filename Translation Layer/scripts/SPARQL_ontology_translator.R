@@ -56,9 +56,6 @@ clean_MetaData <- metadata %>%
     field_type = str_replace(field_type, "^.*[#/]", "")
   )
 
-
-
-
 field <- clean_MetaData %>%
   filter(property == "LivingSituation")
 
@@ -133,7 +130,15 @@ enrollment_schema <- build_resource_schema(
   vocab_values = vocab_values
 )
 
+
 openapi_object <- list(
+  openapi = "3.1.0",
+  
+  info = list(
+    title = "HMIS Enrollment API",
+    version = "1.0.0"
+  ),
+  
   components = list(
     schemas = list(
       Enrollment = enrollment_schema
@@ -143,7 +148,23 @@ openapi_object <- list(
 
 cat(as.yaml(openapi_object))
 
+# NOTE This should move to a global file
+{
+  date_Foldertag <- format(Sys.time(), "%Y%m%d_%H%M%S") #or "%Y%m%d" for just the date no time
+  date_Filetag <- format(Sys.time(), "%m%dT%H%M_%S") #or "%Y%m%d" for just the date no time
+  dated_dir <- file.path("Translation Layer/outputs/", paste0("Output_", date_Foldertag))
+  Final_YAML <- file.path("Artifacts/API_Specification/", paste0("Output_", ontology_version)) 
+  # Ensure directories exist
+  dir.create(dated_dir, recursive = TRUE, showWarnings = FALSE)
+  dir.create(Final_Ontology, recursive = TRUE, showWarnings = FALSE)
+}
 
+
+{
+  #Set the core classes
+  writeLines(, 
+             file.path(dated_dir,paste0("hmis_coreClasses",date_Filetag,".ttl")),useBytes = TRUE) 
+}
 
 
 

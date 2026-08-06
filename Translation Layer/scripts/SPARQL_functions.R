@@ -83,6 +83,8 @@ WHERE {{
   }
 }
 
+
+
 build_field_schema <- function(field_name,
                                metadata,
                                vocab_values) {
@@ -99,17 +101,32 @@ build_field_schema <- function(field_name,
   # Enumerated field
   if (field_type == "Enumeration") {
     
-    enum_vals <- vocab_values %>%
-      filter(scheme == field$scheme[1]) %>%
-      pull(concept) %>%
-      unique()
+    
+    vals <- vocab_values %>%
+      filter(scheme == field$scheme[1])
     
     return(
       list(
         type = "string",
-        enum = enum_vals,
+        
+        enum = vals$label,
+        
         `x-hmis-vocabulary` =
-          field$dataElementNumberAndField[1]
+          field$dataElementNumberAndField[1],
+        
+        `x-hmis-values` =
+          purrr::pmap(
+            list(
+              vals$notation,
+              vals$label
+            ),
+            function(notation, label) {
+              list(
+                notation = notation,
+                label = label
+              )
+            }
+          )
       )
     )
   }
@@ -159,3 +176,6 @@ build_resource_schema <- function(fields,
     properties = properties
   )
 }
+
+
+
