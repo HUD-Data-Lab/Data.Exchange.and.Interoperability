@@ -1027,10 +1027,34 @@ hmis:Other_beds a skos:Concept ;
   skos:notation "3"^^xsd:integer ;
   skos:inScheme hmis:list_BedType .
 
+hmis:Other_CMExitReason a skos:Concept ;
+  skos:prefLabel "Other_CMExitReason"@en ;
+  skos:altLabel "Other"@en ;
+  skos:notation "13"^^xsd:integer ;
+  skos:inScheme hmis:list_CMExitReason .
+
 hmis:Accomplished_goals_and_or_obtained_services_and_no_longer_needs_CM a skos:Concept ;
   skos:prefLabel "Accomplished goals and/or obtained services and no longer needs CM"@en ;
   skos:altLabel "Accomplished goals and/or obtained services and no longer needs CM"@en ;
   skos:notation "1"^^xsd:integer ;
+  skos:inScheme hmis:list_CMExitReason .
+
+hmis:Veteran_too_ill_to_participate_at_this_time a skos:Concept ;
+  skos:prefLabel "Veteran too ill to participate at this time"@en ;
+  skos:altLabel "Veteran too ill to participate at this time"@en ;
+  skos:notation "10"^^xsd:integer ;
+  skos:inScheme hmis:list_CMExitReason .
+
+hmis:Veteran_is_incarcerated a skos:Concept ;
+  skos:prefLabel "Veteran is incarcerated"@en ;
+  skos:altLabel "Veteran is incarcerated"@en ;
+  skos:notation "11"^^xsd:integer ;
+  skos:inScheme hmis:list_CMExitReason .
+
+hmis:Veteran_is_deceased a skos:Concept ;
+  skos:prefLabel "Veteran is deceased"@en ;
+  skos:altLabel "Veteran is deceased"@en ;
+  skos:notation "12"^^xsd:integer ;
   skos:inScheme hmis:list_CMExitReason .
 
 hmis:Transferred_to_another_HUD_VASH_program_site a skos:Concept ;
@@ -1081,30 +1105,6 @@ hmis:Veteran_cannot_be_located a skos:Concept ;
   skos:notation "9"^^xsd:integer ;
   skos:inScheme hmis:list_CMExitReason .
 
-hmis:Veteran_too_ill_to_participate_at_this_time a skos:Concept ;
-  skos:prefLabel "Veteran too ill to participate at this time"@en ;
-  skos:altLabel "Veteran too ill to participate at this time"@en ;
-  skos:notation "10"^^xsd:integer ;
-  skos:inScheme hmis:list_CMExitReason .
-
-hmis:Veteran_is_incarcerated a skos:Concept ;
-  skos:prefLabel "Veteran is incarcerated"@en ;
-  skos:altLabel "Veteran is incarcerated"@en ;
-  skos:notation "11"^^xsd:integer ;
-  skos:inScheme hmis:list_CMExitReason .
-
-hmis:Veteran_is_deceased a skos:Concept ;
-  skos:prefLabel "Veteran is deceased"@en ;
-  skos:altLabel "Veteran is deceased"@en ;
-  skos:notation "12"^^xsd:integer ;
-  skos:inScheme hmis:list_CMExitReason .
-
-hmis:Other_CMExitReason a skos:Concept ;
-  skos:prefLabel "Other_CMExitReason"@en ;
-  skos:altLabel "Other"@en ;
-  skos:notation "13"^^xsd:integer ;
-  skos:inScheme hmis:list_CMExitReason .
-
 hmis:_1_3 a skos:Concept ;
   skos:prefLabel "1-3"@en ;
   skos:altLabel "1-3"@en ;
@@ -1130,8 +1130,8 @@ hmis:_12_or_more a skos:Concept ;
   skos:inScheme hmis:list_CountExchangeForSex .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_CountExchangeForSex .
 
@@ -1154,14 +1154,14 @@ hmis:Pursuing_a_high_school_diploma_or_GED a skos:Concept ;
   skos:inScheme hmis:list_CurrentEdStatus .
 
 hmis:Pursuing_Associate_s_Degree a skos:Concept ;
-  skos:prefLabel "Pursuing Associate's Degree"@en ;
-  skos:altLabel "Pursuing Associate's Degree"@en ;
+  skos:prefLabel "Pursuing Associate’s Degree"@en ;
+  skos:altLabel "Pursuing Associate’s Degree"@en ;
   skos:notation "1"^^xsd:integer ;
   skos:inScheme hmis:list_CurrentEdStatus .
 
 hmis:Pursuing_Bachelor_s_Degree a skos:Concept ;
-  skos:prefLabel "Pursuing Bachelor's Degree"@en ;
-  skos:altLabel "Pursuing Bachelor's Degree"@en ;
+  skos:prefLabel "Pursuing Bachelor’s Degree"@en ;
+  skos:altLabel "Pursuing Bachelor’s Degree"@en ;
   skos:notation "2"^^xsd:integer ;
   skos:inScheme hmis:list_CurrentEdStatus .
 
@@ -1214,8 +1214,8 @@ hmis:Currently_enrolled_and_attending_regularly_when_school_or_the_course_is_in_
   skos:inScheme hmis:list_CurrentSchoolAttend .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_CurrentSchoolAttend .
 
@@ -1310,8 +1310,8 @@ hmis:Both_alcohol_and_drug_use_disorders a skos:Concept ;
   skos:inScheme hmis:list_DisabilityResponse .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_DisabilityResponse .
 
@@ -1345,6 +1345,12 @@ hmis:Chronic_health_condition a skos:Concept ;
   skos:notation "7"^^xsd:integer ;
   skos:inScheme hmis:list_DisabilityType .
 
+hmis:Substance_use_disorder a skos:Concept ;
+  skos:prefLabel "Substance use disorder"@en ;
+  skos:altLabel "Substance use disorder"@en ;
+  skos:notation "10"^^xsd:integer ;
+  skos:inScheme hmis:list_DisabilityType .
+
 hmis:HIV_AIDS a skos:Concept ;
   skos:prefLabel "HIV/AIDS"@en ;
   skos:altLabel "HIV/AIDS"@en ;
@@ -1355,12 +1361,6 @@ hmis:Mental_health_disorder a skos:Concept ;
   skos:prefLabel "Mental health disorder"@en ;
   skos:altLabel "Mental health disorder"@en ;
   skos:notation "9"^^xsd:integer ;
-  skos:inScheme hmis:list_DisabilityType .
-
-hmis:Substance_use_disorder a skos:Concept ;
-  skos:prefLabel "Substance use disorder"@en ;
-  skos:altLabel "Substance use disorder"@en ;
-  skos:notation "10"^^xsd:integer ;
   skos:inScheme hmis:list_DisabilityType .
 
 hmis:Honorable a skos:Concept ;
@@ -1400,8 +1400,8 @@ hmis:Uncharacterized a skos:Concept ;
   skos:inScheme hmis:list_DischargeStatus .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_DischargeStatus .
 
@@ -1430,8 +1430,8 @@ hmis:Approximate_or_partial_DOB_reported a skos:Concept ;
   skos:inScheme hmis:list_DOBDataQuality .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_DOBDataQuality .
 
@@ -1475,54 +1475,6 @@ hmis:Referral_to_Prevention_Assistance_project a skos:Concept ;
   skos:prefLabel "Referral to Prevention Assistance project"@en ;
   skos:altLabel "Referral to Prevention Assistance project"@en ;
   skos:notation "1"^^xsd:integer ;
-  skos:inScheme hmis:list_Event .
-
-hmis:Problem_Solving_Diversion_Rapid_Resolution_intervention_or_service a skos:Concept ;
-  skos:prefLabel "Problem Solving/Diversion/Rapid Resolution intervention or service"@en ;
-  skos:altLabel "Problem Solving/Diversion/Rapid Resolution intervention or service"@en ;
-  skos:notation "2"^^xsd:integer ;
-  skos:inScheme hmis:list_Event .
-
-hmis:Referral_to_scheduled_Coordinated_Entry_Crisis_Needs_Assessment a skos:Concept ;
-  skos:prefLabel "Referral to scheduled Coordinated Entry Crisis Needs Assessment"@en ;
-  skos:altLabel "Referral to scheduled Coordinated Entry Crisis Needs Assessment"@en ;
-  skos:notation "3"^^xsd:integer ;
-  skos:inScheme hmis:list_Event .
-
-hmis:Referral_to_scheduled_Coordinated_Entry_Housing_Needs_Assessment a skos:Concept ;
-  skos:prefLabel "Referral to scheduled Coordinated Entry Housing Needs Assessment"@en ;
-  skos:altLabel "Referral to scheduled Coordinated Entry Housing Needs Assessment"@en ;
-  skos:notation "4"^^xsd:integer ;
-  skos:inScheme hmis:list_Event .
-
-hmis:Referral_to_Post_placement_follow_up_case_management a skos:Concept ;
-  skos:prefLabel "Referral to Post-placement/ follow-up case management"@en ;
-  skos:altLabel "Referral to Post-placement/ follow-up case management"@en ;
-  skos:notation "5"^^xsd:integer ;
-  skos:inScheme hmis:list_Event .
-
-hmis:Referral_to_Street_Outreach_project_or_services a skos:Concept ;
-  skos:prefLabel "Referral to Street Outreach project or services"@en ;
-  skos:altLabel "Referral to Street Outreach project or services"@en ;
-  skos:notation "6"^^xsd:integer ;
-  skos:inScheme hmis:list_Event .
-
-hmis:Referral_to_Housing_Navigation_project_or_services a skos:Concept ;
-  skos:prefLabel "Referral to Housing Navigation project or services"@en ;
-  skos:altLabel "Referral to Housing Navigation project or services"@en ;
-  skos:notation "7"^^xsd:integer ;
-  skos:inScheme hmis:list_Event .
-
-hmis:Referral_to_Non_continuum_services_Ineligible_for_continuum_services a skos:Concept ;
-  skos:prefLabel "Referral to Non-continuum services: Ineligible for continuum services"@en ;
-  skos:altLabel "Referral to Non-continuum services: Ineligible for continuum services"@en ;
-  skos:notation "8"^^xsd:integer ;
-  skos:inScheme hmis:list_Event .
-
-hmis:Referral_to_Non_continuum_services_No_availability_in_continuum_services a skos:Concept ;
-  skos:prefLabel "Referral to Non-continuum services: No availability in continuum services"@en ;
-  skos:altLabel "Referral to Non-continuum services: No availability in continuum services"@en ;
-  skos:notation "9"^^xsd:integer ;
   skos:inScheme hmis:list_Event .
 
 hmis:Referral_to_Emergency_Shelter_bed_opening a skos:Concept ;
@@ -1577,6 +1529,54 @@ hmis:Referral_to_a_Housing_Stability_Voucher a skos:Concept ;
   skos:prefLabel "Referral to a Housing Stability Voucher"@en ;
   skos:altLabel "Referral to a Housing Stability Voucher"@en ;
   skos:notation "18"^^xsd:integer ;
+  skos:inScheme hmis:list_Event .
+
+hmis:Problem_Solving_Diversion_Rapid_Resolution_intervention_or_service a skos:Concept ;
+  skos:prefLabel "Problem Solving/Diversion/Rapid Resolution intervention or service"@en ;
+  skos:altLabel "Problem Solving/Diversion/Rapid Resolution intervention or service"@en ;
+  skos:notation "2"^^xsd:integer ;
+  skos:inScheme hmis:list_Event .
+
+hmis:Referral_to_scheduled_Coordinated_Entry_Crisis_Needs_Assessment a skos:Concept ;
+  skos:prefLabel "Referral to scheduled Coordinated Entry Crisis Needs Assessment"@en ;
+  skos:altLabel "Referral to scheduled Coordinated Entry Crisis Needs Assessment"@en ;
+  skos:notation "3"^^xsd:integer ;
+  skos:inScheme hmis:list_Event .
+
+hmis:Referral_to_scheduled_Coordinated_Entry_Housing_Needs_Assessment a skos:Concept ;
+  skos:prefLabel "Referral to scheduled Coordinated Entry Housing Needs Assessment"@en ;
+  skos:altLabel "Referral to scheduled Coordinated Entry Housing Needs Assessment"@en ;
+  skos:notation "4"^^xsd:integer ;
+  skos:inScheme hmis:list_Event .
+
+hmis:Referral_to_Post_placement_follow_up_case_management a skos:Concept ;
+  skos:prefLabel "Referral to Post-placement/ follow-up case management"@en ;
+  skos:altLabel "Referral to Post-placement/ follow-up case management"@en ;
+  skos:notation "5"^^xsd:integer ;
+  skos:inScheme hmis:list_Event .
+
+hmis:Referral_to_Street_Outreach_project_or_services a skos:Concept ;
+  skos:prefLabel "Referral to Street Outreach project or services"@en ;
+  skos:altLabel "Referral to Street Outreach project or services"@en ;
+  skos:notation "6"^^xsd:integer ;
+  skos:inScheme hmis:list_Event .
+
+hmis:Referral_to_Housing_Navigation_project_or_services a skos:Concept ;
+  skos:prefLabel "Referral to Housing Navigation project or services"@en ;
+  skos:altLabel "Referral to Housing Navigation project or services"@en ;
+  skos:notation "7"^^xsd:integer ;
+  skos:inScheme hmis:list_Event .
+
+hmis:Referral_to_Non_continuum_services_Ineligible_for_continuum_services a skos:Concept ;
+  skos:prefLabel "Referral to Non-continuum services: Ineligible for continuum services"@en ;
+  skos:altLabel "Referral to Non-continuum services: Ineligible for continuum services"@en ;
+  skos:notation "8"^^xsd:integer ;
+  skos:inScheme hmis:list_Event .
+
+hmis:Referral_to_Non_continuum_services_No_availability_in_continuum_services a skos:Concept ;
+  skos:prefLabel "Referral to Non-continuum services: No availability in continuum services"@en ;
+  skos:altLabel "Referral to Non-continuum services: No availability in continuum services"@en ;
+  skos:notation "9"^^xsd:integer ;
   skos:inScheme hmis:list_Event .
 
 hmis:No_prior_rental_evictions a skos:Concept ;
@@ -1691,42 +1691,6 @@ hmis:HUD_CoC_Rapid_Re_Housing a skos:Concept ;
   skos:prefLabel "HUD: CoC – Rapid Re-Housing"@en ;
   skos:altLabel "HUD: CoC – Rapid Re-Housing"@en ;
   skos:notation "3"^^xsd:integer ;
-  skos:inScheme hmis:list_FundingSource .
-
-hmis:HUD_CoC_Supportive_Services_Only a skos:Concept ;
-  skos:prefLabel "HUD: CoC – Supportive Services Only"@en ;
-  skos:altLabel "HUD: CoC – Supportive Services Only"@en ;
-  skos:notation "4"^^xsd:integer ;
-  skos:inScheme hmis:list_FundingSource .
-
-hmis:HUD_CoC_Transitional_Housing a skos:Concept ;
-  skos:prefLabel "HUD: CoC – Transitional Housing"@en ;
-  skos:altLabel "HUD: CoC – Transitional Housing"@en ;
-  skos:notation "5"^^xsd:integer ;
-  skos:inScheme hmis:list_FundingSource .
-
-hmis:HUD_CoC_Safe_Haven a skos:Concept ;
-  skos:prefLabel "HUD: CoC – Safe Haven"@en ;
-  skos:altLabel "HUD: CoC – Safe Haven"@en ;
-  skos:notation "6"^^xsd:integer ;
-  skos:inScheme hmis:list_FundingSource .
-
-hmis:HUD_CoC_Single_Room_Occupancy_SRO a skos:Concept ;
-  skos:prefLabel "HUD: CoC – Single Room Occupancy (SRO)"@en ;
-  skos:altLabel "HUD: CoC – Single Room Occupancy (SRO)"@en ;
-  skos:notation "7"^^xsd:integer ;
-  skos:inScheme hmis:list_FundingSource .
-
-hmis:HUD_ESG_Emergency_Shelter_operating_and_or_essential_services a skos:Concept ;
-  skos:prefLabel "HUD: ESG – Emergency Shelter (operating and/or essential services)"@en ;
-  skos:altLabel "HUD: ESG – Emergency Shelter (operating and/or essential services)"@en ;
-  skos:notation "8"^^xsd:integer ;
-  skos:inScheme hmis:list_FundingSource .
-
-hmis:HUD_ESG_Homelessness_Prevention a skos:Concept ;
-  skos:prefLabel "HUD: ESG – Homelessness Prevention"@en ;
-  skos:altLabel "HUD: ESG – Homelessness Prevention"@en ;
-  skos:notation "9"^^xsd:integer ;
   skos:inScheme hmis:list_FundingSource .
 
 hmis:HUD_ESG_Rapid_Rehousing a skos:Concept ;
@@ -1879,6 +1843,12 @@ hmis:VA_Grant_Per_Diem_Hospital_to_Housing a skos:Concept ;
   skos:notation "39"^^xsd:integer ;
   skos:inScheme hmis:list_FundingSource .
 
+hmis:HUD_CoC_Supportive_Services_Only a skos:Concept ;
+  skos:prefLabel "HUD: CoC – Supportive Services Only"@en ;
+  skos:altLabel "HUD: CoC – Supportive Services Only"@en ;
+  skos:notation "4"^^xsd:integer ;
+  skos:inScheme hmis:list_FundingSource .
+
 hmis:VA_Grant_Per_Diem_Clinical_Treatment a skos:Concept ;
   skos:prefLabel "VA: Grant Per Diem – Clinical Treatment"@en ;
   skos:altLabel "VA: Grant Per Diem – Clinical Treatment"@en ;
@@ -1921,6 +1891,18 @@ hmis:Local_or_Other_Funding_Source_Please_Specify a skos:Concept ;
   skos:notation "46"^^xsd:integer ;
   skos:inScheme hmis:list_FundingSource .
 
+hmis:HUD_CoC_Builds a skos:Concept ;
+  skos:prefLabel "HUD: CoC Builds"@en ;
+  skos:altLabel "HUD: CoC Builds"@en ;
+  skos:notation "56"^^xsd:integer ;
+  skos:inScheme hmis:list_FundingSource .
+
+hmis:HUD_CoC_Transitional_Housing a skos:Concept ;
+  skos:prefLabel "HUD: CoC – Transitional Housing"@en ;
+  skos:altLabel "HUD: CoC – Transitional Housing"@en ;
+  skos:notation "5"^^xsd:integer ;
+  skos:inScheme hmis:list_FundingSource .
+
 hmis:HUD_HOME a skos:Concept ;
   skos:prefLabel "HUD: HOME"@en ;
   skos:altLabel "HUD: HOME"@en ;
@@ -1957,10 +1939,28 @@ hmis:HUD_Rural_Special_NOFO a skos:Concept ;
   skos:notation "55"^^xsd:integer ;
   skos:inScheme hmis:list_FundingSource .
 
-hmis:HUD_CoC_Builds a skos:Concept ;
-  skos:prefLabel "HUD: CoC Builds"@en ;
-  skos:altLabel "HUD: CoC Builds"@en ;
-  skos:notation "56"^^xsd:integer ;
+hmis:HUD_CoC_Safe_Haven a skos:Concept ;
+  skos:prefLabel "HUD: CoC – Safe Haven"@en ;
+  skos:altLabel "HUD: CoC – Safe Haven"@en ;
+  skos:notation "6"^^xsd:integer ;
+  skos:inScheme hmis:list_FundingSource .
+
+hmis:HUD_CoC_Single_Room_Occupancy_SRO a skos:Concept ;
+  skos:prefLabel "HUD: CoC – Single Room Occupancy (SRO)"@en ;
+  skos:altLabel "HUD: CoC – Single Room Occupancy (SRO)"@en ;
+  skos:notation "7"^^xsd:integer ;
+  skos:inScheme hmis:list_FundingSource .
+
+hmis:HUD_ESG_Emergency_Shelter_operating_and_or_essential_services a skos:Concept ;
+  skos:prefLabel "HUD: ESG – Emergency Shelter (operating and/or essential services)"@en ;
+  skos:altLabel "HUD: ESG – Emergency Shelter (operating and/or essential services)"@en ;
+  skos:notation "8"^^xsd:integer ;
+  skos:inScheme hmis:list_FundingSource .
+
+hmis:HUD_ESG_Homelessness_Prevention a skos:Concept ;
+  skos:prefLabel "HUD: ESG – Homelessness Prevention"@en ;
+  skos:altLabel "HUD: ESG – Homelessness Prevention"@en ;
+  skos:notation "9"^^xsd:integer ;
   skos:inScheme hmis:list_FundingSource .
 
 hmis:Urban a skos:Concept ;
@@ -2042,8 +2042,8 @@ hmis:Poor a skos:Concept ;
   skos:inScheme hmis:list_HealthStatus .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_HealthStatus .
 
@@ -2125,12 +2125,6 @@ hmis:Non_HOPWA_Funded_Project a skos:Concept ;
   skos:notation "2"^^xsd:integer ;
   skos:inScheme hmis:list_HOPWAMedAssistedLivingFac .
 
-hmis:Adult_day_care_and_personal_assistance a skos:Concept ;
-  skos:prefLabel "Adult day care and personal assistance"@en ;
-  skos:altLabel "Adult day care and personal assistance"@en ;
-  skos:notation "1"^^xsd:integer ;
-  skos:inScheme hmis:list_HOPWAServices .
-
 hmis:Case_management_HOPWAServices a skos:Concept ;
   skos:prefLabel "Case management_HOPWAServices"@en ;
   skos:altLabel "Case management"@en ;
@@ -2149,22 +2143,10 @@ hmis:Criminal_justice_legal_services_HOPWAServices a skos:Concept ;
   skos:notation "4"^^xsd:integer ;
   skos:inScheme hmis:list_HOPWAServices .
 
-hmis:Education a skos:Concept ;
-  skos:prefLabel "Education"@en ;
-  skos:altLabel "Education"@en ;
-  skos:notation "5"^^xsd:integer ;
-  skos:inScheme hmis:list_HOPWAServices .
-
 hmis:Employment_and_training_services_HOPWAServices a skos:Concept ;
   skos:prefLabel "Employment and training services_HOPWAServices"@en ;
   skos:altLabel "Employment and training services"@en ;
   skos:notation "6"^^xsd:integer ;
-  skos:inScheme hmis:list_HOPWAServices .
-
-hmis:Food_meals_nutritional_services a skos:Concept ;
-  skos:prefLabel "Food/meals/nutritional services"@en ;
-  skos:altLabel "Food/meals/nutritional services"@en ;
-  skos:notation "7"^^xsd:integer ;
   skos:inScheme hmis:list_HOPWAServices .
 
 hmis:Health_medical_care_HOPWAServices a skos:Concept ;
@@ -2177,6 +2159,12 @@ hmis:Life_skills_training_HOPWAServices a skos:Concept ;
   skos:prefLabel "Life skills training_HOPWAServices"@en ;
   skos:altLabel "Life skills training"@en ;
   skos:notation "9"^^xsd:integer ;
+  skos:inScheme hmis:list_HOPWAServices .
+
+hmis:Adult_day_care_and_personal_assistance a skos:Concept ;
+  skos:prefLabel "Adult day care and personal assistance"@en ;
+  skos:altLabel "Adult day care and personal assistance"@en ;
+  skos:notation "1"^^xsd:integer ;
   skos:inScheme hmis:list_HOPWAServices .
 
 hmis:Mental_health_care_counseling a skos:Concept ;
@@ -2209,6 +2197,18 @@ hmis:Other_HOPWA_funded_service a skos:Concept ;
   skos:notation "14"^^xsd:integer ;
   skos:inScheme hmis:list_HOPWAServices .
 
+hmis:Education a skos:Concept ;
+  skos:prefLabel "Education"@en ;
+  skos:altLabel "Education"@en ;
+  skos:notation "5"^^xsd:integer ;
+  skos:inScheme hmis:list_HOPWAServices .
+
+hmis:Food_meals_nutritional_services a skos:Concept ;
+  skos:prefLabel "Food/meals/nutritional services"@en ;
+  skos:altLabel "Food/meals/nutritional services"@en ;
+  skos:notation "7"^^xsd:integer ;
+  skos:inScheme hmis:list_HOPWAServices .
+
 hmis:Households_without_children a skos:Concept ;
   skos:prefLabel "Households without children"@en ;
   skos:altLabel "Households without children"@en ;
@@ -2226,6 +2226,12 @@ hmis:Households_with_only_children a skos:Concept ;
   skos:altLabel "Households with only children"@en ;
   skos:notation "4"^^xsd:integer ;
   skos:inScheme hmis:list_HouseholdType .
+
+hmis:Deceased_HousingAssessmentAtExit a skos:Concept ;
+  skos:prefLabel "Deceased_HousingAssessmentAtExit"@en ;
+  skos:altLabel "Deceased"@en ;
+  skos:notation "10"^^xsd:integer ;
+  skos:inScheme hmis:list_HousingAssessmentAtExit .
 
 hmis:Able_to_maintain_the_housing_they_had_at_project_entry a skos:Concept ;
   skos:prefLabel "Able to maintain the housing they had at project entry"@en ;
@@ -2270,8 +2276,8 @@ hmis:Jail_prison a skos:Concept ;
   skos:inScheme hmis:list_HousingAssessmentAtExit .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_HousingAssessmentAtExit .
 
@@ -2279,12 +2285,6 @@ hmis:Client_prefers_not_to_answer a skos:Concept ;
   skos:prefLabel "Client prefers not to answer"@en ;
   skos:altLabel "Client prefers not to answer"@en ;
   skos:notation "9"^^xsd:integer ;
-  skos:inScheme hmis:list_HousingAssessmentAtExit .
-
-hmis:Deceased_HousingAssessmentAtExit a skos:Concept ;
-  skos:prefLabel "Deceased_HousingAssessmentAtExit"@en ;
-  skos:altLabel "Deceased"@en ;
-  skos:notation "10"^^xsd:integer ;
   skos:inScheme hmis:list_HousingAssessmentAtExit .
 
 hmis:Data_not_collected a skos:Concept ;
@@ -2378,15 +2378,9 @@ hmis:GED a skos:Concept ;
   skos:inScheme hmis:list_LastGradeCompleted .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
-  skos:inScheme hmis:list_LastGradeCompleted .
-
-hmis:Client_prefers_not_to_answer a skos:Concept ;
-  skos:prefLabel "Client prefers not to answer"@en ;
-  skos:altLabel "Client prefers not to answer"@en ;
-  skos:notation "9"^^xsd:integer ;
   skos:inScheme hmis:list_LastGradeCompleted .
 
 hmis:Some_college a skos:Concept ;
@@ -2396,14 +2390,14 @@ hmis:Some_college a skos:Concept ;
   skos:inScheme hmis:list_LastGradeCompleted .
 
 hmis:Associate_s_degree a skos:Concept ;
-  skos:prefLabel "Associate's degree"@en ;
-  skos:altLabel "Associate's degree"@en ;
+  skos:prefLabel "Associate’s degree"@en ;
+  skos:altLabel "Associate’s degree"@en ;
   skos:notation "11"^^xsd:integer ;
   skos:inScheme hmis:list_LastGradeCompleted .
 
 hmis:Bachelor_s_degree a skos:Concept ;
-  skos:prefLabel "Bachelor's degree"@en ;
-  skos:altLabel "Bachelor's degree"@en ;
+  skos:prefLabel "Bachelor’s degree"@en ;
+  skos:altLabel "Bachelor’s degree"@en ;
   skos:notation "12"^^xsd:integer ;
   skos:inScheme hmis:list_LastGradeCompleted .
 
@@ -2419,11 +2413,29 @@ hmis:Vocational_certification a skos:Concept ;
   skos:notation "14"^^xsd:integer ;
   skos:inScheme hmis:list_LastGradeCompleted .
 
+hmis:Client_prefers_not_to_answer a skos:Concept ;
+  skos:prefLabel "Client prefers not to answer"@en ;
+  skos:altLabel "Client prefers not to answer"@en ;
+  skos:notation "9"^^xsd:integer ;
+  skos:inScheme hmis:list_LastGradeCompleted .
+
 hmis:Data_not_collected a skos:Concept ;
   skos:prefLabel "Data not collected"@en ;
   skos:altLabel "Data not collected"@en ;
   skos:notation "99"^^xsd:integer ;
   skos:inScheme hmis:list_LastGradeCompleted .
+
+hmis:One_night_or_less a skos:Concept ;
+  skos:prefLabel "One night or less"@en ;
+  skos:altLabel "One night or less"@en ;
+  skos:notation "10"^^xsd:integer ;
+  skos:inScheme hmis:list_LengthOfStay .
+
+hmis:Two_to_six_nights a skos:Concept ;
+  skos:prefLabel "Two to six nights"@en ;
+  skos:altLabel "Two to six nights"@en ;
+  skos:notation "11"^^xsd:integer ;
+  skos:inScheme hmis:list_LengthOfStay .
 
 hmis:One_week_or_more_but_less_than_one_month a skos:Concept ;
   skos:prefLabel "One week or more, but less than one month"@en ;
@@ -2450,8 +2462,8 @@ hmis:One_year_or_longer a skos:Concept ;
   skos:inScheme hmis:list_LengthOfStay .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_LengthOfStay .
 
@@ -2459,18 +2471,6 @@ hmis:Client_prefers_not_to_answer a skos:Concept ;
   skos:prefLabel "Client prefers not to answer"@en ;
   skos:altLabel "Client prefers not to answer"@en ;
   skos:notation "9"^^xsd:integer ;
-  skos:inScheme hmis:list_LengthOfStay .
-
-hmis:One_night_or_less a skos:Concept ;
-  skos:prefLabel "One night or less"@en ;
-  skos:altLabel "One night or less"@en ;
-  skos:notation "10"^^xsd:integer ;
-  skos:inScheme hmis:list_LengthOfStay .
-
-hmis:Two_to_six_nights a skos:Concept ;
-  skos:prefLabel "Two to six nights"@en ;
-  skos:altLabel "Two to six nights"@en ;
-  skos:notation "11"^^xsd:integer ;
   skos:inScheme hmis:list_LengthOfStay .
 
 hmis:Data_not_collected a skos:Concept ;
@@ -2503,82 +2503,34 @@ hmis:Data_not_collected a skos:Concept ;
   skos:notation "99"^^xsd:integer ;
   skos:inScheme hmis:list_LiteralHomelessHistory .
 
-hmis:Emergency_shelter_including_hotel_or_motel_paid_for_with_emergency_shelter_voucher_Host_Home_shelter a skos:Concept ;
-  skos:prefLabel "Emergency shelter, including hotel or motel paid for with emergency shelter voucher, Host Home shelter"@en ;
-  skos:altLabel "Emergency shelter, including hotel or motel paid for with emergency shelter voucher, Host Home shelter"@en ;
-  skos:notation "101"^^xsd:integer ;
-  skos:inScheme hmis:list_LivingSituationOptionList .
-
 hmis:Place_not_meant_for_habitation_e_g_a_vehicle_an_abandoned_building_bus_train_subway_station_airport_or_anywhere_outside a skos:Concept ;
   skos:prefLabel "Place not meant for habitation (e.g., a vehicle, an abandoned building, bus/train/subway station/airport or anywhere outside)"@en ;
   skos:altLabel "Place not meant for habitation (e.g., a vehicle, an abandoned building, bus/train/subway station/airport or anywhere outside)"@en ;
   skos:notation "116"^^xsd:integer ;
   skos:inScheme hmis:list_LivingSituationOptionList .
 
-hmis:Safe_Haven_LivingSituationOptionList a skos:Concept ;
-  skos:prefLabel "Safe Haven_LivingSituationOptionList"@en ;
-  skos:altLabel "Safe Haven"@en ;
-  skos:notation "118"^^xsd:integer ;
-  skos:inScheme hmis:list_LivingSituationOptionList .
-
-hmis:Other a skos:Concept ;
-  skos:prefLabel "Other"@en ;
-  skos:altLabel "Other"@en ;
-  skos:notation "17"^^xsd:integer ;
-  skos:inScheme hmis:list_LivingSituationOptionList .
-
-hmis:Psychiatric_hospital_or_other_psychiatric_facility a skos:Concept ;
-  skos:prefLabel "Psychiatric hospital or other psychiatric facility"@en ;
-  skos:altLabel "Psychiatric hospital or other psychiatric facility"@en ;
-  skos:notation "204"^^xsd:integer ;
-  skos:inScheme hmis:list_LivingSituationOptionList .
-
-hmis:Substance_abuse_treatment_facility_or_detox_center a skos:Concept ;
-  skos:prefLabel "Substance abuse treatment facility or detox center"@en ;
-  skos:altLabel "Substance abuse treatment facility or detox center"@en ;
-  skos:notation "205"^^xsd:integer ;
-  skos:inScheme hmis:list_LivingSituationOptionList .
-
-hmis:Hospital_or_other_residential_non_psychiatric_medical_facility a skos:Concept ;
-  skos:prefLabel "Hospital or other residential non-psychiatric medical facility"@en ;
-  skos:altLabel "Hospital or other residential non-psychiatric medical facility"@en ;
-  skos:notation "206"^^xsd:integer ;
-  skos:inScheme hmis:list_LivingSituationOptionList .
-
-hmis:Jail_prison_or_juvenile_detention_facility a skos:Concept ;
-  skos:prefLabel "Jail, prison, or juvenile detention facility"@en ;
-  skos:altLabel "Jail, prison, or juvenile detention facility"@en ;
-  skos:notation "207"^^xsd:integer ;
-  skos:inScheme hmis:list_LivingSituationOptionList .
-
-hmis:Foster_care_home_or_foster_care_group_home a skos:Concept ;
-  skos:prefLabel "Foster care home or foster care group home"@en ;
-  skos:altLabel "Foster care home or foster care group home"@en ;
-  skos:notation "215"^^xsd:integer ;
-  skos:inScheme hmis:list_LivingSituationOptionList .
-
-hmis:Long_term_care_facility_or_nursing_home a skos:Concept ;
-  skos:prefLabel "Long-term care facility or nursing home"@en ;
-  skos:altLabel "Long-term care facility or nursing home"@en ;
-  skos:notation "225"^^xsd:integer ;
-  skos:inScheme hmis:list_LivingSituationOptionList .
-
-hmis:Deceased_LivingSituationOptionList a skos:Concept ;
-  skos:prefLabel "Deceased_LivingSituationOptionList"@en ;
-  skos:altLabel "Deceased"@en ;
-  skos:notation "24"^^xsd:integer ;
-  skos:inScheme hmis:list_LivingSituationOptionList .
-
-hmis:No_exit_interview_completed a skos:Concept ;
-  skos:prefLabel "No exit interview completed"@en ;
-  skos:altLabel "No exit interview completed"@en ;
-  skos:notation "30"^^xsd:integer ;
-  skos:inScheme hmis:list_LivingSituationOptionList .
-
 hmis:Transitional_housing_for_homeless_persons_including_homeless_youth a skos:Concept ;
   skos:prefLabel "Transitional housing for homeless persons (including homeless youth)"@en ;
   skos:altLabel "Transitional housing for homeless persons (including homeless youth)"@en ;
   skos:notation "302"^^xsd:integer ;
+  skos:inScheme hmis:list_LivingSituationOptionList .
+
+hmis:Residential_project_or_halfway_house_with_no_homeless_criteria a skos:Concept ;
+  skos:prefLabel "Residential project or halfway house with no homeless criteria"@en ;
+  skos:altLabel "Residential project or halfway house with no homeless criteria"@en ;
+  skos:notation "329"^^xsd:integer ;
+  skos:inScheme hmis:list_LivingSituationOptionList .
+
+hmis:Hotel_or_motel_paid_for_without_emergency_shelter_voucher a skos:Concept ;
+  skos:prefLabel "Hotel or motel paid for without emergency shelter voucher"@en ;
+  skos:altLabel "Hotel or motel paid for without emergency shelter voucher"@en ;
+  skos:notation "314"^^xsd:integer ;
+  skos:inScheme hmis:list_LivingSituationOptionList .
+
+hmis:Host_Home_non_crisis a skos:Concept ;
+  skos:prefLabel "Host Home (non-crisis)"@en ;
+  skos:altLabel "Host Home (non-crisis)"@en ;
+  skos:notation "332"^^xsd:integer ;
   skos:inScheme hmis:list_LivingSituationOptionList .
 
 hmis:Staying_or_living_with_family_temporary_tenure_e_g_room_apartment_or_house a skos:Concept ;
@@ -2593,70 +2545,34 @@ hmis:Staying_or_living_with_friends_temporary_tenure_e_g_room_apartment_or_house
   skos:notation "313"^^xsd:integer ;
   skos:inScheme hmis:list_LivingSituationOptionList .
 
-hmis:Hotel_or_motel_paid_for_without_emergency_shelter_voucher a skos:Concept ;
-  skos:prefLabel "Hotel or motel paid for without emergency shelter voucher"@en ;
-  skos:altLabel "Hotel or motel paid for without emergency shelter voucher"@en ;
-  skos:notation "314"^^xsd:integer ;
-  skos:inScheme hmis:list_LivingSituationOptionList .
-
 hmis:Moved_from_one_HOPWA_funded_project_to_HOPWA_TH a skos:Concept ;
   skos:prefLabel "Moved from one HOPWA funded project to HOPWA TH"@en ;
   skos:altLabel "Moved from one HOPWA funded project to HOPWA TH"@en ;
   skos:notation "327"^^xsd:integer ;
   skos:inScheme hmis:list_LivingSituationOptionList .
 
-hmis:Residential_project_or_halfway_house_with_no_homeless_criteria a skos:Concept ;
-  skos:prefLabel "Residential project or halfway house with no homeless criteria"@en ;
-  skos:altLabel "Residential project or halfway house with no homeless criteria"@en ;
-  skos:notation "329"^^xsd:integer ;
-  skos:inScheme hmis:list_LivingSituationOptionList .
-
-hmis:Host_Home_non_crisis a skos:Concept ;
-  skos:prefLabel "Host Home (non-crisis)"@en ;
-  skos:altLabel "Host Home (non-crisis)"@en ;
-  skos:notation "332"^^xsd:integer ;
-  skos:inScheme hmis:list_LivingSituationOptionList .
-
-hmis:Staying_or_living_in_a_family_member_s_room_apartment_or_house a skos:Concept ;
-  skos:prefLabel "Staying or living in a family member's room, apartment, or house"@en ;
-  skos:altLabel "Staying or living in a family member's room, apartment, or house"@en ;
-  skos:notation "335"^^xsd:integer ;
-  skos:inScheme hmis:list_LivingSituationOptionList .
-
 hmis:Staying_or_living_in_a_friend_s_room_apartment_or_house a skos:Concept ;
-  skos:prefLabel "Staying or living in a friend's room, apartment, or house"@en ;
-  skos:altLabel "Staying or living in a friend's room, apartment, or house"@en ;
+  skos:prefLabel "Staying or living in a friend’s room, apartment, or house"@en ;
+  skos:altLabel "Staying or living in a friend’s room, apartment, or house"@en ;
   skos:notation "336"^^xsd:integer ;
   skos:inScheme hmis:list_LivingSituationOptionList .
 
-hmis:Worker_unable_to_determine a skos:Concept ;
-  skos:prefLabel "Worker unable to determine"@en ;
-  skos:altLabel "Worker unable to determine"@en ;
-  skos:notation "37"^^xsd:integer ;
-  skos:inScheme hmis:list_LivingSituationOptionList .
-
-hmis:Rental_by_client_no_ongoing_housing_subsidy a skos:Concept ;
-  skos:prefLabel "Rental by client, no ongoing housing subsidy"@en ;
-  skos:altLabel "Rental by client, no ongoing housing subsidy"@en ;
-  skos:notation "410"^^xsd:integer ;
-  skos:inScheme hmis:list_LivingSituationOptionList .
-
-hmis:Owned_by_client_no_ongoing_housing_subsidy a skos:Concept ;
-  skos:prefLabel "Owned by client, no ongoing housing subsidy"@en ;
-  skos:altLabel "Owned by client, no ongoing housing subsidy"@en ;
-  skos:notation "411"^^xsd:integer ;
-  skos:inScheme hmis:list_LivingSituationOptionList .
-
-hmis:Owned_by_client_with_ongoing_housing_subsidy a skos:Concept ;
-  skos:prefLabel "Owned by client, with ongoing housing subsidy"@en ;
-  skos:altLabel "Owned by client, with ongoing housing subsidy"@en ;
-  skos:notation "421"^^xsd:integer ;
+hmis:Staying_or_living_in_a_family_member_s_room_apartment_or_house a skos:Concept ;
+  skos:prefLabel "Staying or living in a family member’s room, apartment, or house"@en ;
+  skos:altLabel "Staying or living in a family member’s room, apartment, or house"@en ;
+  skos:notation "335"^^xsd:integer ;
   skos:inScheme hmis:list_LivingSituationOptionList .
 
 hmis:Staying_or_living_with_family_permanent_tenure a skos:Concept ;
   skos:prefLabel "Staying or living with family, permanent tenure"@en ;
   skos:altLabel "Staying or living with family, permanent tenure"@en ;
   skos:notation "422"^^xsd:integer ;
+  skos:inScheme hmis:list_LivingSituationOptionList .
+
+hmis:Emergency_shelter_including_hotel_or_motel_paid_for_with_emergency_shelter_voucher_Host_Home_shelter a skos:Concept ;
+  skos:prefLabel "Emergency shelter, including hotel or motel paid for with emergency shelter voucher, Host Home shelter"@en ;
+  skos:altLabel "Emergency shelter, including hotel or motel paid for with emergency shelter voucher, Host Home shelter"@en ;
+  skos:notation "101"^^xsd:integer ;
   skos:inScheme hmis:list_LivingSituationOptionList .
 
 hmis:Staying_or_living_with_friends_permanent_tenure a skos:Concept ;
@@ -2671,15 +2587,51 @@ hmis:Moved_from_one_HOPWA_funded_project_to_HOPWA_PH a skos:Concept ;
   skos:notation "426"^^xsd:integer ;
   skos:inScheme hmis:list_LivingSituationOptionList .
 
+hmis:Rental_by_client_no_ongoing_housing_subsidy a skos:Concept ;
+  skos:prefLabel "Rental by client, no ongoing housing subsidy"@en ;
+  skos:altLabel "Rental by client, no ongoing housing subsidy"@en ;
+  skos:notation "410"^^xsd:integer ;
+  skos:inScheme hmis:list_LivingSituationOptionList .
+
 hmis:Rental_by_client_with_ongoing_housing_subsidy a skos:Concept ;
   skos:prefLabel "Rental by client, with ongoing housing subsidy"@en ;
   skos:altLabel "Rental by client, with ongoing housing subsidy"@en ;
   skos:notation "435"^^xsd:integer ;
   skos:inScheme hmis:list_LivingSituationOptionList .
 
+hmis:Owned_by_client_with_ongoing_housing_subsidy a skos:Concept ;
+  skos:prefLabel "Owned by client, with ongoing housing subsidy"@en ;
+  skos:altLabel "Owned by client, with ongoing housing subsidy"@en ;
+  skos:notation "421"^^xsd:integer ;
+  skos:inScheme hmis:list_LivingSituationOptionList .
+
+hmis:Owned_by_client_no_ongoing_housing_subsidy a skos:Concept ;
+  skos:prefLabel "Owned by client, no ongoing housing subsidy"@en ;
+  skos:altLabel "Owned by client, no ongoing housing subsidy"@en ;
+  skos:notation "411"^^xsd:integer ;
+  skos:inScheme hmis:list_LivingSituationOptionList .
+
+hmis:No_exit_interview_completed a skos:Concept ;
+  skos:prefLabel "No exit interview completed"@en ;
+  skos:altLabel "No exit interview completed"@en ;
+  skos:notation "30"^^xsd:integer ;
+  skos:inScheme hmis:list_LivingSituationOptionList .
+
+hmis:Other a skos:Concept ;
+  skos:prefLabel "Other"@en ;
+  skos:altLabel "Other"@en ;
+  skos:notation "17"^^xsd:integer ;
+  skos:inScheme hmis:list_LivingSituationOptionList .
+
+hmis:Worker_unable_to_determine a skos:Concept ;
+  skos:prefLabel "Worker unable to determine"@en ;
+  skos:altLabel "Worker unable to determine"@en ;
+  skos:notation "37"^^xsd:integer ;
+  skos:inScheme hmis:list_LivingSituationOptionList .
+
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_LivingSituationOptionList .
 
@@ -2693,6 +2645,54 @@ hmis:Data_not_collected a skos:Concept ;
   skos:prefLabel "Data not collected"@en ;
   skos:altLabel "Data not collected"@en ;
   skos:notation "99"^^xsd:integer ;
+  skos:inScheme hmis:list_LivingSituationOptionList .
+
+hmis:Foster_care_home_or_foster_care_group_home a skos:Concept ;
+  skos:prefLabel "Foster care home or foster care group home"@en ;
+  skos:altLabel "Foster care home or foster care group home"@en ;
+  skos:notation "215"^^xsd:integer ;
+  skos:inScheme hmis:list_LivingSituationOptionList .
+
+hmis:Hospital_or_other_residential_non_psychiatric_medical_facility a skos:Concept ;
+  skos:prefLabel "Hospital or other residential non-psychiatric medical facility"@en ;
+  skos:altLabel "Hospital or other residential non-psychiatric medical facility"@en ;
+  skos:notation "206"^^xsd:integer ;
+  skos:inScheme hmis:list_LivingSituationOptionList .
+
+hmis:Jail_prison_or_juvenile_detention_facility a skos:Concept ;
+  skos:prefLabel "Jail, prison, or juvenile detention facility"@en ;
+  skos:altLabel "Jail, prison, or juvenile detention facility"@en ;
+  skos:notation "207"^^xsd:integer ;
+  skos:inScheme hmis:list_LivingSituationOptionList .
+
+hmis:Long_term_care_facility_or_nursing_home a skos:Concept ;
+  skos:prefLabel "Long-term care facility or nursing home"@en ;
+  skos:altLabel "Long-term care facility or nursing home"@en ;
+  skos:notation "225"^^xsd:integer ;
+  skos:inScheme hmis:list_LivingSituationOptionList .
+
+hmis:Psychiatric_hospital_or_other_psychiatric_facility a skos:Concept ;
+  skos:prefLabel "Psychiatric hospital or other psychiatric facility"@en ;
+  skos:altLabel "Psychiatric hospital or other psychiatric facility"@en ;
+  skos:notation "204"^^xsd:integer ;
+  skos:inScheme hmis:list_LivingSituationOptionList .
+
+hmis:Substance_abuse_treatment_facility_or_detox_center a skos:Concept ;
+  skos:prefLabel "Substance abuse treatment facility or detox center"@en ;
+  skos:altLabel "Substance abuse treatment facility or detox center"@en ;
+  skos:notation "205"^^xsd:integer ;
+  skos:inScheme hmis:list_LivingSituationOptionList .
+
+hmis:Deceased_LivingSituationOptionList a skos:Concept ;
+  skos:prefLabel "Deceased_LivingSituationOptionList"@en ;
+  skos:altLabel "Deceased"@en ;
+  skos:notation "24"^^xsd:integer ;
+  skos:inScheme hmis:list_LivingSituationOptionList .
+
+hmis:Safe_Haven_LivingSituationOptionList a skos:Concept ;
+  skos:prefLabel "Safe Haven_LivingSituationOptionList"@en ;
+  skos:altLabel "Safe Haven"@en ;
+  skos:notation "118"^^xsd:integer ;
   skos:inScheme hmis:list_LivingSituationOptionList .
 
 hmis:Mental_health_consultation_completed a skos:Concept ;
@@ -2756,8 +2756,8 @@ hmis:Space_Force a skos:Concept ;
   skos:inScheme hmis:list_MilitaryBranch .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_MilitaryBranch .
 
@@ -2772,24 +2772,6 @@ hmis:Data_not_collected a skos:Concept ;
   skos:altLabel "Data not collected"@en ;
   skos:notation "99"^^xsd:integer ;
   skos:inScheme hmis:list_MilitaryBranch .
-
-hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
-  skos:notation "8"^^xsd:integer ;
-  skos:inScheme hmis:list_MonthsHomelessPastThreeYears .
-
-hmis:Client_prefers_not_to_answer a skos:Concept ;
-  skos:prefLabel "Client prefers not to answer"@en ;
-  skos:altLabel "Client prefers not to answer"@en ;
-  skos:notation "9"^^xsd:integer ;
-  skos:inScheme hmis:list_MonthsHomelessPastThreeYears .
-
-hmis:Data_not_collected a skos:Concept ;
-  skos:prefLabel "Data not collected"@en ;
-  skos:altLabel "Data not collected"@en ;
-  skos:notation "99"^^xsd:integer ;
-  skos:inScheme hmis:list_MonthsHomelessPastThreeYears .
 
 hmis:_1 a skos:Concept ;
   skos:prefLabel "1"@en ;
@@ -2849,6 +2831,24 @@ hmis:_10 a skos:Concept ;
   skos:prefLabel "10"@en ;
   skos:altLabel "10"@en ;
   skos:notation "110"^^xsd:integer ;
+  skos:inScheme hmis:list_MonthsHomelessPastThreeYears .
+
+hmis:Client_doesn_t_know a skos:Concept ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
+  skos:notation "8"^^xsd:integer ;
+  skos:inScheme hmis:list_MonthsHomelessPastThreeYears .
+
+hmis:Client_prefers_not_to_answer a skos:Concept ;
+  skos:prefLabel "Client prefers not to answer"@en ;
+  skos:altLabel "Client prefers not to answer"@en ;
+  skos:notation "9"^^xsd:integer ;
+  skos:inScheme hmis:list_MonthsHomelessPastThreeYears .
+
+hmis:Data_not_collected a skos:Concept ;
+  skos:prefLabel "Data not collected"@en ;
+  skos:altLabel "Data not collected"@en ;
+  skos:notation "99"^^xsd:integer ;
   skos:inScheme hmis:list_MonthsHomelessPastThreeYears .
 
 hmis:_11 a skos:Concept ;
@@ -2978,8 +2978,8 @@ hmis:Partial_street_name_or_code_name_reported a skos:Concept ;
   skos:inScheme hmis:list_NameDataQuality .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_NameDataQuality .
 
@@ -3020,8 +3020,8 @@ hmis:Insurance_type_not_applicable_for_this_client a skos:Concept ;
   skos:inScheme hmis:list_NoAssistanceReason .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_NoAssistanceReason .
 
@@ -3104,8 +3104,8 @@ hmis:Yes a skos:Concept ;
   skos:inScheme hmis:list_NoYesReasonsForMissing .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_NoYesReasonsForMissing .
 
@@ -3127,10 +3127,16 @@ hmis:Community_mental_health_PATHReferral a skos:Concept ;
   skos:notation "1"^^xsd:integer ;
   skos:inScheme hmis:list_PATHReferral .
 
-hmis:Substance_use_treatment_PATHReferral a skos:Concept ;
-  skos:prefLabel "Substance use treatment_PATHReferral"@en ;
-  skos:altLabel "Substance use treatment"@en ;
-  skos:notation "2"^^xsd:integer ;
+hmis:Medical_insurance a skos:Concept ;
+  skos:prefLabel "Medical insurance"@en ;
+  skos:altLabel "Medical insurance"@en ;
+  skos:notation "10"^^xsd:integer ;
+  skos:inScheme hmis:list_PATHReferral .
+
+hmis:Temporary_housing a skos:Concept ;
+  skos:prefLabel "Temporary housing"@en ;
+  skos:altLabel "Temporary housing"@en ;
+  skos:notation "11"^^xsd:integer ;
   skos:inScheme hmis:list_PATHReferral .
 
 hmis:Primary_health_dental_care a skos:Concept ;
@@ -3175,16 +3181,10 @@ hmis:Employment_assistance a skos:Concept ;
   skos:notation "9"^^xsd:integer ;
   skos:inScheme hmis:list_PATHReferral .
 
-hmis:Medical_insurance a skos:Concept ;
-  skos:prefLabel "Medical insurance"@en ;
-  skos:altLabel "Medical insurance"@en ;
-  skos:notation "10"^^xsd:integer ;
-  skos:inScheme hmis:list_PATHReferral .
-
-hmis:Temporary_housing a skos:Concept ;
-  skos:prefLabel "Temporary housing"@en ;
-  skos:altLabel "Temporary housing"@en ;
-  skos:notation "11"^^xsd:integer ;
+hmis:Substance_use_treatment_PATHReferral a skos:Concept ;
+  skos:prefLabel "Substance use treatment_PATHReferral"@en ;
+  skos:altLabel "Substance use treatment"@en ;
+  skos:notation "2"^^xsd:integer ;
   skos:inScheme hmis:list_PATHReferral .
 
 hmis:Attained a skos:Concept ;
@@ -3205,22 +3205,10 @@ hmis:Unknown a skos:Concept ;
   skos:notation "3"^^xsd:integer ;
   skos:inScheme hmis:list_PATHReferralOutcome .
 
-hmis:Re_engagement a skos:Concept ;
-  skos:prefLabel "Re-engagement"@en ;
-  skos:altLabel "Re-engagement"@en ;
-  skos:notation "1"^^xsd:integer ;
-  skos:inScheme hmis:list_PATHServices .
-
-hmis:Screening a skos:Concept ;
-  skos:prefLabel "Screening"@en ;
-  skos:altLabel "Screening"@en ;
-  skos:notation "2"^^xsd:integer ;
-  skos:inScheme hmis:list_PATHServices .
-
-hmis:Habilitation_rehabilitation a skos:Concept ;
-  skos:prefLabel "Habilitation/rehabilitation"@en ;
-  skos:altLabel "Habilitation/rehabilitation"@en ;
-  skos:notation "3"^^xsd:integer ;
+hmis:Case_management_PATHServices a skos:Concept ;
+  skos:prefLabel "Case management_PATHServices"@en ;
+  skos:altLabel "Case management"@en ;
+  skos:notation "6"^^xsd:integer ;
   skos:inScheme hmis:list_PATHServices .
 
 hmis:Community_mental_health_PATHServices a skos:Concept ;
@@ -3229,34 +3217,10 @@ hmis:Community_mental_health_PATHServices a skos:Concept ;
   skos:notation "4"^^xsd:integer ;
   skos:inScheme hmis:list_PATHServices .
 
-hmis:Substance_use_treatment_PATHServices a skos:Concept ;
-  skos:prefLabel "Substance use treatment_PATHServices"@en ;
-  skos:altLabel "Substance use treatment"@en ;
-  skos:notation "5"^^xsd:integer ;
-  skos:inScheme hmis:list_PATHServices .
-
-hmis:Case_management_PATHServices a skos:Concept ;
-  skos:prefLabel "Case management_PATHServices"@en ;
-  skos:altLabel "Case management"@en ;
-  skos:notation "6"^^xsd:integer ;
-  skos:inScheme hmis:list_PATHServices .
-
-hmis:Residential_supportive_services a skos:Concept ;
-  skos:prefLabel "Residential supportive services"@en ;
-  skos:altLabel "Residential supportive services"@en ;
-  skos:notation "7"^^xsd:integer ;
-  skos:inScheme hmis:list_PATHServices .
-
-hmis:Housing_minor_renovation a skos:Concept ;
-  skos:prefLabel "Housing minor renovation"@en ;
-  skos:altLabel "Housing minor renovation"@en ;
-  skos:notation "8"^^xsd:integer ;
-  skos:inScheme hmis:list_PATHServices .
-
-hmis:Housing_moving_assistance a skos:Concept ;
-  skos:prefLabel "Housing moving assistance"@en ;
-  skos:altLabel "Housing moving assistance"@en ;
-  skos:notation "9"^^xsd:integer ;
+hmis:Re_engagement a skos:Concept ;
+  skos:prefLabel "Re-engagement"@en ;
+  skos:altLabel "Re-engagement"@en ;
+  skos:notation "1"^^xsd:integer ;
   skos:inScheme hmis:list_PATHServices .
 
 hmis:Housing_eligibility_determination a skos:Concept ;
@@ -3281,6 +3245,42 @@ hmis:Clinical_assessment a skos:Concept ;
   skos:prefLabel "Clinical assessment"@en ;
   skos:altLabel "Clinical assessment"@en ;
   skos:notation "14"^^xsd:integer ;
+  skos:inScheme hmis:list_PATHServices .
+
+hmis:Screening a skos:Concept ;
+  skos:prefLabel "Screening"@en ;
+  skos:altLabel "Screening"@en ;
+  skos:notation "2"^^xsd:integer ;
+  skos:inScheme hmis:list_PATHServices .
+
+hmis:Habilitation_rehabilitation a skos:Concept ;
+  skos:prefLabel "Habilitation/rehabilitation"@en ;
+  skos:altLabel "Habilitation/rehabilitation"@en ;
+  skos:notation "3"^^xsd:integer ;
+  skos:inScheme hmis:list_PATHServices .
+
+hmis:Residential_supportive_services a skos:Concept ;
+  skos:prefLabel "Residential supportive services"@en ;
+  skos:altLabel "Residential supportive services"@en ;
+  skos:notation "7"^^xsd:integer ;
+  skos:inScheme hmis:list_PATHServices .
+
+hmis:Housing_minor_renovation a skos:Concept ;
+  skos:prefLabel "Housing minor renovation"@en ;
+  skos:altLabel "Housing minor renovation"@en ;
+  skos:notation "8"^^xsd:integer ;
+  skos:inScheme hmis:list_PATHServices .
+
+hmis:Housing_moving_assistance a skos:Concept ;
+  skos:prefLabel "Housing moving assistance"@en ;
+  skos:altLabel "Housing moving assistance"@en ;
+  skos:notation "9"^^xsd:integer ;
+  skos:inScheme hmis:list_PATHServices .
+
+hmis:Substance_use_treatment_PATHServices a skos:Concept ;
+  skos:prefLabel "Substance use treatment_PATHServices"@en ;
+  skos:altLabel "Substance use treatment"@en ;
+  skos:notation "5"^^xsd:integer ;
   skos:inScheme hmis:list_PATHServices .
 
 hmis:_30_or_less a skos:Concept ;
@@ -3355,48 +3355,6 @@ hmis:Emergency_Shelter_Night_by_Night a skos:Concept ;
   skos:notation "1"^^xsd:integer ;
   skos:inScheme hmis:list_ProjectType .
 
-hmis:Transitional_Housing a skos:Concept ;
-  skos:prefLabel "Transitional Housing"@en ;
-  skos:altLabel "Transitional Housing"@en ;
-  skos:notation "2"^^xsd:integer ;
-  skos:inScheme hmis:list_ProjectType .
-
-hmis:PH_Permanent_Supportive_Housing a skos:Concept ;
-  skos:prefLabel "PH – Permanent Supportive Housing"@en ;
-  skos:altLabel "PH – Permanent Supportive Housing"@en ;
-  skos:notation "3"^^xsd:integer ;
-  skos:inScheme hmis:list_ProjectType .
-
-hmis:Street_Outreach a skos:Concept ;
-  skos:prefLabel "Street Outreach"@en ;
-  skos:altLabel "Street Outreach"@en ;
-  skos:notation "4"^^xsd:integer ;
-  skos:inScheme hmis:list_ProjectType .
-
-hmis:Services_Only a skos:Concept ;
-  skos:prefLabel "Services Only"@en ;
-  skos:altLabel "Services Only"@en ;
-  skos:notation "6"^^xsd:integer ;
-  skos:inScheme hmis:list_ProjectType .
-
-hmis:Other_ProjectType a skos:Concept ;
-  skos:prefLabel "Other_ProjectType"@en ;
-  skos:altLabel "Other"@en ;
-  skos:notation "7"^^xsd:integer ;
-  skos:inScheme hmis:list_ProjectType .
-
-hmis:Safe_Haven_ProjectType a skos:Concept ;
-  skos:prefLabel "Safe Haven_ProjectType"@en ;
-  skos:altLabel "Safe Haven"@en ;
-  skos:notation "8"^^xsd:integer ;
-  skos:inScheme hmis:list_ProjectType .
-
-hmis:PH_Housing_Only a skos:Concept ;
-  skos:prefLabel "PH – Housing Only"@en ;
-  skos:altLabel "PH – Housing Only"@en ;
-  skos:notation "9"^^xsd:integer ;
-  skos:inScheme hmis:list_ProjectType .
-
 hmis:PH_Housing_with_Services_no_disability_required_for_entry a skos:Concept ;
   skos:prefLabel "PH – Housing with Services (no disability required for entry)"@en ;
   skos:altLabel "PH – Housing with Services (no disability required for entry)"@en ;
@@ -3427,9 +3385,51 @@ hmis:Coordinated_Entry a skos:Concept ;
   skos:notation "14"^^xsd:integer ;
   skos:inScheme hmis:list_ProjectType .
 
+hmis:Transitional_Housing a skos:Concept ;
+  skos:prefLabel "Transitional Housing"@en ;
+  skos:altLabel "Transitional Housing"@en ;
+  skos:notation "2"^^xsd:integer ;
+  skos:inScheme hmis:list_ProjectType .
+
+hmis:PH_Permanent_Supportive_Housing a skos:Concept ;
+  skos:prefLabel "PH – Permanent Supportive Housing"@en ;
+  skos:altLabel "PH – Permanent Supportive Housing"@en ;
+  skos:notation "3"^^xsd:integer ;
+  skos:inScheme hmis:list_ProjectType .
+
+hmis:Street_Outreach a skos:Concept ;
+  skos:prefLabel "Street Outreach"@en ;
+  skos:altLabel "Street Outreach"@en ;
+  skos:notation "4"^^xsd:integer ;
+  skos:inScheme hmis:list_ProjectType .
+
+hmis:Services_Only a skos:Concept ;
+  skos:prefLabel "Services Only"@en ;
+  skos:altLabel "Services Only"@en ;
+  skos:notation "6"^^xsd:integer ;
+  skos:inScheme hmis:list_ProjectType .
+
+hmis:PH_Housing_Only a skos:Concept ;
+  skos:prefLabel "PH – Housing Only"@en ;
+  skos:altLabel "PH – Housing Only"@en ;
+  skos:notation "9"^^xsd:integer ;
+  skos:inScheme hmis:list_ProjectType .
+
+hmis:Other_ProjectType a skos:Concept ;
+  skos:prefLabel "Other_ProjectType"@en ;
+  skos:altLabel "Other"@en ;
+  skos:notation "7"^^xsd:integer ;
+  skos:inScheme hmis:list_ProjectType .
+
+hmis:Safe_Haven_ProjectType a skos:Concept ;
+  skos:prefLabel "Safe Haven_ProjectType"@en ;
+  skos:altLabel "Safe Haven"@en ;
+  skos:notation "8"^^xsd:integer ;
+  skos:inScheme hmis:list_ProjectType .
+
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_RaceNone .
 
@@ -3463,16 +3463,16 @@ hmis:Ward_of_the_criminal_justice_system a skos:Concept ;
   skos:notation "3"^^xsd:integer ;
   skos:inScheme hmis:list_ReasonNoServices .
 
-hmis:Other_ReasonNoServices a skos:Concept ;
-  skos:prefLabel "Other_ReasonNoServices"@en ;
-  skos:altLabel "Other"@en ;
-  skos:notation "4"^^xsd:integer ;
-  skos:inScheme hmis:list_ReasonNoServices .
-
 hmis:Data_not_collected a skos:Concept ;
   skos:prefLabel "Data not collected"@en ;
   skos:altLabel "Data not collected"@en ;
   skos:notation "99"^^xsd:integer ;
+  skos:inScheme hmis:list_ReasonNoServices .
+
+hmis:Other_ReasonNoServices a skos:Concept ;
+  skos:prefLabel "Other_ReasonNoServices"@en ;
+  skos:altLabel "Other"@en ;
+  skos:notation "4"^^xsd:integer ;
   skos:inScheme hmis:list_ReasonNoServices .
 
 hmis:Client_was_found_ineligible_for_PATH a skos:Concept ;
@@ -3518,8 +3518,8 @@ hmis:Insurance_type_n_a_for_this_client a skos:Concept ;
   skos:inScheme hmis:list_ReasonNotInsured .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_ReasonNotInsured .
 
@@ -3619,30 +3619,6 @@ hmis:Self_Referral a skos:Concept ;
   skos:notation "1"^^xsd:integer ;
   skos:inScheme hmis:list_ReferralSource .
 
-hmis:Individual_Parent_Guardian_Relative_Friend_Foster_Parent_Other_Individual a skos:Concept ;
-  skos:prefLabel "Individual: Parent/Guardian/Relative/Friend/Foster Parent/Other Individual"@en ;
-  skos:altLabel "Individual: Parent/Guardian/Relative/Friend/Foster Parent/Other Individual"@en ;
-  skos:notation "2"^^xsd:integer ;
-  skos:inScheme hmis:list_ReferralSource .
-
-hmis:Outreach_Project a skos:Concept ;
-  skos:prefLabel "Outreach Project"@en ;
-  skos:altLabel "Outreach Project"@en ;
-  skos:notation "7"^^xsd:integer ;
-  skos:inScheme hmis:list_ReferralSource .
-
-hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
-  skos:notation "8"^^xsd:integer ;
-  skos:inScheme hmis:list_ReferralSource .
-
-hmis:Client_prefers_not_to_answer a skos:Concept ;
-  skos:prefLabel "Client prefers not to answer"@en ;
-  skos:altLabel "Client prefers not to answer"@en ;
-  skos:notation "9"^^xsd:integer ;
-  skos:inScheme hmis:list_ReferralSource .
-
 hmis:Temporary_Shelter a skos:Concept ;
   skos:prefLabel "Temporary Shelter"@en ;
   skos:altLabel "Temporary Shelter"@en ;
@@ -3653,6 +3629,12 @@ hmis:Residential_Project a skos:Concept ;
   skos:prefLabel "Residential Project"@en ;
   skos:altLabel "Residential Project"@en ;
   skos:notation "18"^^xsd:integer ;
+  skos:inScheme hmis:list_ReferralSource .
+
+hmis:Individual_Parent_Guardian_Relative_Friend_Foster_Parent_Other_Individual a skos:Concept ;
+  skos:prefLabel "Individual: Parent/Guardian/Relative/Friend/Foster Parent/Other Individual"@en ;
+  skos:altLabel "Individual: Parent/Guardian/Relative/Friend/Foster Parent/Other Individual"@en ;
+  skos:notation "2"^^xsd:integer ;
   skos:inScheme hmis:list_ReferralSource .
 
 hmis:Hotline a skos:Concept ;
@@ -3697,6 +3679,24 @@ hmis:Other_Organization a skos:Concept ;
   skos:notation "39"^^xsd:integer ;
   skos:inScheme hmis:list_ReferralSource .
 
+hmis:Outreach_Project a skos:Concept ;
+  skos:prefLabel "Outreach Project"@en ;
+  skos:altLabel "Outreach Project"@en ;
+  skos:notation "7"^^xsd:integer ;
+  skos:inScheme hmis:list_ReferralSource .
+
+hmis:Client_doesn_t_know a skos:Concept ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
+  skos:notation "8"^^xsd:integer ;
+  skos:inScheme hmis:list_ReferralSource .
+
+hmis:Client_prefers_not_to_answer a skos:Concept ;
+  skos:prefLabel "Client prefers not to answer"@en ;
+  skos:altLabel "Client prefers not to answer"@en ;
+  skos:notation "9"^^xsd:integer ;
+  skos:inScheme hmis:list_ReferralSource .
+
 hmis:Data_not_collected a skos:Concept ;
   skos:prefLabel "Data not collected"@en ;
   skos:altLabel "Data not collected"@en ;
@@ -3710,20 +3710,20 @@ hmis:Self_Head_of_Household a skos:Concept ;
   skos:inScheme hmis:list_RelationshipToHoH .
 
 hmis:Head_of_household_s_child a skos:Concept ;
-  skos:prefLabel "Head of household's child"@en ;
-  skos:altLabel "Head of household's child"@en ;
+  skos:prefLabel "Head of household’s child"@en ;
+  skos:altLabel "Head of household’s child"@en ;
   skos:notation "2"^^xsd:integer ;
   skos:inScheme hmis:list_RelationshipToHoH .
 
 hmis:Head_of_household_s_spouse_or_partner a skos:Concept ;
-  skos:prefLabel "Head of household's spouse or partner"@en ;
-  skos:altLabel "Head of household's spouse or partner"@en ;
+  skos:prefLabel "Head of household’s spouse or partner"@en ;
+  skos:altLabel "Head of household’s spouse or partner"@en ;
   skos:notation "3"^^xsd:integer ;
   skos:inScheme hmis:list_RelationshipToHoH .
 
 hmis:Head_of_household_s_other_relation_member a skos:Concept ;
-  skos:prefLabel "Head of household's other relation member"@en ;
-  skos:altLabel "Head of household's other relation member"@en ;
+  skos:prefLabel "Head of household’s other relation member"@en ;
+  skos:altLabel "Head of household’s other relation member"@en ;
   skos:notation "4"^^xsd:integer ;
   skos:inScheme hmis:list_RelationshipToHoH .
 
@@ -3823,34 +3823,10 @@ hmis:_3_to_5_or_more_years a skos:Concept ;
   skos:notation "3"^^xsd:integer ;
   skos:inScheme hmis:list_RHYNumberofYears .
 
-hmis:Community_service_service_learning_CSL a skos:Concept ;
-  skos:prefLabel "Community service/service learning (CSL)"@en ;
-  skos:altLabel "Community service/service learning (CSL)"@en ;
-  skos:notation "2"^^xsd:integer ;
-  skos:inScheme hmis:list_RHYServices .
-
-hmis:Education a skos:Concept ;
-  skos:prefLabel "Education"@en ;
-  skos:altLabel "Education"@en ;
-  skos:notation "5"^^xsd:integer ;
-  skos:inScheme hmis:list_RHYServices .
-
-hmis:Employment_and_or_training_services_RHYServices a skos:Concept ;
-  skos:prefLabel "Employment and/or training services_RHYServices"@en ;
-  skos:altLabel "Employment and/or training services"@en ;
-  skos:notation "6"^^xsd:integer ;
-  skos:inScheme hmis:list_RHYServices .
-
 hmis:Criminal_justice_legal_services_RHYServices a skos:Concept ;
   skos:prefLabel "Criminal justice /legal services_RHYServices"@en ;
   skos:altLabel "Criminal justice /legal services"@en ;
   skos:notation "7"^^xsd:integer ;
-  skos:inScheme hmis:list_RHYServices .
-
-hmis:Life_skills_training_RHYServices a skos:Concept ;
-  skos:prefLabel "Life skills training_RHYServices"@en ;
-  skos:altLabel "Life skills training"@en ;
-  skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_RHYServices .
 
 hmis:Parenting_education_for_youth_with_children a skos:Concept ;
@@ -3871,10 +3847,22 @@ hmis:Pre_natal_care a skos:Concept ;
   skos:notation "13"^^xsd:integer ;
   skos:inScheme hmis:list_RHYServices .
 
-hmis:Health_medical_care_RHYServices a skos:Concept ;
-  skos:prefLabel "Health/medical care_RHYServices"@en ;
-  skos:altLabel "Health/medical care"@en ;
-  skos:notation "14"^^xsd:integer ;
+hmis:Community_service_service_learning_CSL a skos:Concept ;
+  skos:prefLabel "Community service/service learning (CSL)"@en ;
+  skos:altLabel "Community service/service learning (CSL)"@en ;
+  skos:notation "2"^^xsd:integer ;
+  skos:inScheme hmis:list_RHYServices .
+
+hmis:Education a skos:Concept ;
+  skos:prefLabel "Education"@en ;
+  skos:altLabel "Education"@en ;
+  skos:notation "5"^^xsd:integer ;
+  skos:inScheme hmis:list_RHYServices .
+
+hmis:Employment_and_or_training_services_RHYServices a skos:Concept ;
+  skos:prefLabel "Employment and/or training services_RHYServices"@en ;
+  skos:altLabel "Employment and/or training services"@en ;
+  skos:notation "6"^^xsd:integer ;
   skos:inScheme hmis:list_RHYServices .
 
 hmis:Substance_use_disorder_treatment a skos:Concept ;
@@ -3911,6 +3899,18 @@ hmis:Street_based_Services a skos:Concept ;
   skos:prefLabel "Street-based Services"@en ;
   skos:altLabel "Street-based Services"@en ;
   skos:notation "29"^^xsd:integer ;
+  skos:inScheme hmis:list_RHYServices .
+
+hmis:Health_medical_care_RHYServices a skos:Concept ;
+  skos:prefLabel "Health/medical care_RHYServices"@en ;
+  skos:altLabel "Health/medical care"@en ;
+  skos:notation "14"^^xsd:integer ;
+  skos:inScheme hmis:list_RHYServices .
+
+hmis:Life_skills_training_RHYServices a skos:Concept ;
+  skos:prefLabel "Life skills training_RHYServices"@en ;
+  skos:altLabel "Life skills training"@en ;
+  skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_RHYServices .
 
 hmis:RRH_Services_Only a skos:Concept ;
@@ -3968,8 +3968,8 @@ hmis:Expelled a skos:Concept ;
   skos:inScheme hmis:list_SchoolStatus .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_SchoolStatus .
 
@@ -3998,8 +3998,8 @@ hmis:Male a skos:Concept ;
   skos:inScheme hmis:list_Sex .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_Sex .
 
@@ -4052,8 +4052,8 @@ hmis:Approximate_or_partial_SSN_reported a skos:Concept ;
   skos:inScheme hmis:list_SSNDataQuality .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_SSNDataQuality .
 
@@ -4069,16 +4069,16 @@ hmis:Data_not_collected a skos:Concept ;
   skos:notation "99"^^xsd:integer ;
   skos:inScheme hmis:list_SSNDataQuality .
 
+hmis:Child_care_SSVFFinancialAssistance a skos:Concept ;
+  skos:prefLabel "Child care_SSVFFinancialAssistance"@en ;
+  skos:altLabel "Child care"@en ;
+  skos:notation "10"^^xsd:integer ;
+  skos:inScheme hmis:list_SSVFFinancialAssistance .
+
 hmis:Rental_assistance a skos:Concept ;
   skos:prefLabel "Rental assistance"@en ;
   skos:altLabel "Rental assistance"@en ;
   skos:notation "1"^^xsd:integer ;
-  skos:inScheme hmis:list_SSVFFinancialAssistance .
-
-hmis:Security_deposit_SSVFFinancialAssistance a skos:Concept ;
-  skos:prefLabel "Security deposit_SSVFFinancialAssistance"@en ;
-  skos:altLabel "Security deposit"@en ;
-  skos:notation "2"^^xsd:integer ;
   skos:inScheme hmis:list_SSVFFinancialAssistance .
 
 hmis:Utility_deposit a skos:Concept ;
@@ -4109,12 +4109,6 @@ hmis:Transportation_services_vehicle_repair_maintenance a skos:Concept ;
   skos:prefLabel "Transportation services: vehicle repair/maintenance"@en ;
   skos:altLabel "Transportation services: vehicle repair/maintenance"@en ;
   skos:notation "9"^^xsd:integer ;
-  skos:inScheme hmis:list_SSVFFinancialAssistance .
-
-hmis:Child_care_SSVFFinancialAssistance a skos:Concept ;
-  skos:prefLabel "Child care_SSVFFinancialAssistance"@en ;
-  skos:altLabel "Child care"@en ;
-  skos:notation "10"^^xsd:integer ;
   skos:inScheme hmis:list_SSVFFinancialAssistance .
 
 hmis:General_housing_stability_assistance a skos:Concept ;
@@ -4151,6 +4145,12 @@ hmis:Tenant_Incentive a skos:Concept ;
   skos:prefLabel "Tenant Incentive"@en ;
   skos:altLabel "Tenant Incentive"@en ;
   skos:notation "18"^^xsd:integer ;
+  skos:inScheme hmis:list_SSVFFinancialAssistance .
+
+hmis:Security_deposit_SSVFFinancialAssistance a skos:Concept ;
+  skos:prefLabel "Security deposit_SSVFFinancialAssistance"@en ;
+  skos:altLabel "Security deposit"@en ;
+  skos:notation "2"^^xsd:integer ;
   skos:inScheme hmis:list_SSVFFinancialAssistance .
 
 hmis:Outreach_services a skos:Concept ;
@@ -4213,22 +4213,10 @@ hmis:Healthcare_navigation a skos:Concept ;
   skos:notation "10"^^xsd:integer ;
   skos:inScheme hmis:list_SSVFServices .
 
-hmis:VA_vocational_and_rehabilitation_counseling a skos:Concept ;
-  skos:prefLabel "VA vocational and rehabilitation counseling"@en ;
-  skos:altLabel "VA vocational and rehabilitation counseling"@en ;
-  skos:notation "1"^^xsd:integer ;
-  skos:inScheme hmis:list_SSVFSubType3 .
-
 hmis:Employment_and_training_services_SSVFSubType3 a skos:Concept ;
   skos:prefLabel "Employment and training services_SSVFSubType3"@en ;
   skos:altLabel "Employment and training services"@en ;
   skos:notation "2"^^xsd:integer ;
-  skos:inScheme hmis:list_SSVFSubType3 .
-
-hmis:Educational_assistance a skos:Concept ;
-  skos:prefLabel "Educational assistance"@en ;
-  skos:altLabel "Educational assistance"@en ;
-  skos:notation "3"^^xsd:integer ;
   skos:inScheme hmis:list_SSVFSubType3 .
 
 hmis:Health_care_services_SSVFSubType3 a skos:Concept ;
@@ -4237,28 +4225,40 @@ hmis:Health_care_services_SSVFSubType3 a skos:Concept ;
   skos:notation "4"^^xsd:integer ;
   skos:inScheme hmis:list_SSVFSubType3 .
 
+hmis:VA_vocational_and_rehabilitation_counseling a skos:Concept ;
+  skos:prefLabel "VA vocational and rehabilitation counseling"@en ;
+  skos:altLabel "VA vocational and rehabilitation counseling"@en ;
+  skos:notation "1"^^xsd:integer ;
+  skos:inScheme hmis:list_SSVFSubType3 .
+
+hmis:Educational_assistance a skos:Concept ;
+  skos:prefLabel "Educational assistance"@en ;
+  skos:altLabel "Educational assistance"@en ;
+  skos:notation "3"^^xsd:integer ;
+  skos:inScheme hmis:list_SSVFSubType3 .
+
+hmis:Child_care_SSVFSubType4 a skos:Concept ;
+  skos:prefLabel "Child care_SSVFSubType4"@en ;
+  skos:altLabel "Child care"@en ;
+  skos:notation "12"^^xsd:integer ;
+  skos:inScheme hmis:list_SSVFSubType4 .
+
+hmis:Fiduciary_and_representative_payee_services_SSVFSubType4 a skos:Concept ;
+  skos:prefLabel "Fiduciary and representative payee services_SSVFSubType4"@en ;
+  skos:altLabel "Fiduciary and representative payee services"@en ;
+  skos:notation "6"^^xsd:integer ;
+  skos:inScheme hmis:list_SSVFSubType4 .
+
 hmis:Health_care_services_SSVFSubType4 a skos:Concept ;
   skos:prefLabel "Health care services_SSVFSubType4"@en ;
   skos:altLabel "Health care services"@en ;
   skos:notation "1"^^xsd:integer ;
   skos:inScheme hmis:list_SSVFSubType4 .
 
-hmis:Daily_living_services a skos:Concept ;
-  skos:prefLabel "Daily living services"@en ;
-  skos:altLabel "Daily living services"@en ;
-  skos:notation "2"^^xsd:integer ;
-  skos:inScheme hmis:list_SSVFSubType4 .
-
-hmis:Personal_financial_planning_services_SSVFSubType4 a skos:Concept ;
-  skos:prefLabel "Personal financial planning services_SSVFSubType4"@en ;
-  skos:altLabel "Personal financial planning services"@en ;
-  skos:notation "3"^^xsd:integer ;
-  skos:inScheme hmis:list_SSVFSubType4 .
-
-hmis:Transportation_services_SSVFSubType4 a skos:Concept ;
-  skos:prefLabel "Transportation services_SSVFSubType4"@en ;
-  skos:altLabel "Transportation services"@en ;
-  skos:notation "4"^^xsd:integer ;
+hmis:Housing_counseling_SSVFSubType4 a skos:Concept ;
+  skos:prefLabel "Housing counseling_SSVFSubType4"@en ;
+  skos:altLabel "Housing counseling"@en ;
+  skos:notation "13"^^xsd:integer ;
   skos:inScheme hmis:list_SSVFSubType4 .
 
 hmis:Income_support_services_SSVFSubType4 a skos:Concept ;
@@ -4267,10 +4267,10 @@ hmis:Income_support_services_SSVFSubType4 a skos:Concept ;
   skos:notation "5"^^xsd:integer ;
   skos:inScheme hmis:list_SSVFSubType4 .
 
-hmis:Fiduciary_and_representative_payee_services_SSVFSubType4 a skos:Concept ;
-  skos:prefLabel "Fiduciary and representative payee services_SSVFSubType4"@en ;
-  skos:altLabel "Fiduciary and representative payee services"@en ;
-  skos:notation "6"^^xsd:integer ;
+hmis:Daily_living_services a skos:Concept ;
+  skos:prefLabel "Daily living services"@en ;
+  skos:altLabel "Daily living services"@en ;
+  skos:notation "2"^^xsd:integer ;
   skos:inScheme hmis:list_SSVFSubType4 .
 
 hmis:Legal_services_child_support_SSVFSubType4 a skos:Concept ;
@@ -4285,6 +4285,12 @@ hmis:Legal_services_eviction_prevention_SSVFSubType4 a skos:Concept ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_SSVFSubType4 .
 
+hmis:Legal_services_other_SSVFSubType4 a skos:Concept ;
+  skos:prefLabel "Legal services – other_SSVFSubType4"@en ;
+  skos:altLabel "Legal services – other"@en ;
+  skos:notation "11"^^xsd:integer ;
+  skos:inScheme hmis:list_SSVFSubType4 .
+
 hmis:Legal_services_outstanding_fines_and_penalties_SSVFSubType4 a skos:Concept ;
   skos:prefLabel "Legal services - outstanding fines and penalties_SSVFSubType4"@en ;
   skos:altLabel "Legal services - outstanding fines and penalties"@en ;
@@ -4292,51 +4298,45 @@ hmis:Legal_services_outstanding_fines_and_penalties_SSVFSubType4 a skos:Concept 
   skos:inScheme hmis:list_SSVFSubType4 .
 
 hmis:Legal_services_restore_acquire_driver_s_license_SSVFSubType4 a skos:Concept ;
-  skos:prefLabel "Legal services - restore / acquire driver's license_SSVFSubType4"@en ;
-  skos:altLabel "Legal services - restore / acquire driver's license"@en ;
+  skos:prefLabel "Legal services - restore / acquire driver’s license_SSVFSubType4"@en ;
+  skos:altLabel "Legal services - restore / acquire driver’s license"@en ;
   skos:notation "10"^^xsd:integer ;
   skos:inScheme hmis:list_SSVFSubType4 .
 
-hmis:Legal_services_other_SSVFSubType4 a skos:Concept ;
-  skos:prefLabel "Legal services – other_SSVFSubType4"@en ;
-  skos:altLabel "Legal services – other"@en ;
-  skos:notation "11"^^xsd:integer ;
-  skos:inScheme hmis:list_SSVFSubType4 .
-
-hmis:Child_care_SSVFSubType4 a skos:Concept ;
-  skos:prefLabel "Child care_SSVFSubType4"@en ;
-  skos:altLabel "Child care"@en ;
-  skos:notation "12"^^xsd:integer ;
-  skos:inScheme hmis:list_SSVFSubType4 .
-
-hmis:Housing_counseling_SSVFSubType4 a skos:Concept ;
-  skos:prefLabel "Housing counseling_SSVFSubType4"@en ;
-  skos:altLabel "Housing counseling"@en ;
-  skos:notation "13"^^xsd:integer ;
-  skos:inScheme hmis:list_SSVFSubType4 .
-
-hmis:Personal_financial_planning_services_SSVFSubType5 a skos:Concept ;
-  skos:prefLabel "Personal financial planning services_SSVFSubType5"@en ;
+hmis:Personal_financial_planning_services_SSVFSubType4 a skos:Concept ;
+  skos:prefLabel "Personal financial planning services_SSVFSubType4"@en ;
   skos:altLabel "Personal financial planning services"@en ;
-  skos:notation "1"^^xsd:integer ;
-  skos:inScheme hmis:list_SSVFSubType5 .
-
-hmis:Transportation_services_SSVFSubType5 a skos:Concept ;
-  skos:prefLabel "Transportation services_SSVFSubType5"@en ;
-  skos:altLabel "Transportation services"@en ;
-  skos:notation "2"^^xsd:integer ;
-  skos:inScheme hmis:list_SSVFSubType5 .
-
-hmis:Income_support_services_SSVFSubType5 a skos:Concept ;
-  skos:prefLabel "Income support services_SSVFSubType5"@en ;
-  skos:altLabel "Income support services"@en ;
   skos:notation "3"^^xsd:integer ;
+  skos:inScheme hmis:list_SSVFSubType4 .
+
+hmis:Transportation_services_SSVFSubType4 a skos:Concept ;
+  skos:prefLabel "Transportation services_SSVFSubType4"@en ;
+  skos:altLabel "Transportation services"@en ;
+  skos:notation "4"^^xsd:integer ;
+  skos:inScheme hmis:list_SSVFSubType4 .
+
+hmis:Child_care_SSVFSubType5 a skos:Concept ;
+  skos:prefLabel "Child care_SSVFSubType5"@en ;
+  skos:altLabel "Child care"@en ;
+  skos:notation "10"^^xsd:integer ;
   skos:inScheme hmis:list_SSVFSubType5 .
 
 hmis:Fiduciary_and_representative_payee_services_SSVFSubType5 a skos:Concept ;
   skos:prefLabel "Fiduciary and representative payee services_SSVFSubType5"@en ;
   skos:altLabel "Fiduciary and representative payee services"@en ;
   skos:notation "4"^^xsd:integer ;
+  skos:inScheme hmis:list_SSVFSubType5 .
+
+hmis:Housing_counseling_SSVFSubType5 a skos:Concept ;
+  skos:prefLabel "Housing counseling_SSVFSubType5"@en ;
+  skos:altLabel "Housing counseling"@en ;
+  skos:notation "11"^^xsd:integer ;
+  skos:inScheme hmis:list_SSVFSubType5 .
+
+hmis:Income_support_services_SSVFSubType5 a skos:Concept ;
+  skos:prefLabel "Income support services_SSVFSubType5"@en ;
+  skos:altLabel "Income support services"@en ;
+  skos:notation "3"^^xsd:integer ;
   skos:inScheme hmis:list_SSVFSubType5 .
 
 hmis:Legal_services_child_support_SSVFSubType5 a skos:Concept ;
@@ -4351,6 +4351,12 @@ hmis:Legal_services_eviction_prevention_SSVFSubType5 a skos:Concept ;
   skos:notation "6"^^xsd:integer ;
   skos:inScheme hmis:list_SSVFSubType5 .
 
+hmis:Legal_services_other_SSVFSubType5 a skos:Concept ;
+  skos:prefLabel "Legal services – other_SSVFSubType5"@en ;
+  skos:altLabel "Legal services – other"@en ;
+  skos:notation "9"^^xsd:integer ;
+  skos:inScheme hmis:list_SSVFSubType5 .
+
 hmis:Legal_services_outstanding_fines_and_penalties_SSVFSubType5 a skos:Concept ;
   skos:prefLabel "Legal services - outstanding fines and penalties_SSVFSubType5"@en ;
   skos:altLabel "Legal services - outstanding fines and penalties"@en ;
@@ -4358,45 +4364,27 @@ hmis:Legal_services_outstanding_fines_and_penalties_SSVFSubType5 a skos:Concept 
   skos:inScheme hmis:list_SSVFSubType5 .
 
 hmis:Legal_services_restore_acquire_driver_s_license_SSVFSubType5 a skos:Concept ;
-  skos:prefLabel "Legal services - restore / acquire driver's license_SSVFSubType5"@en ;
-  skos:altLabel "Legal services - restore / acquire driver's license"@en ;
+  skos:prefLabel "Legal services - restore / acquire driver’s license_SSVFSubType5"@en ;
+  skos:altLabel "Legal services - restore / acquire driver’s license"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_SSVFSubType5 .
 
-hmis:Legal_services_other_SSVFSubType5 a skos:Concept ;
-  skos:prefLabel "Legal services – other_SSVFSubType5"@en ;
-  skos:altLabel "Legal services – other"@en ;
-  skos:notation "9"^^xsd:integer ;
+hmis:Personal_financial_planning_services_SSVFSubType5 a skos:Concept ;
+  skos:prefLabel "Personal financial planning services_SSVFSubType5"@en ;
+  skos:altLabel "Personal financial planning services"@en ;
+  skos:notation "1"^^xsd:integer ;
   skos:inScheme hmis:list_SSVFSubType5 .
 
-hmis:Child_care_SSVFSubType5 a skos:Concept ;
-  skos:prefLabel "Child care_SSVFSubType5"@en ;
-  skos:altLabel "Child care"@en ;
-  skos:notation "10"^^xsd:integer ;
-  skos:inScheme hmis:list_SSVFSubType5 .
-
-hmis:Housing_counseling_SSVFSubType5 a skos:Concept ;
-  skos:prefLabel "Housing counseling_SSVFSubType5"@en ;
-  skos:altLabel "Housing counseling"@en ;
-  skos:notation "11"^^xsd:integer ;
+hmis:Transportation_services_SSVFSubType5 a skos:Concept ;
+  skos:prefLabel "Transportation services_SSVFSubType5"@en ;
+  skos:altLabel "Transportation services"@en ;
+  skos:notation "2"^^xsd:integer ;
   skos:inScheme hmis:list_SSVFSubType5 .
 
 hmis:Without_a_subsidy a skos:Concept ;
   skos:prefLabel "Without a subsidy"@en ;
   skos:altLabel "Without a subsidy"@en ;
   skos:notation "1"^^xsd:integer ;
-  skos:inScheme hmis:list_SubsidyInformation .
-
-hmis:With_on_going_subsidy a skos:Concept ;
-  skos:prefLabel "With on-going subsidy"@en ;
-  skos:altLabel "With on-going subsidy"@en ;
-  skos:notation "11"^^xsd:integer ;
-  skos:inScheme hmis:list_SubsidyInformation .
-
-hmis:Without_an_on_going_subsidy a skos:Concept ;
-  skos:prefLabel "Without an on-going subsidy"@en ;
-  skos:altLabel "Without an on-going subsidy"@en ;
-  skos:notation "12"^^xsd:integer ;
   skos:inScheme hmis:list_SubsidyInformation .
 
 hmis:With_the_subsidy_they_had_at_project_entry a skos:Concept ;
@@ -4417,6 +4405,18 @@ hmis:But_only_with_other_financial_assistance a skos:Concept ;
   skos:notation "4"^^xsd:integer ;
   skos:inScheme hmis:list_SubsidyInformation .
 
+hmis:With_on_going_subsidy a skos:Concept ;
+  skos:prefLabel "With on-going subsidy"@en ;
+  skos:altLabel "With on-going subsidy"@en ;
+  skos:notation "11"^^xsd:integer ;
+  skos:inScheme hmis:list_SubsidyInformation .
+
+hmis:Without_an_on_going_subsidy a skos:Concept ;
+  skos:prefLabel "Without an on-going subsidy"@en ;
+  skos:altLabel "Without an on-going subsidy"@en ;
+  skos:notation "12"^^xsd:integer ;
+  skos:inScheme hmis:list_SubsidyInformation .
+
 hmis:DV_Survivor_of_Domestic_Violence a skos:Concept ;
   skos:prefLabel "DV: Survivor of Domestic Violence"@en ;
   skos:altLabel "DV: Survivor of Domestic Violence"@en ;
@@ -4435,6 +4435,12 @@ hmis:NA_Not_applicable a skos:Concept ;
   skos:notation "4"^^xsd:integer ;
   skos:inScheme hmis:list_TargetPopulation .
 
+hmis:Other_TCellSourceViralLoadSource a skos:Concept ;
+  skos:prefLabel "Other_TCellSourceViralLoadSource"@en ;
+  skos:altLabel "Other"@en ;
+  skos:notation "3"^^xsd:integer ;
+  skos:inScheme hmis:list_TCellSourceViralLoadSource .
+
 hmis:Medical_Report a skos:Concept ;
   skos:prefLabel "Medical Report"@en ;
   skos:altLabel "Medical Report"@en ;
@@ -4445,12 +4451,6 @@ hmis:Client_Report a skos:Concept ;
   skos:prefLabel "Client Report"@en ;
   skos:altLabel "Client Report"@en ;
   skos:notation "2"^^xsd:integer ;
-  skos:inScheme hmis:list_TCellSourceViralLoadSource .
-
-hmis:Other_TCellSourceViralLoadSource a skos:Concept ;
-  skos:prefLabel "Other_TCellSourceViralLoadSource"@en ;
-  skos:altLabel "Other"@en ;
-  skos:notation "3"^^xsd:integer ;
   skos:inScheme hmis:list_TCellSourceViralLoadSource .
 
 hmis:One_time a skos:Concept ;
@@ -4478,8 +4478,8 @@ hmis:Four_or_more_times a skos:Concept ;
   skos:inScheme hmis:list_TimesHomelessPastThreeYears .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_TimesHomelessPastThreeYears .
 
@@ -4524,12 +4524,6 @@ hmis:Data_not_collected a skos:Concept ;
   skos:altLabel "Data not collected"@en ;
   skos:notation "99"^^xsd:integer ;
   skos:inScheme hmis:list_TimeToHousingLoss .
-
-hmis:Data_not_collected a skos:Concept ;
-  skos:prefLabel "Data not collected"@en ;
-  skos:altLabel "Data not collected"@en ;
-  skos:notation "99"^^xsd:integer ;
-  skos:inScheme hmis:list_VAMCStationNumber .
 
 hmis:_402_Togus_ME a skos:Concept ;
   skos:prefLabel "(402) Togus, ME"@en ;
@@ -5137,10 +5131,88 @@ hmis:_656_St_Cloud_MN a skos:Concept ;
   skos:notation "656"^^xsd:integer ;
   skos:inScheme hmis:list_VAMCStationNumber .
 
+hmis:_459GE_Guam a skos:Concept ;
+  skos:prefLabel "(459GE) Guam"@en ;
+  skos:altLabel "(459GE) Guam"@en ;
+  skos:notation "459GE"^^xsd:integer ;
+  skos:inScheme hmis:list_VAMCStationNumber .
+
+hmis:_528A5_Canandaigua_NY a skos:Concept ;
+  skos:prefLabel "(528A5) Canandaigua, NY"@en ;
+  skos:altLabel "(528A5) Canandaigua, NY"@en ;
+  skos:notation "528A5"^^xsd:integer ;
+  skos:inScheme hmis:list_VAMCStationNumber .
+
+hmis:_528A6_Bath_NY a skos:Concept ;
+  skos:prefLabel "(528A6) Bath, NY"@en ;
+  skos:altLabel "(528A6) Bath, NY"@en ;
+  skos:notation "528A6"^^xsd:integer ;
+  skos:inScheme hmis:list_VAMCStationNumber .
+
+hmis:_528A7_Syracuse_NY a skos:Concept ;
+  skos:prefLabel "(528A7) Syracuse, NY"@en ;
+  skos:altLabel "(528A7) Syracuse, NY"@en ;
+  skos:notation "528A7"^^xsd:integer ;
+  skos:inScheme hmis:list_VAMCStationNumber .
+
+hmis:_528A8_Albany_NY a skos:Concept ;
+  skos:prefLabel "(528A8) Albany, NY"@en ;
+  skos:altLabel "(528A8) Albany, NY"@en ;
+  skos:notation "528A8"^^xsd:integer ;
+  skos:inScheme hmis:list_VAMCStationNumber .
+
+hmis:_589A4_Columbia_MO a skos:Concept ;
+  skos:prefLabel "(589A4) Columbia, MO"@en ;
+  skos:altLabel "(589A4) Columbia, MO"@en ;
+  skos:notation "589A4"^^xsd:integer ;
+  skos:inScheme hmis:list_VAMCStationNumber .
+
+hmis:_589A5_Kansas_City_MO a skos:Concept ;
+  skos:prefLabel "(589A5) Kansas City, MO"@en ;
+  skos:altLabel "(589A5) Kansas City, MO"@en ;
+  skos:notation "589A5"^^xsd:integer ;
+  skos:inScheme hmis:list_VAMCStationNumber .
+
+hmis:_589A6_Eastern_KS_HCS_KS a skos:Concept ;
+  skos:prefLabel "(589A6) Eastern KS HCS, KS"@en ;
+  skos:altLabel "(589A6) Eastern KS HCS, KS"@en ;
+  skos:notation "589A6"^^xsd:integer ;
+  skos:inScheme hmis:list_VAMCStationNumber .
+
+hmis:_589A7_Wichita_KS a skos:Concept ;
+  skos:prefLabel "(589A7) Wichita, KS"@en ;
+  skos:altLabel "(589A7) Wichita, KS"@en ;
+  skos:notation "589A7"^^xsd:integer ;
+  skos:inScheme hmis:list_VAMCStationNumber .
+
+hmis:_636A6_Central_Iowa_IA a skos:Concept ;
+  skos:prefLabel "(636A6) Central Iowa, IA"@en ;
+  skos:altLabel "(636A6) Central Iowa, IA"@en ;
+  skos:notation "636A6"^^xsd:integer ;
+  skos:inScheme hmis:list_VAMCStationNumber .
+
+hmis:_636A8_Iowa_City_IA a skos:Concept ;
+  skos:prefLabel "(636A8) Iowa City, IA"@en ;
+  skos:altLabel "(636A8) Iowa City, IA"@en ;
+  skos:notation "636A8"^^xsd:integer ;
+  skos:inScheme hmis:list_VAMCStationNumber .
+
 hmis:_657_St_Louis_MO a skos:Concept ;
   skos:prefLabel "(657) St. Louis, MO"@en ;
   skos:altLabel "(657) St. Louis, MO"@en ;
   skos:notation "657"^^xsd:integer ;
+  skos:inScheme hmis:list_VAMCStationNumber .
+
+hmis:_657A4_Poplar_Bluff_MO a skos:Concept ;
+  skos:prefLabel "(657A4) Poplar Bluff, MO"@en ;
+  skos:altLabel "(657A4) Poplar Bluff, MO"@en ;
+  skos:notation "657A4"^^xsd:integer ;
+  skos:inScheme hmis:list_VAMCStationNumber .
+
+hmis:_657A5_Marion_IL a skos:Concept ;
+  skos:prefLabel "(657A5) Marion, IL"@en ;
+  skos:altLabel "(657A5) Marion, IL"@en ;
+  skos:notation "657A5"^^xsd:integer ;
   skos:inScheme hmis:list_VAMCStationNumber .
 
 hmis:_658_Salem_VA a skos:Concept ;
@@ -5305,82 +5377,10 @@ hmis:_757_Columbus_OH a skos:Concept ;
   skos:notation "757"^^xsd:integer ;
   skos:inScheme hmis:list_VAMCStationNumber .
 
-hmis:_459GE_Guam a skos:Concept ;
-  skos:prefLabel "(459GE) Guam"@en ;
-  skos:altLabel "(459GE) Guam"@en ;
-  skos:notation "459GE"^^xsd:integer ;
-  skos:inScheme hmis:list_VAMCStationNumber .
-
-hmis:_528A5_Canandaigua_NY a skos:Concept ;
-  skos:prefLabel "(528A5) Canandaigua, NY"@en ;
-  skos:altLabel "(528A5) Canandaigua, NY"@en ;
-  skos:notation "528A5"^^xsd:integer ;
-  skos:inScheme hmis:list_VAMCStationNumber .
-
-hmis:_528A6_Bath_NY a skos:Concept ;
-  skos:prefLabel "(528A6) Bath, NY"@en ;
-  skos:altLabel "(528A6) Bath, NY"@en ;
-  skos:notation "528A6"^^xsd:integer ;
-  skos:inScheme hmis:list_VAMCStationNumber .
-
-hmis:_528A7_Syracuse_NY a skos:Concept ;
-  skos:prefLabel "(528A7) Syracuse, NY"@en ;
-  skos:altLabel "(528A7) Syracuse, NY"@en ;
-  skos:notation "528A7"^^xsd:integer ;
-  skos:inScheme hmis:list_VAMCStationNumber .
-
-hmis:_528A8_Albany_NY a skos:Concept ;
-  skos:prefLabel "(528A8) Albany, NY"@en ;
-  skos:altLabel "(528A8) Albany, NY"@en ;
-  skos:notation "528A8"^^xsd:integer ;
-  skos:inScheme hmis:list_VAMCStationNumber .
-
-hmis:_589A4_Columbia_MO a skos:Concept ;
-  skos:prefLabel "(589A4) Columbia, MO"@en ;
-  skos:altLabel "(589A4) Columbia, MO"@en ;
-  skos:notation "589A4"^^xsd:integer ;
-  skos:inScheme hmis:list_VAMCStationNumber .
-
-hmis:_589A5_Kansas_City_MO a skos:Concept ;
-  skos:prefLabel "(589A5) Kansas City, MO"@en ;
-  skos:altLabel "(589A5) Kansas City, MO"@en ;
-  skos:notation "589A5"^^xsd:integer ;
-  skos:inScheme hmis:list_VAMCStationNumber .
-
-hmis:_589A6_Eastern_KS_HCS_KS a skos:Concept ;
-  skos:prefLabel "(589A6) Eastern KS HCS, KS"@en ;
-  skos:altLabel "(589A6) Eastern KS HCS, KS"@en ;
-  skos:notation "589A6"^^xsd:integer ;
-  skos:inScheme hmis:list_VAMCStationNumber .
-
-hmis:_589A7_Wichita_KS a skos:Concept ;
-  skos:prefLabel "(589A7) Wichita, KS"@en ;
-  skos:altLabel "(589A7) Wichita, KS"@en ;
-  skos:notation "589A7"^^xsd:integer ;
-  skos:inScheme hmis:list_VAMCStationNumber .
-
-hmis:_636A6_Central_Iowa_IA a skos:Concept ;
-  skos:prefLabel "(636A6) Central Iowa, IA"@en ;
-  skos:altLabel "(636A6) Central Iowa, IA"@en ;
-  skos:notation "636A6"^^xsd:integer ;
-  skos:inScheme hmis:list_VAMCStationNumber .
-
-hmis:_636A8_Iowa_City_IA a skos:Concept ;
-  skos:prefLabel "(636A8) Iowa City, IA"@en ;
-  skos:altLabel "(636A8) Iowa City, IA"@en ;
-  skos:notation "636A8"^^xsd:integer ;
-  skos:inScheme hmis:list_VAMCStationNumber .
-
-hmis:_657A4_Poplar_Bluff_MO a skos:Concept ;
-  skos:prefLabel "(657A4) Poplar Bluff, MO"@en ;
-  skos:altLabel "(657A4) Poplar Bluff, MO"@en ;
-  skos:notation "657A4"^^xsd:integer ;
-  skos:inScheme hmis:list_VAMCStationNumber .
-
-hmis:_657A5_Marion_IL a skos:Concept ;
-  skos:prefLabel "(657A5) Marion, IL"@en ;
-  skos:altLabel "(657A5) Marion, IL"@en ;
-  skos:notation "657A5"^^xsd:integer ;
+hmis:Data_not_collected a skos:Concept ;
+  skos:prefLabel "Data not collected"@en ;
+  skos:altLabel "Data not collected"@en ;
+  skos:notation "99"^^xsd:integer ;
   skos:inScheme hmis:list_VAMCStationNumber .
 
 hmis:Not_available a skos:Concept ;
@@ -5402,8 +5402,8 @@ hmis:Undetectable a skos:Concept ;
   skos:inScheme hmis:list_ViralLoadAvailable .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_ViralLoadAvailable .
 
@@ -5419,10 +5419,28 @@ hmis:Data_not_collected a skos:Concept ;
   skos:notation "99"^^xsd:integer ;
   skos:inScheme hmis:list_ViralLoadAvailable .
 
+hmis:Other_VoucherTracking a skos:Concept ;
+  skos:prefLabel "Other_VoucherTracking"@en ;
+  skos:altLabel "Other"@en ;
+  skos:notation "12"^^xsd:integer ;
+  skos:inScheme hmis:list_VoucherTracking .
+
 hmis:Referral_package_forwarded_to_PHA a skos:Concept ;
   skos:prefLabel "Referral package forwarded to PHA"@en ;
   skos:altLabel "Referral package forwarded to PHA"@en ;
   skos:notation "1"^^xsd:integer ;
+  skos:inScheme hmis:list_VoucherTracking .
+
+hmis:Veteran_exited_family_maintained_the_voucher a skos:Concept ;
+  skos:prefLabel "Veteran exited – family maintained the voucher"@en ;
+  skos:altLabel "Veteran exited – family maintained the voucher"@en ;
+  skos:notation "10"^^xsd:integer ;
+  skos:inScheme hmis:list_VoucherTracking .
+
+hmis:Veteran_exited_prior_to_ever_receiving_a_voucher a skos:Concept ;
+  skos:prefLabel "Veteran exited – prior to ever receiving a voucher"@en ;
+  skos:altLabel "Veteran exited – prior to ever receiving a voucher"@en ;
+  skos:notation "11"^^xsd:integer ;
   skos:inScheme hmis:list_VoucherTracking .
 
 hmis:Voucher_denied_by_PHA a skos:Concept ;
@@ -5473,24 +5491,6 @@ hmis:Veteran_exited_voucher_was_returned a skos:Concept ;
   skos:notation "9"^^xsd:integer ;
   skos:inScheme hmis:list_VoucherTracking .
 
-hmis:Veteran_exited_family_maintained_the_voucher a skos:Concept ;
-  skos:prefLabel "Veteran exited – family maintained the voucher"@en ;
-  skos:altLabel "Veteran exited – family maintained the voucher"@en ;
-  skos:notation "10"^^xsd:integer ;
-  skos:inScheme hmis:list_VoucherTracking .
-
-hmis:Veteran_exited_prior_to_ever_receiving_a_voucher a skos:Concept ;
-  skos:prefLabel "Veteran exited – prior to ever receiving a voucher"@en ;
-  skos:altLabel "Veteran exited – prior to ever receiving a voucher"@en ;
-  skos:notation "11"^^xsd:integer ;
-  skos:inScheme hmis:list_VoucherTracking .
-
-hmis:Other_VoucherTracking a skos:Concept ;
-  skos:prefLabel "Other_VoucherTracking"@en ;
-  skos:altLabel "Other"@en ;
-  skos:notation "12"^^xsd:integer ;
-  skos:inScheme hmis:list_VoucherTracking .
-
 hmis:Within_the_past_three_months a skos:Concept ;
   skos:prefLabel "Within the past three months"@en ;
   skos:altLabel "Within the past three months"@en ;
@@ -5516,8 +5516,8 @@ hmis:One_year_or_more a skos:Concept ;
   skos:inScheme hmis:list_WhenDVOccurred .
 
 hmis:Client_doesn_t_know a skos:Concept ;
-  skos:prefLabel "Client doesn't know"@en ;
-  skos:altLabel "Client doesn't know"@en ;
+  skos:prefLabel "Client doesn’t know"@en ;
+  skos:altLabel "Client doesn’t know"@en ;
   skos:notation "8"^^xsd:integer ;
   skos:inScheme hmis:list_WhenDVOccurred .
 

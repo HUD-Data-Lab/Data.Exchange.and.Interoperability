@@ -53,6 +53,7 @@ skosConcept <- skos_concepts2 %>%
     lines <- c(
       paste0(subj, " a skos:Concept ;"),
       paste0("  skos:prefLabel ", ttl_lit(PrefLabel), "@en ;"),
+      paste0("  skos:altLabel ", ttl_lit(AltLabel), "@en ;"),
       paste0("  skos:notation ", ttl_lit(Notation), "^^xsd:integer ;"),
       paste0("  skos:inScheme hmis:", Scheme, " ;")
     )
