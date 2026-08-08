@@ -34,25 +34,28 @@ hmis:{property}Shape
 
 
 get_field_definition <- function(
-    search_by,
     field_name,
     metadata,
     graph) {
+
+  field <- metadata %>%
+    filter(
+      dataDictionaryName == field_name |
+        dataElementNumberAndField == field_name
+    )
   
-  row <- if (search_by == "Data Element Name"){
-    metadata %>%
-      filter(dataDictionaryName == field_name)
-  } else if (search_by == "Data Element Number") {
-    metadata %>%
-      filter(dataElementNumberAndField == field_name)
+  if (nrow(field) == 0) {
+    stop(
+      paste(
+        "Field not found:",
+        field_name
+      )
+    )
   }
   
-  if(nrow(row) == 0)
-    stop("Field not found")
-  
-  if(row$field_type[1] == "Enumeration") {
+  if(field$field_type[1] == "Enumeration") {
     
-    scheme <- row$scheme[1]
+    scheme <- field$scheme[1]
     
     query <- glue::glue('
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -76,7 +79,7 @@ WHERE {{
     
     return(
       tibble::tibble(
-        datatype = row$range[1]
+        datatype = field$range[1]
       )
     )
     
@@ -84,16 +87,23 @@ WHERE {{
 }
 
 
-
-build_field_schema <- function(field_name,
+build_field_schema <- function(value,
                                metadata,
                                vocab_values) {
   
   field <- metadata %>%
-    filter(property == field_name)
+    filter(
+      dataDictionaryName == value |
+        dataElementNumberAndField == value
+    )
   
   if (nrow(field) == 0) {
-    stop(paste("Field not found:", field_name))
+    stop(
+      paste(
+        "Field not found:",
+        value
+      )
+    )
   }
   
   field_type <- field$field_type[1]
@@ -107,9 +117,10 @@ build_field_schema <- function(field_name,
     
     return(
       list(
+        DataDictionaryName = field$dataDictionaryName[1],
         type = "string",
         
-        enum = vals$label,
+        enum = vals$preflabel,
         
         `x-hmis-vocabulary` =
           field$dataElementNumberAndField[1],
@@ -118,12 +129,12 @@ build_field_schema <- function(field_name,
           purrr::pmap(
             list(
               vals$notation,
-              vals$label
+              vals$preflabel
             ),
-            function(notation, label) {
+            function(notation, preflabel) {
               list(
                 notation = notation,
-                label = label
+                preflabel = preflabel
               )
             }
           )
@@ -144,7 +155,9 @@ build_field_schema <- function(field_name,
   schema_type <- type_map[field_type]
   
   schema <- list(
-    type = schema_type
+    DataDictionaryName = field$dataDictionaryName[1],
+    type = schema_type,
+    `x-hmis-vocabulary` = field$dataElementNumberAndField[1]
   )
   
   if (field_type == "Date") {
@@ -158,24 +171,102 @@ build_field_schema <- function(field_name,
   schema
 }
 
-build_resource_schema <- function(fields,
-                                  metadata,
-                                  vocab_values) {
+
+#
+
+
+# Build JSON/YAML Schemas
+
+find_field <- function(field_id, metadata) {
   
-  properties <- purrr::map(
+  field_id <- as.character(field_id)
+  
+  metadata_clean <- metadata %>%
+    dplyr::mutate(
+      dplyr::across(
+        dplyr::everything(),
+        as.character
+      )
+    )
+  
+  field <- metadata_clean %>%
+    dplyr::filter(
+      dataDictionaryName == field_id |
+        dataElementNumberAndField == field_id
+    )
+  
+  if (nrow(field) == 0) {
+    stop(
+      paste(
+        "Field not found:",
+        field_id
+      )
+    )
+  }
+  
+  field[1, ]
+}
+
+#For reference
+
+# build_object_schema <- function(
+#     fields,
+#     metadata,
+#     vocab_values
+# ) {
+#   
+#   properties <- purrr::set_names(
+#     lapply(
+#       fields,
+#       build_field_schema,
+#       metadata = metadata,
+#       vocab_values = vocab_values
+#     ),
+#     fields
+#   )
+#   
+#   list(
+#     type = "object",
+#     properties = properties
+#   )
+# }
+
+build_object_schema <- function(
+    fields,
+    metadata,
+    vocab_values
+) {
+  
+  properties <- lapply(
     fields,
     build_field_schema,
     metadata = metadata,
     vocab_values = vocab_values
   )
   
-  names(properties) <- fields
+  property_names <- purrr::map_chr(
+    fields,
+    function(field_id) {
+      
+      field <- find_field(
+        field_id,
+        metadata
+      )
+      
+      field$dataDictionaryName[1]
+    }
+  )
+  
+  names(properties) <- property_names
   
   list(
     type = "object",
     properties = properties
   )
 }
+
+
+
 
 ## Added to perform a quick QA check in translator.
 ## Definitely more verbose than it needs to be, but it works!
@@ -219,3 +310,7 @@ check_skos_notation_integrity <- function(df) {
       
     } 
 }
+
+
+
+
