@@ -8,6 +8,7 @@ library(rdflib)
 library(yaml)
 library(here)
 library(glue)
+library(jsonlite)
 
 ## Custom Functions
 source(paste0(here(),"/Translation Layer/scripts/SPARQL_functions.R"))
@@ -121,16 +122,17 @@ clean_vocab_values <- vocab_values %>%
 check_skos_notation_integrity(clean_vocab_values)
 
 
-
-
 # DEV REFERENCE ITEMS ----
 
-## Individual Field Testing ----
+## Field Testing and JSON schema generation ----
 
-### Manual process of drilling down on a single field
+### Manual and automated process of drilling down on a single field
+
+#Options hmis_elements
+
 
 field <- clean_MetaData %>%
-  filter(property == "LivingSituation")
+  filter(property == "TimesHomelessPastThreeYears")
 
 enum_vals <- vocab_values %>% # FLAG - depends on items defined below
   filter(scheme == field$scheme[1]) %>% 
@@ -142,7 +144,32 @@ schema <- list(
   `x-hmis-vocabulary` = field$dataElementNumberAndField[1]
 )
 
+#This pulls a single data elements information into a table
+get_field_definition("ReceivesReferrals",
+                     clean_MetaData,
+                     g)
 
+#This pulls the data element into a schema for parsing into JSON. Can be more than one data element
+build_field_schema("ReceivesReferrals",
+                   clean_MetaData,
+                   clean_vocab_values)
+
+Generatedschema <- build_object_schema(
+  fields = c(
+    "FirstName",
+    "LastName",
+    "ReceivesReferrals"
+  ),
+  clean_MetaData,
+  clean_vocab_values
+)
+
+
+jsonlite::toJSON(
+  Generatedschema,
+  pretty = TRUE,
+  auto_unbox = TRUE
+)
 
 ### Exploration of vocabulary
 
@@ -265,6 +292,11 @@ view(get_field_definition(
 # cat(as.yaml(openapi_object))
 
 
+{
+  #Set the core classes
+  writeLines(, 
+             file.path(dated_dir,paste0("hmis_coreClasses",date_Filetag,".ttl")),useBytes = TRUE) 
+}
 
 
 
