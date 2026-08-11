@@ -2,10 +2,6 @@
 
 server <- function(input, output, session) {
   
-  # Load selectize choices after app starts.
-  # This works better than putting all choices directly in ui.R,
-  # especially if your ontology has many data elements.
-  
   updateSelectizeInput(
     session = session,
     inputId = "selected_elements",
