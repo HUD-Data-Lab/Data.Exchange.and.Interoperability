@@ -1,19 +1,27 @@
 # global.R ----
 
 library(shiny)
-library(tidyverse)
-library(rdflib)
-library(yaml)
-library(here)
-library(glue)
+library(dplyr)
 library(jsonlite)
+library(bslib)
+
+time_step <- function(label, expr) {
+  message("\n--- START: ", label, " ---")
+  start <- Sys.time()
+  result <- force(expr)
+  end <- Sys.time()
+  message("--- END: ", label, " | ",
+          round(as.numeric(end - start, units = "secs"), 2),
+          " sec ---")
+  result
+}
 
 build_field_schema <- function(value,
                                metadata,
                                vocab_values) {
-  
+
   value <- as.character(value)
-  
+
   field <- metadata %>%
     dplyr::mutate(
       dplyr::across(
@@ -25,7 +33,7 @@ build_field_schema <- function(value,
       dataDictionaryName == value |
         dataElementNumberAndField == value
     )
-  
+
   if (nrow(field) == 0) {
     stop(
       paste(
@@ -34,29 +42,29 @@ build_field_schema <- function(value,
       )
     )
   }
-  
+
   field <- field[1, ]
-  
+
   field_type <- field$field_type[1]
-  
+
   # Enumerated field
   if (field_type == "Enumeration") {
-    
+
     vals <- vocab_values %>%
       dplyr::filter(
         scheme == field$scheme[1]
       )
-    
+
     return(
       list(
         DataDictionaryName = field$dataDictionaryName[1],
         type = "string",
-        
+
         enum = vals$preflabel,
-        
+
         `x-hmis-vocabulary` =
           field$dataElementNumberAndField[1],
-        
+
         `x-hmis-values` =
           purrr::pmap(
             list(
@@ -73,7 +81,7 @@ build_field_schema <- function(value,
       )
     )
   }
-  
+
   # Scalar fields
   type_map <- c(
     String = "string",
@@ -83,34 +91,34 @@ build_field_schema <- function(value,
     Date = "string",
     DateTime = "string"
   )
-  
+
   schema_type <- type_map[field_type]
-  
+
   if (is.na(schema_type)) {
     schema_type <- "string"
   }
-  
+
   schema <- list(
     DataDictionaryName = field$dataDictionaryName[1],
     type = schema_type,
     `x-hmis-vocabulary` = field$dataElementNumberAndField[1]
   )
-  
+
   if (field_type == "Date") {
     schema$format <- "date"
   }
-  
+
   if (field_type == "DateTime") {
     schema$format <- "date-time"
   }
-  
+
   schema
 }
 
 find_field <- function(field_id, metadata) {
-  
+
   field_id <- as.character(field_id)
-  
+
   metadata_clean <- metadata %>%
     dplyr::mutate(
       dplyr::across(
@@ -118,13 +126,13 @@ find_field <- function(field_id, metadata) {
         as.character
       )
     )
-  
+
   field <- metadata_clean %>%
     dplyr::filter(
       dataDictionaryName == field_id |
         dataElementNumberAndField == field_id
     )
-  
+
   if (nrow(field) == 0) {
     stop(
       paste(
@@ -133,90 +141,83 @@ find_field <- function(field_id, metadata) {
       )
     )
   }
-  
+
   field[1, ]
 }
 
 build_object_schema <- function(fields,
                                 metadata,
                                 vocab_values) {
-  
+
   properties <- lapply(
     fields,
     build_field_schema,
     metadata = metadata,
     vocab_values = vocab_values
   )
-  
+
   property_names <- purrr::map_chr(
     fields,
     function(field_id) {
-      
+
       field <- find_field(
         field_id,
         metadata
       )
-      
+
       field$dataDictionaryName[1]
     }
   )
-  
+
   names(properties) <- property_names
-  
+
   list(
     type = "object",
     properties = properties
   )
 }
 
-g <- rdf_parse(
-  "Artifacts/Ontology/Output_v1.0.0-beta/hmis_ontologyv1.0.0-beta.ttl",
-  format = "turtle"
-)
+cache_path <- "Artifacts/Ontology/hmis_ontology_cache_v1.0.0-beta.rds"
+ontology_path <- "Artifacts/Ontology/Output_v1.0.0-beta/hmis_ontologyv1.0.0-beta.ttl"
 
-
-query_all <- '
-PREFIX hmis: <http://www.semanticweb.org/61084/ontologies/2026/2/hmis#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-
-SELECT ?property ?dataDictionaryName ?dataElementNumber ?dataElementFieldNumber ?CSVExportTable ?domain ?range ?scheme
-WHERE {
-
-  ?property a ?type .
-
-  FILTER(
-      STRENDS(STR(?type), "ObjectProperty") ||
-      STRENDS(STR(?type), "DatatypeProperty")
+if (!file.exists(cache_path)) {
+  stop(
+    "Ontology cache not found. Run scripts/build_ontology_cache.R before launching the Shiny app."
   )
-
-  OPTIONAL { ?property hmis:dataDictionaryName ?dataDictionaryName . }
-  OPTIONAL { ?property hmis:dataElementNumber ?dataElementNumber . }
-  OPTIONAL { ?property hmis:dataElementFieldNumber ?dataElementFieldNumber . }
-  OPTIONAL { ?property hmis:CSVExportTable ?CSVExportTable . }
-  OPTIONAL { ?property rdfs:domain ?domain . }
-  OPTIONAL { ?property rdfs:range ?range . }
-  OPTIONAL { ?property hmis:linkedVocabulary ?scheme . }
 }
-'
 
-query_vocab <- '
-PREFIX hmis: <http://www.semanticweb.org/61084/ontologies/2026/2/hmis#>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+ontology_cache <- time_step("Load ontology cache", {
+  readRDS(cache_path)
+})
 
-SELECT ?scheme ?concept ?preflabel ?notation ?altlabel
-WHERE {
-
-  ?concept skos:inScheme ?scheme .
-
-  OPTIONAL { ?concept skos:prefLabel ?preflabel . }
-  OPTIONAL { ?concept skos:notation ?notation . }
-  OPTIONAL { ?concept skos:altLabel ?altlabel . }
+if (file.exists(ontology_path) && !is.null(ontology_cache$ontology_mtime)) {
+  current_info <- file.info(ontology_path)
+  
+  if (!isTRUE(all.equal(current_info$mtime, ontology_cache$ontology_mtime))) {
+    warning(
+      "Ontology cache may be stale. Re-run scripts/build_ontology_cache.R because the TTL file has changed."
+    )
+  }
 }
-'
 
-results <- rdf_query(g, query_all)
-vocab_values <- rdf_query(g, query_vocab)
+results <- ontology_cache$properties
+vocab_values <- ontology_cache$vocab_values
 
+
+message("Loaded ", nrow(results), " ontology property rows.")
+message("Loaded ", nrow(vocab_values), " vocabulary rows.")
+
+# field_choices <- results |>
+#   filter(!is.na(dataDictionaryName)) |>
+#   distinct(dataDictionaryName, dataElementNumber) |>
+#   arrange(dataDictionaryName) |>
+#   mutate(
+#     label = ifelse(
+#       is.na(dataElementNumber) | dataElementNumber == "",
+#       dataDictionaryName,
+#       paste0(dataDictionaryName, " [", dataElementNumber, "]")
+#     )
+#   )
 
 metadata <- results %>%
   dplyr::mutate(
@@ -283,10 +284,7 @@ hmis_elements <- clean_MetaData %>%
     )
   )
 
-
-# Named vector for selectizeInput
-# Value returned to server = dataDictionaryName
-# Searchable label shown to user = name, number.field, and type
-
 hmis_element_choices <- hmis_elements$dataDictionaryName
 names(hmis_element_choices) <- hmis_elements$selector_label
+
+
