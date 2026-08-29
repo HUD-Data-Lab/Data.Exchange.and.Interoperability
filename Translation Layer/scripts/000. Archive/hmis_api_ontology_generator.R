@@ -9,7 +9,7 @@ OWL <- "http://www.w3.org/2002/07/owl#" #This is the IRI for owl
 
 
 #g <- rdf()
-g <- rdf_parse("Artifacts/Ontology/Output_v1.0.0-beta/hmis_ontologyv1.0.0-beta.ttl", format = "turtle")
+g <- rdf_parse("Artifacts/Ontology/Output_v1.1.0-beta/hmis_ontologyv1.1.0-beta.ttl", format = "turtle")
 
 #Add Scenario and Endpoint Classes to the API ontology
 

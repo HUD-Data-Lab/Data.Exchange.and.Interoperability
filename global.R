@@ -1,10 +1,13 @@
 # global.R ----
 
 library(shiny)
+library(tidyverse)
 library(dplyr)
 library(jsonlite)
 library(bslib)
+library(rdflib)
 
+## Functions ----
 time_step <- function(label, expr) {
   message("\n--- START: ", label, " ---")
   start <- Sys.time()
@@ -177,8 +180,10 @@ build_object_schema <- function(fields,
   )
 }
 
-cache_path <- "Artifacts/Ontology/hmis_ontology_cache_v1.0.0-beta.rds"
-ontology_path <- "Artifacts/Ontology/Output_v1.0.0-beta/hmis_ontologyv1.0.0-beta.ttl"
+## Step 1: Prep the ontology files ----
+
+cache_path <- "Artifacts/Ontology/Output_v1.3.0-beta/hmis_ontology_cache_v1.3.0-beta.rds"
+ontology_path <- "Artifacts/Ontology/Output_v1.3.0-beta/hmis_ontologyv1.3.0-beta.ttl"
 
 if (!file.exists(cache_path)) {
   stop(
@@ -186,6 +191,7 @@ if (!file.exists(cache_path)) {
   )
 }
 
+#Intention of this section is to make sure we are using the most recent ontology file. 
 ontology_cache <- time_step("Load ontology cache", {
   readRDS(cache_path)
 })
@@ -200,24 +206,28 @@ if (file.exists(ontology_path) && !is.null(ontology_cache$ontology_mtime)) {
   }
 }
 
+
 results <- ontology_cache$properties
 vocab_values <- ontology_cache$vocab_values
+scenarios <- ontology_cache$de_scenarios
+
+
+# ADD THIS TO ONTOLOGY AND DELETE ----
+#Add the label to the ontology. This was kept here to troubleshoot different UI approaches.
+input_file <- paste0("Translation Layer/datasource/", "DataExchangeScenarioOntology.xlsx")
+ScenarioData <- read_excel(input_file, 1)
+
+scenarios_temp <- ScenarioData |>
+  mutate(ScenarioName_id = paste0(ScenarioName,"Scenario")) |> 
+  select(ScenarioName_id,Label) |> 
+  right_join(scenarios,
+             by= c("ScenarioName_id"="scenario_id" ))
 
 
 message("Loaded ", nrow(results), " ontology property rows.")
 message("Loaded ", nrow(vocab_values), " vocabulary rows.")
+message("Loaded ", nrow(scenarios), " data exchange scenarios.")
 
-# field_choices <- results |>
-#   filter(!is.na(dataDictionaryName)) |>
-#   distinct(dataDictionaryName, dataElementNumber) |>
-#   arrange(dataDictionaryName) |>
-#   mutate(
-#     label = ifelse(
-#       is.na(dataElementNumber) | dataElementNumber == "",
-#       dataDictionaryName,
-#       paste0(dataDictionaryName, " [", dataElementNumber, "]")
-#     )
-#   )
 
 metadata <- results %>%
   dplyr::mutate(
@@ -284,7 +294,46 @@ hmis_elements <- clean_MetaData %>%
     )
   )
 
+
+# UI specific functions and objects ----
+
+#Lists to for multi-select options
+
 hmis_element_choices <- hmis_elements$dataDictionaryName
 names(hmis_element_choices) <- hmis_elements$selector_label
+scenario_choices <- unique(scenarios_temp$Label) #UPDATE once "label" is in the Data Exchange Scenario ontology
+RequestResponse_choices <- c("All", "Request Schema", "Response Schema")
+
+cards <- list(
+  card(
+    full_screen = TRUE,
+    card_header("First Card"),
+    "First card"
+  ),
+  card(
+    full_screen = TRUE,
+    card_header("Second Card"),
+    "Second Card"
+  ),
+  card(
+    full_screen = TRUE,
+    card_header("Third Card"),
+    "Third Card"
+  )
+)
+
+ScenarioList <- list(
+  "Scenario 1 Request" = c("PersonalID","FirstName","LastName",
+                   "DOB","SSN"),
+  "Scenario 1 Response" = c("PersonalID", "FirstName", "MiddleName",
+                            "LastName","NameSuffix", "NameDataQuality","SSN","SSNDataQuality",
+                            "DOB","DOBDataQuality", "AmIndAKNative", "Asian", "BlackAfAmerican",
+                            "HispanicLatinaeo","MidEastNAfrican","NativeHIPacific",
+                            "White", "RaceNone","AdditionalRaceEthnicity", "VeteranStatus", "YearEnteredService",
+                            "YearSeparated", "WorldWarII","KoreanWar","VietnamWar","DesertStorm", "AfghanistanOEF", "IraqOIF",
+                            "IraqOND", "OtherTheater", "MilitaryBranch","DischargeStatus" ),
+  "Scenario 2" = c("PersonalID","Destination"),
+  "Scenario 3" = c("ProjectID","EnrollmentID")
+)
 
 

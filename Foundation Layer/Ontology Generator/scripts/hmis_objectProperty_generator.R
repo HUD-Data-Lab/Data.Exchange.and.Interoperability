@@ -26,10 +26,10 @@ objProp <- objectProperty2 %>%
     if (!is_blank(CSVTable))
       lines <- c(lines, paste0("  hmis:CSVExportTable ", ttl_lit(CSVTable), " ;"))
     
-    if (!is_blank(ConceptScheme))
+    if (!is_blank(ConceptSchemeRange))
       lines <- c(
         lines,
-        paste0("  hmis:linkedVocabulary hmis:", ttl_local(ConceptScheme), " ;")
+        paste0("  hmis:linkedVocabulary hmis:", ttl_local(ConceptSchemeRange), " ;")
       )
     
     last <- sub(";\\s*$", ".", trimws(lines[length(lines)]))

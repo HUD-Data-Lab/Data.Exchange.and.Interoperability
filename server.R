@@ -2,6 +2,170 @@
 
 server <- function(input, output, session) {
   
+  
+# Home Page ----  
+  
+  # Set the main table
+  updateSelectizeInput(
+    session = session,
+    inputId = "selectScenario"
+  )
+  
+  scenarioSelected_metadata <- reactive({
+    
+    req(input$selectScenario)
+    
+    #Select the elements used in the scenario
+    selected_elements <- scenarios_temp |>
+      filter(Label == input$selectScenario) |>
+      select(requestElement_id, responseElement_id) |>
+      unlist(use.names = FALSE) |>
+      unique()
+    selected_elements <- selected_elements[!is.na(selected_elements)]
+      
+    #Build the table the shows the data elements used in the table  
+    clean_MetaData %>%
+      dplyr::filter(
+        dataDictionaryName %in% selected_elements  |
+          dataElementNumberAndField %in% selected_elements) %>%
+      dplyr::select(
+        dataDictionaryName,
+        dataElementNumberAndField,
+        field_type
+      ) %>%
+      dplyr::distinct() |> 
+      arrange(dataElementNumberAndField)
+  })
+  
+  output$scenarioSelected_table <- renderTable({
+    req(input$selectScenario)
+    scenarioSelected_metadata()
+  })
+  
+  # Build the JSON Schemas
+  openapi_object <- reactive({
+    
+    req(input$selectScenario)
+    
+    scenario_data <- scenarios_temp |>
+      filter(Label == input$selectScenario)
+    
+    requestElements <- scenario_data |>
+      pull(requestElement_id) |>
+      unique()
+    
+    requestElements <- requestElements[!is.na(requestElements)]
+    
+    responseElements <- scenario_data |>
+      pull(responseElement_id) |>
+      unique()
+    
+    responseElements <- responseElements[!is.na(responseElements)]
+    
+    request_schema <- build_object_schema(
+      fields = requestElements,
+      metadata = clean_MetaData,
+      vocab_values = clean_vocab_values
+    )
+    
+    response_schema <- build_object_schema(
+      fields = responseElements,
+      metadata = clean_MetaData,
+      vocab_values = clean_vocab_values
+    )
+    
+    list(
+      operationId = gsub("\\s+", "", input$selectScenario),
+      requestBody = list(
+        required = TRUE,
+        content = list(
+          `application/json` = list(
+            schema = request_schema
+          )
+        )
+      ),
+      responses = list(
+        `200` = list(
+          description = "Successful response",
+          content = list(
+            `application/json` = list(
+              schema = response_schema
+            )
+          )
+        )
+      )
+    )
+    
+  })  
+
+  # Render the outputs
+  output$requestSchema_output <- renderText({
+    
+    req(openapi_object())
+    
+    jsonlite::toJSON(
+      openapi_object()$requestBody,
+      pretty = TRUE,
+      auto_unbox = TRUE
+    )
+    
+  })
+  
+  output$responseSchema_output <- renderText({
+    
+    req(openapi_object())
+    
+    jsonlite::toJSON(
+      openapi_object()$responses$`200`,
+      pretty = TRUE,
+      auto_unbox = TRUE
+    )
+    
+  })
+  
+  output$openapi_output <- renderText({
+    
+    req(openapi_object())
+    
+    jsonlite::toJSON(
+      openapi_object(),
+      pretty = TRUE,
+      auto_unbox = TRUE
+    )
+    
+  })
+  
+  #Download the OpenAPI JSON Script
+  output$download_OpenAPIschema <- downloadHandler(
+    
+    filename = function() {
+      paste0(
+        "hmis_Fullschema_",
+        Sys.Date(),
+        ".json"
+      )
+    },
+    
+    content = function(file) {
+      req(openapi_object())
+      
+      schema_json <- jsonlite::toJSON(
+        openapi_object(),
+        pretty = TRUE,
+        auto_unbox = TRUE,
+        null = "null"
+      )
+      
+      writeLines(
+        schema_json,
+        con = file
+      )
+    }
+  )
+  
+  
+# JSON Schema Builder Page ----
+  
   updateSelectizeInput(
     session = session,
     inputId = "selected_elements",
@@ -9,8 +173,7 @@ server <- function(input, output, session) {
     server = TRUE
   )
   
-  
-  # Reactive table of selected HMIS elements
+  #Reactive table of selected HMIS elements
   
   selected_metadata <- reactive({
     
@@ -32,11 +195,8 @@ server <- function(input, output, session) {
   
   
   output$selected_table <- renderTable({
-    
     req(input$selected_elements)
-    
     selected_metadata()
-    
   })
   
   
@@ -99,3 +259,6 @@ server <- function(input, output, session) {
     }
   )
 }
+
+
+

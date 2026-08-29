@@ -1,0 +1,135 @@
+@prefix hmis: <http://www.semanticweb.org/ontologies/hmis#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix de: <http://www.semanticweb.org/ontologies/hmis/de#> .
+
+de:Scenario a owl:Class ;
+  rdfs:label "Test scenario for Data Exchange Scenarios"@en .
+
+de:httpMethod
+  rdf:type owl:AnnotationProperty .
+
+de:requestElement
+  rdf:type owl:AnnotationProperty .
+
+de:responseElement
+  rdf:type owl:AnnotationProperty .
+
+de:ClientSearchScenario
+    rdf:type owl:Class ;
+    rdfs:subClassOf de:Scenario ;
+    de:httpMethod "Get" ;
+    de:requestElement
+        hmis:hasPersonalID ,
+        hmis:hasFirstName ,
+        hmis:hasLastName ,
+        hmis:hasSSN ,
+        hmis:hasDOB ;
+    de:responseElement
+        hmis:hasNameDataQuality ,
+        hmis:hasSSNDataQuality ,
+        hmis:hasDOBDataQuality ,
+        hmis:hasSex ,
+        hmis:hasAmIndAKNative ,
+        hmis:hasAsian ,
+        hmis:hasBlackAfAmerican ,
+        hmis:hasHispanicLatinao ,
+        hmis:hasMidEastNAfrican ,
+        hmis:hasNativeHIPacific ,
+        hmis:hasWhite ,
+        hmis:hasRaceNone ,
+        hmis:hasVeteranStatus ,
+        hmis:hasWorldWarII ,
+        hmis:hasKoreanWar ,
+        hmis:hasVietnamWar ,
+        hmis:hasDesertStorm ,
+        hmis:hasAfghanistanOEF ,
+        hmis:hasIraqOIF ,
+        hmis:hasIraqOND ,
+        hmis:hasOtherTheater ,
+        hmis:hasMilitaryBranch ,
+        hmis:hasDischargeStatus ,
+        hmis:hasPersonalID ,
+        hmis:hasFirstName ,
+        hmis:hasMiddleName ,
+        hmis:hasLastName ,
+        hmis:hasNameSuffix ,
+        hmis:hasSSN ,
+        hmis:hasDOB ,
+        hmis:hasAdditionalRaceEthnicity ,
+        hmis:hasYearEnteredService ,
+        hmis:hasYearSeparated .
+
+de:NewClientScenario
+    rdf:type owl:Class ;
+    rdfs:subClassOf de:Scenario ;
+    de:httpMethod "Post" ;
+    de:requestElement
+        hmis:hasNameDataQuality ,
+        hmis:hasSSNDataQuality ,
+        hmis:hasDOBDataQuality ,
+        hmis:hasSex ,
+        hmis:hasAmIndAKNative ,
+        hmis:hasAsian ,
+        hmis:hasBlackAfAmerican ,
+        hmis:hasHispanicLatinao ,
+        hmis:hasMidEastNAfrican ,
+        hmis:hasNativeHIPacific ,
+        hmis:hasWhite ,
+        hmis:hasRaceNone ,
+        hmis:hasVeteranStatus ,
+        hmis:hasWorldWarII ,
+        hmis:hasKoreanWar ,
+        hmis:hasVietnamWar ,
+        hmis:hasDesertStorm ,
+        hmis:hasAfghanistanOEF ,
+        hmis:hasIraqOIF ,
+        hmis:hasIraqOND ,
+        hmis:hasOtherTheater ,
+        hmis:hasMilitaryBranch ,
+        hmis:hasDischargeStatus ,
+        hmis:hasFirstName ,
+        hmis:hasMiddleName ,
+        hmis:hasLastName ,
+        hmis:hasNameSuffix ,
+        hmis:hasSSN ,
+        hmis:hasDOB ,
+        hmis:hasAdditionalRaceEthnicity ,
+        hmis:hasYearEnteredService ,
+        hmis:hasYearSeparated ;
+    de:responseElement
+        hmis:hasNameDataQuality ,
+        hmis:hasSSNDataQuality ,
+        hmis:hasDOBDataQuality ,
+        hmis:hasSex ,
+        hmis:hasAmIndAKNative ,
+        hmis:hasAsian ,
+        hmis:hasBlackAfAmerican ,
+        hmis:hasHispanicLatinao ,
+        hmis:hasMidEastNAfrican ,
+        hmis:hasNativeHIPacific ,
+        hmis:hasWhite ,
+        hmis:hasRaceNone ,
+        hmis:hasVeteranStatus ,
+        hmis:hasWorldWarII ,
+        hmis:hasKoreanWar ,
+        hmis:hasVietnamWar ,
+        hmis:hasDesertStorm ,
+        hmis:hasAfghanistanOEF ,
+        hmis:hasIraqOIF ,
+        hmis:hasIraqOND ,
+        hmis:hasOtherTheater ,
+        hmis:hasMilitaryBranch ,
+        hmis:hasDischargeStatus ,
+        hmis:hasPersonalID ,
+        hmis:hasFirstName ,
+        hmis:hasMiddleName ,
+        hmis:hasLastName ,
+        hmis:hasNameSuffix ,
+        hmis:hasSSN ,
+        hmis:hasDOB ,
+        hmis:hasAdditionalRaceEthnicity ,
+        hmis:hasYearEnteredService ,
+        hmis:hasYearSeparated .
+

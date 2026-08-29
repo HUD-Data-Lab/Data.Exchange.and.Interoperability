@@ -1,0 +1,47 @@
+@base <localhost://> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<api:DataExchangeOntology>
+    <rdf:type> <owl:Ontology> ;
+    <rdfs:label> "HMIS Data Exchange Ontology"^^<http://www.w3.org/2001/XMLSchema#string> .
+
+<api:Scenario>
+    <rdfs:label> "Data Exchange Scenario"^^<http://www.w3.org/2001/XMLSchema#string> .
+
+<api:httpMethod>
+    <rdf:type> <owl:DatatypeProperty> ;
+    <rdfs:domain> <api:Scenario> ;
+    <rdfs:label> "HTTP method"^^<http://www.w3.org/2001/XMLSchema#string> ;
+    <rdfs:range> <xsd:string> .
+
+<api:requestElement>
+    <rdf:type> <owl:ObjectProperty> ;
+    <rdfs:domain> <api:Scenario> ;
+    <rdfs:label> "request element"^^<http://www.w3.org/2001/XMLSchema#string> ;
+    <rdfs:range> <rdf:Property> .
+
+<api:responseElement>
+    <rdf:type> <owl:ObjectProperty> ;
+    <rdfs:domain> <api:Scenario> ;
+    <rdfs:label> "response element"^^<http://www.w3.org/2001/XMLSchema#string> ;
+    <rdfs:range> <rdf:Property> .
+
+<http://www.semanticweb.org/ontologies/hmis/api#ClientSearchScenario>
+    <http://www.semanticweb.org/ontologies/hmis/api#httpMethod> "GET"^^<http://www.w3.org/2001/XMLSchema#string> ;
+    <http://www.semanticweb.org/ontologies/hmis/api#requestElement> <http://www.semanticweb.org/ontologies/hmis#hasDOB>, <http://www.semanticweb.org/ontologies/hmis#hasFirstName>, <http://www.semanticweb.org/ontologies/hmis#hasLastName>, <http://www.semanticweb.org/ontologies/hmis#hasPersonalID>, <http://www.semanticweb.org/ontologies/hmis#hasSSN> ;
+    <http://www.semanticweb.org/ontologies/hmis/api#responseElement> <http://www.semanticweb.org/ontologies/hmis#hasAdditionalRaceEthnicity>, <http://www.semanticweb.org/ontologies/hmis#hasAfghanistanOEF>, <http://www.semanticweb.org/ontologies/hmis#hasAmIndAKNative>, <http://www.semanticweb.org/ontologies/hmis#hasAsian>, <http://www.semanticweb.org/ontologies/hmis#hasBlackAfAmerican>, <http://www.semanticweb.org/ontologies/hmis#hasDOB>, <http://www.semanticweb.org/ontologies/hmis#hasDOBDataQuality>, <http://www.semanticweb.org/ontologies/hmis#hasDesertStorm>, <http://www.semanticweb.org/ontologies/hmis#hasDischargeStatus>, <http://www.semanticweb.org/ontologies/hmis#hasFirstName>, <http://www.semanticweb.org/ontologies/hmis#hasHispanicLatinao>, <http://www.semanticweb.org/ontologies/hmis#hasIraqOIF>, <http://www.semanticweb.org/ontologies/hmis#hasIraqOND>, <http://www.semanticweb.org/ontologies/hmis#hasKoreanWar>, <http://www.semanticweb.org/ontologies/hmis#hasLastName>, <http://www.semanticweb.org/ontologies/hmis#hasMidEastNAfrican>, <http://www.semanticweb.org/ontologies/hmis#hasMiddleName>, <http://www.semanticweb.org/ontologies/hmis#hasMilitaryBranch>, <http://www.semanticweb.org/ontologies/hmis#hasNameDataQuality>, <http://www.semanticweb.org/ontologies/hmis#hasNameSuffix>, <http://www.semanticweb.org/ontologies/hmis#hasNativeHIPacific>, <http://www.semanticweb.org/ontologies/hmis#hasOtherTheater>, <http://www.semanticweb.org/ontologies/hmis#hasPersonalID>, <http://www.semanticweb.org/ontologies/hmis#hasRaceNone>, <http://www.semanticweb.org/ontologies/hmis#hasSSN>, <http://www.semanticweb.org/ontologies/hmis#hasSSNDataQuality>, <http://www.semanticweb.org/ontologies/hmis#hasSex>, <http://www.semanticweb.org/ontologies/hmis#hasVeteranStatus>, <http://www.semanticweb.org/ontologies/hmis#hasVietnamWar>, <http://www.semanticweb.org/ontologies/hmis#hasWhite>, <http://www.semanticweb.org/ontologies/hmis#hasWorldWarII>, <http://www.semanticweb.org/ontologies/hmis#hasYearEnteredService>, <http://www.semanticweb.org/ontologies/hmis#hasYearSeparated> ;
+    <rdf:type> <owl:Class> ;
+    <rdfs:label> "ClientSearch"^^<http://www.w3.org/2001/XMLSchema#string> ;
+    <rdfs:subClassOf> <api:Scenario> .
+
+<http://www.semanticweb.org/ontologies/hmis/api#NewClientScenario>
+    <http://www.semanticweb.org/ontologies/hmis/api#httpMethod> "POST"^^<http://www.w3.org/2001/XMLSchema#string> ;
+    <http://www.semanticweb.org/ontologies/hmis/api#requestElement> <http://www.semanticweb.org/ontologies/hmis#hasAdditionalRaceEthnicity>, <http://www.semanticweb.org/ontologies/hmis#hasAfghanistanOEF>, <http://www.semanticweb.org/ontologies/hmis#hasAmIndAKNative>, <http://www.semanticweb.org/ontologies/hmis#hasAsian>, <http://www.semanticweb.org/ontologies/hmis#hasBlackAfAmerican>, <http://www.semanticweb.org/ontologies/hmis#hasDOB>, <http://www.semanticweb.org/ontologies/hmis#hasDOBDataQuality>, <http://www.semanticweb.org/ontologies/hmis#hasDesertStorm>, <http://www.semanticweb.org/ontologies/hmis#hasDischargeStatus>, <http://www.semanticweb.org/ontologies/hmis#hasFirstName>, <http://www.semanticweb.org/ontologies/hmis#hasHispanicLatinao>, <http://www.semanticweb.org/ontologies/hmis#hasIraqOIF>, <http://www.semanticweb.org/ontologies/hmis#hasIraqOND>, <http://www.semanticweb.org/ontologies/hmis#hasKoreanWar>, <http://www.semanticweb.org/ontologies/hmis#hasLastName>, <http://www.semanticweb.org/ontologies/hmis#hasMidEastNAfrican>, <http://www.semanticweb.org/ontologies/hmis#hasMiddleName>, <http://www.semanticweb.org/ontologies/hmis#hasMilitaryBranch>, <http://www.semanticweb.org/ontologies/hmis#hasNameDataQuality>, <http://www.semanticweb.org/ontologies/hmis#hasNameSuffix>, <http://www.semanticweb.org/ontologies/hmis#hasNativeHIPacific>, <http://www.semanticweb.org/ontologies/hmis#hasOtherTheater>, <http://www.semanticweb.org/ontologies/hmis#hasRaceNone>, <http://www.semanticweb.org/ontologies/hmis#hasSSN>, <http://www.semanticweb.org/ontologies/hmis#hasSSNDataQuality>, <http://www.semanticweb.org/ontologies/hmis#hasSex>, <http://www.semanticweb.org/ontologies/hmis#hasVeteranStatus>, <http://www.semanticweb.org/ontologies/hmis#hasVietnamWar>, <http://www.semanticweb.org/ontologies/hmis#hasWhite>, <http://www.semanticweb.org/ontologies/hmis#hasWorldWarII>, <http://www.semanticweb.org/ontologies/hmis#hasYearEnteredService>, <http://www.semanticweb.org/ontologies/hmis#hasYearSeparated> ;
+    <http://www.semanticweb.org/ontologies/hmis/api#responseElement> <http://www.semanticweb.org/ontologies/hmis#hasAdditionalRaceEthnicity>, <http://www.semanticweb.org/ontologies/hmis#hasAfghanistanOEF>, <http://www.semanticweb.org/ontologies/hmis#hasAmIndAKNative>, <http://www.semanticweb.org/ontologies/hmis#hasAsian>, <http://www.semanticweb.org/ontologies/hmis#hasBlackAfAmerican>, <http://www.semanticweb.org/ontologies/hmis#hasDOB>, <http://www.semanticweb.org/ontologies/hmis#hasDOBDataQuality>, <http://www.semanticweb.org/ontologies/hmis#hasDesertStorm>, <http://www.semanticweb.org/ontologies/hmis#hasDischargeStatus>, <http://www.semanticweb.org/ontologies/hmis#hasFirstName>, <http://www.semanticweb.org/ontologies/hmis#hasHispanicLatinao>, <http://www.semanticweb.org/ontologies/hmis#hasIraqOIF>, <http://www.semanticweb.org/ontologies/hmis#hasIraqOND>, <http://www.semanticweb.org/ontologies/hmis#hasKoreanWar>, <http://www.semanticweb.org/ontologies/hmis#hasLastName>, <http://www.semanticweb.org/ontologies/hmis#hasMidEastNAfrican>, <http://www.semanticweb.org/ontologies/hmis#hasMiddleName>, <http://www.semanticweb.org/ontologies/hmis#hasMilitaryBranch>, <http://www.semanticweb.org/ontologies/hmis#hasNameDataQuality>, <http://www.semanticweb.org/ontologies/hmis#hasNameSuffix>, <http://www.semanticweb.org/ontologies/hmis#hasNativeHIPacific>, <http://www.semanticweb.org/ontologies/hmis#hasOtherTheater>, <http://www.semanticweb.org/ontologies/hmis#hasPersonalID>, <http://www.semanticweb.org/ontologies/hmis#hasRaceNone>, <http://www.semanticweb.org/ontologies/hmis#hasSSN>, <http://www.semanticweb.org/ontologies/hmis#hasSSNDataQuality>, <http://www.semanticweb.org/ontologies/hmis#hasSex>, <http://www.semanticweb.org/ontologies/hmis#hasVeteranStatus>, <http://www.semanticweb.org/ontologies/hmis#hasVietnamWar>, <http://www.semanticweb.org/ontologies/hmis#hasWhite>, <http://www.semanticweb.org/ontologies/hmis#hasWorldWarII>, <http://www.semanticweb.org/ontologies/hmis#hasYearEnteredService>, <http://www.semanticweb.org/ontologies/hmis#hasYearSeparated> ;
+    <rdf:type> <owl:Class> ;
+    <rdfs:label> "NewClient"^^<http://www.w3.org/2001/XMLSchema#string> ;
+    <rdfs:subClassOf> <api:Scenario> .
+
+<http://www.semanticweb.org/ontologies/hmis/api#Scenario>
+    a <http://www.w3.org/2002/07/owl#Class> .
+

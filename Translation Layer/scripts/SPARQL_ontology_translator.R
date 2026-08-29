@@ -16,14 +16,14 @@ source(paste0(here(),"/Translation Layer/scripts/SPARQL_functions.R"))
 # Load ontology ----
 
 ## Pull in graph
-g <- rdf_parse("Artifacts/Ontology/Output_v1.0.0-beta/hmis_ontologyv1.0.0-beta.ttl", format = "turtle")
+g <- rdf_parse("Artifacts/Ontology/Output_v1.1.0-beta/hmis_ontologyv1.1.0-beta.ttl", format = "turtle")
 
 
 # Extract graph objects ----
 
 ## SPARQL body to extract ontology DATA PROPERTIES
 query_all <- '
-PREFIX hmis: <http://www.semanticweb.org/61084/ontologies/2026/2/hmis#>
+PREFIX hmis: <http://www.semanticweb.org/ontologies/hmis#> 
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT ?property ?dataDictionaryName ?dataElementNumber ?dataElementFieldNumber ?CSVExportTable ?domain ?range ?scheme

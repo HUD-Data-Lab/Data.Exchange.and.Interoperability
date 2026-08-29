@@ -1,4 +1,73 @@
+library(rdflib)
+library(dplyr)
 
+
+# SPARQL Queries used in build_ontology_cache ----
+# Use these to model sparql queries to put the ontology into table format
+
+# This pulls all the data element names and related annotations (metadata such as associated CSV tables)
+query_all <- '
+PREFIX hmis: <http://www.semanticweb.org/ontologies/hmis#> #This needs to match the ontology IRI exactly
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+
+SELECT ?property ?dataDictionaryName ?dataElementNumber ?dataElementFieldNumber 
+?CSVExportTable ?domain ?range ?scheme
+WHERE {
+
+  {
+    ?property a owl:ObjectProperty .
+  }
+  UNION
+  {
+    ?property a owl:DatatypeProperty .
+  }
+
+  OPTIONAL { ?property hmis:dataDictionaryName ?dataDictionaryName . }
+  OPTIONAL { ?property hmis:dataElementNumber ?dataElementNumber . }
+  OPTIONAL { ?property hmis:dataElementFieldNumber ?dataElementFieldNumber . }
+  OPTIONAL { ?property hmis:CSVExportTable ?CSVExportTable . }
+  OPTIONAL { ?property rdfs:domain ?domain . }
+  OPTIONAL { ?property rdfs:range ?range . }
+  OPTIONAL { ?property hmis:linkedVocabulary ?scheme . }
+}
+'
+# This pulls all of the list values 
+query_vocab <- '
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?scheme ?concept ?preflabel ?notation ?altlabel
+WHERE {
+
+  ?concept skos:inScheme ?scheme .
+
+  OPTIONAL { ?concept skos:prefLabel ?preflabel . }
+  OPTIONAL { ?concept skos:notation ?notation . }
+  OPTIONAL { ?concept skos:altLabel ?altlabel . }
+}
+'
+#This pulls the scenarios and groups data element names into two categories (request and response)
+query_deScenarios <- '
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX de:   <http://www.semanticweb.org/ontologies/hmis/de#>
+
+SELECT ?scenario ?httpMethod ?requestElement ?responseElement
+WHERE {
+
+  ?scenario rdfs:subClassOf de:Scenario .
+
+  OPTIONAL { ?scenario de:httpMethod ?httpMethod . }
+  OPTIONAL { ?scenario de:requestElement ?requestElement . }
+  OPTIONAL { ?scenario de:responseElement ?responseElement . }
+
+}
+ORDER BY ?scenario ?requestElement ?responseElement
+
+'
+
+
+# Shape function (NOT COMPLETE) ----
 
 generate_shape <- function(property,
                            domain,
@@ -172,10 +241,10 @@ build_field_schema <- function(value,
 }
 
 
-#
 
 
-# Build JSON/YAML Schemas
+
+# Build JSON/YAML Schemas ----
 
 find_field <- function(field_id, metadata) {
   

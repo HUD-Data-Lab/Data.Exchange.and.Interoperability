@@ -1,0 +1,45 @@
+@base <localhost://> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<api:ClientSearchScenario>
+    <api:httpMethod> "GET"^^<http://www.w3.org/2001/XMLSchema#string> ;
+    <api:requestElement> <hmis:hasDOB>, <hmis:hasFirstName>, <hmis:hasLastName>, <hmis:hasPersonalID>, <hmis:hasSSN> ;
+    <api:responseElement> <hmis:hasAdditionalRaceEthnicity>, <hmis:hasAfghanistanOEF>, <hmis:hasAmIndAKNative>, <hmis:hasAsian>, <hmis:hasBlackAfAmerican>, <hmis:hasDOB>, <hmis:hasDOBDataQuality>, <hmis:hasDesertStorm>, <hmis:hasDischargeStatus>, <hmis:hasFirstName>, <hmis:hasHispanicLatinao>, <hmis:hasIraqOIF>, <hmis:hasIraqOND>, <hmis:hasKoreanWar>, <hmis:hasLastName>, <hmis:hasMidEastNAfrican>, <hmis:hasMiddleName>, <hmis:hasMilitaryBranch>, <hmis:hasNameDataQuality>, <hmis:hasNameSuffix>, <hmis:hasNativeHIPacific>, <hmis:hasOtherTheater>, <hmis:hasPersonalID>, <hmis:hasRaceNone>, <hmis:hasSSN>, <hmis:hasSSNDataQuality>, <hmis:hasSex>, <hmis:hasVeteranStatus>, <hmis:hasVietnamWar>, <hmis:hasWhite>, <hmis:hasWorldWarII>, <hmis:hasYearEnteredService>, <hmis:hasYearSeparated> ;
+    <rdf:type> <owl:Class> ;
+    <rdfs:label> "ClientSearch"^^<http://www.w3.org/2001/XMLSchema#string> ;
+    <rdfs:subClassOf> <api:Scenario> .
+
+<api:DataExchangeOntology>
+    <rdf:type> <owl:Ontology> ;
+    <rdfs:label> "HMIS Data Exchange Ontology"^^<http://www.w3.org/2001/XMLSchema#string> .
+
+<api:NewClientScenario>
+    <api:httpMethod> "POST"^^<http://www.w3.org/2001/XMLSchema#string> ;
+    <api:requestElement> <hmis:hasAdditionalRaceEthnicity>, <hmis:hasAfghanistanOEF>, <hmis:hasAmIndAKNative>, <hmis:hasAsian>, <hmis:hasBlackAfAmerican>, <hmis:hasDOB>, <hmis:hasDOBDataQuality>, <hmis:hasDesertStorm>, <hmis:hasDischargeStatus>, <hmis:hasFirstName>, <hmis:hasHispanicLatinao>, <hmis:hasIraqOIF>, <hmis:hasIraqOND>, <hmis:hasKoreanWar>, <hmis:hasLastName>, <hmis:hasMidEastNAfrican>, <hmis:hasMiddleName>, <hmis:hasMilitaryBranch>, <hmis:hasNameDataQuality>, <hmis:hasNameSuffix>, <hmis:hasNativeHIPacific>, <hmis:hasOtherTheater>, <hmis:hasRaceNone>, <hmis:hasSSN>, <hmis:hasSSNDataQuality>, <hmis:hasSex>, <hmis:hasVeteranStatus>, <hmis:hasVietnamWar>, <hmis:hasWhite>, <hmis:hasWorldWarII>, <hmis:hasYearEnteredService>, <hmis:hasYearSeparated> ;
+    <api:responseElement> <hmis:hasAdditionalRaceEthnicity>, <hmis:hasAfghanistanOEF>, <hmis:hasAmIndAKNative>, <hmis:hasAsian>, <hmis:hasBlackAfAmerican>, <hmis:hasDOB>, <hmis:hasDOBDataQuality>, <hmis:hasDesertStorm>, <hmis:hasDischargeStatus>, <hmis:hasFirstName>, <hmis:hasHispanicLatinao>, <hmis:hasIraqOIF>, <hmis:hasIraqOND>, <hmis:hasKoreanWar>, <hmis:hasLastName>, <hmis:hasMidEastNAfrican>, <hmis:hasMiddleName>, <hmis:hasMilitaryBranch>, <hmis:hasNameDataQuality>, <hmis:hasNameSuffix>, <hmis:hasNativeHIPacific>, <hmis:hasOtherTheater>, <hmis:hasPersonalID>, <hmis:hasRaceNone>, <hmis:hasSSN>, <hmis:hasSSNDataQuality>, <hmis:hasSex>, <hmis:hasVeteranStatus>, <hmis:hasVietnamWar>, <hmis:hasWhite>, <hmis:hasWorldWarII>, <hmis:hasYearEnteredService>, <hmis:hasYearSeparated> ;
+    <rdf:type> <owl:Class> ;
+    <rdfs:label> "NewClient"^^<http://www.w3.org/2001/XMLSchema#string> ;
+    <rdfs:subClassOf> <api:Scenario> .
+
+<api:Scenario>
+    <rdf:type> <owl:Class> ;
+    <rdfs:label> "Data Exchange Scenario"^^<http://www.w3.org/2001/XMLSchema#string> .
+
+<api:httpMethod>
+    <rdf:type> <owl:DatatypeProperty> ;
+    <rdfs:domain> <api:Scenario> ;
+    <rdfs:label> "HTTP method"^^<http://www.w3.org/2001/XMLSchema#string> ;
+    <rdfs:range> <xsd:string> .
+
+<api:requestElement>
+    <rdf:type> <owl:ObjectProperty> ;
+    <rdfs:domain> <api:Scenario> ;
+    <rdfs:label> "request element"^^<http://www.w3.org/2001/XMLSchema#string> ;
+    <rdfs:range> <rdf:Property> .
+
+<api:responseElement>
+    <rdf:type> <owl:ObjectProperty> ;
+    <rdfs:domain> <api:Scenario> ;
+    <rdfs:label> "response element"^^<http://www.w3.org/2001/XMLSchema#string> ;
+    <rdfs:range> <rdf:Property> .
+

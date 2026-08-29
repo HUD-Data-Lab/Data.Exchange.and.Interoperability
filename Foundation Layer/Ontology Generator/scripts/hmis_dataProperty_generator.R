@@ -11,7 +11,7 @@ dataProp <- dataProperty2 %>%
     lines <- c(
       paste0(subj, " a owl:DatatypeProperty ;"),
       paste0("  rdfs:domain hmis:", ttl_local(Class), " ;"),
-      paste0("  rdfs:range ", trimws(Range), " ;")
+      paste0("  rdfs:range ", trimws(ConceptSchemeRange), " ;")
     )
     
     # metadata as literals (only include if nonblank)
