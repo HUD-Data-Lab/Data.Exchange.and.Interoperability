@@ -5,7 +5,20 @@ ui <- page_navbar(
   title = "HMIS API Product Suite",
   id = "page",
   theme = bs_theme(bootswatch = "lumen"), #update to this? https://posit-dev.github.io/brand-yml/
-  nav_panel("Home", 
+  nav_panel("Home",
+            page_fluid(
+              page_sidebar(
+                sidebar = 
+                  selectInput(
+                    "selectScenario",
+                    "Select Baseline Scenario:",
+                    scenario_choices,
+                    multiple = FALSE
+                  ),
+                cards[[1]],
+                layout_columns(cards[[2]],cards[[3]])
+              ))),
+  nav_panel("HMIS Data Exchange Scenarios", 
             page_fluid(
               page_sidebar(
                 sidebar = list(
@@ -27,7 +40,7 @@ ui <- page_navbar(
                 accordion(
                   open = FALSE,
                   accordion_panel(
-                    "HMIS Data Elements Used in this Scenario:",
+                    "HMIS Data Elements Summary Table:",
                     tableOutput("scenarioSelected_table")
                   ), br(),
                   card(
@@ -63,7 +76,7 @@ ui <- page_navbar(
                 )
               ),
               accordion(
-                open = c("Selected HMIS Data Elements","Generated JSON Schema"),
+                open = c("Selected HMIS Data Elements"),
                 accordion_panel(
                   "Selected HMIS Data Elements",
                     tableOutput("selected_table")

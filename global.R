@@ -6,6 +6,7 @@ library(dplyr)
 library(jsonlite)
 library(bslib)
 library(rdflib)
+library(readxl)
 
 ## Functions ----
 time_step <- function(label, expr) {
@@ -302,7 +303,7 @@ hmis_elements <- clean_MetaData %>%
 hmis_element_choices <- hmis_elements$dataDictionaryName
 names(hmis_element_choices) <- hmis_elements$selector_label
 scenario_choices <- unique(scenarios_temp$Label) #UPDATE once "label" is in the Data Exchange Scenario ontology
-RequestResponse_choices <- c("All", "Request Schema", "Response Schema")
+RequestResponse_choices <- c("Full Schema", "Request Schema", "Response Schema")
 
 cards <- list(
   card(

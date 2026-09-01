@@ -5,7 +5,7 @@ server <- function(input, output, session) {
   
 # Home Page ----  
   
-  # Set the main table
+  # Set the main table with filter
   updateSelectizeInput(
     session = session,
     inputId = "selectScenario"
