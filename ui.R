@@ -2,22 +2,13 @@
 
 
 ui <- page_navbar(
-  title = "HMIS API Product Suite",
+  title = "HMIS Data Exchange Product Suite",
   id = "page",
   theme = bs_theme(bootswatch = "lumen"), #update to this? https://posit-dev.github.io/brand-yml/
   nav_panel("Home",
             page_fluid(
-              page_sidebar(
-                sidebar = 
-                  selectInput(
-                    "selectScenario",
-                    "Select Baseline Scenario:",
-                    scenario_choices,
-                    multiple = FALSE
-                  ),
-                cards[[1]],
-                layout_columns(cards[[2]],cards[[3]])
-              ))),
+                cards[[1]]
+              )),
   nav_panel("HMIS Data Exchange Scenarios", 
             page_fluid(
               page_sidebar(
@@ -79,8 +70,15 @@ ui <- page_navbar(
                 open = c("Selected HMIS Data Elements"),
                 accordion_panel(
                   "Selected HMIS Data Elements",
-                    tableOutput("selected_table")
-                  ),
+                  navset_pill(
+                  nav_panel(
+                    "Data Table",
+                    tableOutput("selected_table")),
+                  nav_panel(
+                    "Data Dictionary",
+                    uiOutput("datadictionary_output")
+                  )
+                  )),
                 br(),
                 accordion_panel(
                   "Generated JSON Schema",
@@ -88,17 +86,12 @@ ui <- page_navbar(
                   )
                 )
                 ))),
-  nav_panel("Example", 
+  nav_panel("Privacy and Security",
             page_fluid(
-              page_sidebar(
-                sidebar = 
-                  selectInput(
-                    "selectScenario",
-                    "Select Baseline Scenario:",
-                    scenario_choices,
-                    multiple = FALSE
-                  ),
-                cards[[1]],
-                layout_columns(cards[[2]],cards[[3]])
-              )))
+              cards[[2]]
+            )),
+  nav_panel("Guides and Resources",
+            page_fluid(
+              cards[[3]]
+            ))
 )

@@ -1,7 +1,17 @@
 # server.R ----
 
 server <- function(input, output, session) {
+
+#Observers for testing
+  observe({
+    cat("\nselected_elements:\n")
+    dput(input$selected_elements)
+  })
   
+  observe({
+    cat("\nselectScenario:\n")
+    dput(input$selectScenario)
+  })
   
 # Home Page ----  
   
@@ -199,6 +209,59 @@ server <- function(input, output, session) {
     selected_metadata()
   })
   
+  #Build Data Dictionary based on selected elements
+
+  
+  DataDictionary <- reactive({
+    
+    if (is.null(input$selected_elements) ||
+        length(input$selected_elements) == 0) {
+      
+      return(NULL)
+      
+    }
+    
+    selected_dataelements <- clean_MetaData %>%
+      dplyr::filter(
+        dataDictionaryName %in% input$selected_elements |
+          dataElementNumberAndField %in% input$selected_elements
+      ) %>%
+      pull(dataElementNumber) %>%
+      unique()
+    
+    DataDictionaryText %>%
+    filter(`Element Identifier` %in% selected_dataelements) %>%
+    split(.$`Element Identifier`)
+    
+  })
+  
+  output$datadictionary_output <- renderUI({
+    
+    if (is.null(input$selected_elements) ||
+        length(input$selected_elements) == 0) {
+      
+      return(
+        div(
+          class = "alert alert-info",
+          "Select one or more HMIS Data Elements."
+        )
+      )
+    }
+    
+    div(
+      style = "
+      max-height:700px;
+      overflow-y:auto;
+      padding:20px;
+      border:1px solid #ddd;
+      background:white;
+    ",
+      
+      lapply(DataDictionary(), build_element_html)
+      
+    )
+    
+  })
   
   # Build schema only when button is clicked
   
@@ -225,11 +288,9 @@ server <- function(input, output, session) {
       generated_schema(),
       pretty = TRUE,
       auto_unbox = TRUE,
-      null = "null"
-    )
+      null = "null")
     
   })
-  
   
   # Download JSON file
   

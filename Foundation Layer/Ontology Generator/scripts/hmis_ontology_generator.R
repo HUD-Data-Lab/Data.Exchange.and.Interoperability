@@ -88,7 +88,6 @@ writeLines(c(ttl_header,classes,coreClassObjProps, skosConceptScheme,skosConcept
              file.path(Final_Ontology,paste0("hmis_ontology",ontology_version,".ttl")), useBytes = TRUE)
 }
 
-
 }
 
 

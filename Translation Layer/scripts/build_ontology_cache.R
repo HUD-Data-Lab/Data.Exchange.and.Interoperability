@@ -18,7 +18,7 @@ g <- rdf_parse(ontology_path, format = "turtle")
 # pulls the data elements and annotations (metadata)
 results <- rdf_query(g, query_all)
 
-#Pull the lists for the enumerated values
+#Pull the lists for the enumerated values + SKOS
 vocab_values <- rdf_query(g, query_vocab)
 
 # Pull the data needed to build Data Exchange Scenarios

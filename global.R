@@ -8,6 +8,9 @@ library(bslib)
 library(rdflib)
 library(readxl)
 
+## source required files
+source("html_text_blocks.R")
+
 ## Functions ----
 time_step <- function(label, expr) {
   message("\n--- START: ", label, " ---")
@@ -305,36 +308,123 @@ names(hmis_element_choices) <- hmis_elements$selector_label
 scenario_choices <- unique(scenarios_temp$Label) #UPDATE once "label" is in the Data Exchange Scenario ontology
 RequestResponse_choices <- c("Full Schema", "Request Schema", "Response Schema")
 
+# Build data dictionary text ----
+DataDictionaryText <- read_excel("Foundation Layer/Ontology Generator/datasource/DataDictionaryAnnotations.xlsx", 1)
+
+build_element_html <- function(df) {
+  
+  div(
+    
+    h2(
+      paste(
+        unique(df$`Element Identifier`),
+        unique(df$`Element Name`)
+      ),
+      style = "color:#1f4e79;"
+    ),
+    
+    lapply(
+      c(
+        "Element Type",
+        "Funder: Program-Component",
+        "Project Type Applicability",
+        "Data Collected About",
+        "Collection Point",
+        "System Logic and Other System Issues",
+        "CSV"
+      ),
+      function(field) {
+        
+        value <- df[[field]][1]
+        
+        if (!is.na(value) && nzchar(value)) {
+          
+          tagList(
+            
+            tags$h4(
+              field,
+              style = "margin-top:15px;margin-bottom:5px;"
+            ),
+            
+            tags$p(
+              value,
+              style = "margin-bottom:10px;"
+            )
+            
+          )
+          
+        }
+        
+      }
+    ),
+    
+    tags$hr()
+  )
+}
+
+
+#Function to build tables
+# Build individual tables
+build_dictionary_tables <- function(ids, dictionary){
+  
+  lapply(ids, function(id){
+    
+    x <- dictionary |>
+      dplyr::filter(
+        `Element Identifier` %in% id
+      )
+    
+    list(
+      title = paste0(
+        x$`Element Identifier`,
+        " ",
+        x$`Element Name`
+      ),
+      tibble::tibble(
+        Header = c(
+          "Element Type",
+          "Funder: Program-Component",
+          "Project Type Applicability",
+          "Data Collected About",
+          "Collection Point",
+          "System Logic & Other System Issues",
+          "CSV"
+        ),
+        
+        Instruction = c(
+          x$`Element Type`,
+          x$`Funder: Program-Component`,
+          x$`Project Type Applicability`,
+          x$`Data Collected About`,
+          x$`Collection Point`,
+          x$`System Logic and Other System Issues`,
+          x$CSV
+        )
+      )
+    )
+  }) |>
+    stats::setNames(ids)
+  
+}
+
+# Preset card formats
 cards <- list(
   card(
     full_screen = TRUE,
-    card_header("First Card"),
-    "First card"
+    card_header("Overview"),
+    HomePage_overview
   ),
   card(
     full_screen = TRUE,
-    card_header("Second Card"),
-    "Second Card"
+    card_header("Privacy and Security"),
+    "Coming soon"
   ),
   card(
     full_screen = TRUE,
-    card_header("Third Card"),
-    "Third Card"
+    card_header("Guides and Resources"),
+    "Coming Soon"
   )
 )
 
-ScenarioList <- list(
-  "Scenario 1 Request" = c("PersonalID","FirstName","LastName",
-                   "DOB","SSN"),
-  "Scenario 1 Response" = c("PersonalID", "FirstName", "MiddleName",
-                            "LastName","NameSuffix", "NameDataQuality","SSN","SSNDataQuality",
-                            "DOB","DOBDataQuality", "AmIndAKNative", "Asian", "BlackAfAmerican",
-                            "HispanicLatinaeo","MidEastNAfrican","NativeHIPacific",
-                            "White", "RaceNone","AdditionalRaceEthnicity", "VeteranStatus", "YearEnteredService",
-                            "YearSeparated", "WorldWarII","KoreanWar","VietnamWar","DesertStorm", "AfghanistanOEF", "IraqOIF",
-                            "IraqOND", "OtherTheater", "MilitaryBranch","DischargeStatus" ),
-  "Scenario 2" = c("PersonalID","Destination"),
-  "Scenario 3" = c("ProjectID","EnrollmentID")
-)
 
 
