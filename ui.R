@@ -29,7 +29,7 @@ ui <- page_navbar(
                   )
                 ),
                 card(
-                  full_screen = TRUE,
+                  full_screen = FALSE,
                   card_header("Introduction"),
                   "Use this tab to explore the HMIS data elements and generate a custom JSON schema. 
                   To see the response lists for any enumerated field please generate a JSON schema."
@@ -93,18 +93,5 @@ ui <- page_navbar(
                       nav_panel("Request",verbatimTextOutput("requestSchema_output") ),
                       nav_panel("Response", verbatimTextOutput("responseSchema_output")))
                     )
-                )))),
-
-  nav_panel("Privacy and Security",
-            page_fluid(
-              cards[[2]]
-            )),
-  nav_panel("HMIS Data Mapping",
-            page_fluid(
-              cards[[3]]
-            )),
-  nav_panel("Guides and Resources",
-            page_fluid(
-              cards[[4]]
-            ))
+                ))))
 )
