@@ -13,7 +13,7 @@ server <- function(input, output, session) {
     dput(input$selectScenario)
   })
   
-# Home Page ----  
+# Data Exchange Scenario Page ----  
   
   # Set the main table with filter
   updateSelectizeInput(
@@ -51,6 +51,73 @@ server <- function(input, output, session) {
     req(input$selectScenario)
     scenarioSelected_metadata()
   })
+  
+# Generated the data dictionary from selected elements
+  
+  ScenarioDataDictionary <- reactive({
+    
+    if (is.null(input$selectScenario) ||
+        length(input$selectScenario) == 0) {
+      
+      return(NULL)
+      
+    }
+    
+    
+    #Select the elements used in the scenario
+    selected_elements <- scenarios_temp |>
+      filter(Label == input$selectScenario) |>
+      #filter(Label == "Search for Client") |>
+      select(requestElement_id, responseElement_id) |>
+      unlist(use.names = FALSE) |>
+      unique()
+    
+    selected_elements <- selected_elements[!is.na(selected_elements)]
+    
+    #Build the table the shows the data elements used in the table  
+    selected_scenariodataelements <- clean_MetaData %>%
+      dplyr::filter(
+        dataDictionaryName %in% selected_elements  |
+          dataElementNumberAndField %in% selected_elements) %>%
+      pull(dataElementNumber) |> 
+      unique()
+      
+    
+    DataDictionaryText %>%
+      filter(`Element Identifier` %in% selected_scenariodataelements) %>%
+      split(.$`Element Identifier`)
+    
+  })
+  
+  output$datadictionaryscenario_output <- renderUI({
+    
+    if (is.null(input$selectScenario) ||
+        length(input$selectScenario) == 0) {
+      
+      return(
+        div(
+          class = "alert alert-info",
+          "Select a scenario"
+        )
+      )
+    }
+    
+    div(
+      style = "
+      max-height:700px;
+      overflow-y:auto;
+      padding:20px;
+      border:1px solid #ddd;
+      background:white;
+    ",
+      
+      lapply(ScenarioDataDictionary(), build_element_html)
+      
+    )
+    
+  })
+  
+  
   
   # Build the JSON Schemas
   openapi_object <- reactive({
@@ -174,7 +241,7 @@ server <- function(input, output, session) {
   )
   
   
-# JSON Schema Builder Page ----
+# HMIS Data Model Explorer ----
   
   updateSelectizeInput(
     session = session,
@@ -265,7 +332,7 @@ server <- function(input, output, session) {
   
   # Build schema only when button is clicked
   
-  generated_schema <- eventReactive(input$build_schema, {
+  generated_schema <- eventReactive(input$selected_elements, {
     
     req(input$selected_elements)
     
@@ -276,7 +343,6 @@ server <- function(input, output, session) {
     )
     
   })
-  
   
   # Render JSON in the app
   

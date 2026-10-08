@@ -1,0 +1,125 @@
+{
+  "operationId": "RetrieveClientEnrollments",
+  "requestBody": {
+    "required": true,
+    "content": {
+      "application/json": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "EntryDate": {
+              "DataDictionaryName": "EntryDate",
+              "type": "string",
+              "x-hmis-vocabulary": "3.10.1",
+              "format": "date"
+            },
+            "ExitDate": {
+              "DataDictionaryName": "ExitDate",
+              "type": "string",
+              "x-hmis-vocabulary": "3.11.1",
+              "format": "date"
+            },
+            "PersonalID": {
+              "DataDictionaryName": "PersonalID",
+              "type": "string",
+              "x-hmis-vocabulary": "5.08.1"
+            },
+            "ProjectID": {
+              "DataDictionaryName": "ProjectID",
+              "type": "string",
+              "x-hmis-vocabulary": "2.02.1"
+            }
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "description": "Successful response",
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "EnrollmentCoC": {
+                "DataDictionaryName": "EnrollmentCoC",
+                "type": "string",
+                "x-hmis-vocabulary": "3.16.1"
+              },
+              "EnrollmentID": {
+                "DataDictionaryName": "EnrollmentID",
+                "type": "string",
+                "x-hmis-vocabulary": "5.06.1"
+              },
+              "EntryDate": {
+                "DataDictionaryName": "EntryDate",
+                "type": "string",
+                "x-hmis-vocabulary": "3.10.1",
+                "format": "date"
+              },
+              "ExitDate": {
+                "DataDictionaryName": "ExitDate",
+                "type": "string",
+                "x-hmis-vocabulary": "3.11.1",
+                "format": "date"
+              },
+              "HouseholdID": {
+                "DataDictionaryName": "HouseholdID",
+                "type": "string",
+                "x-hmis-vocabulary": "5.09.1"
+              },
+              "PersonalID": {
+                "DataDictionaryName": "PersonalID",
+                "type": "string",
+                "x-hmis-vocabulary": "5.08.1"
+              },
+              "ProjectID": {
+                "DataDictionaryName": "ProjectID",
+                "type": "string",
+                "x-hmis-vocabulary": "2.02.1"
+              },
+              "ProjectName": {
+                "DataDictionaryName": "ProjectName",
+                "type": "string",
+                "x-hmis-vocabulary": "2.02.2"
+              },
+              "RelationshipToHoH": {
+                "DataDictionaryName": "RelationshipToHoH",
+                "type": "string",
+                "enum": ["Data not collected", "Self (Head of Household)", "Head of household's spouse or partner", "Head of household's child", "Other: non-relation member", "Head of household's other relation member"],
+                "x-hmis-vocabulary": "3.15.1",
+                "x-hmis-values": [
+                  {
+                    "notation": "99",
+                    "preflabel": "Data not collected"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Self (Head of Household)"
+                  },
+                  {
+                    "notation": "3",
+                    "preflabel": "Head of household's spouse or partner"
+                  },
+                  {
+                    "notation": "2",
+                    "preflabel": "Head of household's child"
+                  },
+                  {
+                    "notation": "5",
+                    "preflabel": "Other: non-relation member"
+                  },
+                  {
+                    "notation": "4",
+                    "preflabel": "Head of household's other relation member"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -320,7 +320,11 @@ build_element_html <- function(df) {
         unique(df$`Element Identifier`),
         unique(df$`Element Name`)
       ),
-      style = "color:#1f4e79;"
+      style = "
+      color:#1f4e79;
+      font-size:20px;
+      margin-bottom:10px
+      "
     ),
     
     lapply(
@@ -331,7 +335,9 @@ build_element_html <- function(df) {
         "Data Collected About",
         "Collection Point",
         "System Logic and Other System Issues",
-        "CSV"
+        "CSV",
+        "Rationale",
+        "Data Collection Instruction"
       ),
       function(field) {
         
@@ -343,13 +349,37 @@ build_element_html <- function(df) {
             
             tags$h4(
               field,
-              style = "margin-top:15px;margin-bottom:5px;"
+              style = "
+              margin-top:12px;
+              margin-bottom:4px;
+              font-size:13px;
+              font-weight:600;
+              color:#444;
+              "
             ),
+            
+            if (field == "Data Collection Instruction"){
+              tags$p(
+                tags$a(
+                  href = value,
+                  "Link to documentation",
+                  target = "_blank",
+                  style="font-size:12px"
+                  ),
+                style = "margin-bottom:8px;"
+                )
+              
+            } else {
             
             tags$p(
               value,
-              style = "margin-bottom:10px;"
+              style = "
+              margin-bottom:8px;
+              font-size:12px;
+              line-height:1-4
+              "
             )
+            }
             
           )
           
@@ -418,6 +448,11 @@ cards <- list(
     full_screen = TRUE,
     card_header("Privacy and Security"),
     "Coming soon"
+  ),
+  card(
+    full_screen = TRUE,
+    card_header("HMIS Data Mapping"),
+    "Coming Soon"
   ),
   card(
     full_screen = TRUE,

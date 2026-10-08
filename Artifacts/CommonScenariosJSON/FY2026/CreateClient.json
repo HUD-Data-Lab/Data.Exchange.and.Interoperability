@@ -1,0 +1,1185 @@
+{
+  "operationId": "CreateClient",
+  "requestBody": {
+    "required": true,
+    "content": {
+      "application/json": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "AccessPoint": {
+              "DataDictionaryName": "AccessPoint",
+              "type": "string",
+              "enum": ["No", "Yes"],
+              "x-hmis-vocabulary": "2.09.1",
+              "x-hmis-values": [
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "AmIndAKNative": {
+              "DataDictionaryName": "AmIndAKNative",
+              "type": "string",
+              "enum": ["No", "Yes"],
+              "x-hmis-vocabulary": "3.04.1",
+              "x-hmis-values": [
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "Asian": {
+              "DataDictionaryName": "Asian",
+              "type": "string",
+              "enum": ["No", "Yes"],
+              "x-hmis-vocabulary": "3.04.1",
+              "x-hmis-values": [
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "AssessmentAnswer": {
+              "DataDictionaryName": "AssessmentAnswer",
+              "type": "string",
+              "x-hmis-vocabulary": "4.19.A"
+            },
+            "AssessmentQuestion": {
+              "DataDictionaryName": "AssessmentQuestion",
+              "type": "string",
+              "x-hmis-vocabulary": "4.19.5"
+            },
+            "AssessmentResult": {
+              "DataDictionaryName": "AssessmentResult",
+              "type": "string",
+              "x-hmis-vocabulary": "4.19.B"
+            },
+            "AssessmentResultType": {
+              "DataDictionaryName": "AssessmentResultType",
+              "type": "string",
+              "x-hmis-vocabulary": "4.19.6"
+            },
+            "BlackAfAmerican": {
+              "DataDictionaryName": "BlackAfAmerican",
+              "type": "string",
+              "enum": ["No", "Yes"],
+              "x-hmis-vocabulary": "3.04.1",
+              "x-hmis-values": [
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "CEParticipationStatusEndDate": {
+              "DataDictionaryName": "CEParticipationStatusEndDate",
+              "type": "string",
+              "x-hmis-vocabulary": "2.09.4",
+              "format": "date"
+            },
+            "CEParticipationStatusStartDate": {
+              "DataDictionaryName": "CEParticipationStatusStartDate",
+              "type": "string",
+              "x-hmis-vocabulary": "2.09.3",
+              "format": "date"
+            },
+            "CrisisAssessment": {
+              "DataDictionaryName": "CrisisAssessment",
+              "type": "string",
+              "enum": ["No", "Yes"],
+              "x-hmis-vocabulary": "2.09.A",
+              "x-hmis-values": [
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "DOBDataQuality": {
+              "DataDictionaryName": "DOBDataQuality",
+              "type": "string",
+              "enum": ["Data not collected", "Client prefers not to answer", "Client doesn't know", "Full DOB reported", "Approximate or partial DOB reported"],
+              "x-hmis-vocabulary": "3.03.2",
+              "x-hmis-values": [
+                {
+                  "notation": "99",
+                  "preflabel": "Data not collected"
+                },
+                {
+                  "notation": "9",
+                  "preflabel": "Client prefers not to answer"
+                },
+                {
+                  "notation": "8",
+                  "preflabel": "Client doesn't know"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Full DOB reported"
+                },
+                {
+                  "notation": "2",
+                  "preflabel": "Approximate or partial DOB reported"
+                }
+              ]
+            },
+            "DirectServices": {
+              "DataDictionaryName": "DirectServices",
+              "type": "string",
+              "enum": ["No", "Yes"],
+              "x-hmis-vocabulary": "2.09.A",
+              "x-hmis-values": [
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "GA": {
+              "DataDictionaryName": "GA",
+              "type": "string",
+              "enum": ["Data not collected", "No", "Yes"],
+              "x-hmis-vocabulary": "4.02.12",
+              "x-hmis-values": [
+                {
+                  "notation": "99",
+                  "preflabel": "Data not collected"
+                },
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "HispanicLatinao": {
+              "DataDictionaryName": "HispanicLatinao",
+              "type": "string",
+              "enum": ["No", "Yes"],
+              "x-hmis-vocabulary": "3.04.1",
+              "x-hmis-values": [
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "HousingAssessment": {
+              "DataDictionaryName": "HousingAssessment",
+              "type": "string",
+              "enum": ["Able to maintain the housing they had at project entry", "Moved to a transitional or temporary housing facility or program", "Moved in with family/friends on a temporary basis", "Data not collected", "Moved in with family/friends on a permanent basis", "Client prefers not to answer", "Deceased_HousingAssessmentAtExit", "Client doesn't know", "Client became homeless – moving to a shelter or other place unfit for human habitation", "Moved to new housing unit", "Jail/prison"],
+              "x-hmis-vocabulary": "W5.1",
+              "x-hmis-values": [
+                {
+                  "notation": "1",
+                  "preflabel": "Able to maintain the housing they had at project entry"
+                },
+                {
+                  "notation": "5",
+                  "preflabel": "Moved to a transitional or temporary housing facility or program"
+                },
+                {
+                  "notation": "3",
+                  "preflabel": "Moved in with family/friends on a temporary basis"
+                },
+                {
+                  "notation": "99",
+                  "preflabel": "Data not collected"
+                },
+                {
+                  "notation": "4",
+                  "preflabel": "Moved in with family/friends on a permanent basis"
+                },
+                {
+                  "notation": "9",
+                  "preflabel": "Client prefers not to answer"
+                },
+                {
+                  "notation": "10",
+                  "preflabel": "Deceased_HousingAssessmentAtExit"
+                },
+                {
+                  "notation": "8",
+                  "preflabel": "Client doesn't know"
+                },
+                {
+                  "notation": "6",
+                  "preflabel": "Client became homeless – moving to a shelter or other place unfit for human habitation"
+                },
+                {
+                  "notation": "2",
+                  "preflabel": "Moved to new housing unit"
+                },
+                {
+                  "notation": "7",
+                  "preflabel": "Jail/prison"
+                }
+              ]
+            },
+            "MidEastNAfrican": {
+              "DataDictionaryName": "MidEastNAfrican",
+              "type": "string",
+              "enum": ["No", "Yes"],
+              "x-hmis-vocabulary": "3.04.1",
+              "x-hmis-values": [
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "NameDataQuality": {
+              "DataDictionaryName": "NameDataQuality",
+              "type": "string",
+              "enum": ["Full name reported", "Data not collected", "Client prefers not to answer", "Client doesn't know", "Partial, street name, or code name reported"],
+              "x-hmis-vocabulary": "3.01.5",
+              "x-hmis-values": [
+                {
+                  "notation": "1",
+                  "preflabel": "Full name reported"
+                },
+                {
+                  "notation": "99",
+                  "preflabel": "Data not collected"
+                },
+                {
+                  "notation": "9",
+                  "preflabel": "Client prefers not to answer"
+                },
+                {
+                  "notation": "8",
+                  "preflabel": "Client doesn't know"
+                },
+                {
+                  "notation": "2",
+                  "preflabel": "Partial, street name, or code name reported"
+                }
+              ]
+            },
+            "NativeHIPacific": {
+              "DataDictionaryName": "NativeHIPacific",
+              "type": "string",
+              "enum": ["No", "Yes"],
+              "x-hmis-vocabulary": "3.04.1",
+              "x-hmis-values": [
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "PreventionAssessment": {
+              "DataDictionaryName": "PreventionAssessment",
+              "type": "string",
+              "enum": ["No", "Yes"],
+              "x-hmis-vocabulary": "2.09.A",
+              "x-hmis-values": [
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "PrivateDisability": {
+              "DataDictionaryName": "PrivateDisability",
+              "type": "string",
+              "enum": ["Data not collected", "No", "Yes"],
+              "x-hmis-vocabulary": "4.02.9",
+              "x-hmis-values": [
+                {
+                  "notation": "99",
+                  "preflabel": "Data not collected"
+                },
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "ReceivesReferrals": {
+              "DataDictionaryName": "ReceivesReferrals",
+              "type": "string",
+              "enum": ["No", "Yes"],
+              "x-hmis-vocabulary": "2.09.2",
+              "x-hmis-values": [
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "SSDI": {
+              "DataDictionaryName": "SSDI",
+              "type": "string",
+              "enum": ["Data not collected", "No", "Yes"],
+              "x-hmis-vocabulary": "4.02.6",
+              "x-hmis-values": [
+                {
+                  "notation": "99",
+                  "preflabel": "Data not collected"
+                },
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "SSI": {
+              "DataDictionaryName": "SSI",
+              "type": "string",
+              "enum": ["Data not collected", "No", "Yes"],
+              "x-hmis-vocabulary": "4.02.5",
+              "x-hmis-values": [
+                {
+                  "notation": "99",
+                  "preflabel": "Data not collected"
+                },
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "SSNDataQuality": {
+              "DataDictionaryName": "SSNDataQuality",
+              "type": "string",
+              "enum": ["Data not collected", "Client prefers not to answer", "Client doesn't know", "Full SSN reported", "Approximate or partial SSN reported"],
+              "x-hmis-vocabulary": "3.02.2",
+              "x-hmis-values": [
+                {
+                  "notation": "99",
+                  "preflabel": "Data not collected"
+                },
+                {
+                  "notation": "9",
+                  "preflabel": "Client prefers not to answer"
+                },
+                {
+                  "notation": "8",
+                  "preflabel": "Client doesn't know"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Full SSN reported"
+                },
+                {
+                  "notation": "2",
+                  "preflabel": "Approximate or partial SSN reported"
+                }
+              ]
+            },
+            "Sex": {
+              "DataDictionaryName": "Sex",
+              "type": "string",
+              "enum": ["Data not collected", "Client prefers not to answer", "Client doesn't know", "Male", "Female"],
+              "x-hmis-vocabulary": "4.21.NA",
+              "x-hmis-values": [
+                {
+                  "notation": "99",
+                  "preflabel": "Data not collected"
+                },
+                {
+                  "notation": "9",
+                  "preflabel": "Client prefers not to answer"
+                },
+                {
+                  "notation": "8",
+                  "preflabel": "Client doesn't know"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Male"
+                },
+                {
+                  "notation": "0",
+                  "preflabel": "Female"
+                }
+              ]
+            },
+            "TANF": {
+              "DataDictionaryName": "TANF",
+              "type": "string",
+              "enum": ["Data not collected", "No", "Yes"],
+              "x-hmis-vocabulary": "4.02.11",
+              "x-hmis-values": [
+                {
+                  "notation": "99",
+                  "preflabel": "Data not collected"
+                },
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "Unemployment": {
+              "DataDictionaryName": "Unemployment",
+              "type": "string",
+              "enum": ["Data not collected", "No", "Yes"],
+              "x-hmis-vocabulary": "4.02.4",
+              "x-hmis-values": [
+                {
+                  "notation": "99",
+                  "preflabel": "Data not collected"
+                },
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "VADisabilityNonService": {
+              "DataDictionaryName": "VADisabilityNonService",
+              "type": "string",
+              "enum": ["Data not collected", "No", "Yes"],
+              "x-hmis-vocabulary": "4.02.8",
+              "x-hmis-values": [
+                {
+                  "notation": "99",
+                  "preflabel": "Data not collected"
+                },
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "VADisabilityService": {
+              "DataDictionaryName": "VADisabilityService",
+              "type": "string",
+              "enum": ["Data not collected", "No", "Yes"],
+              "x-hmis-vocabulary": "4.02.7",
+              "x-hmis-values": [
+                {
+                  "notation": "99",
+                  "preflabel": "Data not collected"
+                },
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "White": {
+              "DataDictionaryName": "White",
+              "type": "string",
+              "enum": ["No", "Yes"],
+              "x-hmis-vocabulary": "3.04.1",
+              "x-hmis-values": [
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            },
+            "WorkersComp": {
+              "DataDictionaryName": "WorkersComp",
+              "type": "string",
+              "enum": ["Data not collected", "No", "Yes"],
+              "x-hmis-vocabulary": "4.02.10",
+              "x-hmis-values": [
+                {
+                  "notation": "99",
+                  "preflabel": "Data not collected"
+                },
+                {
+                  "notation": "0",
+                  "preflabel": "No"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Yes"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "description": "Successful response",
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "AccessPoint": {
+                "DataDictionaryName": "AccessPoint",
+                "type": "string",
+                "enum": ["No", "Yes"],
+                "x-hmis-vocabulary": "2.09.1",
+                "x-hmis-values": [
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "AmIndAKNative": {
+                "DataDictionaryName": "AmIndAKNative",
+                "type": "string",
+                "enum": ["No", "Yes"],
+                "x-hmis-vocabulary": "3.04.1",
+                "x-hmis-values": [
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "Asian": {
+                "DataDictionaryName": "Asian",
+                "type": "string",
+                "enum": ["No", "Yes"],
+                "x-hmis-vocabulary": "3.04.1",
+                "x-hmis-values": [
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "AssessmentAnswer": {
+                "DataDictionaryName": "AssessmentAnswer",
+                "type": "string",
+                "x-hmis-vocabulary": "4.19.A"
+              },
+              "AssessmentQuestion": {
+                "DataDictionaryName": "AssessmentQuestion",
+                "type": "string",
+                "x-hmis-vocabulary": "4.19.5"
+              },
+              "AssessmentResult": {
+                "DataDictionaryName": "AssessmentResult",
+                "type": "string",
+                "x-hmis-vocabulary": "4.19.B"
+              },
+              "AssessmentResultType": {
+                "DataDictionaryName": "AssessmentResultType",
+                "type": "string",
+                "x-hmis-vocabulary": "4.19.6"
+              },
+              "BlackAfAmerican": {
+                "DataDictionaryName": "BlackAfAmerican",
+                "type": "string",
+                "enum": ["No", "Yes"],
+                "x-hmis-vocabulary": "3.04.1",
+                "x-hmis-values": [
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "CEParticipationStatusEndDate": {
+                "DataDictionaryName": "CEParticipationStatusEndDate",
+                "type": "string",
+                "x-hmis-vocabulary": "2.09.4",
+                "format": "date"
+              },
+              "CEParticipationStatusStartDate": {
+                "DataDictionaryName": "CEParticipationStatusStartDate",
+                "type": "string",
+                "x-hmis-vocabulary": "2.09.3",
+                "format": "date"
+              },
+              "CrisisAssessment": {
+                "DataDictionaryName": "CrisisAssessment",
+                "type": "string",
+                "enum": ["No", "Yes"],
+                "x-hmis-vocabulary": "2.09.A",
+                "x-hmis-values": [
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "DOBDataQuality": {
+                "DataDictionaryName": "DOBDataQuality",
+                "type": "string",
+                "enum": ["Data not collected", "Client prefers not to answer", "Client doesn't know", "Full DOB reported", "Approximate or partial DOB reported"],
+                "x-hmis-vocabulary": "3.03.2",
+                "x-hmis-values": [
+                  {
+                    "notation": "99",
+                    "preflabel": "Data not collected"
+                  },
+                  {
+                    "notation": "9",
+                    "preflabel": "Client prefers not to answer"
+                  },
+                  {
+                    "notation": "8",
+                    "preflabel": "Client doesn't know"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Full DOB reported"
+                  },
+                  {
+                    "notation": "2",
+                    "preflabel": "Approximate or partial DOB reported"
+                  }
+                ]
+              },
+              "DirectServices": {
+                "DataDictionaryName": "DirectServices",
+                "type": "string",
+                "enum": ["No", "Yes"],
+                "x-hmis-vocabulary": "2.09.A",
+                "x-hmis-values": [
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "Earned": {
+                "DataDictionaryName": "Earned",
+                "type": "string",
+                "enum": ["Data not collected", "No", "Yes"],
+                "x-hmis-vocabulary": "4.02.3",
+                "x-hmis-values": [
+                  {
+                    "notation": "99",
+                    "preflabel": "Data not collected"
+                  },
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "GA": {
+                "DataDictionaryName": "GA",
+                "type": "string",
+                "enum": ["Data not collected", "No", "Yes"],
+                "x-hmis-vocabulary": "4.02.12",
+                "x-hmis-values": [
+                  {
+                    "notation": "99",
+                    "preflabel": "Data not collected"
+                  },
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "HispanicLatinao": {
+                "DataDictionaryName": "HispanicLatinao",
+                "type": "string",
+                "enum": ["No", "Yes"],
+                "x-hmis-vocabulary": "3.04.1",
+                "x-hmis-values": [
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "HousingAssessment": {
+                "DataDictionaryName": "HousingAssessment",
+                "type": "string",
+                "enum": ["Able to maintain the housing they had at project entry", "Moved to a transitional or temporary housing facility or program", "Moved in with family/friends on a temporary basis", "Data not collected", "Moved in with family/friends on a permanent basis", "Client prefers not to answer", "Deceased_HousingAssessmentAtExit", "Client doesn't know", "Client became homeless – moving to a shelter or other place unfit for human habitation", "Moved to new housing unit", "Jail/prison"],
+                "x-hmis-vocabulary": "W5.1",
+                "x-hmis-values": [
+                  {
+                    "notation": "1",
+                    "preflabel": "Able to maintain the housing they had at project entry"
+                  },
+                  {
+                    "notation": "5",
+                    "preflabel": "Moved to a transitional or temporary housing facility or program"
+                  },
+                  {
+                    "notation": "3",
+                    "preflabel": "Moved in with family/friends on a temporary basis"
+                  },
+                  {
+                    "notation": "99",
+                    "preflabel": "Data not collected"
+                  },
+                  {
+                    "notation": "4",
+                    "preflabel": "Moved in with family/friends on a permanent basis"
+                  },
+                  {
+                    "notation": "9",
+                    "preflabel": "Client prefers not to answer"
+                  },
+                  {
+                    "notation": "10",
+                    "preflabel": "Deceased_HousingAssessmentAtExit"
+                  },
+                  {
+                    "notation": "8",
+                    "preflabel": "Client doesn't know"
+                  },
+                  {
+                    "notation": "6",
+                    "preflabel": "Client became homeless – moving to a shelter or other place unfit for human habitation"
+                  },
+                  {
+                    "notation": "2",
+                    "preflabel": "Moved to new housing unit"
+                  },
+                  {
+                    "notation": "7",
+                    "preflabel": "Jail/prison"
+                  }
+                ]
+              },
+              "MidEastNAfrican": {
+                "DataDictionaryName": "MidEastNAfrican",
+                "type": "string",
+                "enum": ["No", "Yes"],
+                "x-hmis-vocabulary": "3.04.1",
+                "x-hmis-values": [
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "NameDataQuality": {
+                "DataDictionaryName": "NameDataQuality",
+                "type": "string",
+                "enum": ["Full name reported", "Data not collected", "Client prefers not to answer", "Client doesn't know", "Partial, street name, or code name reported"],
+                "x-hmis-vocabulary": "3.01.5",
+                "x-hmis-values": [
+                  {
+                    "notation": "1",
+                    "preflabel": "Full name reported"
+                  },
+                  {
+                    "notation": "99",
+                    "preflabel": "Data not collected"
+                  },
+                  {
+                    "notation": "9",
+                    "preflabel": "Client prefers not to answer"
+                  },
+                  {
+                    "notation": "8",
+                    "preflabel": "Client doesn't know"
+                  },
+                  {
+                    "notation": "2",
+                    "preflabel": "Partial, street name, or code name reported"
+                  }
+                ]
+              },
+              "NativeHIPacific": {
+                "DataDictionaryName": "NativeHIPacific",
+                "type": "string",
+                "enum": ["No", "Yes"],
+                "x-hmis-vocabulary": "3.04.1",
+                "x-hmis-values": [
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "PreventionAssessment": {
+                "DataDictionaryName": "PreventionAssessment",
+                "type": "string",
+                "enum": ["No", "Yes"],
+                "x-hmis-vocabulary": "2.09.A",
+                "x-hmis-values": [
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "PrivateDisability": {
+                "DataDictionaryName": "PrivateDisability",
+                "type": "string",
+                "enum": ["Data not collected", "No", "Yes"],
+                "x-hmis-vocabulary": "4.02.9",
+                "x-hmis-values": [
+                  {
+                    "notation": "99",
+                    "preflabel": "Data not collected"
+                  },
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "ReceivesReferrals": {
+                "DataDictionaryName": "ReceivesReferrals",
+                "type": "string",
+                "enum": ["No", "Yes"],
+                "x-hmis-vocabulary": "2.09.2",
+                "x-hmis-values": [
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "SSDI": {
+                "DataDictionaryName": "SSDI",
+                "type": "string",
+                "enum": ["Data not collected", "No", "Yes"],
+                "x-hmis-vocabulary": "4.02.6",
+                "x-hmis-values": [
+                  {
+                    "notation": "99",
+                    "preflabel": "Data not collected"
+                  },
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "SSI": {
+                "DataDictionaryName": "SSI",
+                "type": "string",
+                "enum": ["Data not collected", "No", "Yes"],
+                "x-hmis-vocabulary": "4.02.5",
+                "x-hmis-values": [
+                  {
+                    "notation": "99",
+                    "preflabel": "Data not collected"
+                  },
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "SSNDataQuality": {
+                "DataDictionaryName": "SSNDataQuality",
+                "type": "string",
+                "enum": ["Data not collected", "Client prefers not to answer", "Client doesn't know", "Full SSN reported", "Approximate or partial SSN reported"],
+                "x-hmis-vocabulary": "3.02.2",
+                "x-hmis-values": [
+                  {
+                    "notation": "99",
+                    "preflabel": "Data not collected"
+                  },
+                  {
+                    "notation": "9",
+                    "preflabel": "Client prefers not to answer"
+                  },
+                  {
+                    "notation": "8",
+                    "preflabel": "Client doesn't know"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Full SSN reported"
+                  },
+                  {
+                    "notation": "2",
+                    "preflabel": "Approximate or partial SSN reported"
+                  }
+                ]
+              },
+              "Sex": {
+                "DataDictionaryName": "Sex",
+                "type": "string",
+                "enum": ["Data not collected", "Client prefers not to answer", "Client doesn't know", "Male", "Female"],
+                "x-hmis-vocabulary": "4.21.NA",
+                "x-hmis-values": [
+                  {
+                    "notation": "99",
+                    "preflabel": "Data not collected"
+                  },
+                  {
+                    "notation": "9",
+                    "preflabel": "Client prefers not to answer"
+                  },
+                  {
+                    "notation": "8",
+                    "preflabel": "Client doesn't know"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Male"
+                  },
+                  {
+                    "notation": "0",
+                    "preflabel": "Female"
+                  }
+                ]
+              },
+              "TANF": {
+                "DataDictionaryName": "TANF",
+                "type": "string",
+                "enum": ["Data not collected", "No", "Yes"],
+                "x-hmis-vocabulary": "4.02.11",
+                "x-hmis-values": [
+                  {
+                    "notation": "99",
+                    "preflabel": "Data not collected"
+                  },
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "Unemployment": {
+                "DataDictionaryName": "Unemployment",
+                "type": "string",
+                "enum": ["Data not collected", "No", "Yes"],
+                "x-hmis-vocabulary": "4.02.4",
+                "x-hmis-values": [
+                  {
+                    "notation": "99",
+                    "preflabel": "Data not collected"
+                  },
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "VADisabilityNonService": {
+                "DataDictionaryName": "VADisabilityNonService",
+                "type": "string",
+                "enum": ["Data not collected", "No", "Yes"],
+                "x-hmis-vocabulary": "4.02.8",
+                "x-hmis-values": [
+                  {
+                    "notation": "99",
+                    "preflabel": "Data not collected"
+                  },
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "VADisabilityService": {
+                "DataDictionaryName": "VADisabilityService",
+                "type": "string",
+                "enum": ["Data not collected", "No", "Yes"],
+                "x-hmis-vocabulary": "4.02.7",
+                "x-hmis-values": [
+                  {
+                    "notation": "99",
+                    "preflabel": "Data not collected"
+                  },
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "White": {
+                "DataDictionaryName": "White",
+                "type": "string",
+                "enum": ["No", "Yes"],
+                "x-hmis-vocabulary": "3.04.1",
+                "x-hmis-values": [
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "WorkersComp": {
+                "DataDictionaryName": "WorkersComp",
+                "type": "string",
+                "enum": ["Data not collected", "No", "Yes"],
+                "x-hmis-vocabulary": "4.02.10",
+                "x-hmis-values": [
+                  {
+                    "notation": "99",
+                    "preflabel": "Data not collected"
+                  },
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
