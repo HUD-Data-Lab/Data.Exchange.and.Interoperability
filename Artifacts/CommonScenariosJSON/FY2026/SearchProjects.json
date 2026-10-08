@@ -1,0 +1,453 @@
+{
+  "operationId": "SearchProjects",
+  "requestBody": {
+    "required": true,
+    "content": {
+      "application/json": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "CoCCode": {
+              "DataDictionaryName": "CoCCode",
+              "type": "string",
+              "x-hmis-vocabulary": "2.07.3"
+            },
+            "Funder": {
+              "DataDictionaryName": "Funder",
+              "type": "string",
+              "enum": ["HUD: CoC – Supportive Services Only", "HUD: ESG – Homelessness Prevention", "HUD: HOPWA – Permanent Housing Placement", "HUD: HUD/VASH", "HUD: CoC Builds", "HUD: CoC – Rapid Re-Housing", "HUD: Pay for Success", "N/A", "HUD: CoC – Joint Component TH/RRH", "HUD: Rural Special NOFO", "HUD: HOME (ARP)", "HUD: HOME", "HHS: RHY – Street Outreach Project", "HHS: RHY – Transitional Living Program", "VA: Supportive Services for Veteran Families", "VA: Community Contract Safe Haven Program", "HHS: RHY – Basic Center Program (prevention and shelter)", "HHS: PATH – Street Outreach & Supportive Services Only", "HUD: ESG – RUSH", "HHS: RHY – Maternity Group Home for Pregnant and Parenting Youth", "HUD: ESG – Emergency Shelter (operating and/or essential services)", "HUD: HOPWA – Housing Information", "VA: Grant Per Diem – Service Intensive Transitional Housing", "HUD: HOPWA – Permanent Housing (facility based or TBRA)", "HUD: Public and Indian Housing (PIH) Programs", "HUD: PIH (Emergency Housing Voucher)", "HUD: CoC – Transitional Housing", "HUD: CoC – Safe Haven", "HUD: CoC – Permanent Supportive Housing", "HUD: CoC – Single Room Occupancy (SRO)", "HUD: HOPWA – Short-Term Rent, Mortgage, Utility assistance", "HUD: CoC – Homelessness Prevention (High Performing Comm. Only)", "VA: Grant Per Diem – Hospital to Housing", "Local or Other Funding Source (Please Specify)", "VA: Grant Per Diem – Transition in Place", "HUD: ESG – Rapid Rehousing", "VA: Grant Per Diem – Low Demand", "HUD: Unsheltered Special NOFO", "HUD: HOPWA – Hotel/Motel Vouchers", "HUD: ESG – Street Outreach", "VA: Grant Per Diem – Bridge Housing", "HHS: RHY – Demonstration Project", "VA: Grant Per Diem – Clinical Treatment", "VA: CRS Contract Residential Services", "VA: Grant Per Diem – Case Management/Housing Retention", "HUD: HOPWA – Transitional Housing (facility based or TBRA)", "HUD: HOPWA – Short-Term Supportive Facility", "HUD: CoC – Youth Homeless Demonstration Program (YHDP)"],
+              "x-hmis-vocabulary": "2.06.1",
+              "x-hmis-values": [
+                {
+                  "notation": "4",
+                  "preflabel": "HUD: CoC – Supportive Services Only"
+                },
+                {
+                  "notation": "9",
+                  "preflabel": "HUD: ESG – Homelessness Prevention"
+                },
+                {
+                  "notation": "16",
+                  "preflabel": "HUD: HOPWA – Permanent Housing Placement"
+                },
+                {
+                  "notation": "20",
+                  "preflabel": "HUD: HUD/VASH"
+                },
+                {
+                  "notation": "56",
+                  "preflabel": "HUD: CoC Builds"
+                },
+                {
+                  "notation": "3",
+                  "preflabel": "HUD: CoC – Rapid Re-Housing"
+                },
+                {
+                  "notation": "35",
+                  "preflabel": "HUD: Pay for Success"
+                },
+                {
+                  "notation": "34",
+                  "preflabel": "N/A"
+                },
+                {
+                  "notation": "44",
+                  "preflabel": "HUD: CoC – Joint Component TH/RRH"
+                },
+                {
+                  "notation": "55",
+                  "preflabel": "HUD: Rural Special NOFO"
+                },
+                {
+                  "notation": "51",
+                  "preflabel": "HUD: HOME (ARP)"
+                },
+                {
+                  "notation": "50",
+                  "preflabel": "HUD: HOME"
+                },
+                {
+                  "notation": "25",
+                  "preflabel": "HHS: RHY – Street Outreach Project"
+                },
+                {
+                  "notation": "24",
+                  "preflabel": "HHS: RHY – Transitional Living Program"
+                },
+                {
+                  "notation": "33",
+                  "preflabel": "VA: Supportive Services for Veteran Families"
+                },
+                {
+                  "notation": "30",
+                  "preflabel": "VA: Community Contract Safe Haven Program"
+                },
+                {
+                  "notation": "22",
+                  "preflabel": "HHS: RHY – Basic Center Program (prevention and shelter)"
+                },
+                {
+                  "notation": "21",
+                  "preflabel": "HHS: PATH – Street Outreach & Supportive Services Only"
+                },
+                {
+                  "notation": "53",
+                  "preflabel": "HUD: ESG – RUSH"
+                },
+                {
+                  "notation": "23",
+                  "preflabel": "HHS: RHY – Maternity Group Home for Pregnant and Parenting Youth"
+                },
+                {
+                  "notation": "8",
+                  "preflabel": "HUD: ESG – Emergency Shelter (operating and/or essential services)"
+                },
+                {
+                  "notation": "14",
+                  "preflabel": "HUD: HOPWA – Housing Information"
+                },
+                {
+                  "notation": "41",
+                  "preflabel": "VA: Grant Per Diem – Service Intensive Transitional Housing"
+                },
+                {
+                  "notation": "15",
+                  "preflabel": "HUD: HOPWA – Permanent Housing (facility based or TBRA)"
+                },
+                {
+                  "notation": "36",
+                  "preflabel": "HUD: Public and Indian Housing (PIH) Programs"
+                },
+                {
+                  "notation": "52",
+                  "preflabel": "HUD: PIH (Emergency Housing Voucher)"
+                },
+                {
+                  "notation": "5",
+                  "preflabel": "HUD: CoC – Transitional Housing"
+                },
+                {
+                  "notation": "6",
+                  "preflabel": "HUD: CoC – Safe Haven"
+                },
+                {
+                  "notation": "2",
+                  "preflabel": "HUD: CoC – Permanent Supportive Housing"
+                },
+                {
+                  "notation": "7",
+                  "preflabel": "HUD: CoC – Single Room Occupancy (SRO)"
+                },
+                {
+                  "notation": "17",
+                  "preflabel": "HUD: HOPWA – Short-Term Rent, Mortgage, Utility assistance"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "HUD: CoC – Homelessness Prevention (High Performing Comm. Only)"
+                },
+                {
+                  "notation": "39",
+                  "preflabel": "VA: Grant Per Diem – Hospital to Housing"
+                },
+                {
+                  "notation": "46",
+                  "preflabel": "Local or Other Funding Source (Please Specify)"
+                },
+                {
+                  "notation": "42",
+                  "preflabel": "VA: Grant Per Diem – Transition in Place"
+                },
+                {
+                  "notation": "10",
+                  "preflabel": "HUD: ESG – Rapid Rehousing"
+                },
+                {
+                  "notation": "38",
+                  "preflabel": "VA: Grant Per Diem – Low Demand"
+                },
+                {
+                  "notation": "54",
+                  "preflabel": "HUD: Unsheltered Special NOFO"
+                },
+                {
+                  "notation": "13",
+                  "preflabel": "HUD: HOPWA – Hotel/Motel Vouchers"
+                },
+                {
+                  "notation": "11",
+                  "preflabel": "HUD: ESG – Street Outreach"
+                },
+                {
+                  "notation": "37",
+                  "preflabel": "VA: Grant Per Diem – Bridge Housing"
+                },
+                {
+                  "notation": "26",
+                  "preflabel": "HHS: RHY – Demonstration Project"
+                },
+                {
+                  "notation": "40",
+                  "preflabel": "VA: Grant Per Diem – Clinical Treatment"
+                },
+                {
+                  "notation": "27",
+                  "preflabel": "VA: CRS Contract Residential Services"
+                },
+                {
+                  "notation": "45",
+                  "preflabel": "VA: Grant Per Diem – Case Management/Housing Retention"
+                },
+                {
+                  "notation": "19",
+                  "preflabel": "HUD: HOPWA – Transitional Housing (facility based or TBRA)"
+                },
+                {
+                  "notation": "18",
+                  "preflabel": "HUD: HOPWA – Short-Term Supportive Facility"
+                },
+                {
+                  "notation": "43",
+                  "preflabel": "HUD: CoC – Youth Homeless Demonstration Program (YHDP)"
+                }
+              ]
+            },
+            "OperatingEndDate": {
+              "DataDictionaryName": "OperatingEndDate",
+              "type": "string",
+              "x-hmis-vocabulary": "2.02.4",
+              "format": "date"
+            },
+            "OperatingStartDate": {
+              "DataDictionaryName": "OperatingStartDate",
+              "type": "string",
+              "x-hmis-vocabulary": "2.02.3",
+              "format": "date"
+            },
+            "ProjectType": {
+              "DataDictionaryName": "ProjectType",
+              "type": "string",
+              "enum": ["Day Shelter", "Transitional Housing", "Homelessness Prevention", "PH – Housing Only", "PH – Housing with Services (no disability required for entry)", "Safe Haven_ProjectType", "Street Outreach", "Emergency Shelter – Night-by-Night", "Services Only", "PH – Rapid Re-Housing", "Emergency Shelter – Entry Exit", "Other_ProjectType", "Coordinated Entry", "PH – Permanent Supportive Housing"],
+              "x-hmis-vocabulary": "2.02.6",
+              "x-hmis-values": [
+                {
+                  "notation": "11",
+                  "preflabel": "Day Shelter"
+                },
+                {
+                  "notation": "2",
+                  "preflabel": "Transitional Housing"
+                },
+                {
+                  "notation": "12",
+                  "preflabel": "Homelessness Prevention"
+                },
+                {
+                  "notation": "9",
+                  "preflabel": "PH – Housing Only"
+                },
+                {
+                  "notation": "10",
+                  "preflabel": "PH – Housing with Services (no disability required for entry)"
+                },
+                {
+                  "notation": "8",
+                  "preflabel": "Safe Haven_ProjectType"
+                },
+                {
+                  "notation": "4",
+                  "preflabel": "Street Outreach"
+                },
+                {
+                  "notation": "1",
+                  "preflabel": "Emergency Shelter – Night-by-Night"
+                },
+                {
+                  "notation": "6",
+                  "preflabel": "Services Only"
+                },
+                {
+                  "notation": "13",
+                  "preflabel": "PH – Rapid Re-Housing"
+                },
+                {
+                  "notation": "0",
+                  "preflabel": "Emergency Shelter – Entry Exit"
+                },
+                {
+                  "notation": "7",
+                  "preflabel": "Other_ProjectType"
+                },
+                {
+                  "notation": "14",
+                  "preflabel": "Coordinated Entry"
+                },
+                {
+                  "notation": "3",
+                  "preflabel": "PH – Permanent Supportive Housing"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "description": "Successful response",
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "ContinuumProject": {
+                "DataDictionaryName": "ContinuumProject",
+                "type": "string",
+                "enum": ["No", "Yes"],
+                "x-hmis-vocabulary": "2.02.5",
+                "x-hmis-values": [
+                  {
+                    "notation": "0",
+                    "preflabel": "No"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Yes"
+                  }
+                ]
+              },
+              "HousingType": {
+                "DataDictionaryName": "HousingType",
+                "type": "string",
+                "enum": ["Site-based – clustered / multiple sites", "Site-based – single site", "Tenant-based – scattered site"],
+                "x-hmis-vocabulary": "2.02.D",
+                "x-hmis-values": [
+                  {
+                    "notation": "2",
+                    "preflabel": "Site-based – clustered / multiple sites"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Site-based – single site"
+                  },
+                  {
+                    "notation": "3",
+                    "preflabel": "Tenant-based – scattered site"
+                  }
+                ]
+              },
+              "OperatingEndDate": {
+                "DataDictionaryName": "OperatingEndDate",
+                "type": "string",
+                "x-hmis-vocabulary": "2.02.4",
+                "format": "date"
+              },
+              "OperatingStartDate": {
+                "DataDictionaryName": "OperatingStartDate",
+                "type": "string",
+                "x-hmis-vocabulary": "2.02.3",
+                "format": "date"
+              },
+              "OrganizationID": {
+                "DataDictionaryName": "OrganizationID",
+                "type": "string",
+                "x-hmis-vocabulary": "2.01.1"
+              },
+              "ProjectID": {
+                "DataDictionaryName": "ProjectID",
+                "type": "string",
+                "x-hmis-vocabulary": "2.02.1"
+              },
+              "ProjectName": {
+                "DataDictionaryName": "ProjectName",
+                "type": "string",
+                "x-hmis-vocabulary": "2.02.2"
+              },
+              "ProjectType": {
+                "DataDictionaryName": "ProjectType",
+                "type": "string",
+                "enum": ["Day Shelter", "Transitional Housing", "Homelessness Prevention", "PH – Housing Only", "PH – Housing with Services (no disability required for entry)", "Safe Haven_ProjectType", "Street Outreach", "Emergency Shelter – Night-by-Night", "Services Only", "PH – Rapid Re-Housing", "Emergency Shelter – Entry Exit", "Other_ProjectType", "Coordinated Entry", "PH – Permanent Supportive Housing"],
+                "x-hmis-vocabulary": "2.02.6",
+                "x-hmis-values": [
+                  {
+                    "notation": "11",
+                    "preflabel": "Day Shelter"
+                  },
+                  {
+                    "notation": "2",
+                    "preflabel": "Transitional Housing"
+                  },
+                  {
+                    "notation": "12",
+                    "preflabel": "Homelessness Prevention"
+                  },
+                  {
+                    "notation": "9",
+                    "preflabel": "PH – Housing Only"
+                  },
+                  {
+                    "notation": "10",
+                    "preflabel": "PH – Housing with Services (no disability required for entry)"
+                  },
+                  {
+                    "notation": "8",
+                    "preflabel": "Safe Haven_ProjectType"
+                  },
+                  {
+                    "notation": "4",
+                    "preflabel": "Street Outreach"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "Emergency Shelter – Night-by-Night"
+                  },
+                  {
+                    "notation": "6",
+                    "preflabel": "Services Only"
+                  },
+                  {
+                    "notation": "13",
+                    "preflabel": "PH – Rapid Re-Housing"
+                  },
+                  {
+                    "notation": "0",
+                    "preflabel": "Emergency Shelter – Entry Exit"
+                  },
+                  {
+                    "notation": "7",
+                    "preflabel": "Other_ProjectType"
+                  },
+                  {
+                    "notation": "14",
+                    "preflabel": "Coordinated Entry"
+                  },
+                  {
+                    "notation": "3",
+                    "preflabel": "PH – Permanent Supportive Housing"
+                  }
+                ]
+              },
+              "RRHSubType": {
+                "DataDictionaryName": "RRHSubType",
+                "type": "string",
+                "enum": ["RRH: Housing with or without services", "RRH: Services Only"],
+                "x-hmis-vocabulary": "2.02.A",
+                "x-hmis-values": [
+                  {
+                    "notation": "2",
+                    "preflabel": "RRH: Housing with or without services"
+                  },
+                  {
+                    "notation": "1",
+                    "preflabel": "RRH: Services Only"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
