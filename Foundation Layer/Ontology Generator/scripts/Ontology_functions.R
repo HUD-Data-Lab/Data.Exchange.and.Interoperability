@@ -196,3 +196,34 @@ generate_openapi <- function(ttl_file, output_file) {
 
 
 
+
+# Functions for data elements that appear in more than one CSV table ----
+
+# One rdfs:domain line. A field used by several classes (e.g. PersonalID in Client and
+# Enrollment) gets a single union domain: several rdfs:domain statements would be read
+# by OWL as an intersection, i.e. "every subject is both a Client and an Enrollment".
+ttl_domain <- function(classes) {
+  classes <- unique(ttl_local(classes[!is_blank(classes)]))
+  if (length(classes) == 0) return(character(0))
+  if (length(classes) == 1) return(paste0("  rdfs:domain hmis:", classes, " ;"))
+  paste0("  rdfs:domain [ a owl:Class ; owl:unionOf ( ",
+         paste0("hmis:", classes, collapse = " "), " ) ] ;")
+}
+
+# One annotation line holding every distinct non-blank value.
+ttl_annotation <- function(predicate, values) {
+  values <- unique(trimws(nb2sp(as.character(values))))
+  values <- values[!is_blank(values)]
+  if (length(values) == 0) return(character(0))
+  paste0("  ", predicate, " ", paste(ttl_lit(values), collapse = " , "), " ;")
+}
+
+# Collapse rows that share a Name into one row, keeping first-appearance order.
+collapse_by_name <- function(df) {
+  df %>%
+    mutate(.row = row_number(), Name = trimws(Name)) %>%
+    group_by(Name) %>%
+    summarise(.row = min(.row), across(-.row, ~ list(.x)), .groups = "drop") %>%
+    arrange(.row) %>%
+    select(-.row)
+}

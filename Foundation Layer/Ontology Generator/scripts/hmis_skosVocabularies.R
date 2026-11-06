@@ -3,7 +3,8 @@ skos_concepts2 <- skos_concepts %>%
   mutate(across(everything(), ~ nb2sp(as.character(.x))))
 
 skos_conceptScheme2 <- skos_conceptScheme %>% 
-  mutate(across(everything(), ~ nb2sp(as.character(.x))))
+  mutate(across(everything(), ~ nb2sp(as.character(.x)))) %>%
+  distinct() # some schemes (e.g. list_TargetPopulation) are listed twice in the spreadsheet
 
 
 skosClasses <- {
@@ -32,7 +33,7 @@ skosConceptScheme <- skos_conceptScheme2 %>%
     lines <- c(
       paste0(subj, " a skos:ConceptScheme ;"),
       paste0("  skos:prefLabel ", ttl_lit(PrefLabel), "@en ;"),
-      paste0("  hmis:csvList ", ttl_lit(CSVList), "@en ;")
+      paste0("  hmis:csvList ", ttl_lit(CSVList), " ;")
       
     )
     
@@ -54,7 +55,9 @@ skosConcept <- skos_concepts2 %>%
       paste0(subj, " a skos:Concept ;"),
       paste0("  skos:prefLabel ", ttl_lit(PrefLabel), "@en ;"),
       paste0("  skos:altLabel ", ttl_lit(AltLabel), "@en ;"),
-      paste0("  skos:notation ", ttl_lit(Notation), "^^xsd:integer ;"),
+      # Type the code as an integer only when it is one; codes such as "459GE" stay plain strings.
+      paste0("  skos:notation ", ttl_lit(Notation),
+             if (grepl("^-?[0-9]+$", trimws(Notation))) "^^xsd:integer" else "", " ;"),
       paste0("  skos:inScheme hmis:", Scheme, " ;")
     )
     

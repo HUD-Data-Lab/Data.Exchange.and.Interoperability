@@ -38,22 +38,10 @@ classes <- core_classes2 %>%
       )
     }
     
-    # owl:disjointWith (comma-separated list)
-    if (!is_blank(`Disjoint With`)) {
-      
-      disjoints <- str_split(`Disjoint With`, ",")[[1]] |>
-        str_trim() |>
-        ttl_local()
-      
-      disjoint_line <- paste0(
-        "  owl:disjointWith ",
-        paste(paste0("hmis:", disjoints), collapse = " ,\n                   "),
-        " ;"
-      )
-      
-      lines <- c(lines, disjoint_line)
-    }
-    
+    # owl:disjointWith is no longer generated. The pairwise axioms grew as O(N^2),
+    # and ICF agreed they solve no current problem. The "Disjoint With" column
+    # in SkosVocabulary.xlsx is now ignored.
+
     # Replace final ";" with "."
     lines[length(lines)] <- sub(";\\s*$", ".", lines[length(lines)])
     
@@ -86,13 +74,13 @@ coreClassObjProps <- class_relationships %>%
       lines <- c(lines, paste0("  rdfs:range hmis:", Range, " ;"))
     
     if (!is.na(label) && label != "")
-      lines <- c(lines, paste0("  rdfs:label \"", label, "\"@en ;"))
+      lines <- c(lines, paste0("  rdfs:label ", ttl_lit(label), "@en ;"))
     
     if (!is.na(comment) && comment != "")
-      lines <- c(lines, paste0("  rdfs:comment \"", comment, "\"@en ;"))
+      lines <- c(lines, paste0("  rdfs:comment ", ttl_lit(comment), "@en ;"))
     
     # Force final predicate to end with "."
-    last <- sub(";\\s*$", ".", trimws(lines[length(lines)]))
+    last <- sub(";\\s*$", ".", sub("\\s+$", "", lines[length(lines)]))
     body <- c(lines[-length(lines)], last)
     
     paste0(paste(body, collapse = "\n"), "\n")

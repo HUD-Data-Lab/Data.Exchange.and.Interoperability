@@ -11,7 +11,7 @@ It is intended to support Continuums of Care (CoCs) in implementing data exchang
 
 ## Supporting Resources
 These resources are to support the conformance to the HMIS Data Exchange and Interoperability Guidelines. 
-- HMIS Ontology: [HMIS Ontology](https://raw.githubusercontent.com/HUD-Data-Lab/Data.Exchange.and.Interoperability/refs/heads/main/Artifacts/Ontology/Output_v1.3.0-beta/hmisDataExchange_ontologyv1.3.0-beta.ttl)
+- HMIS Ontology: [HMIS Ontology](https://raw.githubusercontent.com/HUD-Data-Lab/Data.Exchange.and.Interoperability/refs/heads/main/Artifacts/Ontology/Output_v1.4.0-beta/hmis_ontologyv1.4.0-beta.ttl) ([recommendations for this version](Artifacts/Ontology/Output_v1.4.0-beta/RECOMMENDATIONS.md))
 - JSON representation of the request and response pairings of the common scenarios: [Common Scenarios](https://github.com/HUD-Data-Lab/Data.Exchange.and.Interoperability/tree/main/Artifacts/CommonScenariosJSON/FY2026)
 
 

@@ -10,7 +10,11 @@ source("Foundation Layer/Ontology Generator/scripts/Ontology_functions.R")
 # Step 2: ----
 # Set the ontology IRI and load the data used to create the ontology
 
-HMIS <- "http://www.semanticweb.org/ontologies/hmis#" #This will be the IRI for the ontology
+HMIS <- "urn:hud:hmis#" #Namespace for HMIS terms. A URN needs no web host; the versionIRI below gives the file location.
+ontology_version <- "v1.4.0-beta" #format for version numbering is: "v[major].[minor].[patch]" [-beta] is only used for the initial development of v1.0.0
+prior_version <- "v1.3.0-beta"
+repo_ontology_url <- "https://raw.githubusercontent.com/HUD-Data-Lab/Data.Exchange.and.Interoperability/main/Artifacts/Ontology" #raw URL, so owl:imports and versionIRI resolve to Turtle rather than a GitHub HTML page
+version_iri <- function(file_stem, version) paste0(repo_ontology_url, "/Output_", version, "/", file_stem, version, ".ttl")
 
 core_classes <- read_xlsx("Foundation Layer/Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 2)
 class_relationships <- read_xlsx("Foundation Layer/Ontology Generator/datasource/SkosVocabulary.xlsx", sheet = 3)
@@ -37,7 +41,10 @@ ttl_header <- c(
   "@prefix dct: <http://purl.org/dc/terms/> .",
   paste0("@base <", HMIS, "> ."),
   "",
-  "<http://www.semanticweb.org/61084/ontologies/2026/2/hmis> rdf:type owl:Ontology ;",
+  "<urn:hud:hmis> rdf:type owl:Ontology ;",
+  paste0("  owl:versionIRI <", version_iri("hmis_ontology", ontology_version), "> ;"),
+  paste0("  owl:priorVersion <", version_iri("hmis_ontology", prior_version), "> ;"),
+  paste0("  owl:versionInfo \"", ontology_version, "\" ;"),
   "  dct:description \"Ontology representing HMIS data standards.\"@en ;" ,
   "  dct:title \"HMIS Ontology\"@en ;", 
   "  rdfs:seeAlso <https://www.hudexchange.info/resource/3824/hmis-data-dictionary/> .",
@@ -49,11 +56,11 @@ source("Foundation Layer/Ontology Generator/scripts/hmis_coreClasses_generator.R
 source("Foundation Layer/Ontology Generator/scripts/hmis_dataProperty_generator.R")
 source("Foundation Layer/Ontology Generator/scripts/hmis_objectProperty_generator.R")
 source("Foundation Layer/Ontology Generator/scripts/hmis_skosVocabularies.R")
+source("Foundation Layer/Ontology Generator/scripts/hmis_annotationProperties.R")
 
 #Step 4 ----
 #Generate the ontology files
 {
-ontology_version <- "v1.3.0-beta" #format for version numbering is: "v[major].[minor].[patch]" [-beta] is only used for the initial development of v1.0.0
 date_Foldertag <- format(Sys.time(), "%Y%m%d_%H%M%S") #or "%Y%m%d" for just the date no time
 date_Filetag <- format(Sys.time(), "%m%dT%H%M_%S") #or "%Y%m%d" for just the date no time
 dated_dir <- file.path("Foundation Layer/Ontology Generator/output", paste0("Output_", date_Foldertag))
@@ -78,13 +85,13 @@ writeLines(c(ttl_header, dataProp, objProp),
            file.path(dated_dir,paste0("hmis_dataPropertiesObjectProperties",date_Filetag,".ttl")), useBytes = TRUE)
 
 #Full RDF/OWL of HMIS Ontology
-writeLines(c(ttl_header,classes,coreClassObjProps, skosConceptScheme,skosConcept,dataProp,objProp),
+writeLines(c(ttl_header,annotationProps,classes,coreClassObjProps, skosConceptScheme,skosConcept,dataProp,objProp),
            file.path(dated_dir,paste0("hmis_ontology",date_Filetag,".ttl")), useBytes = TRUE)
 }
 
 #Create the ontology file that the Translation Layer will use
 {
-  writeLines(c(ttl_header,classes,coreClassObjProps, skosConceptScheme,skosConcept,dataProp,objProp),
+  writeLines(c(ttl_header,annotationProps,classes,coreClassObjProps, skosConceptScheme,skosConcept,dataProp,objProp),
              file.path(Final_Ontology,paste0("hmis_ontology",ontology_version,".ttl")), useBytes = TRUE)
 }
 

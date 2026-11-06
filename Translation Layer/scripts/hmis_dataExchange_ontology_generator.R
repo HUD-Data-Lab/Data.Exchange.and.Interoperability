@@ -6,15 +6,20 @@ library(readxl)
 library(dplyr)
 library(stringr)
 
+# Build the core HMIS ontology first. This also loads the helper functions
+# (ttl_lit, ttl_local), the HMIS namespace, ontology_version and Final_Ontology.
+source("Foundation Layer/Ontology Generator/scripts/hmis_ontology_generator.R")
+
 # Set up ----
 
 input_file <- paste0("Translation Layer/datasource/", "DataExchangeScenarioOntology.xlsx")
-output_file <- paste0("Translation Layer/outputs/", "DataExchangeOntology_v9.0.0.ttl")
+output_file <- paste0("Translation Layer/outputs/", "DataExchangeOntology_", ontology_version, ".ttl")
+dir.create("Translation Layer/outputs", recursive = TRUE, showWarnings = FALSE)
 
 # Namespace IRI ----
 # This must match the namespace used by the core HMIS ontology.
-dtaexchng_namespace <- paste0("http://www.semanticweb.org/","ontologies/hmis/de#")
-hmis_namespace <- paste0( "http://www.semanticweb.org/","ontologies/hmis#")
+dtaexchng_namespace <- "urn:hud:hmis:de#"
+hmis_namespace <- HMIS
 rdf_namespace <- paste0("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 rdfs_namespace <- paste0("http://www.w3.org/2000/01/rdf-schema#")
 owl_namespace <- paste0("http://www.w3.org/2002/07/owl#")
@@ -82,10 +87,19 @@ ttl_header_DataExchange <- c(
   "@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .",
   "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .",
   "@prefix owl:  <http://www.w3.org/2002/07/owl#> .",
-  paste0("@prefix de: <", dtaexchng_namespace, "> .")
+  "@prefix dct: <http://purl.org/dc/terms/> .",
+  paste0("@prefix de: <", dtaexchng_namespace, "> ."),
+  "",
+  # The data exchange module imports the core ontology rather than copying it,
+  # so the two files cannot drift apart.
+  "<urn:hud:hmis:de> rdf:type owl:Ontology ;",
+  paste0("  owl:imports <", version_iri("hmis_ontology", ontology_version), "> ;"),
+  paste0("  owl:versionIRI <", version_iri("hmisDataExchange_ontology", ontology_version), "> ;"),
+  paste0("  owl:priorVersion <", version_iri("hmisDataExchange_ontology", prior_version), "> ;"),
+  paste0("  owl:versionInfo \"", ontology_version, "\" ;"),
+  "  dct:title \"HMIS Data Exchange Scenarios\"@en ;",
+  "  dct:description \"Data exchange test scenarios that reference the HMIS Ontology data elements.\"@en ."
 )
-
-ttl_headerDataExchangePrefix <- paste0("@prefix de: <", dtaexchng_namespace, "> .")
 
 #Set the core classes
 deCoreClasses <- c(
@@ -98,13 +112,18 @@ deCoreClasses <- c(
 deAnnotProp <- 
   c(
     "de:httpMethod",
-    paste0("  rdf:type owl:AnnotationProperty ."),
+    "  rdf:type owl:AnnotationProperty ;",
+    "  rdfs:label \"HTTP method\"@en .",
     "",
     "de:requestElement",
-    paste0("  rdf:type owl:AnnotationProperty ."),
+    "  rdf:type owl:AnnotationProperty ;",
+    "  rdfs:label \"request element\"@en ;",
+    "  rdfs:comment \"An HMIS data element sent in the scenario's request.\"@en .",
     "",
     "de:responseElement",
-    paste0("  rdf:type owl:AnnotationProperty ."),
+    "  rdf:type owl:AnnotationProperty ;",
+    "  rdfs:label \"response element\"@en ;",
+    "  rdfs:comment \"An HMIS data element returned in the scenario's response.\"@en .",
     ""
     )
 
@@ -136,99 +155,38 @@ ScenarioSubClasses <- lapply(
       "Response"
     )
     
+    selected_elements <- function(column) {
+      if (!column %in% names(ElementMapping)) {
+        warning("Scenario '", scenario_name, "' has no column '", column, "' in ElementMapping")
+        return(character(0))
+      }
+      ElementMapping %>%
+        filter(vapply(.data[[column]], is_selected, logical(1))) %>%
+        pull(dataExchangeOntologyName) %>%
+        unique()
+    }
+
+    element_group <- function(predicate, elements) {
+      if (length(elements) == 0) return(NULL)
+      paste0(
+        "    ", predicate, "\n",
+        paste0("        hmis:", ttl_local(elements), collapse = " ,\n")
+      )
+    }
+
+    groups <- c(
+      "    rdf:type owl:Class",
+      "    rdfs:subClassOf de:Scenario",
+      paste0("    de:httpMethod ", ttl_lit(scenario_method)),
+      element_group("de:requestElement", selected_elements(request_column)),
+      element_group("de:responseElement", selected_elements(response_column))
+    )
+
     lines <- c(
       scenario_class,
-      "    rdf:type owl:Class ;",
-      "    rdfs:subClassOf de:Scenario ;",
-      paste0(
-        "    de:httpMethod ",
-        ttl_lit(scenario_method),
-        " ;"
-      )
+      paste0(paste(groups, collapse = " ;\n"), " .")
     )
-    
-    # Request elements
-    if (request_column %in% names(ElementMapping)) {
-      
-      request_elements <- ElementMapping %>%
-        filter(
-          vapply(
-            .data[[request_column]],
-            is_selected,
-            logical(1)
-          )
-        ) %>%
-        pull(dataExchangeOntologyName) %>%
-        unique()
-      
-      if (length(request_elements) > 0) {
-        
-        lines <- c(
-          lines,
-          "    de:requestElement"
-        )
-        
-        for (j in seq_along(request_elements)) {
-          
-          suffix <- ifelse(
-            j == length(request_elements),
-            " ;",
-            " ,"
-          )
-          
-          lines <- c(
-            lines,
-            paste0(
-              "        hmis:",
-              ttl_local(request_elements[j]),
-              suffix
-            )
-          )
-        }
-      }
-    }
-    
-    # Response elements
-    if (response_column %in% names(ElementMapping)) {
-      
-      response_elements <- ElementMapping %>%
-        filter(
-          vapply(
-            .data[[response_column]],
-            is_selected,
-            logical(1)
-          )
-        ) %>%
-        pull(dataExchangeOntologyName) %>%
-        unique()
-      
-      if (length(response_elements) > 0) {
-        
-        lines <- c(
-          lines,
-          "    de:responseElement"
-        )
-        
-        for (j in seq_along(response_elements)) {
-          
-          suffix <- ifelse(
-            j == length(response_elements),
-            " .",
-            " ,"
-          )
-          
-          lines <- c(
-            lines,
-            paste0(
-              "        hmis:",
-              ttl_local(response_elements[j]),
-              suffix
-            )
-          )
-        }
-      }
-    }
-    
+
     c(lines, "")
   }
 ) %>%
@@ -238,13 +196,8 @@ ScenarioSubClasses <- lapply(
 writeLines(c(ttl_header_DataExchange,deCoreClasses,deAnnotProp,ScenarioSubClasses),
            file.path(output_file),useBytes = TRUE) 
 
-## Combine with the main ontology turtle file ----
-source("Foundation Layer/Ontology Generator/scripts/hmis_ontology_generator.R")
-
-writeLines(c(ttl_header,ttl_headerDataExchangePrefix, classes,coreClassObjProps, skosConceptScheme,skosConcept,dataProp,objProp,
-             deCoreClasses,deAnnotProp,ScenarioSubClasses),
-           file.path(Final_Ontology,paste0("hmisDataExchange_ontology",ontology_version,".ttl")), useBytes = TRUE)
-
-
-
-
+## The scenarios are no longer published in Artifacts/Ontology ----
+# API test scenarios describe service behavior, not the meaning of HMIS data, so they
+# are kept out of the ontology release. The module above stays in Translation Layer/outputs
+# as working material until the scenarios move to OpenAPI + JSON-LD (see
+# Artifacts/Ontology/Output_v1.4.0-beta/RECOMMENDATIONS.md).
