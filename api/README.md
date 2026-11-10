@@ -55,6 +55,8 @@ HMIS_API_BASE_URL=https://hmis.example.org/hmis/v1 npm test   # against a real i
 $env:HMIS_API_BASE_URL = "https://hmis.example.org/hmis/v1"; npm test   # against a real implementation (PowerShell)
 ```
 
-`npm test` runs `run-tests.mjs`, which lints the OpenAPI and Arazzo files, then uses Portman to build a Postman collection from the OpenAPI description, with a contract test for each operation: 2xx status, JSON content type, JSON body, and response schema. Newman then runs that collection. JUnit results are written to `build/newman-results.xml`. CI runs the same script on Linux, macOS and Windows from `.github/workflows/api-tests.yml`.
+`npm test` runs `run-tests.mjs`, which lints the OpenAPI and Arazzo files and runs `check-ontology.mjs`, then uses Portman to build a Postman collection from the OpenAPI description, with a contract test for each operation: 2xx status, JSON content type, JSON body, and response schema. Newman then runs that collection. JUnit results are written to `build/newman-results.xml`. CI runs the same script on Linux, macOS and Windows from `.github/workflows/api-tests.yml`.
+
+`check-ontology.mjs` (also `npm run check-ontology`) keeps the API and `FY26_HMIS_Logic_Model.ttl` from drifting apart. It fails if a field's JSON-LD term is not a property the ontology declares (unless the field is listed in `x-hmis-unmapped-fields`), if a listed field has since been added to the ontology, if a term's `@type` is not one of the property's `rdfs:range` values, or if the field's `x-hmis-vocabulary` data element number is not among the property's `dcterms:identifier` values. CI also runs the tests when the ontology file changes.
 
 Not yet covered: security schemes and 4xx responses, which the stricter Redocly `recommended` ruleset flags.

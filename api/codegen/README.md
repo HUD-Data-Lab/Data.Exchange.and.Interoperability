@@ -206,7 +206,7 @@ The contract tests are separate. They live in [`../tests/`](../tests/) and run f
 ## Best practices
 
 1. **Edit the description, never the output.** Anything in `build/` is overwritten on the next run.
-2. **Keep the JSON-LD contexts in step with the schemas.** Every field should have a context term that maps to a property declared in the ontology.
+2. **Keep the JSON-LD contexts in step with the schemas and the ontology.** Every field needs a context term that maps to a property declared in the ontology, with a matching `@type` and data element number. `npm test` in [`../tests/`](../tests/) enforces this with `check-ontology.mjs`.
 3. **Version the ontology.** Its version is `owl:versionInfo` in `FY26_HMIS_Logic_Model.ttl`.
 4. **Pin tool versions.** The npm tools are pinned in `package.json` and `package-lock.json`, and OpenAPI Generator in `openapitools.json`.
 

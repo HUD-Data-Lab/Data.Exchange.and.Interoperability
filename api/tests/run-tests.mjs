@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // Contract-test the HMIS Data Exchange API with Newman.
 //
-// 1. Lint the OpenAPI description and the Arazzo workflows.
+// 1. Lint the OpenAPI description and the Arazzo workflows, and check that the API's JSON-LD
+//    mappings agree with the ontology (check-ontology.mjs).
 // 2. Build a Postman collection from the OpenAPI description with Portman, adding a
 //    contract test per operation (status, content type, JSON body, response schema).
 // 3. Run that collection with Newman.
@@ -51,14 +52,23 @@ function run(pkg, name, args) {
 const lint = () =>
   run("@redocly/cli", "redocly", ["lint", "--config", join("..", "redocly.yaml"), spec, ...workflows]);
 
+// Fails if the API's JSON-LD mappings and the ontology have drifted apart (see check-ontology.mjs).
+function checkOntology() {
+  const { status, error } = spawnSync(process.execPath, [join(here, "check-ontology.mjs")], { stdio: "inherit" });
+  if (error) throw error;
+  if (status !== 0) process.exit(status ?? 1);
+}
+
 mkdirSync("build", { recursive: true });
 
 if (process.argv.includes("--lint-only")) {
   lint();
+  checkOntology();
   process.exit(0);
 }
 
 lint();
+checkOntology();
 run("@apideck/portman", "portman", [
   "--local", spec,
   "--portmanConfigFile", "portman-config.json",

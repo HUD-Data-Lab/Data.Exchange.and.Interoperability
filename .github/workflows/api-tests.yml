@@ -4,10 +4,12 @@ on:
   push:
     paths:
       - "api/**"
+      - "FY26_HMIS_Logic_Model.ttl"
       - ".github/workflows/api-tests.yml"
   pull_request:
     paths:
       - "api/**"
+      - "FY26_HMIS_Logic_Model.ttl"
       - ".github/workflows/api-tests.yml"
 
 jobs:

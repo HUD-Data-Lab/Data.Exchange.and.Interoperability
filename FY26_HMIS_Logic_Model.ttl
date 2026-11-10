@@ -3,6 +3,7 @@
 # (RDF/XML), with proposed changes taken from the v1.3.0-beta ontology:
 #   - 2.06.3 StartDate and 2.06.4 EndDate moved from the HUD_HMIS.xsd namespace into this one.
 #   - Everything else added is in the section "Proposed additions from v1.3.0-beta" at the end of this file.
+#   - Data element numbers from the FY2026 HMIS CSV specification, in the last section of this file.
 
 @prefix : <urn:hud:hmis:owl#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
@@ -8047,3 +8048,42 @@ xsd:dateTime a rdfs:Datatype .
 :Export dcterms:description "Describes one HMIS CSV export: its source, reporting period and export parameters (Export.csv)." .
 :ServiceFAReferral dcterms:description "Services, financial assistance and referrals provided during an enrollment, exported in Services.csv." .
 :VASHExitReason dcterms:description "Contains data for element V9 HUD-VASH Exit Information, exported in Exit.csv." .
+
+# --- Data element numbers from the FY2026 HMIS CSV specification ---------------
+# The API (api/hmis-api.openapi.yaml, x-hmis-vocabulary) cites each field's data element
+# number as given in HUD's FY2026 CSV specification. Where this ontology lacked that
+# number, it is added below as another dcterms:identifier; existing identifiers are kept.
+# A field used in several data elements (CoCCode in ProjectCoC.csv and Inventory.csv, for
+# example) can carry several numbers. api/tests/check-ontology.mjs fails if they drift.
+
+:CoCCode dcterms:identifier "2.07.3" .
+:DisablingCondition dcterms:identifier "3.08" .
+:EmailSocialMedia dcterms:identifier "R20.A" .
+:ExportID dcterms:identifier "FW.5" .
+:FAAmount dcterms:identifier "V3.2" .
+:FAStartDate dcterms:identifier "V3.1" .
+:FamilyCounseling dcterms:identifier "R18.A" .
+:GroupCounseling dcterms:identifier "R18.A" .
+:HouseholdID dcterms:identifier "5.09.1" .
+:HousingAssessment dcterms:identifier "W5.1" .
+:InPersonGroup dcterms:identifier "R20.A" .
+:InPersonIndividual dcterms:identifier "R20.A" .
+:IndividualCounseling dcterms:identifier "R18.A" .
+:InformationDate dcterms:identifier "C3.1" .
+:LOSUnderThreshold dcterms:identifier "3.917.2 B" .
+:LaborExploitPastThreeMonths dcterms:identifier "R16.B" .
+:LeaseOwn60Day dcterms:identifier "4.12.E" .
+:OrganizationID dcterms:identifier "2.01.1" .
+:OtherInsuranceIdentify dcterms:identifier "4.04.12A" .
+:OtherTypeProvided dcterms:identifier "V8.A" .
+:PreviousStreetESSH dcterms:identifier "3.917.2 C" .
+:ProjectID dcterms:identifier "2.02.1" .
+:RaceNone dcterms:identifier "3.04.1" .
+:ReferralOutcome dcterms:identifier "P2" .
+:SubTypeProvided dcterms:identifier "V2.C" .
+:SubsidyInformation dcterms:identifier "W5.B" .
+:Telephone dcterms:identifier "R20.A" .
+:UserID dcterms:identifier "5.07" .
+
+# BedInventory (2.07.14) had no rdfs:range; every other bed and unit count uses xsd:nonNegativeInteger.
+:BedInventory rdfs:range xsd:nonNegativeInteger .
