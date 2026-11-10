@@ -11,7 +11,7 @@ It is intended to support Continuums of Care (CoCs) in implementing data exchang
 
 ## Supporting Resources
 These resources are to support the conformance to the HMIS Data Exchange and Interoperability Guidelines. 
-- HMIS Ontology: [HMIS Ontology](FY26_HMIS_Logic_Model.ttl) (recommendations for this version)
+- HMIS Ontology: [HMIS Ontology](FY26_HMIS_Logic_Model.ttl) ([recommendations for this version](doc/RECOMMENDATIONS.md))
 - OpenAPI definition of the request and response pairings of the common scenarios: [Common Scenarios](api/) ([scenario list](api/DataExchangeScenarioList.xlsx))
 
 
