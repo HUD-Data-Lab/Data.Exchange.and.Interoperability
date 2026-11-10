@@ -8,7 +8,7 @@
 //      unless the schema lists the field in x-hmis-unmapped-fields. A listed field must not be
 //      declared, so the list cannot go stale;
 //   4. if the term has an @type, use one of the property's rdfs:range values;
-//   5. cite in x-hmis-vocabulary a data element number the property has as dcterms:identifier.
+//   5. cite in x-hmis-vocabulary, as a string, a data element number the property has as dcterms:identifier.
 //
 // Usage: node check-ontology.mjs [path/to/ontology.ttl] [path/to/openapi.yaml]
 // Exits 1 and lists every problem if any check fails.
@@ -143,7 +143,9 @@ for (const [name, schema] of Object.entries(schemas)) {
     let fieldSchema = resolve(props[field]);
     if (fieldSchema.type === "array" && fieldSchema.items) fieldSchema = resolve(fieldSchema.items);
     const element = fieldSchema["x-hmis-vocabulary"];
-    if (element !== undefined) {
+    if (element !== undefined && typeof element !== "string") {
+      errors.push(`${name}.${field}: x-hmis-vocabulary ${element} must be a string (quote it in the YAML)`);
+    } else if (element !== undefined) {
       const ids = identifiers.get(term.iri) ?? new Set();
       if (!ids.has(String(element))) {
         const known = ids.size ? [...ids].join(", ") : "none";

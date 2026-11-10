@@ -3784,7 +3784,7 @@ components:
       - Client prefers not to answer
       - 'Yes'
       - Client doesn't know
-      x-hmis-vocabulary: 3.08
+      x-hmis-vocabulary: '3.08'
       x-hmis-values:
       - notation: '99'
         preflabel: Data not collected
@@ -4149,16 +4149,16 @@ components:
     FAAmount:
       x-hmis-dataDictionaryName: FAAmount
       type: number
-      x-hmis-vocabulary: V3.2
+      x-hmis-vocabulary: V3.3
     FAEndDate:
       x-hmis-dataDictionaryName: FAEndDate
       type: string
-      x-hmis-vocabulary: V3.4
+      x-hmis-vocabulary: V3.5
       format: date
     FAStartDate:
       x-hmis-dataDictionaryName: FAStartDate
       type: string
-      x-hmis-vocabulary: V3.1
+      x-hmis-vocabulary: V3.2
       format: date
     FamilyCounseling:
       x-hmis-dataDictionaryName: FamilyCounseling
@@ -4880,7 +4880,7 @@ components:
       - Data not collected
       - 'No'
       - 'Yes'
-      x-hmis-vocabulary: 3.917.2 B
+      x-hmis-vocabulary: 3.917.2B
       x-hmis-values:
       - notation: '99'
         preflabel: Data not collected
@@ -6093,7 +6093,7 @@ components:
       - Data not collected
       - 'No'
       - 'Yes'
-      x-hmis-vocabulary: 3.917.2 C
+      x-hmis-vocabulary: 3.917.2C
       x-hmis-values:
       - notation: '99'
         preflabel: Data not collected
@@ -6712,7 +6712,7 @@ components:
       - Client doesn't know
       - Male
       - Female
-      x-hmis-vocabulary: 4.21
+      x-hmis-vocabulary: '4.21'
       x-hmis-values:
       - notation: '99'
         preflabel: Data not collected
@@ -7116,7 +7116,7 @@ components:
     UserID:
       x-hmis-dataDictionaryName: UserID
       type: string
-      x-hmis-vocabulary: 5.07
+      x-hmis-vocabulary: '5.07.01'
     VADisabilityNonService:
       x-hmis-dataDictionaryName: VADisabilityNonService
       type: string

@@ -3,7 +3,8 @@
 # (RDF/XML), with proposed changes taken from the v1.3.0-beta ontology:
 #   - 2.06.3 StartDate and 2.06.4 EndDate moved from the HUD_HMIS.xsd namespace into this one.
 #   - Everything else added is in the section "Proposed additions from v1.3.0-beta" at the end of this file.
-#   - Data element numbers from the FY2026 HMIS CSV specification, in the last section of this file.
+# Data element numbers (dcterms:identifier) follow HUD's FY 2026 HMIS CSV Specifications (2025-08-28),
+# edited in place in each property, and 2.03.2 Geocode is typed as a string (six digits, leading zeros).
 
 @prefix : <urn:hud:hmis:owl#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
@@ -641,7 +642,8 @@ care;99=Data not collected""" .
 
 :EmailSocialMedia a owl:DatatypeProperty ;
     dcterms:description "Via email/social media" ;
-    dcterms:identifier "R20.A.1" ;
+    dcterms:identifier "R20.A",
+        "R20.A.1" ;
     rdfs:domain :RHYAftercare ;
     rdfs:range :1.10 ;
     hmis:responseValue "0=No;1=Yes" .
@@ -735,7 +737,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
 :FAEndDate a owl:DatatypeProperty ;
     rdfs:label "FAEndDate" ;
     dcterms:description "End Date of Financial Assistance" ;
-    dcterms:identifier "V3.4" ;
+    dcterms:identifier "V3.5" ;
     rdfs:domain :ServiceFAReferral ;
     rdfs:range xsd:date ;
     rdfs:subPropertyOf owl:topDataProperty .
@@ -750,7 +752,8 @@ Necessary for projects that operate across multiple CoCs for data export purpose
 
 :FamilyCounseling a owl:DatatypeProperty ;
     dcterms:description "Family" ;
-    dcterms:identifier "R18.A.2" ;
+    dcterms:identifier "R18.A",
+        "R18.A.2" ;
     rdfs:domain :ExitRHY ;
     rdfs:range :1.7 ;
     hmis:responseValue "0=No;1=Yes;99=Data not collected" .
@@ -786,7 +789,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
     dcterms:description "Geocode" ;
     dcterms:identifier "2.03.2" ;
     rdfs:domain :ProjectCoC ;
-    rdfs:range xsd:integer ;
+    rdfs:range xsd:string ;
     hmis:responseValue "Limited to six digits ^[0-9]{6}$" .
 
 :GeographyType a owl:DatatypeProperty ;
@@ -798,7 +801,8 @@ Necessary for projects that operate across multiple CoCs for data export purpose
 
 :GroupCounseling a owl:DatatypeProperty ;
     dcterms:description "Group – including peer counseling" ;
-    dcterms:identifier "R18.A.3" ;
+    dcterms:identifier "R18.A",
+        "R18.A.3" ;
     rdfs:domain :ExitRHY ;
     rdfs:range :1.7 ;
     hmis:responseValue "0=No;1=Yes;99=Data not collected" .
@@ -873,7 +877,8 @@ Necessary for projects that operate across multiple CoCs for data export purpose
 
 :HousingAssessment a owl:DatatypeProperty ;
     dcterms:description "Housing Assessment, Screening, and/or Referral" ;
-    dcterms:identifier "2.09A" ;
+    dcterms:identifier "2.09.A",
+        "W5.1" ;
     rdfs:domain :CEParticipation ;
     rdfs:range :1.10 ;
     rdfs:subPropertyOf owl:topDataProperty ;
@@ -894,14 +899,16 @@ Necessary for projects that operate across multiple CoCs for data export purpose
 
 :InPersonGroup a owl:DatatypeProperty ;
     dcterms:description "In person: group" ;
-    dcterms:identifier "R20.A.4" ;
+    dcterms:identifier "R20.A",
+        "R20.A.4" ;
     rdfs:domain :RHYAftercare ;
     rdfs:range :1.10 ;
     hmis:responseValue "0=No;1=Yes" .
 
 :InPersonIndividual a owl:DatatypeProperty ;
     dcterms:description "In person: one-on-one" ;
-    dcterms:identifier "R20.A.3" ;
+    dcterms:identifier "R20.A",
+        "R20.A.3" ;
     rdfs:domain :RHYAftercare ;
     rdfs:range :1.10 ;
     hmis:responseValue "0=No;1=Yes" .
@@ -929,7 +936,8 @@ Necessary for projects that operate across multiple CoCs for data export purpose
 
 :IndividualCounseling a owl:DatatypeProperty ;
     dcterms:description "Individual" ;
-    dcterms:identifier "R18.A.1" ;
+    dcterms:identifier "R18.A",
+        "R18.A.1" ;
     rdfs:domain :ExitRHY ;
     rdfs:range :1.7 ;
     hmis:responseValue "0=No;1=Yes;99=Data not collected" .
@@ -972,15 +980,16 @@ Necessary for projects that operate across multiple CoCs for data export purpose
     hmis:responseValue "0=No;1=Yes;8=Client doesn’t know;9=Client prefers not to answer;99=Data not collected" .
 
 :LOSUnderThreshold a owl:DatatypeProperty ;
-    dcterms:identifier "3.917.2AB",
-        "for Institutional Situations: Did you stay less than 90 days? for Housing Situations: Did you stay less than 7 nights?" ;
+    dcterms:description "for Institutional Situations: Did you stay less than 90 days? for Housing Situations: Did you stay less than 7 nights?" ;
+    dcterms:identifier "3.917.2A",
+        "3.917.2B" ;
     rdfs:domain :Enrollment ;
     rdfs:range :1.7 ;
     hmis:responseValue "0=No;1=Yes;99=Data not collected" .
 
 :LaborExploitPastThreeMonths a owl:DatatypeProperty ;
     dcterms:description "In the last 3 months" ;
-    dcterms:identifier "R16.A" ;
+    dcterms:identifier "R16.B" ;
     rdfs:domain :ExitRHY ;
     rdfs:range :1.8 ;
     hmis:responseValue "0=No;1=Yes;8=Client doesn’t know;9=Client prefers not to answer;99=Data not collected" .
@@ -1002,7 +1011,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
 
 :LeaseOwn60Day a owl:DatatypeProperty ;
     dcterms:description "Has the client had a lease or ownership interest in a permanent housing unit in the last 60 days?" ;
-    dcterms:identifier "4.12E" ;
+    dcterms:identifier "4.12.E" ;
     rdfs:domain :CurrentLivingSituationClass ;
     rdfs:range :1.8 ;
     rdfs:subPropertyOf owl:topDataProperty ;
@@ -1293,7 +1302,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
 
 :OtherInsuranceIdentify a owl:DatatypeProperty ;
     dcterms:description "No Other Insurance Reason" ;
-    dcterms:identifier "4.04.A" ;
+    dcterms:identifier "4.04.12A" ;
     rdfs:domain :HealthInsurance ;
     rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> .
 
@@ -1313,6 +1322,8 @@ Necessary for projects that operate across multiple CoCs for data export purpose
     hmis:responseValue "0=No;1=Yes;8=Client doesn’t know;9=Client prefers not to answer;99=Data not collected" .
 
 :OtherTypeProvided a owl:DatatypeProperty ;
+    dcterms:identifier "V2.D",
+        "V8.A" ;
     rdfs:domain :ServiceFAReferral ;
     rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> .
 
@@ -1449,6 +1460,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
     hmis:responseValue "1=RRH: Services Only;2=RRH: Housing with or without services" .
 
 :RaceNone a owl:DatatypeProperty ;
+    dcterms:identifier "3.04.1" ;
     dcterms:description "Race None" ;
     rdfs:domain :Client ;
     rdfs:range :1.6 ;
@@ -1487,7 +1499,8 @@ Necessary for projects that operate across multiple CoCs for data export purpose
 
 :ReferralOutcome a owl:DatatypeProperty ;
     dcterms:description "Select Outcome for each" ;
-    dcterms:identifier "P2.A" ;
+    dcterms:identifier "P2",
+        "P2.A" ;
     rdfs:domain :ServiceFAReferral ;
     rdfs:range :P2.A ;
     hmis:responseValue "1=Attained;2=Not attained;3=Unknown" .
@@ -1719,6 +1732,9 @@ indicate the position of omitted digits
     hmis:responseValue "0=No;1=Yes;99=Data not collected" .
 
 :SubTypeProvided a owl:DatatypeProperty ;
+    dcterms:identifier "V2.A",
+        "V2.B",
+        "V2.C" ;
     rdfs:domain :ServiceFAReferral ;
     rdfs:range :V2.A,
         :V2.B,
@@ -1741,7 +1757,8 @@ indicate the position of omitted digits
 
 :SubsidyInformation a owl:DatatypeProperty ;
     dcterms:description "Subsidy information" ;
-    dcterms:identifier "W5.A" ;
+    dcterms:identifier "W5.A",
+        "W5.B" ;
     rdfs:domain :ExitHousingAssessmentClass ;
     rdfs:range :W5.A-B ;
     hmis:responseValue "1 =Without a subsidy ;2 =With the subsidy they had at project entry ;3 =With an on-going subsidy acquired since project entry ;4 =But only with other financial assistance ;11 =With on-going subsidy ;12 =Without an on-going subsidy " .
@@ -1802,7 +1819,8 @@ indicate the position of omitted digits
 
 :Telephone a owl:DatatypeProperty ;
     dcterms:description "Via telephone" ;
-    dcterms:identifier "R20.A.2" ;
+    dcterms:identifier "R20.A",
+        "R20.A.2" ;
     rdfs:domain :RHYAftercare ;
     rdfs:range :1.10 ;
     hmis:responseValue "0=No;1=Yes" .
@@ -2928,7 +2946,8 @@ hmis:responseValueSecondary a owl:AnnotationProperty .
 :BedInventory a owl:DatatypeProperty ;
     dcterms:description "Total bed inventory" ;
     dcterms:identifier "2.07.14" ;
-    rdfs:domain :Inventory .
+    rdfs:domain :Inventory ;
+    rdfs:range xsd:nonNegativeInteger .
 
 :BenefitsFromAnySource a owl:DatatypeProperty ;
     dcterms:description "Non-Cash Benefits from Any Source" ;
@@ -3151,7 +3170,8 @@ hmis:responseValueSecondary a owl:AnnotationProperty .
 
 :DisablingCondition a owl:DatatypeProperty ;
     dcterms:description "Disabling Condition" ;
-    dcterms:identifier "3.08.1" ;
+    dcterms:identifier "3.08",
+        "3.08.1" ;
     rdfs:domain :Enrollment ;
     rdfs:range :1.8 ;
     hmis:responseValue "0=No;1=Yes;8=Client doesn’t know;9=Client prefers not to answer;99=Data not collected" .
@@ -5217,7 +5237,8 @@ xsd:gYear a rdfs:Datatype .
 
 :CoCCode a owl:DatatypeProperty ;
     dcterms:description "Continuum Code - HUD-assigned CoC codes for the project location" ;
-    dcterms:identifier "2.03.1" ;
+    dcterms:identifier "2.03.1",
+        "2.07.3" ;
     rdfs:domain :ProjectCoC ;
     rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#cocCode> ;
     hmis:responseNotes """Two letters, a dash, and 3 numbers
@@ -5326,6 +5347,7 @@ xsd:gYear a rdfs:Datatype .
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] .
 
 :OrganizationID a owl:DatatypeProperty ;
+    dcterms:identifier "2.01.1" ;
     rdfs:label "OrganizationID" ;
     rdfs:domain :Organization ;
     rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
@@ -6516,7 +6538,8 @@ necessary to provide the person with the appropriate services to prevent further
 
 :HouseholdID a owl:DatatypeProperty ;
     dcterms:description "Household Identifier" ;
-    dcterms:identifier "5.09" ;
+    dcterms:identifier "5.09",
+        "5.09.1" ;
     rdfs:domain :Household .
 
 :IncomeBenefitsID a owl:DatatypeProperty ;
@@ -6948,7 +6971,11 @@ each row in Assessment.csv""" ;
 
 :InformationDate a owl:DatatypeProperty ;
     dcterms:description "Information Date" ;
-    dcterms:identifier "5.04.1" ;
+    dcterms:identifier "4.11.1",
+        "4.12.1",
+        "5.04.1",
+        "C3.1",
+        "R6.1" ;
     rdfs:domain :Metadata ;
     rdfs:range xsd:date .
 
@@ -7309,7 +7336,8 @@ reported as contact events in Services.csv. This element now contains additional
 :ProjectID a owl:DatatypeProperty ;
     rdfs:label "ProjectID" ;
     dcterms:description "Project Identifier" ;
-    dcterms:identifier "5.05.1" ;
+    dcterms:identifier "2.02.1",
+        "5.05.1" ;
     rdfs:domain :Project ;
     rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
     rdfs:subPropertyOf owl:topDataProperty .
@@ -7632,7 +7660,8 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
 
 :PersonalID a owl:DatatypeProperty ;
     dcterms:description "Personal ID [HMIS Generated]" ;
-    dcterms:identifier "5.08.1" ;
+    dcterms:identifier "5.08",
+        "5.08.1" ;
     rdfs:domain :Client ;
     rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
     rdfs:subPropertyOf owl:topDataProperty .
@@ -7807,6 +7836,7 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
     rdfs:range xsd:dateTime .
 
 :ExportID a owl:DatatypeProperty ;
+    dcterms:identifier "FW.5" ;
     rdfs:label "ExportID" ;
     rdfs:domain :Export ;
     rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
@@ -7814,7 +7844,8 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
 
 :UserID a owl:DatatypeProperty ;
     dcterms:description "A unique ID used to associate data with the user who entered and/or edited it." ;
-    dcterms:identifier "5.07.1" .
+    dcterms:identifier "5.07.01",
+        "5.07.1" .
 
 xsd:date a rdfs:Datatype .
 
@@ -8048,42 +8079,3 @@ xsd:dateTime a rdfs:Datatype .
 :Export dcterms:description "Describes one HMIS CSV export: its source, reporting period and export parameters (Export.csv)." .
 :ServiceFAReferral dcterms:description "Services, financial assistance and referrals provided during an enrollment, exported in Services.csv." .
 :VASHExitReason dcterms:description "Contains data for element V9 HUD-VASH Exit Information, exported in Exit.csv." .
-
-# --- Data element numbers from the FY2026 HMIS CSV specification ---------------
-# The API (api/hmis-api.openapi.yaml, x-hmis-vocabulary) cites each field's data element
-# number as given in HUD's FY2026 CSV specification. Where this ontology lacked that
-# number, it is added below as another dcterms:identifier; existing identifiers are kept.
-# A field used in several data elements (CoCCode in ProjectCoC.csv and Inventory.csv, for
-# example) can carry several numbers. api/tests/check-ontology.mjs fails if they drift.
-
-:CoCCode dcterms:identifier "2.07.3" .
-:DisablingCondition dcterms:identifier "3.08" .
-:EmailSocialMedia dcterms:identifier "R20.A" .
-:ExportID dcterms:identifier "FW.5" .
-:FAAmount dcterms:identifier "V3.2" .
-:FAStartDate dcterms:identifier "V3.1" .
-:FamilyCounseling dcterms:identifier "R18.A" .
-:GroupCounseling dcterms:identifier "R18.A" .
-:HouseholdID dcterms:identifier "5.09.1" .
-:HousingAssessment dcterms:identifier "W5.1" .
-:InPersonGroup dcterms:identifier "R20.A" .
-:InPersonIndividual dcterms:identifier "R20.A" .
-:IndividualCounseling dcterms:identifier "R18.A" .
-:InformationDate dcterms:identifier "C3.1" .
-:LOSUnderThreshold dcterms:identifier "3.917.2 B" .
-:LaborExploitPastThreeMonths dcterms:identifier "R16.B" .
-:LeaseOwn60Day dcterms:identifier "4.12.E" .
-:OrganizationID dcterms:identifier "2.01.1" .
-:OtherInsuranceIdentify dcterms:identifier "4.04.12A" .
-:OtherTypeProvided dcterms:identifier "V8.A" .
-:PreviousStreetESSH dcterms:identifier "3.917.2 C" .
-:ProjectID dcterms:identifier "2.02.1" .
-:RaceNone dcterms:identifier "3.04.1" .
-:ReferralOutcome dcterms:identifier "P2" .
-:SubTypeProvided dcterms:identifier "V2.C" .
-:SubsidyInformation dcterms:identifier "W5.B" .
-:Telephone dcterms:identifier "R20.A" .
-:UserID dcterms:identifier "5.07" .
-
-# BedInventory (2.07.14) had no rdfs:range; every other bed and unit count uses xsd:nonNegativeInteger.
-:BedInventory rdfs:range xsd:nonNegativeInteger .
