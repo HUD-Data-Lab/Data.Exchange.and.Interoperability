@@ -29,7 +29,7 @@ Every request and response object carries an `x-jsonld-context`. It maps each JS
 
 A client turns a payload into linked data by sending or adding that object as `@context`. The ontology stays API-free, and the API stays ontology-aware.
 
-Eight fields have no matching property in the FY2026 Logic Model, and each schema lists its affected fields under `x-hmis-unmapped-fields`: `EndDate`, `Event`, `HOHLeaseholder`, `MentalHealthConsultation`, `PreferredLanguage`, `PreferredLanguageDifferent`, `StartDate`, `TranslationNeeded`. `Event` exists in the ontology only as a class.
+Four fields have no matching property in the FY2026 Logic Model, and each schema lists its affected fields under `x-hmis-unmapped-fields`: `Event`, `PreferredLanguage`, `PreferredLanguageDifferent`, `TranslationNeeded`. `Event` exists in the ontology only as a class. The other three are the C4 Translation Assistance Needed fields, which the FY2026 standards removed, so the Client Full HMIS Record scenario should drop them.
 
 ## Workflows
 

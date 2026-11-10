@@ -1,6 +1,8 @@
 # HMIS Logic Model, FY2026.
 # Turtle serialization of https://github.com/HUD-Data-Lab/HMIS-Logic-Model/blob/main/FY2026_HMIS_Logic_Model_RDF.owl
-# (RDF/XML). Same 9,269 triples, checked isomorphic with rdflib; only the syntax changed.
+# (RDF/XML), with proposed changes taken from the v1.3.0-beta ontology:
+#   - 2.06.3 StartDate and 2.06.4 EndDate moved from the HUD_HMIS.xsd namespace into this one.
+#   - Everything else added is in the section "Proposed additions from v1.3.0-beta" at the end of this file.
 
 @prefix : <urn:hud:hmis:owl#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
@@ -169,7 +171,7 @@ owl:maxCardinality a owl:AnnotationProperty .
 
 skos:note a owl:AnnotationProperty .
 
-<https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#EndDate> a owl:DatatypeProperty ;
+:EndDate a owl:DatatypeProperty ;
     rdfs:label "GrantEndDate" ;
     dcterms:description "Grant End Date" ;
     dcterms:identifier "2.06.4" ;
@@ -2186,7 +2188,7 @@ hmis:responseValueSecondary a owl:AnnotationProperty .
 
 <wptmp:entity#AffiliationID> dcterms:description "Unique identifier" .
 
-<https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#StartDate> a owl:DatatypeProperty ;
+:StartDate a owl:DatatypeProperty ;
     rdfs:label "GrantStartDate" ;
     dcterms:description "Grant Start Date" ;
     dcterms:identifier "2.06.3" ;
@@ -6758,7 +6760,7 @@ C. Identifies the number of runaway youth.""" ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onDataRange xsd:date ;
-            owl:onProperty <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#StartDate> ;
+            owl:onProperty :StartDate ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
@@ -7859,3 +7861,189 @@ xsd:dateTime a rdfs:Datatype .
 
 <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> a rdfs:Datatype .
 
+
+#################################################################
+#  Proposed additions from v1.3.0-beta
+#  Content from Artifacts/Ontology/Output_v1.3.0-beta/hmis_ontologyv1.3.0-beta.ttl
+#  that the FY2026 Logic Model lacks, rewritten in this model's conventions.
+#  Left out on purpose: Sub* grouping classes, disjointness axioms, the C4
+#  Translation Assistance fields (removed from the FY2026 standards), and the
+#  SKOS code lists (this model already defines each list as an rdfs:Datatype).
+#################################################################
+
+# --- FY2026 data elements missing from the Logic Model -------------------------
+
+:HOHLeaseholder a owl:DatatypeProperty ;
+    rdfs:label "HOHLeaseholder" ;
+    dcterms:description "Head of Household is a current leaseholder/renter of unit" ;
+    dcterms:identifier "V7.E" ;
+    rdfs:domain :EntrySSVF ;
+    rdfs:range :1.7 ;
+    hmis:responseValue "0=No;1=Yes;99=Data not collected" .
+
+:MentalHealthConsultation a owl:DatatypeProperty ;
+    rdfs:label "MentalHealthConsultation" ;
+    dcterms:description "Mental Health Consultation Status (new in FY2026). Collected at project start for all Veterans in VA: SSVF RRH and Homelessness Prevention, and VA: GPD Case Management/Housing Retention projects. No more than one per enrollment." ;
+    dcterms:identifier "V10" ;
+    rdfs:domain :EntrySSVF ;
+    rdfs:range :V10 ;
+    hmis:responseValue "1=Mental health consultation completed;2=Mental health consultation being coordinated/arranged with VA provider;3=Mental health consultation being coordinated/arranged with other provider;4=Offer declined" .
+
+:V10 a rdfs:Datatype ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:oneOf ( "Mental health consultation completed" "Mental health consultation being coordinated/arranged with VA provider" "Mental health consultation being coordinated/arranged with other provider" "Offer declined" 1 2 3 4 ) ] .
+
+:EntrySSVF rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange :V10 ;
+            owl:onProperty :MentalHealthConsultation ] .
+
+:FunderClass rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:date ;
+            owl:onProperty :EndDate ] .
+
+# --- Part-of property hierarchy -------------------------------------------------
+# The beta grouped record types under SubEnrollment / SubProject / SubCEAssessment
+# classes. The same grouping is expressed here on the relationships instead: every
+# compositional has* property is a sub-property of :hasPart, so a reasoner can
+# answer "all parts of this enrollment / project / assessment" in one query.
+
+:hasPart a owl:ObjectProperty ;
+    rdfs:label "has part"@en ;
+    rdfs:comment "Links a record to a record that exists only as part of it, such as an enrollment to its assessments, services and exit, or a project to its funders and inventory."@en ;
+    owl:inverseOf :partOf .
+
+:partOf a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:label "part of"@en ;
+    rdfs:comment "Links a record to the one record it is part of. Functional: each part belongs to exactly one whole."@en ;
+    owl:inverseOf :hasPart .
+
+:hasAffiliation rdfs:subPropertyOf :hasPart .
+:hasCEParticipation rdfs:subPropertyOf :hasPart .
+:hasFunder rdfs:subPropertyOf :hasPart .
+:hasHMISParticipation rdfs:subPropertyOf :hasPart .
+:hasInventory rdfs:subPropertyOf :hasPart .
+:hasProjectCoC rdfs:subPropertyOf :hasPart .
+
+:hasClientVeteranInfo rdfs:subPropertyOf :hasPart .
+
+:hasAssessment rdfs:subPropertyOf :hasPart .
+:hasConnectionWithSOAR rdfs:subPropertyOf :hasPart .
+:hasCurrentLivingSituation rdfs:subPropertyOf :hasPart .
+:hasDateOfEngagement rdfs:subPropertyOf :hasPart .
+:hasDisabilities rdfs:subPropertyOf :hasPart .
+:hasDomesticViolence rdfs:subPropertyOf :hasPart .
+:hasEducation rdfs:subPropertyOf :hasPart .
+:hasEmployment rdfs:subPropertyOf :hasPart .
+:hasEntryRHY rdfs:subPropertyOf :hasPart .
+:hasEntrySSVF rdfs:subPropertyOf :hasPart .
+:hasEvent rdfs:subPropertyOf :hasPart .
+:hasExit rdfs:subPropertyOf :hasPart .
+:hasHealthInsurance rdfs:subPropertyOf :hasPart .
+:hasHealthStatus rdfs:subPropertyOf :hasPart .
+:hasIncomeAndSources rdfs:subPropertyOf :hasPart .
+:hasMedicalAssistance rdfs:subPropertyOf :hasPart .
+:hasMoveInDate rdfs:subPropertyOf :hasPart .
+:hasNonCashBenefits rdfs:subPropertyOf :hasPart .
+:hasPATHStatus rdfs:subPropertyOf :hasPart .
+:hasRHYBCPStatus rdfs:subPropertyOf :hasPart .
+:hasServiceFAReferral rdfs:subPropertyOf :hasPart .
+:hasYouthEducationStatus rdfs:subPropertyOf :hasPart .
+
+:hasExitHousingAssessment rdfs:subPropertyOf :hasPart .
+:hasExitRHY rdfs:subPropertyOf :hasPart .
+:hasRhyAftercare rdfs:subPropertyOf :hasPart .
+:hasVASHExitReason rdfs:subPropertyOf :hasPart .
+
+:hasAssessmentQuestion rdfs:subPropertyOf :hasPart .
+:hasAssessmentResult rdfs:subPropertyOf :hasPart .
+
+# --- Inverses for the non-compositional links -----------------------------------
+# The beta declared inverse pairs (organizationOf, clientOf, projectOf, householdOf).
+# Each enrollment has exactly one client, project and household, and each project
+# exactly one organization, so the inverses are functional.
+
+:operatedBy a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:label "operated by"@en ;
+    rdfs:comment "Links a project to the organization that operates it (2.02.2 OrganizationID)."@en ;
+    rdfs:domain :Project ;
+    rdfs:range :Organization ;
+    owl:inverseOf :hasProject .
+
+:enrollmentOfClient a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:label "enrollment of client"@en ;
+    rdfs:comment "Links an enrollment to the client enrolled (PersonalID)."@en ;
+    rdfs:domain :Enrollment ;
+    rdfs:range :Client ;
+    owl:inverseOf :hasClientEnrollment .
+
+:enrollmentInProject a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:label "enrollment in project"@en ;
+    rdfs:comment "Links an enrollment to the project it is in (ProjectID)."@en ;
+    rdfs:domain :Enrollment ;
+    rdfs:range :Project ;
+    owl:inverseOf :hasProjectEnrollment .
+
+:enrollmentInHousehold a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:label "enrollment in household"@en ;
+    rdfs:comment "Links an enrollment to its household (5.09 HouseholdID)."@en ;
+    rdfs:domain :Enrollment ;
+    rdfs:range :Household ;
+    owl:inverseOf :hasHouseholdEnrollment .
+
+# --- Human-readable labels for every class --------------------------------------
+
+:Affiliation rdfs:label "Residential Affiliation"@en .
+:Assessment rdfs:label "Coordinated Entry Assessment"@en .
+:AssessmentQuestionClass rdfs:label "Coordinated Entry Assessment Question"@en .
+:AssessmentResultClass rdfs:label "Coordinated Entry Assessment Result"@en .
+:CEParticipation rdfs:label "Coordinated Entry Participation"@en .
+:Client rdfs:label "Client"@en .
+:ClientVeteranInfo rdfs:label "Veteran Information"@en .
+:ConnectionWithSOAR rdfs:label "Connection with SOAR"@en .
+:CurrentLivingSituationClass rdfs:label "Current Living Situation"@en .
+:DateOfEngagementClass rdfs:label "Date of Engagement"@en .
+:Disabilities rdfs:label "Disabilities"@en .
+:DomesticViolence rdfs:label "Domestic Violence"@en .
+:Education rdfs:label "Education"@en .
+:Employment rdfs:label "Employment Status"@en .
+:Enrollment rdfs:label "Enrollment"@en .
+:EntryRHY rdfs:label "RHY Project Start Information"@en .
+:EntrySSVF rdfs:label "SSVF Project Start Information"@en .
+:Event rdfs:label "Coordinated Entry Event"@en .
+:Exit rdfs:label "Exit"@en .
+:ExitHousingAssessmentClass rdfs:label "Housing Assessment at Exit"@en .
+:ExitRHY rdfs:label "RHY Exit Information"@en .
+:Export rdfs:label "Export"@en .
+:FunderClass rdfs:label "Funder"@en .
+:HMISParticipation rdfs:label "HMIS Participation"@en .
+:HealthInsurance rdfs:label "Health Insurance"@en .
+:HealthStatus rdfs:label "Health Status"@en .
+:Household rdfs:label "Household"@en .
+:IncomeAndSources rdfs:label "Income and Sources"@en .
+:Inventory rdfs:label "Bed and Unit Inventory"@en .
+:MedicalAssistance rdfs:label "Medical Assistance"@en .
+:MoveInDate rdfs:label "Housing Move-In Date"@en .
+:NonCashBenefits rdfs:label "Non-Cash Benefits"@en .
+:Organization rdfs:label "Organization"@en .
+:PATHStatus rdfs:label "PATH Status"@en .
+:Project rdfs:label "Project"@en .
+:ProjectCoC rdfs:label "Project Continuum of Care"@en .
+:RHYAftercare rdfs:label "RHY Aftercare Plans"@en .
+:RHYBCPStatus rdfs:label "RHY-BCP Status"@en .
+:ServiceFAReferral rdfs:label "Services, Financial Assistance and Referrals"@en .
+:User rdfs:label "User"@en .
+:VASHExitReason rdfs:label "HUD-VASH Exit Information"@en .
+:YouthEducationStatus rdfs:label "Youth Education Status"@en .
+
+# --- Descriptions for classes that had none ------------------------------------
+
+:DateOfEngagementClass dcterms:description "Contains data for element 4.13 Date of Engagement, exported in Enrollment.csv." .
+:EntryRHY dcterms:description "Runaway and Homeless Youth (RHY) data collected at project start, exported in Enrollment.csv." .
+:EntrySSVF dcterms:description "VA program data collected at project start, exported in Enrollment.csv: V7 HP Targeting Criteria and V10 Mental Health Consultation." .
+:Event dcterms:description "Contains data for element 4.20 Coordinated Entry Event, exported in Event.csv." .
+:ExitRHY dcterms:description "Runaway and Homeless Youth (RHY) data collected at project exit, exported in Exit.csv." .
+:Export dcterms:description "Describes one HMIS CSV export: its source, reporting period and export parameters (Export.csv)." .
+:ServiceFAReferral dcterms:description "Services, financial assistance and referrals provided during an enrollment, exported in Services.csv." .
+:VASHExitReason dcterms:description "Contains data for element V9 HUD-VASH Exit Information, exported in Exit.csv." .

@@ -1606,13 +1606,9 @@ components:
         ZIP:
           '@id': urn:hud:hmis:owl#ZIP
       x-hmis-unmapped-fields:
-      - EndDate
       - Event
-      - HOHLeaseholder
-      - MentalHealthConsultation
       - PreferredLanguage
       - PreferredLanguageDifferent
-      - StartDate
       - TranslationNeeded
     ClientsinaProjectRequest:
       type: object
