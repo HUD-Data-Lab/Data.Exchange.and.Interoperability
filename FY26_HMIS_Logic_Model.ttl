@@ -187,7 +187,7 @@ skos:note a owl:AnnotationProperty .
     dc:title "HUD HMIS Logical Model"@en ;
     dcterms:description "The logical model for the US Department of Housing and Urban Development Homeless Management Information System FY2026 Data Standards"@en ;
     owl:versionIRI <https://github.com/HUD-Data-Lab/HMIS-Logic-Model/blob/main/urn_hud_hmis_owl.owl> ;
-    owl:versionInfo "FY2026v1.1.0"@en .
+    owl:versionInfo "FY2026v1.2.0"@en .
 
 :AccessPoint a owl:DatatypeProperty ;
     dcterms:description "Project is a Coordinated Entry Access Point" ;
