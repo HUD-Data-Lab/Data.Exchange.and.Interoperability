@@ -103,8 +103,8 @@ To view the full description of the expected request and response schemas for ea
  
 The HMIS API Specification will be enhanced by the development of three additional layers:
 - Foundation Layer - [HMIS Ontology](https://github.com/HUD-Data-Lab/HMIS-Logic-Model)
-- Translation Layer - [HMIS API Toolchain](https://github.com/HUD-Data-Lab/Data.Exchange.and.Interoperability/blob/main/hmis-codegen/README.md)
+- Translation Layer - [HMIS API Toolchain](../api/codegen/README.md)
 - Implementation Layer - HMIS Sandbox
 
-These layers will set a single-source of truth that usable artifacts (OpenAPI specifications, mapping schemas to external standards, and effect handlers for packaged behaviors) can be generated from. Please refer to the [HMIS API Toolchain](https://github.com/HUD-Data-Lab/Data.Exchange.and.Interoperability/blob/main/hmis-codegen/README.md) for more information.
+These layers will set a single-source of truth that usable artifacts (OpenAPI specifications, mapping schemas to external standards, and effect handlers for packaged behaviors) can be generated from. Please refer to the [HMIS API Toolchain](../api/codegen/README.md) for more information.
 

@@ -5,6 +5,7 @@
 | `hmis-api.openapi.yaml` | One OpenAPI 3.1 description of the eight FY2026 baseline scenarios, consolidated from the former `Artifacts/CommonScenariosJSON/FY2026/*.json` files. |
 | `workflows/*.arazzo.yaml` | Proposed multi-step scenarios in [Arazzo 1.0](https://spec.openapis.org/arazzo/latest.html), the OpenAPI Initiative's workflow format. |
 | `tests/` | Contract tests run with [Newman](https://github.com/postmanlabs/newman), locally or in CI. |
+| `codegen/` | Generator config and scripts that build client SDKs (TypeScript, Python), standalone JSON-LD context files and HTML docs from the OpenAPI description. Output goes to the gitignored `codegen/build/`. See [codegen/README.md](codegen/README.md). |
 | `DataExchangeScenarioList.xlsx` | The scenario-to-data-element mapping, a verbatim copy of the former `Translation Layer/datasource/DataExchangeScenarioOntology.xlsx`. |
 | `redocly.yaml` | Lint settings for the OpenAPI and Arazzo files. |
 
