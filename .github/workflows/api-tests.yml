@@ -12,7 +12,11 @@ on:
 
 jobs:
   newman:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     defaults:
       run:
         working-directory: api/tests
@@ -22,9 +26,9 @@ jobs:
         with:
           node-version: "24"
       - run: npm ci --no-audit --no-fund
-      - run: ./run-tests.sh
+      - run: npm test
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: newman-results
+          name: api-test-results-${{ matrix.os }}
           path: api/tests/build/

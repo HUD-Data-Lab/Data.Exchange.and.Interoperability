@@ -42,13 +42,18 @@ Eight fields have no matching property in the FY2026 Logic Model, and each schem
 
 ## Running the tests
 
+Node 24 or later on Linux, macOS or Windows:
+
 ```bash
 cd api/tests
-npm ci
-./run-tests.sh                                              # against a local Prism mock
-HMIS_API_BASE_URL=https://hmis.example.org/hmis/v1 ./run-tests.sh   # against a real implementation
+npm ci && npm test                                           # against a local Prism mock
+HMIS_API_BASE_URL=https://hmis.example.org/hmis/v1 npm test   # against a real implementation (bash)
 ```
 
-`run-tests.sh` lints the OpenAPI and Arazzo files, then uses Portman to build a Postman collection from the OpenAPI description, with a contract test for each operation: 2xx status, JSON content type, JSON body, and response schema. Newman then runs that collection. JUnit results are written to `build/newman-results.xml`. CI runs the same script from `.github/workflows/api-tests.yml`.
+```powershell
+$env:HMIS_API_BASE_URL = "https://hmis.example.org/hmis/v1"; npm test   # against a real implementation (PowerShell)
+```
+
+`npm test` runs `run-tests.mjs`, which lints the OpenAPI and Arazzo files, then uses Portman to build a Postman collection from the OpenAPI description, with a contract test for each operation: 2xx status, JSON content type, JSON body, and response schema. Newman then runs that collection. JUnit results are written to `build/newman-results.xml`. CI runs the same script on Linux, macOS and Windows from `.github/workflows/api-tests.yml`.
 
 Not yet covered: security schemes and 4xx responses, which the stricter Redocly `recommended` ruleset flags.
