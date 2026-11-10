@@ -1,0 +1,6 @@
+# Lint configuration for the HMIS API description and its Arazzo workflows.
+# "spec" checks conformance to the OpenAPI 3.1 and Arazzo 1.0 specifications only.
+# Security schemes and 4xx responses are not defined yet, so the stricter
+# "recommended" ruleset reports them; see api/README.md.
+extends:
+  - spec

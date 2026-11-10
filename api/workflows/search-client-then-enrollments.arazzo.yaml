@@ -1,0 +1,59 @@
+arazzo: 1.0.1
+info:
+  title: Search for a client, then get their enrollments
+  version: 0.1.0-proposed
+  summary: Scenario 1 followed by Scenario 5.
+  description: >
+    Finds a client, then lists that client's enrollments.
+    NOTE: this workflow cannot run against the FY2026 scenario schemas yet. The
+    SearchforClient response has no PersonalID, and its request has income fields
+    rather than identifying information, so there is nothing to chain on. It is
+    included as the target for fixing Scenario 1: add PersonalID (and name, DOB, SSN
+    search fields) to SearchforClient, and this workflow will run unchanged.
+sourceDescriptions:
+  - name: hmisApi
+    url: ../hmis-api.openapi.yaml
+    type: openapi
+workflows:
+  - workflowId: searchClientThenEnrollments
+    summary: Find a client and list their enrollments.
+    inputs:
+      type: object
+      properties:
+        searchCriteria:
+          type: object
+          description: Fields accepted by the SearchforClient request.
+        entryDate:
+          type: string
+          format: date
+        exitDate:
+          type: string
+          format: date
+    steps:
+      - stepId: searchClient
+        description: Scenario 1. Search for the client.
+        operationId: $sourceDescriptions.hmisApi.SearchforClient
+        requestBody:
+          contentType: application/json
+          payload: $inputs.searchCriteria
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          personalId: $response.body#/PersonalID
+      - stepId: getEnrollments
+        description: Scenario 5. List the enrollments for the client found in step 1.
+        operationId: $sourceDescriptions.hmisApi.RetrieveClientEnrollments
+        requestBody:
+          contentType: application/json
+          payload:
+            PersonalID: $steps.searchClient.outputs.personalId
+            EntryDate: $inputs.entryDate
+            ExitDate: $inputs.exitDate
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          enrollmentId: $response.body#/EnrollmentID
+          projectId: $response.body#/ProjectID
+    outputs:
+      personalId: $steps.searchClient.outputs.personalId
+      enrollmentId: $steps.getEnrollments.outputs.enrollmentId

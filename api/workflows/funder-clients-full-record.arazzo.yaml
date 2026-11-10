@@ -1,0 +1,66 @@
+arazzo: 1.0.1
+info:
+  title: Find clients by funder, then pull a full record
+  version: 0.1.0-proposed
+  summary: Scenario 7, then Scenario 5, then Scenario 8.
+  description: >
+    Finds clients served under a funder and project type, lists the first client's
+    enrollments, and retrieves that client's full HMIS record. Runs against the
+    FY2026 scenario schemas as they are.
+sourceDescriptions:
+  - name: hmisApi
+    url: ../hmis-api.openapi.yaml
+    type: openapi
+workflows:
+  - workflowId: funderClientsFullRecord
+    summary: From a funder and project type to one client's full record.
+    inputs:
+      type: object
+      properties:
+        funder:
+          type: string
+        projectType:
+          type: string
+        entryDate:
+          type: string
+          format: date
+        exitDate:
+          type: string
+          format: date
+    steps:
+      - stepId: searchClientsByFunder
+        description: Scenario 7. Clients filtered by funder and project type.
+        operationId: $sourceDescriptions.hmisApi.SearchClientsbyProjectTypeorFunderType
+        requestBody:
+          contentType: application/json
+          payload:
+            Funder: $inputs.funder
+            ProjectType: $inputs.projectType
+            EntryDate: $inputs.entryDate
+            ExitDate: $inputs.exitDate
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          personalId: $response.body#/PersonalID
+      - stepId: clientEnrollments
+        description: Scenario 5. That client's enrollments.
+        operationId: $sourceDescriptions.hmisApi.RetrieveClientEnrollments
+        requestBody:
+          contentType: application/json
+          payload:
+            PersonalID: $steps.searchClientsByFunder.outputs.personalId
+        successCriteria:
+          - condition: $statusCode == 200
+      - stepId: fullRecord
+        description: Scenario 8. That client's full HMIS record.
+        operationId: $sourceDescriptions.hmisApi.ClientFullHMISRecord
+        requestBody:
+          contentType: application/json
+          payload:
+            PersonalID: $steps.searchClientsByFunder.outputs.personalId
+            EntryDate: $inputs.entryDate
+            ExitDate: $inputs.exitDate
+        successCriteria:
+          - condition: $statusCode == 200
+    outputs:
+      personalId: $steps.searchClientsByFunder.outputs.personalId

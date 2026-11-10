@@ -1,0 +1,51 @@
+arazzo: 1.0.1
+info:
+  title: Find a client in a project, then update the client
+  version: 0.1.0-proposed
+  summary: Scenario 4 followed by Scenario 3.
+  description: >
+    Lists the clients enrolled in a project, then updates the first client's record.
+    The UpdateClient request has no fields in the FY2026 scenarios yet, so the update
+    payload is passed through from the workflow inputs.
+sourceDescriptions:
+  - name: hmisApi
+    url: ../hmis-api.openapi.yaml
+    type: openapi
+workflows:
+  - workflowId: projectClientUpdate
+    summary: Pick a client from a project and update their record.
+    inputs:
+      type: object
+      required: [projectId]
+      properties:
+        projectId:
+          type: string
+        changes:
+          type: object
+          description: Client fields to change.
+    steps:
+      - stepId: listProjectClients
+        description: Scenario 4. Clients enrolled in the project.
+        operationId: $sourceDescriptions.hmisApi.ClientsinaProject
+        requestBody:
+          contentType: application/json
+          payload:
+            ProjectID: $inputs.projectId
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          personalId: $response.body#/PersonalID
+      - stepId: updateClient
+        description: Scenario 3. Update that client's record.
+        operationId: $sourceDescriptions.hmisApi.UpdateClient
+        parameters:
+          - name: PersonalID
+            in: path
+            value: $steps.listProjectClients.outputs.personalId
+        requestBody:
+          contentType: application/json
+          payload: $inputs.changes
+        successCriteria:
+          - condition: $statusCode == 200
+    outputs:
+      personalId: $steps.listProjectClients.outputs.personalId

@@ -1,0 +1,18 @@
+{
+  "name": "hmis-api-tests",
+  "private": true,
+  "description": "Contract tests for the HMIS Data Exchange API, run with Newman against the OpenAPI description.",
+  "scripts": {
+    "lint": "redocly lint --config ../redocly.yaml ../hmis-api.openapi.yaml ../workflows/*.arazzo.yaml",
+    "mock": "prism mock ../hmis-api.openapi.yaml --port 4010 --errors",
+    "collection": "portman --local ../hmis-api.openapi.yaml --portmanConfigFile portman-config.json --baseUrl http://localhost:4010 --output build/hmis-api.postman_collection.json --runNewman false",
+    "newman": "newman run build/hmis-api.postman_collection.json --env-var baseUrl=${HMIS_API_BASE_URL:-http://localhost:4010} --reporters cli,junit --reporter-junit-export build/newman-results.xml",
+    "test": "./run-tests.sh"
+  },
+  "devDependencies": {
+    "@apideck/portman": "1.35.2",
+    "@redocly/cli": "2.77.0",
+    "@stoplight/prism-cli": "5.16.0",
+    "newman": "6.2.3"
+  }
+}

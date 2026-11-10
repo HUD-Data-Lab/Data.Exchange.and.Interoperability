@@ -1,0 +1,30 @@
+name: API contract tests
+
+on:
+  push:
+    paths:
+      - "api/**"
+      - ".github/workflows/api-tests.yml"
+  pull_request:
+    paths:
+      - "api/**"
+      - ".github/workflows/api-tests.yml"
+
+jobs:
+  newman:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api/tests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --no-audit --no-fund
+      - run: ./run-tests.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: newman-results
+          path: api/tests/build/

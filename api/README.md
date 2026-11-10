@@ -1,0 +1,54 @@
+# HMIS Data Exchange API
+
+| Path | What it is |
+| --- | --- |
+| `hmis-api.openapi.yaml` | One OpenAPI 3.1 description of the eight FY2026 baseline scenarios, consolidated from the former `Artifacts/CommonScenariosJSON/FY2026/*.json` files. |
+| `workflows/*.arazzo.yaml` | Proposed multi-step scenarios in [Arazzo 1.0](https://spec.openapis.org/arazzo/latest.html), the OpenAPI Initiative's workflow format. |
+| `tests/` | Contract tests run with [Newman](https://github.com/postmanlabs/newman), locally or in CI. |
+| `DataExchangeScenarioList.xlsx` | The scenario-to-data-element mapping, a verbatim copy of the former `Translation Layer/datasource/DataExchangeScenarioOntology.xlsx`. |
+| `redocly.yaml` | Lint settings for the OpenAPI and Arazzo files. |
+
+## The OpenAPI description
+
+- **Field schemas** are the ones in the FY2026 scenario files, unchanged except that the non-standard `DataDictionaryName` keyword is now `x-hmis-dataDictionaryName`, matching the files' other `x-hmis-` extensions. Validators reject unknown keywords that lack the `x-` prefix. Each field is defined once under `components/schemas` and shared by every operation that uses it.
+- **Paths and methods** follow the baseline scenarios in `doc/HMIS API Reference Guide v1.0.md`. The scenario files define operations but no URLs, so the paths are proposals. Searches use `POST`, so identifying information stays out of URLs and logs.
+- **Examples** are illustrative values generated from the schemas, not real client data.
+- **Responses** are single objects, as in the source files. List scenarios (4 to 7) will probably need to return arrays.
+
+## JSON-LD: the bridge to the ontology
+
+Every request and response object carries an `x-jsonld-context`. It maps each JSON field to its term in the HMIS Logic Model ontology (`FY26_HMIS_Logic_Model.ttl`, namespace `urn:hud:hmis:owl#`):
+
+```json
+{
+  "@vocab": "urn:hud:hmis:owl#",
+  "PersonalID": { "@id": "urn:hud:hmis:owl#PersonalID" },
+  "EntryDate":  { "@id": "urn:hud:hmis:owl#EntryDate", "@type": "xsd:date" }
+}
+```
+
+A client turns a payload into linked data by sending or adding that object as `@context`. The ontology stays API-free, and the API stays ontology-aware.
+
+Eight fields have no matching property in the FY2026 Logic Model, and each schema lists its affected fields under `x-hmis-unmapped-fields`: `EndDate`, `Event`, `HOHLeaseholder`, `MentalHealthConsultation`, `PreferredLanguage`, `PreferredLanguageDifferent`, `StartDate`, `TranslationNeeded`. `Event` exists in the ontology only as a class.
+
+## Workflows
+
+| File | Steps | Runs against the FY2026 schemas? |
+| --- | --- | --- |
+| `search-client-then-enrollments.arazzo.yaml` | Scenario 1, then 5 | Not yet. The SearchforClient response has no `PersonalID` to chain on. |
+| `find-project-then-enrollments.arazzo.yaml` | Scenario 6, then 4 | Yes |
+| `funder-clients-full-record.arazzo.yaml` | Scenario 7, then 5, then 8 | Yes |
+| `project-client-update.arazzo.yaml` | Scenario 4, then 3 | Yes. UpdateClient has no request fields yet, so the changes come from the inputs. |
+
+## Running the tests
+
+```bash
+cd api/tests
+npm ci
+./run-tests.sh                                              # against a local Prism mock
+HMIS_API_BASE_URL=https://hmis.example.org/hmis/v1 ./run-tests.sh   # against a real implementation
+```
+
+`run-tests.sh` lints the OpenAPI and Arazzo files, then uses Portman to build a Postman collection from the OpenAPI description, with a contract test for each operation: 2xx status, JSON content type, JSON body, and response schema. Newman then runs that collection. JUnit results are written to `build/newman-results.xml`. CI runs the same script from `.github/workflows/api-tests.yml`.
+
+Not yet covered: security schemes and 4xx responses, which the stricter Redocly `recommended` ruleset flags.
