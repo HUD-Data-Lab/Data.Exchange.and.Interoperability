@@ -84,7 +84,7 @@ server <- function(input, output, session) {
       
     
     DataDictionaryText %>%
-      filter(`Element Identifier` %in% selected_scenariodataelements) %>%
+      filter(element_key %in% selected_scenariodataelements) %>%
       split(.$`Element Identifier`)
     
   })
@@ -297,7 +297,7 @@ server <- function(input, output, session) {
       unique()
     
     DataDictionaryText %>%
-    filter(`Element Identifier` %in% selected_dataelements) %>%
+    filter(element_key %in% selected_dataelements) %>%
     split(.$`Element Identifier`)
     
   })

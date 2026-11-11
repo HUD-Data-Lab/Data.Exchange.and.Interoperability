@@ -6,7 +6,6 @@ library(dplyr)
 library(jsonlite)
 library(bslib)
 library(rdflib)
-library(readxl)
 
 ## source required files
 source("html_text_blocks.R")
@@ -96,7 +95,8 @@ build_field_schema <- function(value,
     Decimal = "number",
     Boolean = "boolean",
     Date = "string",
-    DateTime = "string"
+    DateTime = "string",
+    Year = "integer"
   )
 
   schema_type <- type_map[field_type]
@@ -186,12 +186,14 @@ build_object_schema <- function(fields,
 
 ## Step 1: Prep the ontology files ----
 
-cache_path <- "data/hmis_ontology_cache_v1.3.0-beta.rds"
-ontology_path <- "data/hmis_ontologyv1.3.0-beta.ttl"
+# build_cache.R builds the cache from FY26_HMIS_Logic_Model.ttl and
+# api/DataExchangeScenarioList.md at the repository root.
+cache_path <- "data/hmis_ontology_cache.rds"
+ontology_path <- "../../FY26_HMIS_Logic_Model.ttl"
 
 if (!file.exists(cache_path)) {
   stop(
-    "Ontology cache not found at app/shiny/data/. Restore it before launching the Shiny app."
+    "Ontology cache not found. Run Rscript app/shiny/build_cache.R from the repository root."
   )
 }
 
@@ -200,12 +202,11 @@ ontology_cache <- time_step("Load ontology cache", {
   readRDS(cache_path)
 })
 
-if (file.exists(ontology_path) && !is.null(ontology_cache$ontology_mtime)) {
-  current_info <- file.info(ontology_path)
-  
-  if (!isTRUE(all.equal(current_info$mtime, ontology_cache$ontology_mtime))) {
+# Compare contents, not modification times, which change on every checkout.
+if (file.exists(ontology_path) && !is.null(ontology_cache$ontology_md5)) {
+  if (unname(tools::md5sum(ontology_path)) != ontology_cache$ontology_md5) {
     warning(
-      "Ontology cache may be stale. Re-run scripts/build_ontology_cache.R because the TTL file has changed."
+      "Ontology cache may be stale. Re-run app/shiny/build_cache.R because FY26_HMIS_Logic_Model.ttl has changed."
     )
   }
 }
@@ -216,16 +217,9 @@ vocab_values <- ontology_cache$vocab_values
 scenarios <- ontology_cache$de_scenarios
 
 
-# ADD THIS TO ONTOLOGY AND DELETE ----
-#Add the label to the ontology. This was kept here to troubleshoot different UI approaches.
-input_file <- "data/DataExchangeScenarioOntology.xlsx"
-ScenarioData <- read_excel(input_file, 1)
-
-scenarios_temp <- ScenarioData |>
-  mutate(ScenarioName_id = paste0(ScenarioName,"Scenario")) |> 
-  select(ScenarioName_id,Label) |> 
-  right_join(scenarios,
-             by= c("ScenarioName_id"="scenario_id" ))
+# The cache already carries each scenario's Label (from the Scenarios table
+# in api/DataExchangeScenarioList.md).
+scenarios_temp <- scenarios
 
 
 message("Loaded ", nrow(results), " ontology property rows.")
@@ -235,20 +229,18 @@ message("Loaded ", nrow(scenarios), " data exchange scenarios.")
 
 metadata <- results %>%
   dplyr::mutate(
+    # range_id is the local name of the rdfs:range: an XSD datatype, or one
+    # of the ontology's own string datatypes (string32, zipCodeString, ...).
     field_type = dplyr::case_when(
       !is.na(scheme) ~ "Enumeration",
-      stringr::str_detect(range, "dateTime") ~ "DateTime",
-      stringr::str_detect(range, "date") ~ "Date",
-      stringr::str_detect(range, "integer") ~ "Integer",
-      stringr::str_detect(range, "decimal") ~ "Decimal",
-      stringr::str_detect(range, "boolean") ~ "Boolean",
-      stringr::str_detect(range, "string") ~ "String",
+      range_id == "dateTime" ~ "DateTime",
+      range_id == "date" ~ "Date",
+      range_id == "gYear" ~ "Year",
+      range_id %in% c("integer", "nonNegativeInteger", "positiveInteger", "unsignedInt") ~ "Integer",
+      range_id == "decimal" ~ "Decimal",
+      range_id == "boolean" ~ "Boolean",
+      grepl("^string|String$", range_id) ~ "String",
       TRUE ~ "Unknown"
-    ),
-    dataElementNumberAndField = paste0(
-      dataElementNumber,
-      ".",
-      dataElementFieldNumber
     )
   )
 
@@ -292,7 +284,7 @@ hmis_elements <- clean_MetaData %>%
     selector_label = paste0(
       dataDictionaryName,
       " | ",
-      dataElementNumberAndField,
+      dplyr::coalesce(dataElementNumberAndField, "no element number"),
       " | ",
       field_type
     )
@@ -357,7 +349,10 @@ read_data_dictionary <- function(path) {
     )
 }
 
-DataDictionaryText <- read_data_dictionary("data/DataDictionaryAnnotations.md")
+DataDictionaryText <- read_data_dictionary("data/DataDictionaryAnnotations.md") |>
+  # The ontology numbers 3.917A and 3.917B (Prior Living Situation) as 3.917,
+  # so element_key drops the trailing letter for matching.
+  dplyr::mutate(element_key = sub("^([0-9]+\\.[0-9]+)[A-Z]$", "\\1", `Element Identifier`))
 
 build_element_html <- function(df) {
   
