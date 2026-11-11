@@ -6,7 +6,7 @@
 | `workflows/*.arazzo.yaml` | Proposed multi-step scenarios in [Arazzo 1.0](https://spec.openapis.org/arazzo/latest.html), the OpenAPI Initiative's workflow format. |
 | `tests/` | Contract tests run with [Newman](https://github.com/postmanlabs/newman), locally or in CI. |
 | `codegen/` | Generator config and scripts that build client SDKs (TypeScript, Python), standalone JSON-LD context files and HTML docs from the OpenAPI description. Output goes to the gitignored `codegen/build/`. See [codegen/README.md](codegen/README.md). |
-| `DataExchangeScenarioList.xlsx` | The scenario-to-data-element mapping, a verbatim copy of the former `Translation Layer/datasource/DataExchangeScenarioOntology.xlsx`. |
+| [`DataExchangeScenarioList.md`](DataExchangeScenarioList.md) | The eight scenarios and the data elements each one uses in its request and response. It was converted from `DataExchangeScenarioList.xlsx`, a copy of the former `Translation Layer/datasource/DataExchangeScenarioOntology.xlsx`. |
 | `redocly.yaml` | Lint settings for the OpenAPI and Arazzo files. |
 
 ## The OpenAPI description
