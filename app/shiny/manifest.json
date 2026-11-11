@@ -4043,6 +4043,9 @@
     }
   },
   "files": {
+    "README.md": {
+      "checksum": "d51b6ff7ea260e968ce1c823ea71f7a7"
+    },
     "app.R": {
       "checksum": "89ec815a910c20f3ce5abeabd74c7ad7"
     },
