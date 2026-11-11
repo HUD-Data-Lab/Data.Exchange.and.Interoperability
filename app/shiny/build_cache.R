@@ -57,7 +57,7 @@ datatype_properties <- triples |>
 
 # A property is an HMIS data element field when its range is a datatype or a
 # code list (skos:Concept), or when it is a datatype property with no range
-# (EnrollmentCoC, UserID, HouseholdID), which the app treats as a string.
+# (the app shows those as type "Unknown" and treats them as strings).
 # Object properties whose range is a class or missing (hasExit,
 # enrollmentOfClient, partOf, ...) only link records together; like the
 # structural properties in the old cache, they get no dataDictionaryName.

@@ -686,6 +686,7 @@ care;99=Data not collected""" .
 Necessary for projects that operate across multiple CoCs for data export purposes and to ensure accurate counts of persons who are served within a CoC.""" ;
     dcterms:identifier "3.16.1" ;
     rdfs:domain :Enrollment ;
+    rdfs:range :cocCodeString ;
     :responseValue "Must match a record in ProjectCoC.csv   with the same ProjectID ^[A-Za-z]{2}-(0-9){3}$" .
 
 :EventType a owl:ObjectProperty ;
@@ -3452,7 +3453,8 @@ necessary to provide the person with the appropriate services to prevent further
     dcterms:description "Household Identifier" ;
     dcterms:identifier "5.09",
         "5.09.1" ;
-    rdfs:domain :Household .
+    rdfs:domain :Household ;
+    rdfs:range :string32 .
 
 :IncomeBenefitsID a owl:DatatypeProperty ;
     rdfs:label "IncomeBenefitsID" ;
@@ -4679,8 +4681,8 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
 
 :UserID a owl:DatatypeProperty ;
     dcterms:description "A unique ID used to associate data with the user who entered and/or edited it." ;
-    dcterms:identifier "5.07.01",
-        "5.07.1" .
+    dcterms:identifier "5.07.1" ;
+    rdfs:range :string32 .
 
 xsd:date a rdfs:Datatype .
 

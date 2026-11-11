@@ -11566,7 +11566,7 @@ components:
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#UserID
       type: string
-      x-hmis-vocabulary: '5.07.01'
+      x-hmis-vocabulary: 5.07.1
     VADisabilityNonService:
       x-hmis-dataDictionaryName: VADisabilityNonService
       x-jsonld-context:
