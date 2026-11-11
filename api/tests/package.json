@@ -1,0 +1,20 @@
+{
+  "name": "hmis-api-tests",
+  "private": true,
+  "description": "Contract tests for the HMIS Data Exchange API, run with Newman against the OpenAPI description.",
+  "scripts": {
+    "test": "node run-tests.mjs",
+    "lint": "node run-tests.mjs --lint-only",
+    "mock": "prism mock ../hmis-api.openapi.yaml --port 4010 --errors",
+    "check-ontology": "node check-ontology.mjs",
+    "check-names": "node check-names.mjs"
+  },
+  "devDependencies": {
+    "@apideck/portman": "1.35.2",
+    "@redocly/cli": "2.77.0",
+    "@stoplight/prism-cli": "5.16.0",
+    "n3": "2.13.12",
+    "newman": "6.2.3",
+    "yaml": "2.9.1"
+  }
+}

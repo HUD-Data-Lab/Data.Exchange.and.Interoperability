@@ -1,0 +1,508 @@
+# global.R ----
+
+library(shiny)
+library(tidyverse)
+library(dplyr)
+library(jsonlite)
+library(bslib)
+library(rdflib)
+
+## source required files
+source("html_text_blocks.R")
+
+## Functions ----
+time_step <- function(label, expr) {
+  message("\n--- START: ", label, " ---")
+  start <- Sys.time()
+  result <- force(expr)
+  end <- Sys.time()
+  message("--- END: ", label, " | ",
+          round(as.numeric(end - start, units = "secs"), 2),
+          " sec ---")
+  result
+}
+
+build_field_schema <- function(value,
+                               metadata,
+                               vocab_values) {
+
+  value <- as.character(value)
+
+  field <- metadata %>%
+    dplyr::mutate(
+      dplyr::across(
+        dplyr::everything(),
+        as.character
+      )
+    ) %>%
+    dplyr::filter(
+      dataDictionaryName == value |
+        dataElementNumberAndField == value
+    )
+
+  if (nrow(field) == 0) {
+    stop(
+      paste(
+        "Field not found:",
+        value
+      )
+    )
+  }
+
+  field <- field[1, ]
+
+  field_type <- field$field_type[1]
+
+  # Enumerated field
+  if (field_type == "Enumeration") {
+
+    vals <- vocab_values %>%
+      dplyr::filter(
+        scheme == field$scheme[1]
+      )
+
+    return(
+      list(
+        DataDictionaryName = field$dataDictionaryName[1],
+        type = "string",
+
+        enum = vals$preflabel,
+
+        `x-hmis-vocabulary` =
+          field$dataElementNumberAndField[1],
+
+        `x-hmis-values` =
+          purrr::pmap(
+            list(
+              vals$notation,
+              vals$preflabel
+            ),
+            function(notation, preflabel) {
+              list(
+                notation = notation,
+                preflabel = preflabel
+              )
+            }
+          )
+      )
+    )
+  }
+
+  # Scalar fields
+  type_map <- c(
+    String = "string",
+    Integer = "integer",
+    Decimal = "number",
+    Boolean = "boolean",
+    Date = "string",
+    DateTime = "string",
+    Year = "integer"
+  )
+
+  schema_type <- type_map[field_type]
+
+  if (is.na(schema_type)) {
+    schema_type <- "string"
+  }
+
+  schema <- list(
+    DataDictionaryName = field$dataDictionaryName[1],
+    type = schema_type,
+    `x-hmis-vocabulary` = field$dataElementNumberAndField[1]
+  )
+
+  if (field_type == "Date") {
+    schema$format <- "date"
+  }
+
+  if (field_type == "DateTime") {
+    schema$format <- "date-time"
+  }
+
+  schema
+}
+
+find_field <- function(field_id, metadata) {
+
+  field_id <- as.character(field_id)
+
+  metadata_clean <- metadata %>%
+    dplyr::mutate(
+      dplyr::across(
+        dplyr::everything(),
+        as.character
+      )
+    )
+
+  field <- metadata_clean %>%
+    dplyr::filter(
+      dataDictionaryName == field_id |
+        dataElementNumberAndField == field_id
+    )
+
+  if (nrow(field) == 0) {
+    stop(
+      paste(
+        "Field not found:",
+        field_id
+      )
+    )
+  }
+
+  field[1, ]
+}
+
+build_object_schema <- function(fields,
+                                metadata,
+                                vocab_values) {
+
+  properties <- lapply(
+    fields,
+    build_field_schema,
+    metadata = metadata,
+    vocab_values = vocab_values
+  )
+
+  property_names <- purrr::map_chr(
+    fields,
+    function(field_id) {
+
+      field <- find_field(
+        field_id,
+        metadata
+      )
+
+      field$dataDictionaryName[1]
+    }
+  )
+
+  names(properties) <- property_names
+
+  list(
+    type = "object",
+    properties = properties
+  )
+}
+
+## Step 1: Prep the ontology files ----
+
+# build_cache.R builds the cache from FY26_HMIS_Logic_Model.ttl and
+# api/DataExchangeScenarioList.md at the repository root.
+cache_path <- "data/hmis_ontology_cache.rds"
+ontology_path <- "../../FY26_HMIS_Logic_Model.ttl"
+
+if (!file.exists(cache_path)) {
+  stop(
+    "Ontology cache not found. Run Rscript app/shiny/build_cache.R from the repository root."
+  )
+}
+
+#Intention of this section is to make sure we are using the most recent ontology file. 
+ontology_cache <- time_step("Load ontology cache", {
+  readRDS(cache_path)
+})
+
+# Compare contents, not modification times, which change on every checkout.
+if (file.exists(ontology_path) && !is.null(ontology_cache$ontology_md5)) {
+  if (unname(tools::md5sum(ontology_path)) != ontology_cache$ontology_md5) {
+    warning(
+      "Ontology cache may be stale. Re-run app/shiny/build_cache.R because FY26_HMIS_Logic_Model.ttl has changed."
+    )
+  }
+}
+
+
+results <- ontology_cache$properties
+vocab_values <- ontology_cache$vocab_values
+scenarios <- ontology_cache$de_scenarios
+
+
+# The cache already carries each scenario's Label (from the Scenarios table
+# in api/DataExchangeScenarioList.md).
+scenarios_temp <- scenarios
+
+
+message("Loaded ", nrow(results), " ontology property rows.")
+message("Loaded ", nrow(vocab_values), " vocabulary rows.")
+message("Loaded ", nrow(scenarios), " data exchange scenarios.")
+
+
+metadata <- results %>%
+  dplyr::mutate(
+    # range_id is the local name of the rdfs:range: an XSD datatype, or one
+    # of the ontology's own string datatypes (string32, zipCodeString, ...).
+    field_type = dplyr::case_when(
+      !is.na(scheme) ~ "Enumeration",
+      range_id == "dateTime" ~ "DateTime",
+      range_id == "date" ~ "Date",
+      range_id == "gYear" ~ "Year",
+      range_id %in% c("integer", "nonNegativeInteger", "positiveInteger", "unsignedInt") ~ "Integer",
+      range_id == "decimal" ~ "Decimal",
+      range_id == "boolean" ~ "Boolean",
+      grepl("^string|String$", range_id) ~ "String",
+      TRUE ~ "Unknown"
+    )
+  )
+
+
+clean_MetaData <- metadata %>%
+  dplyr::mutate(
+    property = stringr::str_replace(property, "^.*[#/]", ""),
+    domain = stringr::str_replace(domain, "^.*[#/]", ""),
+    range = stringr::str_replace(range, "^.*[#/]", ""),
+    field_type = stringr::str_replace(field_type, "^.*[#/]", "")
+  )
+
+
+clean_vocab_values <- vocab_values %>%
+  dplyr::mutate(
+    concept = stringr::str_replace(concept, "^.*[#/]", "")
+  )
+
+hmis_elements <- clean_MetaData %>%
+  dplyr::select(
+    dataDictionaryName,
+    dataElementNumberAndField,
+    CSVExportTable,
+    field_type
+  ) %>%
+  dplyr::filter(
+    !is.na(dataDictionaryName),
+    dataDictionaryName != "NA",
+    dataDictionaryName != ""
+  ) %>%
+  dplyr::distinct(
+    dataDictionaryName,
+    dataElementNumberAndField,
+    .keep_all = TRUE
+  ) %>%
+  dplyr::arrange(
+    dataElementNumberAndField,
+    dataDictionaryName
+  ) %>%
+  dplyr::mutate(
+    selector_label = paste0(
+      dataDictionaryName,
+      " | ",
+      dplyr::coalesce(dataElementNumberAndField, "no element number"),
+      " | ",
+      field_type
+    )
+  )
+
+
+# UI specific functions and objects ----
+
+#Lists to for multi-select options
+
+hmis_element_choices <- hmis_elements$dataDictionaryName
+names(hmis_element_choices) <- hmis_elements$selector_label
+scenario_choices <- unique(scenarios_temp$Label) #UPDATE once "label" is in the Data Exchange Scenario ontology
+RequestResponse_choices <- c("Full Schema", "Request Schema", "Response Schema")
+
+# Build data dictionary text ----
+# Reads data/DataDictionaryAnnotations.md into one row per data element, with
+# the same columns the spreadsheet it replaced had. Each element is a
+# "## <identifier> <name>" heading followed by "- **<field>:** <value>" items;
+# further lines of a value are indented by two spaces.
+read_data_dictionary <- function(path) {
+  lines <- readLines(path, encoding = "UTF-8", warn = FALSE)
+  fields <- c(
+    "Element Type", "Funder: Program-Component", "Project Type Applicability",
+    "Data Collected About", "Collection Point",
+    "System Logic and Other System Issues", "CSV", "Rationale",
+    "Data Collection Instruction"
+  )
+  rows <- list()
+  current <- NULL
+  field <- NULL
+  flush <- function() {
+    if (!is.null(current)) rows[[length(rows) + 1]] <<- sub("\n+$", "", current)
+  }
+  for (line in lines) {
+    if (startsWith(line, "## ")) {
+      flush()
+      heading <- sub("^## ", "", line)
+      current <- c(
+        `Element Identifier` = sub(" .*$", "", heading),
+        `Element Name` = sub("^\\S+ ", "", heading),
+        setNames(rep(NA_character_, length(fields)), fields)
+      )
+      field <- NULL
+    } else if (!is.null(current) && grepl("^- \\*\\*.+?:\\*\\* ", line)) {
+      field <- sub("^- \\*\\*(.+?):\\*\\* .*$", "\\1", line)
+      current[[field]] <- sub("^- \\*\\*.+?:\\*\\* ", "", line)
+    } else if (!is.null(current) && !is.null(field) &&
+               (startsWith(line, "  ") || line == "")) {
+      current[[field]] <- paste0(current[[field]], "\n", sub("^  ", "", line))
+    }
+  }
+  flush()
+  dictionary <- tibble::as_tibble(as.data.frame(do.call(rbind, rows), check.names = FALSE))
+  dictionary |>
+    dplyr::mutate(
+      CSV = sub("^`(.*)`$", "\\1", CSV),
+      # Links are written as <url> or [text](url); the app needs the URL.
+      `Data Collection Instruction` = sub(
+        "^<(.*)>$|^\\[.*\\]\\((.*)\\)$", "\\1\\2", `Data Collection Instruction`
+      )
+    )
+}
+
+DataDictionaryText <- read_data_dictionary("data/DataDictionaryAnnotations.md") |>
+  # The ontology numbers 3.917A and 3.917B (Prior Living Situation) as 3.917,
+  # so element_key drops the trailing letter for matching.
+  dplyr::mutate(element_key = sub("^([0-9]+\\.[0-9]+)[A-Z]$", "\\1", `Element Identifier`))
+
+build_element_html <- function(df) {
+  
+  div(
+    
+    h2(
+      paste(
+        unique(df$`Element Identifier`),
+        unique(df$`Element Name`)
+      ),
+      style = "
+      color:#1f4e79;
+      font-size:20px;
+      margin-bottom:10px
+      "
+    ),
+    
+    lapply(
+      c(
+        "Element Type",
+        "Funder: Program-Component",
+        "Project Type Applicability",
+        "Data Collected About",
+        "Collection Point",
+        "System Logic and Other System Issues",
+        "CSV",
+        "Rationale",
+        "Data Collection Instruction"
+      ),
+      function(field) {
+        
+        value <- df[[field]][1]
+        
+        if (!is.na(value) && nzchar(value)) {
+          
+          tagList(
+            
+            tags$h4(
+              field,
+              style = "
+              margin-top:12px;
+              margin-bottom:4px;
+              font-size:13px;
+              font-weight:600;
+              color:#444;
+              "
+            ),
+            
+            if (field == "Data Collection Instruction"){
+              tags$p(
+                tags$a(
+                  href = value,
+                  "Link to documentation",
+                  target = "_blank",
+                  style="font-size:12px"
+                  ),
+                style = "margin-bottom:8px;"
+                )
+              
+            } else {
+            
+            tags$p(
+              value,
+              style = "
+              margin-bottom:8px;
+              font-size:12px;
+              line-height:1-4
+              "
+            )
+            }
+            
+          )
+          
+        }
+        
+      }
+    ),
+    
+    tags$hr()
+  )
+}
+
+
+#Function to build tables
+# Build individual tables
+build_dictionary_tables <- function(ids, dictionary){
+  
+  lapply(ids, function(id){
+    
+    x <- dictionary |>
+      dplyr::filter(
+        `Element Identifier` %in% id
+      )
+    
+    list(
+      title = paste0(
+        x$`Element Identifier`,
+        " ",
+        x$`Element Name`
+      ),
+      tibble::tibble(
+        Header = c(
+          "Element Type",
+          "Funder: Program-Component",
+          "Project Type Applicability",
+          "Data Collected About",
+          "Collection Point",
+          "System Logic & Other System Issues",
+          "CSV"
+        ),
+        
+        Instruction = c(
+          x$`Element Type`,
+          x$`Funder: Program-Component`,
+          x$`Project Type Applicability`,
+          x$`Data Collected About`,
+          x$`Collection Point`,
+          x$`System Logic and Other System Issues`,
+          x$CSV
+        )
+      )
+    )
+  }) |>
+    stats::setNames(ids)
+  
+}
+
+# Preset card formats
+cards <- list(
+  card(
+    full_screen = TRUE,
+    card_header("Overview"),
+    HomePage_overview
+  ),
+  card(
+    full_screen = TRUE,
+    card_header("Privacy and Security"),
+    "Coming soon"
+  ),
+  card(
+    full_screen = TRUE,
+    card_header("HMIS Data Mapping"),
+    "Coming Soon"
+  ),
+  card(
+    full_screen = TRUE,
+    card_header("Guides and Resources"),
+    "Coming Soon"
+  )
+)
+
+
+
