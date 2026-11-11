@@ -144,14 +144,6 @@ dcterms:publisher a owl:AnnotationProperty .
 
 dcterms:title a owl:AnnotationProperty .
 
-<http://webprotege.stanford.edu/MentalHealthConsultation> a owl:ObjectProperty ;
-    rdfs:label "MentalHealthConsultation" ;
-    dcterms:identifier "V10" ;
-    rdfs:domain :EntrySSVF ;
-    rdfs:range skos:Concept ;
-    :linkedVocabulary :list_MentalHealthConsultation ;
-    :responseValue "1=Mental health consultation completed;2=Mental health consultation being coordinated/arranged with VA provider;3=Mental health consultation being coordinated/arranged with other provider;4=Offer declined" .
-
 <http://webprotege.stanford.edu/RDFb6idbQSbeN9XWT5FvRg5> rdfs:label "AccessPoint" ;
     dcterms:description "Project is a Coordinated Entry Access Point" ;
     dcterms:identifier "2.09.1" .
