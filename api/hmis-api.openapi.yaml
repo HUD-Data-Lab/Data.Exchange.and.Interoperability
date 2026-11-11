@@ -1546,7 +1546,7 @@ components:
             "Seasonal / sporadic (including day labor)": urn:hud:hmis:owl#list_EmploymentType_3
             "Full-time": urn:hud:hmis:owl#list_EmploymentType_1
         EndDate:
-          '@id': urn:hud:hmis:owl#EndDate
+          '@id': urn:hud:hmis:owl#GrantEndDate
           '@type': xsd:date
         EnrollmentCoC:
           '@id': urn:hud:hmis:owl#EnrollmentCoC
@@ -2743,7 +2743,7 @@ components:
           '@id': urn:hud:hmis:owl#SocSecRetirementAmount
           '@type': http://www.w3.org/2001/XMLSchema#decimal
         StartDate:
-          '@id': urn:hud:hmis:owl#StartDate
+          '@id': urn:hud:hmis:owl#GrantStartDate
           '@type': xsd:date
         State:
           '@id': urn:hud:hmis:owl#State
@@ -7097,7 +7097,7 @@ components:
     EndDate:
       x-hmis-dataDictionaryName: EndDate
       x-jsonld-context:
-        '@id': urn:hud:hmis:owl#EndDate
+        '@id': urn:hud:hmis:owl#GrantEndDate
         '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 2.06.4
@@ -11078,7 +11078,7 @@ components:
     StartDate:
       x-hmis-dataDictionaryName: StartDate
       x-jsonld-context:
-        '@id': urn:hud:hmis:owl#StartDate
+        '@id': urn:hud:hmis:owl#GrantStartDate
         '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 2.06.3

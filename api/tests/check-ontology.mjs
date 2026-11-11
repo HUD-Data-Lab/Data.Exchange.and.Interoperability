@@ -11,9 +11,10 @@
 //   5. cite in x-hmis-vocabulary, as a string, a data element number the property has as dcterms:identifier.
 //
 // Every field schema (a schema with x-hmis-dataDictionaryName) must:
-//   6. carry its own x-jsonld-context term definition, with "@id" urn:hud:hmis:owl#<name> and the same
-//      "@type" (or none) as the object-level contexts, unless the field is only ever listed in
-//      x-hmis-unmapped-fields, in which case it must carry none.
+//   6. carry its own x-jsonld-context term definition, with "@id" urn:hud:hmis:owl#<name> (or the
+//      property FIELD_PROPERTY_EXCEPTIONS names for that field) and the same "@type" (or none) as the
+//      object-level contexts, unless the field is only ever listed in x-hmis-unmapped-fields, in which
+//      case it must carry none.
 //
 // Every x-jsonld-type (the class an object represents) must:
 //   7. be an owl:Class declared in the ontology.
@@ -53,6 +54,11 @@ const SKOS = "http://www.w3.org/2004/02/skos/core#";
 const LINKED_VOCABULARY = `urn:hud:hmis:owl#linkedVocabulary`;
 const CODE_LIST_EXCEPTIONS = {
   SubTypeProvided: "an integer whose list (V2.A, V2.B or V2.C) depends on TypeProvided, so no single label map applies",
+};
+// Fields whose JSON name (the CSV column name) differs from the ontology property's local name.
+const FIELD_PROPERTY_EXCEPTIONS = {
+  StartDate: "GrantStartDate", // Funder.csv 2.06.3
+  EndDate: "GrantEndDate", // Funder.csv 2.06.4
 };
 const PROPERTY_TYPES = new Set([
   "http://www.w3.org/2002/07/owl#DatatypeProperty",
@@ -257,7 +263,7 @@ for (const [name, schema] of Object.entries(schemas)) {
     if (own === undefined || unmappedFields.has(name)) continue;
   }
   if (own === undefined) {
-    errors.push(`${name}: field schema has no x-jsonld-context (expected "@id": ${HMIS}${name})`);
+    errors.push(`${name}: field schema has no x-jsonld-context (expected "@id": ${HMIS}${FIELD_PROPERTY_EXCEPTIONS[name] ?? name})`);
     continue;
   }
   if (!own || typeof own !== "object" || Array.isArray(own) || typeof own["@id"] !== "string") {
@@ -267,7 +273,8 @@ for (const [name, schema] of Object.entries(schemas)) {
   fieldContexts++;
   const iri = own["@id"];
   const type = own["@type"] === "@vocab" ? "@vocab" : typeof own["@type"] === "string" ? own["@type"].replace(/^xsd:/, XSD) : null;
-  if (iri !== HMIS + name) errors.push(`${name}: field schema x-jsonld-context "@id" is ${iri}, expected ${HMIS}${name}`);
+  const expected = HMIS + (FIELD_PROPERTY_EXCEPTIONS[name] ?? name);
+  if (iri !== expected) errors.push(`${name}: field schema x-jsonld-context "@id" is ${iri}, expected ${expected}`);
   if (!properties.has(iri)) errors.push(`${name}: field schema x-jsonld-context "@id" ${iri} is not a property in the ontology`);
   if (objectTerm && (objectTerm.type ?? null) !== type) {
     errors.push(`${name}: field schema "@type" is ${type ?? "(none)"}, but the object-level contexts use ${objectTerm.type ?? "(none)"}`);

@@ -170,8 +170,9 @@ owl:maxCardinality a owl:AnnotationProperty .
 
 skos:note a owl:AnnotationProperty .
 
-:EndDate a owl:DatatypeProperty ;
+:GrantEndDate a owl:DatatypeProperty ;
     rdfs:label "GrantEndDate" ;
+    rdfs:comment "The EndDate column of Funder.csv (2.06.4). Named GrantEndDate so it is not mistaken for an enrollment, project or service end date."@en ;
     dcterms:description "Grant End Date" ;
     dcterms:identifier "2.06.4" ;
     rdfs:domain :FunderClass ;
@@ -2364,8 +2365,9 @@ indicate the position of omitted digits
 
 <wptmp:entity#AffiliationID> dcterms:description "Unique identifier" .
 
-:StartDate a owl:DatatypeProperty ;
+:GrantStartDate a owl:DatatypeProperty ;
     rdfs:label "GrantStartDate" ;
+    rdfs:comment "The StartDate column of Funder.csv (2.06.3). Named GrantStartDate so it is not mistaken for an enrollment, project or service start date."@en ;
     dcterms:description "Grant Start Date" ;
     dcterms:identifier "2.06.3" ;
     rdfs:domain :FunderClass ;
@@ -3708,7 +3710,7 @@ C. Identifies the number of runaway youth.""" ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onDataRange xsd:date ;
-            owl:onProperty :StartDate ;
+            owl:onProperty :GrantStartDate ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
@@ -4736,7 +4738,7 @@ xsd:dateTime a rdfs:Datatype .
 :FunderClass rdfs:subClassOf [ a owl:Restriction ;
             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
             owl:onDataRange xsd:date ;
-            owl:onProperty :EndDate ] .
+            owl:onProperty :GrantEndDate ] .
 
 # --- Part-of property hierarchy -------------------------------------------------
 # The beta grouped record types under SubEnrollment / SubProject / SubCEAssessment
