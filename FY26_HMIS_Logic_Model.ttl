@@ -1,22 +1,3 @@
-# HMIS Logic Model, FY2026.
-# Turtle serialization of https://github.com/HUD-Data-Lab/HMIS-Logic-Model/blob/main/FY2026_HMIS_Logic_Model_RDF.owl
-# (RDF/XML), with proposed changes taken from the v1.3.0-beta ontology:
-#   - 2.06.3 StartDate and 2.06.4 EndDate moved from the HUD_HMIS.xsd namespace into this one.
-#   - Everything else added is in the section "Proposed additions from v1.3.0-beta" at the end of this file.
-# Data element numbers (dcterms:identifier) follow HUD's FY 2026 HMIS CSV Specifications (2025-08-28),
-# edited in place in each property, and 2.03.2 Geocode is typed as a string (six digits, leading zeros).
-# hmis:responseValue, hmis:responseValueSecondary and hmis:responseNotes renamed to :responseValue,
-# :responseValueSecondary and :responseNotes; the upstream IRIs had "hmis:" inside the local name
-# (urn:hud:hmis:owl#hmis:responseValue).
-# The unused datatype urn:hud:hmis:owl#xs:positiveInteger (a conversion artifact; properties use
-# xsd:positiveInteger) is removed.
-# The HMIS code lists are SKOS concept schemes (skos:ConceptScheme, one skos:Concept per value,
-# IRI :list_<Name>_<notation>) instead of rdfs:Datatype owl:oneOf enumerations. Properties that
-# take a code-list value are owl:ObjectProperty with range skos:Concept and name their scheme
-# with :linkedVocabulary. See the last section of this file.
-# HousingAssessment is the CE Participation field (2.09.A, No/Yes); the Exit.csv column of the same
-# name (W5.1, Housing Assessment at Exit) is :ExitHousingAssessment.
-
 @prefix : <urn:hud:hmis:owl#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
@@ -4706,15 +4687,10 @@ xsd:dateTime a rdfs:Datatype .
 
 
 #################################################################
-#  Proposed additions from v1.3.0-beta
-#  Content from Artifacts/Ontology/Output_v1.3.0-beta/hmis_ontologyv1.3.0-beta.ttl
-#  that the FY2026 Logic Model lacks, rewritten in this model's conventions.
-#  Left out on purpose: Sub* grouping classes, disjointness axioms, the C4
-#  Translation Assistance fields (removed from the FY2026 standards), and the
-#  SKOS code lists (this model already defines each list as an rdfs:Datatype).
+#  Additional data elements, property hierarchy, inverses, class labels and descriptions
 #################################################################
 
-# --- FY2026 data elements missing from the Logic Model -------------------------
+# --- Additional FY2026 data elements -------------------------------------------
 
 :HOHLeaseholder a owl:ObjectProperty ;
     rdfs:label "HOHLeaseholder" ;
@@ -4745,9 +4721,7 @@ xsd:dateTime a rdfs:Datatype .
             owl:onProperty :GrantEndDate ] .
 
 # --- Part-of property hierarchy -------------------------------------------------
-# The beta grouped record types under SubEnrollment / SubProject / SubCEAssessment
-# classes. The same grouping is expressed here on the relationships instead: every
-# compositional has* property is a sub-property of :hasPart, so a reasoner can
+# Every compositional has* property is a sub-property of :hasPart, so a reasoner can
 # answer "all parts of this enrollment / project / assessment" in one query.
 
 :hasPart a owl:ObjectProperty ;
@@ -4801,7 +4775,6 @@ xsd:dateTime a rdfs:Datatype .
 :hasAssessmentResult rdfs:subPropertyOf :hasPart .
 
 # --- Inverses for the non-compositional links -----------------------------------
-# The beta declared inverse pairs (organizationOf, clientOf, projectOf, householdOf).
 # Each enrollment has exactly one client, project and household, and each project
 # exactly one organization, so the inverses are functional.
 
@@ -4878,7 +4851,7 @@ xsd:dateTime a rdfs:Datatype .
 :VASHExitReason rdfs:label "HUD-VASH Exit Information"@en .
 :YouthEducationStatus rdfs:label "Youth Education Status"@en .
 
-# --- Descriptions for classes that had none ------------------------------------
+# --- Class descriptions --------------------------------------------------------
 
 :DateOfEngagementClass dcterms:description "Contains data for element 4.13 Date of Engagement, exported in Enrollment.csv." .
 :EntryRHY dcterms:description "Runaway and Homeless Youth (RHY) data collected at project start, exported in Enrollment.csv." .
@@ -4894,7 +4867,7 @@ xsd:dateTime a rdfs:Datatype .
 #  One skos:ConceptScheme per HMIS list (:csvList is the list number in the HUD FY2026 CSV
 #  specification) and one skos:Concept per value. Concept IRIs are scoped to their scheme
 #  (:list_<Name>_<notation>), so every concept has exactly one skos:inScheme, skos:notation and
-#  skos:prefLabel. Scheme names follow the v1.3.0-beta ontology.
+#  skos:prefLabel.
 #################################################################
 
 :csvList a owl:AnnotationProperty ;
