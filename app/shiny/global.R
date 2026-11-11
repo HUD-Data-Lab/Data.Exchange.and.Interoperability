@@ -309,7 +309,55 @@ scenario_choices <- unique(scenarios_temp$Label) #UPDATE once "label" is in the 
 RequestResponse_choices <- c("Full Schema", "Request Schema", "Response Schema")
 
 # Build data dictionary text ----
-DataDictionaryText <- read_excel("data/DataDictionaryAnnotations.xlsx", 1)
+# Reads data/DataDictionaryAnnotations.md into one row per data element, with
+# the same columns the spreadsheet it replaced had. Each element is a
+# "## <identifier> <name>" heading followed by "- **<field>:** <value>" items;
+# further lines of a value are indented by two spaces.
+read_data_dictionary <- function(path) {
+  lines <- readLines(path, encoding = "UTF-8", warn = FALSE)
+  fields <- c(
+    "Element Type", "Funder: Program-Component", "Project Type Applicability",
+    "Data Collected About", "Collection Point",
+    "System Logic and Other System Issues", "CSV", "Rationale",
+    "Data Collection Instruction"
+  )
+  rows <- list()
+  current <- NULL
+  field <- NULL
+  flush <- function() {
+    if (!is.null(current)) rows[[length(rows) + 1]] <<- sub("\n+$", "", current)
+  }
+  for (line in lines) {
+    if (startsWith(line, "## ")) {
+      flush()
+      heading <- sub("^## ", "", line)
+      current <- c(
+        `Element Identifier` = sub(" .*$", "", heading),
+        `Element Name` = sub("^\\S+ ", "", heading),
+        setNames(rep(NA_character_, length(fields)), fields)
+      )
+      field <- NULL
+    } else if (!is.null(current) && grepl("^- \\*\\*.+?:\\*\\* ", line)) {
+      field <- sub("^- \\*\\*(.+?):\\*\\* .*$", "\\1", line)
+      current[[field]] <- sub("^- \\*\\*.+?:\\*\\* ", "", line)
+    } else if (!is.null(current) && !is.null(field) &&
+               (startsWith(line, "  ") || line == "")) {
+      current[[field]] <- paste0(current[[field]], "\n", sub("^  ", "", line))
+    }
+  }
+  flush()
+  dictionary <- tibble::as_tibble(as.data.frame(do.call(rbind, rows), check.names = FALSE))
+  dictionary |>
+    dplyr::mutate(
+      CSV = sub("^`(.*)`$", "\\1", CSV),
+      # Links are written as <url> or [text](url); the app needs the URL.
+      `Data Collection Instruction` = sub(
+        "^<(.*)>$|^\\[.*\\]\\((.*)\\)$", "\\1\\2", `Data Collection Instruction`
+      )
+    )
+}
+
+DataDictionaryText <- read_data_dictionary("data/DataDictionaryAnnotations.md")
 
 build_element_html <- function(df) {
   

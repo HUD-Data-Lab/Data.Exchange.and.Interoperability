@@ -101,7 +101,7 @@ the history before that commit.
 | `manifest.json` | Deployment manifest for Posit Connect or shinyapps.io (rsconnect). It pins the R version and package versions and lists checksums for the files in this folder. If you change any file, regenerate it with `rsconnect::writeManifest("app/shiny")`. | Repository root |
 | `data/hmis_ontology_cache_v1.3.0-beta.rds` | Prebuilt cache of the v1.3.0-beta ontology. It holds the data properties (`properties`), the SKOS code-list values (`vocab_values`) and the data exchange scenarios (`de_scenarios`). | `Artifacts/Ontology/Output_v1.3.0-beta/` |
 | `data/DataExchangeScenarioOntology.xlsx` | The scenario list. The app uses it to add a readable label to each scenario in the cache. | `Translation Layer/datasource/` |
-| `data/DataDictionaryAnnotations.xlsx` | Data dictionary text for each element, shown on the Data Dictionary panels. | `Foundation Layer/Ontology Generator/datasource/` |
+| `data/DataDictionaryAnnotations.md` | Data dictionary guidance for each of the 87 HMIS data elements, from HUD's HMIS Data Standards Manual: who collects it, about whom, when, the system rules, its CSV file, why it is collected, and a link to its HUD Exchange page. It is shown on the Data Dictionary panels. `read_data_dictionary()` in `global.R` parses it, so keep its layout. It was converted from `DataDictionaryAnnotations.xlsx`. | `Foundation Layer/Ontology Generator/datasource/` (as .xlsx) |
 
 `global.R` also looks for `data/hmis_ontologyv1.3.0-beta.ttl`, but only to
 warn when the cache is older than that file. The file is not included, so the
