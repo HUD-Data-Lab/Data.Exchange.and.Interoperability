@@ -890,14 +890,6 @@ Necessary for projects that operate across multiple CoCs for data export purpose
     rdfs:subPropertyOf owl:topObjectProperty ;
     :responseValue "0=Not Participating;1=HMIS Participating;2=Comparable Database Participating" .
 
-:HOHLeaseHolder a owl:ObjectProperty ;
-    dcterms:description "Head of Household has never been a leaseholder/renter of unit" ;
-    dcterms:identifier "V7.E" ;
-    rdfs:domain :EntrySSVF ;
-    rdfs:range skos:Concept ;
-    :linkedVocabulary :list_NoYesMissing ;
-    :responseValue "0=No;1=Yes;99=Data not collected" .
-
 :HOPWAMedAssistedLivingFac a owl:ObjectProperty ;
     dcterms:description "HOPWA-funded Medically Assisted Living Facility" ;
     dcterms:identifier "2.02.8" ;
@@ -1766,7 +1758,7 @@ indicate the position of omitted digits
 
 :Sex a owl:ObjectProperty ;
     rdfs:label "Sex" ;
-    dcterms:identifier 4.21 ;
+    dcterms:identifier "4.21" ;
     rdfs:domain :Client ;
     rdfs:range skos:Concept ;
     :linkedVocabulary :list_Sex .
@@ -2899,15 +2891,6 @@ indicate the position of omitted digits
     rdfs:domain :Exit ;
     rdfs:range :VASHExitReason .
 
-:string10 a rdfs:Datatype ;
-    rdfs:label "string10" .
-
-:string200 a rdfs:Datatype ;
-    rdfs:label "string200" .
-
-:string9 a rdfs:Datatype ;
-    rdfs:label "string9" .
-
 # ---------------------------------------------------------------------------------------------
 # String datatypes with the field rules of the HUD FY 2026 HMIS CSV Specifications.
 # xsd:pattern values are XSD regular expressions, implicitly anchored to the whole string.
@@ -2941,6 +2924,20 @@ indicate the position of omitted digits
             owl:onDatatype xsd:string ;
             owl:withRestrictions ( [ xsd:maxLength 5 ] ) ] .
 
+:string9 a rdfs:Datatype ;
+    rdfs:label "string9"@en ;
+    rdfs:comment "A string of at most 9 characters, the S9 field type of the HUD FY 2026 HMIS CSV Specifications."@en ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:onDatatype xsd:string ;
+            owl:withRestrictions ( [ xsd:maxLength 9 ] ) ] .
+
+:string10 a rdfs:Datatype ;
+    rdfs:label "string10"@en ;
+    rdfs:comment "A string of at most 10 characters, the S10 field type of the HUD FY 2026 HMIS CSV Specifications."@en ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:onDatatype xsd:string ;
+            owl:withRestrictions ( [ xsd:maxLength 10 ] ) ] .
+
 :string32 a rdfs:Datatype ;
     rdfs:label "string32"@en ;
     rdfs:comment "A string of at most 32 characters, the S32 field type of the HUD FY 2026 HMIS CSV Specifications."@en ;
@@ -2961,6 +2958,13 @@ indicate the position of omitted digits
     owl:equivalentClass [ a rdfs:Datatype ;
             owl:onDatatype xsd:string ;
             owl:withRestrictions ( [ xsd:maxLength 100 ] ) ] .
+
+:string200 a rdfs:Datatype ;
+    rdfs:label "string200"@en ;
+    rdfs:comment "A string of at most 200 characters, the S200 field type of the HUD FY 2026 HMIS CSV Specifications."@en ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:onDatatype xsd:string ;
+            owl:withRestrictions ( [ xsd:maxLength 200 ] ) ] .
 
 :string250 a rdfs:Datatype ;
     rdfs:label "string250"@en ;
@@ -3001,7 +3005,7 @@ xsd:gYear a rdfs:Datatype .
 ^[a-zA-Z]{2}-[0-9]{3}$""" .
 
 :DateOfEngagementClass a owl:Class ;
-    dcterms:identifier 4.13 ;
+    dcterms:identifier "4.13" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
             owl:someValuesFrom :string32 ],
@@ -3055,7 +3059,7 @@ xsd:gYear a rdfs:Datatype .
 
 :Household a owl:Class ;
     dcterms:description "Automatically generated identifier created by the HMIS software. A Household Identifier must be permanent and unique to a single household at each project start within an HMIS. The Household ID has no meaning beyond a single ‘household enrollment’; it is used in conjunction with the 2.02.1 Project ID, 3.10 Project Start Date, and 3.11 Project Exit Date to link records for household members together and indicate that they were served together." ;
-    dcterms:identifier 5.09 ;
+    dcterms:identifier "5.09" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :ProjectID ;
             owl:someValuesFrom :string32 ],
@@ -3358,7 +3362,7 @@ xsd:gYear a rdfs:Datatype .
 :DomesticViolence a owl:Class ;
     dcterms:description """To identify if a person is a survivor of or fleeing from domestic violence. Ascertaining whether a person is a survivor of or fleeing from domestic violence is 
 necessary to provide the person with the appropriate services to prevent further abuse and to treat the physical and psychological injuries from prior abuse. Also, ascertaining that a person may be experiencing domestic violence may be important for the safety of project staff and other clients.""" ;
-    dcterms:identifier 4.11 ;
+    dcterms:identifier "4.11" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ],
@@ -3438,7 +3442,7 @@ necessary to provide the person with the appropriate services to prevent further
 
 :HMISParticipation a owl:Class ;
     dcterms:description "identifies the HMIS or comparable database participation status of each Continuum project." ;
-    dcterms:identifier 2.08 ;
+    dcterms:identifier "2.08" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :HMISParticipationID ;
             owl:someValuesFrom :string32 ],
@@ -3481,7 +3485,7 @@ necessary to provide the person with the appropriate services to prevent further
 
 :Organization a owl:Class ;
     dcterms:description "includes all the fields from HMIS data element 2.01 Organization Information." ;
-    dcterms:identifier 2.01 ;
+    dcterms:identifier "2.01" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :ExportID ;
             owl:someValuesFrom :string32 ],
@@ -3834,7 +3838,7 @@ responses, and results, the latter data are reported separately in AssessmentQue
 AssessmentResults.csv. This allows for the number of questions/responses and results to be a variable 
 number, though there must be at least 1 row each in AssessmentQuestions.csv and AssessmentResults.csv for 
 each row in Assessment.csv""" ;
-    dcterms:identifier 4.19 ;
+    dcterms:identifier "4.19" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :AssessmentID ;
             owl:someValuesFrom :string32 ],
@@ -3873,7 +3877,7 @@ each row in Assessment.csv""" ;
 
 :CEParticipation a owl:Class ;
     dcterms:description "Includes information from 2.09 CE Participation." ;
-    dcterms:identifier 2.09 ;
+    dcterms:identifier "2.09" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
@@ -3899,7 +3903,7 @@ each row in Assessment.csv""" ;
 
 :NonCashBenefits a owl:Class ;
     dcterms:description "used to indicate which mainstream benefits persons are accessing at a point in time and to track changes in benefit access over time." ;
-    dcterms:identifier 4.03 ;
+    dcterms:identifier "4.03" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
             owl:someValuesFrom :string32 ],
@@ -3938,7 +3942,7 @@ each row in Assessment.csv""" ;
     dcterms:description """Includes data for data element 2.03 Continuum of Care Code. There may be, but
 do not have to be, multiple records in ProjectCoC.csv for each record in Project.csv where
 ContinuumProject is equal to 1 (Yes).""" ;
-    dcterms:identifier 2.03 ;
+    dcterms:identifier "2.03" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
@@ -4005,7 +4009,7 @@ W2.2: 1=Rental assistance;2=Security deposits;3=Utility deposits;4=Utility payme
 :CurrentLivingSituationClass a owl:Class ;
     dcterms:description """Contains data exclusively for element 4.12 which was previously
 reported as contact events in Services.csv. This element now contains additional information and therefore requires a separate file.""" ;
-    dcterms:identifier 4.12 ;
+    dcterms:identifier "4.12" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
             owl:someValuesFrom :string32 ],
@@ -4304,7 +4308,7 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
 
 :Inventory a owl:Class ;
     dcterms:description "includes data for 2.07 Bed and Unit Inventory Information." ;
-    dcterms:identifier 2.07 ;
+    dcterms:identifier "2.07" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :ExportID ;
             owl:someValuesFrom :string32 ],
@@ -4355,7 +4359,7 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
 
 :Project a owl:Class ;
     dcterms:description "includes all the fields from HMIS data element 2.02 Project Information." ;
-    dcterms:identifier 2.02 ;
+    dcterms:identifier "2.02" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
@@ -4415,7 +4419,7 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
 
 :HealthInsurance a owl:Class ;
     dcterms:description "used to indicate which mainstream medical assistance benefits persons are accessing at a point in time and to track changes in benefit access over time." ;
-    dcterms:identifier 4.04 ;
+    dcterms:identifier "4.04" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :UserID ;
             owl:someValuesFrom :string32 ],
@@ -4525,7 +4529,7 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
 
 :IncomeAndSources a owl:Class ;
     dcterms:description "used to indicate which income sources persons are accessing at a point in time and to track changes in income sources and amounts over time." ;
-    dcterms:identifier 4.02 ;
+    dcterms:identifier "4.02" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
@@ -4714,7 +4718,7 @@ xsd:dateTime a rdfs:Datatype .
 
 :HOHLeaseholder a owl:ObjectProperty ;
     rdfs:label "HOHLeaseholder" ;
-    dcterms:description "Head of Household is a current leaseholder/renter of unit" ;
+    dcterms:description "Head of Household has never been a leaseholder/renter of unit" ;
     dcterms:identifier "V7.E" ;
     rdfs:domain :EntrySSVF ;
     rdfs:range skos:Concept ;
