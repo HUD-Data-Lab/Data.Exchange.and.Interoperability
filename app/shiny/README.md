@@ -18,13 +18,58 @@ The app has three tabs:
   their data dictionary text, and builds the full, request and response JSON
   schemas, which you can download.
 
-## Running it
+## Requirements
 
-Install the packages it needs:
+The app needs [R](https://www.r-project.org/) 4.1 or later and six R
+packages: shiny, tidyverse, bslib, readxl, jsonlite and rdflib. It has been
+run with R 4.5.2. Install them in any one of these ways.
+
+**Ubuntu or Debian, system packages.** These are prebuilt, so nothing is
+compiled:
+
+```bash
+sudo apt install r-base r-cran-shiny r-cran-tidyverse r-cran-bslib r-cran-readxl r-cran-jsonlite r-cran-rdflib
+```
+
+**macOS, with Homebrew.** Then install the packages from CRAN, as shown under
+"Any platform" below:
+
+```bash
+brew install r
+```
+
+**Windows, with winget.** Or use the installer from
+[CRAN](https://cran.r-project.org/bin/windows/base/). Then install the
+packages from CRAN, as below:
+
+```powershell
+winget install RProject.R
+```
+
+**Any platform, with conda or mamba.** This needs no administrator rights,
+and everything stays in its own environment:
+
+```bash
+conda create -n hmis-shiny -c conda-forge r-base r-shiny r-tidyverse r-bslib r-readxl r-jsonlite r-rdflib
+conda activate hmis-shiny
+```
+
+**Any platform, from CRAN.** Once R is installed, run this in R. On Linux,
+building tidyverse from source also needs system libraries such as
+libcurl, libssl, libxml2 and libfontconfig development headers; the apt or
+conda routes above avoid that.
 
 ```r
-install.packages(c("shiny", "tidyverse", "jsonlite", "bslib", "rdflib", "readxl"))
+install.packages(c("shiny", "tidyverse", "bslib", "readxl", "jsonlite", "rdflib"))
 ```
+
+Check that everything loads:
+
+```bash
+Rscript -e 'for (p in c("shiny","tidyverse","bslib","readxl","jsonlite","rdflib")) library(p, character.only = TRUE)'
+```
+
+## Running it
 
 Start it from the repository root:
 

@@ -18,6 +18,6 @@ These resources are to support the conformance to the HMIS Data Exchange and Int
 
 - HMIS Ontology: [HMIS Ontology](FY26_HMIS_Logic_Model.ttl) 
 - OpenAPI definition of the request and response pairings of the common scenarios: [Common Scenarios](api/) ([scenario list](api/DataExchangeScenarioList.md))
-- Shiny app for browsing data elements and building scenario JSON schemas: [app/shiny](app/shiny/). Run it from the repository root with `shiny::runApp("app/shiny")`. It reads the v1.3.0-beta ontology cache in [app/shiny/data](app/shiny/data/), not the FY26 Logic Model.
+- Shiny app for browsing data elements and building scenario JSON schemas: [app/shiny](app/shiny/). Run it from the repository root with `shiny::runApp("app/shiny")`. It needs R 4.1 or later and six R packages; see [app/shiny/README.md](app/shiny/README.md#requirements) for ways to install them. It reads the v1.3.0-beta ontology cache in [app/shiny/data](app/shiny/data/), not the FY26 Logic Model.
 
 *This resource is prepared by technical assistance providers and intended only to provide guidance. The contents of this document, except when based on statutory or regulatory authority or law, do not have the force and effect of law and are not meant to bind the public in any way. This document is intended only to provide clarity to the public regarding existing requirements under the law or agency policies.*
