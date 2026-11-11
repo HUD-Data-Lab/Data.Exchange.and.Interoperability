@@ -14,6 +14,8 @@
 # IRI :list_<Name>_<notation>) instead of rdfs:Datatype owl:oneOf enumerations. Properties that
 # take a code-list value are owl:ObjectProperty with range skos:Concept and name their scheme
 # with :linkedVocabulary. See the last section of this file.
+# HousingAssessment is the CE Participation field (2.09.A, No/Yes); the Exit.csv column of the same
+# name (W5.1, Housing Assessment at Exit) is :ExitHousingAssessment.
 
 @prefix : <urn:hud:hmis:owl#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
@@ -931,11 +933,10 @@ Necessary for projects that operate across multiple CoCs for data export purpose
 
 :HousingAssessment a owl:ObjectProperty ;
     dcterms:description "Housing Assessment, Screening, and/or Referral" ;
-    dcterms:identifier "2.09.A",
-        "W5.1" ;
+    dcterms:identifier "2.09.A" ;
     rdfs:domain :CEParticipation ;
     rdfs:range skos:Concept ;
-    :linkedVocabulary :list_NoYes, :list_HousingAssessmentAtExit ;
+    :linkedVocabulary :list_NoYes ;
     rdfs:subPropertyOf owl:topObjectProperty ;
     :responseValue "0=No;1=Yes" .
 
@@ -2608,6 +2609,7 @@ indicate the position of omitted digits
     rdfs:range xsd:date .
 
 :ExitHousingAssessment a owl:ObjectProperty ;
+    rdfs:label "ExitHousingAssessment" ;
     dcterms:description "Housing Assessment at Exit" ;
     dcterms:identifier "W5.1" ;
     rdfs:domain :ExitHousingAssessmentClass ;

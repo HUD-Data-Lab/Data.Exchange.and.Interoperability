@@ -495,6 +495,8 @@ components:
           $ref: '#/components/schemas/ExchangeForSexPastThreeMonths'
         ExitDate:
           $ref: '#/components/schemas/ExitDate'
+        ExitHousingAssessment:
+          $ref: '#/components/schemas/ExitHousingAssessment'
         ExportID:
           $ref: '#/components/schemas/ExportID'
         FAAmount:
@@ -1587,6 +1589,21 @@ components:
         ExitDate:
           '@id': urn:hud:hmis:owl#ExitDate
           '@type': xsd:date
+        ExitHousingAssessment:
+          '@id': urn:hud:hmis:owl#ExitHousingAssessment
+          '@type': '@vocab'
+          '@context':
+            "Able to maintain the housing they had at project entry": urn:hud:hmis:owl#list_HousingAssessmentAtExit_1
+            "Moved to a transitional or temporary housing facility or program": urn:hud:hmis:owl#list_HousingAssessmentAtExit_5
+            "Moved in with family/friends on a temporary basis": urn:hud:hmis:owl#list_HousingAssessmentAtExit_3
+            "Data not collected": urn:hud:hmis:owl#list_HousingAssessmentAtExit_99
+            "Moved in with family/friends on a permanent basis": urn:hud:hmis:owl#list_HousingAssessmentAtExit_4
+            "Client prefers not to answer": urn:hud:hmis:owl#list_HousingAssessmentAtExit_9
+            "Deceased": urn:hud:hmis:owl#list_HousingAssessmentAtExit_10
+            "Client doesn't know": urn:hud:hmis:owl#list_HousingAssessmentAtExit_8
+            "Client became homeless – moving to a shelter or other place unfit for human habitation": urn:hud:hmis:owl#list_HousingAssessmentAtExit_6
+            "Moved to new housing unit": urn:hud:hmis:owl#list_HousingAssessmentAtExit_2
+            "Jail/prison": urn:hud:hmis:owl#list_HousingAssessmentAtExit_7
         ExportID:
           '@id': urn:hud:hmis:owl#ExportID
         FAAmount:
@@ -1774,17 +1791,8 @@ components:
           '@id': urn:hud:hmis:owl#HousingAssessment
           '@type': '@vocab'
           '@context':
-            "Able to maintain the housing they had at project entry": urn:hud:hmis:owl#list_HousingAssessmentAtExit_1
-            "Moved to a transitional or temporary housing facility or program": urn:hud:hmis:owl#list_HousingAssessmentAtExit_5
-            "Moved in with family/friends on a temporary basis": urn:hud:hmis:owl#list_HousingAssessmentAtExit_3
-            "Data not collected": urn:hud:hmis:owl#list_HousingAssessmentAtExit_99
-            "Moved in with family/friends on a permanent basis": urn:hud:hmis:owl#list_HousingAssessmentAtExit_4
-            "Client prefers not to answer": urn:hud:hmis:owl#list_HousingAssessmentAtExit_9
-            "Deceased": urn:hud:hmis:owl#list_HousingAssessmentAtExit_10
-            "Client doesn't know": urn:hud:hmis:owl#list_HousingAssessmentAtExit_8
-            "Client became homeless – moving to a shelter or other place unfit for human habitation": urn:hud:hmis:owl#list_HousingAssessmentAtExit_6
-            "Moved to new housing unit": urn:hud:hmis:owl#list_HousingAssessmentAtExit_2
-            "Jail/prison": urn:hud:hmis:owl#list_HousingAssessmentAtExit_7
+            "No": urn:hud:hmis:owl#list_NoYes_0
+            "Yes": urn:hud:hmis:owl#list_NoYes_1
         HousingType:
           '@id': urn:hud:hmis:owl#HousingType
           '@type': '@vocab'
@@ -3667,17 +3675,8 @@ components:
           '@id': urn:hud:hmis:owl#HousingAssessment
           '@type': '@vocab'
           '@context':
-            "Able to maintain the housing they had at project entry": urn:hud:hmis:owl#list_HousingAssessmentAtExit_1
-            "Moved to a transitional or temporary housing facility or program": urn:hud:hmis:owl#list_HousingAssessmentAtExit_5
-            "Moved in with family/friends on a temporary basis": urn:hud:hmis:owl#list_HousingAssessmentAtExit_3
-            "Data not collected": urn:hud:hmis:owl#list_HousingAssessmentAtExit_99
-            "Moved in with family/friends on a permanent basis": urn:hud:hmis:owl#list_HousingAssessmentAtExit_4
-            "Client prefers not to answer": urn:hud:hmis:owl#list_HousingAssessmentAtExit_9
-            "Deceased": urn:hud:hmis:owl#list_HousingAssessmentAtExit_10
-            "Client doesn't know": urn:hud:hmis:owl#list_HousingAssessmentAtExit_8
-            "Client became homeless – moving to a shelter or other place unfit for human habitation": urn:hud:hmis:owl#list_HousingAssessmentAtExit_6
-            "Moved to new housing unit": urn:hud:hmis:owl#list_HousingAssessmentAtExit_2
-            "Jail/prison": urn:hud:hmis:owl#list_HousingAssessmentAtExit_7
+            "No": urn:hud:hmis:owl#list_NoYes_0
+            "Yes": urn:hud:hmis:owl#list_NoYes_1
         MidEastNAfrican:
           '@id': urn:hud:hmis:owl#MidEastNAfrican
           '@type': '@vocab'
@@ -3948,17 +3947,8 @@ components:
           '@id': urn:hud:hmis:owl#HousingAssessment
           '@type': '@vocab'
           '@context':
-            "Able to maintain the housing they had at project entry": urn:hud:hmis:owl#list_HousingAssessmentAtExit_1
-            "Moved to a transitional or temporary housing facility or program": urn:hud:hmis:owl#list_HousingAssessmentAtExit_5
-            "Moved in with family/friends on a temporary basis": urn:hud:hmis:owl#list_HousingAssessmentAtExit_3
-            "Data not collected": urn:hud:hmis:owl#list_HousingAssessmentAtExit_99
-            "Moved in with family/friends on a permanent basis": urn:hud:hmis:owl#list_HousingAssessmentAtExit_4
-            "Client prefers not to answer": urn:hud:hmis:owl#list_HousingAssessmentAtExit_9
-            "Deceased": urn:hud:hmis:owl#list_HousingAssessmentAtExit_10
-            "Client doesn't know": urn:hud:hmis:owl#list_HousingAssessmentAtExit_8
-            "Client became homeless – moving to a shelter or other place unfit for human habitation": urn:hud:hmis:owl#list_HousingAssessmentAtExit_6
-            "Moved to new housing unit": urn:hud:hmis:owl#list_HousingAssessmentAtExit_2
-            "Jail/prison": urn:hud:hmis:owl#list_HousingAssessmentAtExit_7
+            "No": urn:hud:hmis:owl#list_NoYes_0
+            "Yes": urn:hud:hmis:owl#list_NoYes_1
         MidEastNAfrican:
           '@id': urn:hud:hmis:owl#MidEastNAfrican
           '@type': '@vocab'
@@ -4496,17 +4486,8 @@ components:
           '@id': urn:hud:hmis:owl#HousingAssessment
           '@type': '@vocab'
           '@context':
-            "Able to maintain the housing they had at project entry": urn:hud:hmis:owl#list_HousingAssessmentAtExit_1
-            "Moved to a transitional or temporary housing facility or program": urn:hud:hmis:owl#list_HousingAssessmentAtExit_5
-            "Moved in with family/friends on a temporary basis": urn:hud:hmis:owl#list_HousingAssessmentAtExit_3
-            "Data not collected": urn:hud:hmis:owl#list_HousingAssessmentAtExit_99
-            "Moved in with family/friends on a permanent basis": urn:hud:hmis:owl#list_HousingAssessmentAtExit_4
-            "Client prefers not to answer": urn:hud:hmis:owl#list_HousingAssessmentAtExit_9
-            "Deceased": urn:hud:hmis:owl#list_HousingAssessmentAtExit_10
-            "Client doesn't know": urn:hud:hmis:owl#list_HousingAssessmentAtExit_8
-            "Client became homeless – moving to a shelter or other place unfit for human habitation": urn:hud:hmis:owl#list_HousingAssessmentAtExit_6
-            "Moved to new housing unit": urn:hud:hmis:owl#list_HousingAssessmentAtExit_2
-            "Jail/prison": urn:hud:hmis:owl#list_HousingAssessmentAtExit_7
+            "No": urn:hud:hmis:owl#list_NoYes_0
+            "Yes": urn:hud:hmis:owl#list_NoYes_1
         MidEastNAfrican:
           '@id': urn:hud:hmis:owl#MidEastNAfrican
           '@type': '@vocab'
@@ -7303,6 +7284,60 @@ components:
       type: string
       x-hmis-vocabulary: 3.11.1
       format: date
+    ExitHousingAssessment:
+      x-hmis-dataDictionaryName: HousingAssessment
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ExitHousingAssessment
+        '@type': '@vocab'
+        '@context':
+          "Able to maintain the housing they had at project entry": urn:hud:hmis:owl#list_HousingAssessmentAtExit_1
+          "Moved to a transitional or temporary housing facility or program": urn:hud:hmis:owl#list_HousingAssessmentAtExit_5
+          "Moved in with family/friends on a temporary basis": urn:hud:hmis:owl#list_HousingAssessmentAtExit_3
+          "Data not collected": urn:hud:hmis:owl#list_HousingAssessmentAtExit_99
+          "Moved in with family/friends on a permanent basis": urn:hud:hmis:owl#list_HousingAssessmentAtExit_4
+          "Client prefers not to answer": urn:hud:hmis:owl#list_HousingAssessmentAtExit_9
+          "Deceased": urn:hud:hmis:owl#list_HousingAssessmentAtExit_10
+          "Client doesn't know": urn:hud:hmis:owl#list_HousingAssessmentAtExit_8
+          "Client became homeless – moving to a shelter or other place unfit for human habitation": urn:hud:hmis:owl#list_HousingAssessmentAtExit_6
+          "Moved to new housing unit": urn:hud:hmis:owl#list_HousingAssessmentAtExit_2
+          "Jail/prison": urn:hud:hmis:owl#list_HousingAssessmentAtExit_7
+      type: string
+      enum:
+      - Able to maintain the housing they had at project entry
+      - Moved to a transitional or temporary housing facility or program
+      - Moved in with family/friends on a temporary basis
+      - Data not collected
+      - Moved in with family/friends on a permanent basis
+      - Client prefers not to answer
+      - Deceased
+      - Client doesn't know
+      - Client became homeless – moving to a shelter or other place unfit for human habitation
+      - Moved to new housing unit
+      - Jail/prison
+      x-hmis-vocabulary: W5.1
+      x-hmis-values:
+      - notation: '1'
+        preflabel: Able to maintain the housing they had at project entry
+      - notation: '5'
+        preflabel: Moved to a transitional or temporary housing facility or program
+      - notation: '3'
+        preflabel: Moved in with family/friends on a temporary basis
+      - notation: '99'
+        preflabel: Data not collected
+      - notation: '4'
+        preflabel: Moved in with family/friends on a permanent basis
+      - notation: '9'
+        preflabel: Client prefers not to answer
+      - notation: '10'
+        preflabel: Deceased
+      - notation: '8'
+        preflabel: Client doesn't know
+      - notation: '6'
+        preflabel: Client became homeless – moving to a shelter or other place unfit for human habitation
+      - notation: '2'
+        preflabel: Moved to new housing unit
+      - notation: '7'
+        preflabel: Jail/prison
     ExportID:
       x-hmis-dataDictionaryName: ExportID
       x-jsonld-context:
@@ -7916,54 +7951,18 @@ components:
         '@id': urn:hud:hmis:owl#HousingAssessment
         '@type': '@vocab'
         '@context':
-          "Able to maintain the housing they had at project entry": urn:hud:hmis:owl#list_HousingAssessmentAtExit_1
-          "Moved to a transitional or temporary housing facility or program": urn:hud:hmis:owl#list_HousingAssessmentAtExit_5
-          "Moved in with family/friends on a temporary basis": urn:hud:hmis:owl#list_HousingAssessmentAtExit_3
-          "Data not collected": urn:hud:hmis:owl#list_HousingAssessmentAtExit_99
-          "Moved in with family/friends on a permanent basis": urn:hud:hmis:owl#list_HousingAssessmentAtExit_4
-          "Client prefers not to answer": urn:hud:hmis:owl#list_HousingAssessmentAtExit_9
-          "Deceased": urn:hud:hmis:owl#list_HousingAssessmentAtExit_10
-          "Client doesn't know": urn:hud:hmis:owl#list_HousingAssessmentAtExit_8
-          "Client became homeless – moving to a shelter or other place unfit for human habitation": urn:hud:hmis:owl#list_HousingAssessmentAtExit_6
-          "Moved to new housing unit": urn:hud:hmis:owl#list_HousingAssessmentAtExit_2
-          "Jail/prison": urn:hud:hmis:owl#list_HousingAssessmentAtExit_7
+          "No": urn:hud:hmis:owl#list_NoYes_0
+          "Yes": urn:hud:hmis:owl#list_NoYes_1
       type: string
       enum:
-      - Able to maintain the housing they had at project entry
-      - Moved to a transitional or temporary housing facility or program
-      - Moved in with family/friends on a temporary basis
-      - Data not collected
-      - Moved in with family/friends on a permanent basis
-      - Client prefers not to answer
-      - Deceased
-      - Client doesn't know
-      - Client became homeless – moving to a shelter or other place unfit for human habitation
-      - Moved to new housing unit
-      - Jail/prison
-      x-hmis-vocabulary: W5.1
+      - 'No'
+      - 'Yes'
+      x-hmis-vocabulary: 2.09.A
       x-hmis-values:
+      - notation: '0'
+        preflabel: 'No'
       - notation: '1'
-        preflabel: Able to maintain the housing they had at project entry
-      - notation: '5'
-        preflabel: Moved to a transitional or temporary housing facility or program
-      - notation: '3'
-        preflabel: Moved in with family/friends on a temporary basis
-      - notation: '99'
-        preflabel: Data not collected
-      - notation: '4'
-        preflabel: Moved in with family/friends on a permanent basis
-      - notation: '9'
-        preflabel: Client prefers not to answer
-      - notation: '10'
-        preflabel: Deceased
-      - notation: '8'
-        preflabel: Client doesn't know
-      - notation: '6'
-        preflabel: Client became homeless – moving to a shelter or other place unfit for human habitation
-      - notation: '2'
-        preflabel: Moved to new housing unit
-      - notation: '7'
-        preflabel: Jail/prison
+        preflabel: 'Yes'
     HousingType:
       x-hmis-dataDictionaryName: HousingType
       x-jsonld-context:
@@ -12727,6 +12726,7 @@ components:
         ExchangeForSex: 'No'
         ExchangeForSexPastThreeMonths: 'No'
         ExitDate: '2026-03-31'
+        ExitHousingAssessment: Able to maintain the housing they had at project entry
         ExportID: example-ExportID
         FAAmount: 1
         FAEndDate: '2025-10-01'
@@ -12753,7 +12753,7 @@ components:
         HispanicLatinao: 'No'
         HouseholdID: h1o2u3s4e5h6o7l8d9
         HouseholdType: Households with only children
-        HousingAssessment: Able to maintain the housing they had at project entry
+        HousingAssessment: 'Yes'
         HousingType: Site-based – clustered / multiple sites
         InPersonGroup: 'No'
         InPersonIndividual: 'No'
@@ -13003,7 +13003,7 @@ components:
         DirectServices: 'No'
         GA: 'No'
         HispanicLatinao: 'No'
-        HousingAssessment: Able to maintain the housing they had at project entry
+        HousingAssessment: 'Yes'
         MidEastNAfrican: 'No'
         NameDataQuality: Full name reported
         NativeHIPacific: 'No'
@@ -13039,7 +13039,7 @@ components:
         Earned: 'No'
         GA: 'No'
         HispanicLatinao: 'No'
-        HousingAssessment: Able to maintain the housing they had at project entry
+        HousingAssessment: 'Yes'
         MidEastNAfrican: 'No'
         NameDataQuality: Full name reported
         NativeHIPacific: 'No'
@@ -13121,7 +13121,7 @@ components:
         Earned: 'No'
         GA: 'No'
         HispanicLatinao: 'No'
-        HousingAssessment: Able to maintain the housing they had at project entry
+        HousingAssessment: 'Yes'
         MidEastNAfrican: 'No'
         NameDataQuality: Full name reported
         NativeHIPacific: 'No'
