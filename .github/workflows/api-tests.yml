@@ -11,17 +11,18 @@ on:
       - "api/**"
       - "FY26_HMIS_Logic_Model.ttl"
       - ".github/workflows/api-tests.yml"
+  workflow_dispatch:
 
 jobs:
   newman:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        # macOS hosted runners are often unavailable, and a job that never gets a
+        # runner fails the run even with continue-on-error. Run macOS only on a
+        # manual dispatch; Ubuntu and Windows run on every push and PR.
+        os: ${{ github.event_name == 'workflow_dispatch' && fromJSON('["ubuntu-latest","macos-latest","windows-latest"]') || fromJSON('["ubuntu-latest","windows-latest"]') }}
     runs-on: ${{ matrix.os }}
-    # Hosted macOS runners are often short on capacity; a job that is never
-    # picked up should not mark the whole run red. Ubuntu and Windows still gate.
-    continue-on-error: ${{ matrix.os == 'macos-latest' }}
     defaults:
       run:
         working-directory: api/tests
