@@ -4,7 +4,7 @@ This folder holds the generator configuration and script that build artifacts fr
 
 ## Overview
 
-The single source of truth is [`../hmis-api.openapi.yaml`](../hmis-api.openapi.yaml), an OpenAPI 3.1 description maintained by hand. Each request and response schema carries an `x-jsonld-context` that maps its JSON fields to terms in the HMIS Logic Model ontology, [`../../FY26_HMIS_Logic_Model.ttl`](../../FY26_HMIS_Logic_Model.ttl) (namespace `urn:hud:hmis:owl#`).
+The single source of truth is [`../hmis-api.openapi.yaml`](../hmis-api.openapi.yaml), an OpenAPI 3.1 description maintained by hand. Each request and response schema carries an `x-jsonld-context` that maps its JSON fields to terms in the HMIS Logic Model ontology, [`../../FY26_HMIS_Logic_Model.ttl`](../../FY26_HMIS_Logic_Model.ttl) (namespace `urn:hud:hmis:owl#`). Field schemas carry the same term definitions, and entity objects name their ontology class with `x-jsonld-type`; see [`../README.md`](../README.md#json-ld-the-bridge-to-the-ontology).
 
 The old `hmis-codegen` read a YAML-LD specification and a JSON-LD ontology and generated `openapi.yaml` and `context.jsonld` from them. That role is gone: the OpenAPI description is now edited directly, and the JSON-LD contexts are taken from it. What is generated here is everything downstream of the description:
 
@@ -52,7 +52,7 @@ This runs these steps in order and stops at the first failure:
 
 1. **Prepare the spec.** Writes `build/openapi.codegen.yaml`, a copy of the description with `x-enum-varnames` added to every enum whose values contain characters outside printable ASCII. Some generators, the Python one among them, turn enum values directly into identifiers, and a character such as an en dash is not legal in an identifier. The added names are ASCII and the values themselves are unchanged. The source description is not modified.
 2. **Generate the clients.** Runs OpenAPI Generator once for each entry in `openapitools.json`.
-3. **Export JSON-LD.** Writes each schema's `x-jsonld-context` to its own file and merges all of them into one. The step fails if two schemas define the same term differently.
+3. **Export JSON-LD.** Writes each request or response schema's `x-jsonld-context` to its own file (field schemas carry single term definitions, already included in those) and merges all of them into one. The step fails if two schemas define the same term differently.
 4. **Build the docs.** Runs `redocly build-docs` on the source description.
 5. **Verify the clients.** Type-checks the TypeScript client with `tsc --noEmit`, and byte-compiles the Python client if Python is installed.
 

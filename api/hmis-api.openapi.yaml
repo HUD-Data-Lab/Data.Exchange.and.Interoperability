@@ -12,7 +12,7 @@ info:
 
     Every request and response object carries an `x-jsonld-context` that maps each JSON field to its term in the HMIS Logic
     Model ontology (`urn:hud:hmis:owl#`, FY26_HMIS_Logic_Model.ttl). Adding that context as `@context` turns a payload into
-    linked data, so the ontology itself stays API-free.
+    linked data, so the ontology itself stays API-free. Each field schema carries the same mapping as its own `x-jsonld-context` term definition, and `x-jsonld-type` (from the IETF draft "REST API Linked Data Keywords") names the ontology class an object represents; a JSON-LD consumer adds it as `@type` when converting a payload.
 
 
     Examples are illustrative values generated from the schemas, not real client data.'
@@ -919,6 +919,7 @@ components:
           $ref: '#/components/schemas/YouthVetBedInventory'
         ZIP:
           $ref: '#/components/schemas/ZIP'
+      x-jsonld-type: urn:hud:hmis:owl#Client
       x-jsonld-context:
         '@vocab': urn:hud:hmis:owl#
         xsd: http://www.w3.org/2001/XMLSchema#
@@ -1706,6 +1707,7 @@ components:
           $ref: '#/components/schemas/YearEnteredService'
         YearSeparated:
           $ref: '#/components/schemas/YearSeparated'
+      x-jsonld-type: urn:hud:hmis:owl#Client
       x-jsonld-context:
         '@vocab': urn:hud:hmis:owl#
         xsd: http://www.w3.org/2001/XMLSchema#
@@ -1855,6 +1857,7 @@ components:
           $ref: '#/components/schemas/White'
         WorkersComp:
           $ref: '#/components/schemas/WorkersComp'
+      x-jsonld-type: urn:hud:hmis:owl#Client
       x-jsonld-context:
         '@vocab': urn:hud:hmis:owl#
         xsd: http://www.w3.org/2001/XMLSchema#
@@ -1993,6 +1996,7 @@ components:
           $ref: '#/components/schemas/White'
         WorkersComp:
           $ref: '#/components/schemas/WorkersComp'
+      x-jsonld-type: urn:hud:hmis:owl#Client
       x-jsonld-context:
         '@vocab': urn:hud:hmis:owl#
         xsd: http://www.w3.org/2001/XMLSchema#
@@ -2109,6 +2113,7 @@ components:
           $ref: '#/components/schemas/ProjectName'
         RelationshipToHoH:
           $ref: '#/components/schemas/RelationshipToHoH'
+      x-jsonld-type: urn:hud:hmis:owl#Enrollment
       x-jsonld-context:
         '@vocab': urn:hud:hmis:owl#
         xsd: http://www.w3.org/2001/XMLSchema#
@@ -2177,6 +2182,7 @@ components:
           $ref: '#/components/schemas/ProjectID'
         ProjectName:
           $ref: '#/components/schemas/ProjectName'
+      x-jsonld-type: urn:hud:hmis:owl#Client
       x-jsonld-context:
         '@vocab': urn:hud:hmis:owl#
         xsd: http://www.w3.org/2001/XMLSchema#
@@ -2296,6 +2302,7 @@ components:
           $ref: '#/components/schemas/White'
         WorkersComp:
           $ref: '#/components/schemas/WorkersComp'
+      x-jsonld-type: urn:hud:hmis:owl#Client
       x-jsonld-context:
         '@vocab': urn:hud:hmis:owl#
         xsd: http://www.w3.org/2001/XMLSchema#
@@ -2416,6 +2423,7 @@ components:
           $ref: '#/components/schemas/ProjectType'
         RRHSubType:
           $ref: '#/components/schemas/RRHSubType'
+      x-jsonld-type: urn:hud:hmis:owl#Project
       x-jsonld-context:
         '@vocab': urn:hud:hmis:owl#
         xsd: http://www.w3.org/2001/XMLSchema#
@@ -2442,6 +2450,7 @@ components:
     UpdateClientRequest:
       type: object
       properties: {}
+      x-jsonld-type: urn:hud:hmis:owl#Client
       x-jsonld-context:
         '@vocab': urn:hud:hmis:owl#
         xsd: http://www.w3.org/2001/XMLSchema#
@@ -2514,6 +2523,7 @@ components:
           $ref: '#/components/schemas/SSNDataQuality'
         NameDataQuality:
           $ref: '#/components/schemas/NameDataQuality'
+      x-jsonld-type: urn:hud:hmis:owl#Client
       x-jsonld-context:
         '@vocab': urn:hud:hmis:owl#
         xsd: http://www.w3.org/2001/XMLSchema#
@@ -2588,6 +2598,8 @@ components:
           '@id': urn:hud:hmis:owl#NameDataQuality
     ADAP:
       x-hmis-dataDictionaryName: ADAP
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ADAP
       type: string
       enum:
       - Data not collected
@@ -2609,6 +2621,8 @@ components:
         preflabel: Client doesn't know
     AccessPoint:
       x-hmis-dataDictionaryName: AccessPoint
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AccessPoint
       type: string
       enum:
       - 'No'
@@ -2621,18 +2635,26 @@ components:
         preflabel: 'Yes'
     AdditionalRaceEthnicity:
       x-hmis-dataDictionaryName: AdditionalRaceEthnicity
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AdditionalRaceEthnicity
       type: string
       x-hmis-vocabulary: 3.04.2
     Address1:
       x-hmis-dataDictionaryName: Address1
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#Address1
       type: string
       x-hmis-vocabulary: 2.03.3
     Address2:
       x-hmis-dataDictionaryName: Address2
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#Address2
       type: string
       x-hmis-vocabulary: 2.03.4
     AfghanistanOEF:
       x-hmis-dataDictionaryName: AfghanistanOEF
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AfghanistanOEF
       type: string
       enum:
       - Data not collected
@@ -2654,11 +2676,16 @@ components:
         preflabel: Client doesn't know
     AftercareDate:
       x-hmis-dataDictionaryName: AftercareDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AftercareDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: R20.1
       format: date
     AftercareProvided:
       x-hmis-dataDictionaryName: AftercareProvided
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AftercareProvided
       type: string
       enum:
       - 'No'
@@ -2674,6 +2701,8 @@ components:
         preflabel: 'Yes'
     AlcoholDrugUseDisorderFam:
       x-hmis-dataDictionaryName: AlcoholDrugUseDisorderFam
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AlcoholDrugUseDisorderFam
       type: string
       enum:
       - Data not collected
@@ -2695,6 +2724,8 @@ components:
         preflabel: Client doesn't know
     Alimony:
       x-hmis-dataDictionaryName: Alimony
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#Alimony
       type: string
       enum:
       - Data not collected
@@ -2710,10 +2741,15 @@ components:
         preflabel: 'Yes'
     AlimonyAmount:
       x-hmis-dataDictionaryName: AlimonyAmount
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AlimonyAmount
+        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
       type: number
       x-hmis-vocabulary: 4.02.N
     AmIndAKNative:
       x-hmis-dataDictionaryName: AmIndAKNative
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AmIndAKNative
       type: string
       enum:
       - 'No'
@@ -2726,6 +2762,8 @@ components:
         preflabel: 'Yes'
     AnnualPercentAMI:
       x-hmis-dataDictionaryName: AnnualPercentAMI
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AnnualPercentAMI
       type: string
       enum:
       - Data not collected
@@ -2747,6 +2785,8 @@ components:
         preflabel: More than 30% of AMI for household size
     AntiRetroviral:
       x-hmis-dataDictionaryName: AntiRetroviral
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AntiRetroviral
       type: string
       enum:
       - Data not collected
@@ -2768,6 +2808,8 @@ components:
         preflabel: Client doesn't know
     Asian:
       x-hmis-dataDictionaryName: Asian
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#Asian
       type: string
       enum:
       - 'No'
@@ -2780,6 +2822,8 @@ components:
         preflabel: 'Yes'
     AskedOrForcedToExchangeForSex:
       x-hmis-dataDictionaryName: AskedOrForcedToExchangeForSex
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AskedOrForcedToExchangeForSex
       type: string
       enum:
       - Data not collected
@@ -2801,6 +2845,8 @@ components:
         preflabel: Client doesn't know
     AskedOrForcedToExchangeForSexPastThreeMonths:
       x-hmis-dataDictionaryName: AskedOrForcedToExchangeForSexPastThreeMonths
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AskedOrForcedToExchangeForSexPastThreeMonths
       type: string
       enum:
       - Data not collected
@@ -2822,15 +2868,22 @@ components:
         preflabel: Client doesn't know
     AssessmentAnswer:
       x-hmis-dataDictionaryName: AssessmentAnswer
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AssessmentAnswer
       type: string
       x-hmis-vocabulary: 4.19.A
     AssessmentDate:
       x-hmis-dataDictionaryName: AssessmentDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AssessmentDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 4.19.1
       format: date
     AssessmentLevel:
       x-hmis-dataDictionaryName: AssessmentLevel
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AssessmentLevel
       type: string
       enum:
       - Housing Needs Assessment
@@ -2843,22 +2896,32 @@ components:
         preflabel: Crisis Needs Assessment
     AssessmentLocation:
       x-hmis-dataDictionaryName: AssessmentLocation
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AssessmentLocation
       type: string
       x-hmis-vocabulary: 4.19.2
     AssessmentQuestion:
       x-hmis-dataDictionaryName: AssessmentQuestion
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AssessmentQuestion
       type: string
       x-hmis-vocabulary: 4.19.5
     AssessmentResult:
       x-hmis-dataDictionaryName: AssessmentResult
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AssessmentResult
       type: string
       x-hmis-vocabulary: 4.19.B
     AssessmentResultType:
       x-hmis-dataDictionaryName: AssessmentResultType
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AssessmentResultType
       type: string
       x-hmis-vocabulary: 4.19.6
     AssessmentType:
       x-hmis-dataDictionaryName: AssessmentType
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#AssessmentType
       type: string
       enum:
       - In Person
@@ -2874,6 +2937,8 @@ components:
         preflabel: Phone
     Availability:
       x-hmis-dataDictionaryName: Availability
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#Availability
       type: string
       enum:
       - Seasonal
@@ -2889,10 +2954,15 @@ components:
         preflabel: Overflow
     BedInventory:
       x-hmis-dataDictionaryName: BedInventory
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#BedInventory
+        '@type': http://www.w3.org/2001/XMLSchema#nonNegativeInteger
       type: integer
       x-hmis-vocabulary: 2.07.14
     BenefitsFromAnySource:
       x-hmis-dataDictionaryName: BenefitsFromAnySource
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#BenefitsFromAnySource
       type: string
       enum:
       - Data not collected
@@ -2914,6 +2984,8 @@ components:
         preflabel: Client doesn't know
     BlackAfAmerican:
       x-hmis-dataDictionaryName: BlackAfAmerican
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#BlackAfAmerican
       type: string
       enum:
       - 'No'
@@ -2926,28 +2998,45 @@ components:
         preflabel: 'Yes'
     CEParticipationStatusEndDate:
       x-hmis-dataDictionaryName: CEParticipationStatusEndDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CEParticipationStatusEndDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 2.09.4
       format: date
     CEParticipationStatusStartDate:
       x-hmis-dataDictionaryName: CEParticipationStatusStartDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CEParticipationStatusStartDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 2.09.3
       format: date
     CHBedInventory:
       x-hmis-dataDictionaryName: CHBedInventory
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CHBedInventory
+        '@type': http://www.w3.org/2001/XMLSchema#nonNegativeInteger
       type: integer
       x-hmis-vocabulary: 2.07.12
     CHVetBedInventory:
       x-hmis-dataDictionaryName: CHVetBedInventory
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CHVetBedInventory
+        '@type': http://www.w3.org/2001/XMLSchema#nonNegativeInteger
       type: integer
       x-hmis-vocabulary: 2.07.7
     CHYouthBedInventory:
       x-hmis-dataDictionaryName: CHYouthBedInventory
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CHYouthBedInventory
+        '@type': http://www.w3.org/2001/XMLSchema#nonNegativeInteger
       type: integer
       x-hmis-vocabulary: 2.07.10
     CLSSubsidyType:
       x-hmis-dataDictionaryName: CLSSubsidyType
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CLSSubsidyType
       type: string
       enum:
       - Public housing unit
@@ -2987,6 +3076,8 @@ components:
         preflabel: Other permanent housing dedicated for formerly homeless persons
     CMExitReason:
       x-hmis-dataDictionaryName: CMExitReason
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CMExitReason
       type: string
       enum:
       - No longer financially eligible for HUD/VASH voucher
@@ -3032,6 +3123,8 @@ components:
         preflabel: No longer interested in participating in this program
     COBRA:
       x-hmis-dataDictionaryName: COBRA
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#COBRA
       type: string
       enum:
       - Data not collected
@@ -3047,6 +3140,8 @@ components:
         preflabel: 'Yes'
     ChildSupport:
       x-hmis-dataDictionaryName: ChildSupport
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ChildSupport
       type: string
       enum:
       - Data not collected
@@ -3062,14 +3157,22 @@ components:
         preflabel: 'Yes'
     ChildSupportAmount:
       x-hmis-dataDictionaryName: ChildSupportAmount
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ChildSupportAmount
+        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
       type: number
       x-hmis-vocabulary: 4.02.M
     ChildWelfareMonths:
       x-hmis-dataDictionaryName: ChildWelfareMonths
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ChildWelfareMonths
+        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#months
       type: integer
       x-hmis-vocabulary: R11.B
     ChildWelfareYears:
       x-hmis-dataDictionaryName: ChildWelfareYears
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ChildWelfareYears
       type: string
       enum:
       - 1 to 2 years
@@ -3085,10 +3188,14 @@ components:
         preflabel: Less than one year
     City:
       x-hmis-dataDictionaryName: City
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#City
       type: string
       x-hmis-vocabulary: 2.03.5
     ClientEnrolledInPATH:
       x-hmis-dataDictionaryName: ClientEnrolledInPATH
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ClientEnrolledInPATH
       type: string
       enum:
       - Data not collected
@@ -3104,6 +3211,8 @@ components:
         preflabel: 'Yes'
     ClientLeaseholder:
       x-hmis-dataDictionaryName: ClientLeaseholder
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ClientLeaseholder
       type: string
       enum:
       - Data not collected
@@ -3119,10 +3228,14 @@ components:
         preflabel: 'Yes'
     CoCCode:
       x-hmis-dataDictionaryName: CoCCode
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CoCCode
       type: string
       x-hmis-vocabulary: 2.07.3
     CoCPrioritized:
       x-hmis-dataDictionaryName: CoCPrioritized
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CoCPrioritized
       type: string
       enum:
       - Data not collected
@@ -3138,6 +3251,8 @@ components:
         preflabel: 'Yes'
     CoercedToContinueWork:
       x-hmis-dataDictionaryName: CoercedToContinueWork
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CoercedToContinueWork
       type: string
       enum:
       - Data not collected
@@ -3159,6 +3274,8 @@ components:
         preflabel: Client doesn't know
     ConnectionWithSOAR:
       x-hmis-dataDictionaryName: ConnectionWithSOAR
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ConnectionWithSOAR
       type: string
       enum:
       - Data not collected
@@ -3180,6 +3297,8 @@ components:
         preflabel: Client doesn't know
     ContinuumProject:
       x-hmis-dataDictionaryName: ContinuumProject
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ContinuumProject
       type: string
       enum:
       - 'No'
@@ -3192,6 +3311,8 @@ components:
         preflabel: 'Yes'
     CounselingReceived:
       x-hmis-dataDictionaryName: CounselingReceived
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CounselingReceived
       type: string
       enum:
       - 'No'
@@ -3204,6 +3325,8 @@ components:
         preflabel: 'Yes'
     CountOfExchangeForSex:
       x-hmis-dataDictionaryName: CountOfExchangeForSex
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CountOfExchangeForSex
       type: string
       enum:
       - Data not collected
@@ -3231,10 +3354,15 @@ components:
         preflabel: 1-3
     CountOutreachReferralApproaches:
       x-hmis-dataDictionaryName: CountOutreachReferralApproaches
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CountOutreachReferralApproaches
+        '@type': http://www.w3.org/2001/XMLSchema#unsignedInt
       type: integer
       x-hmis-vocabulary: R1.A
     CriminalRecord:
       x-hmis-dataDictionaryName: CriminalRecord
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CriminalRecord
       type: string
       enum:
       - Data not collected
@@ -3250,6 +3378,8 @@ components:
         preflabel: 'Yes'
     CrisisAssessment:
       x-hmis-dataDictionaryName: CrisisAssessment
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CrisisAssessment
       type: string
       enum:
       - 'No'
@@ -3262,6 +3392,8 @@ components:
         preflabel: 'Yes'
     CurrentEdStatus:
       x-hmis-dataDictionaryName: CurrentEdStatus
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CurrentEdStatus
       type: string
       enum:
       - Data not collected
@@ -3292,6 +3424,8 @@ components:
         preflabel: Pursuing Bachelor's Degree
     CurrentLivingSituation:
       x-hmis-dataDictionaryName: CurrentLivingSituation
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CurrentLivingSituation
       type: string
       enum:
       - Owned by client, with ongoing housing subsidy
@@ -3396,6 +3530,8 @@ components:
         preflabel: Substance abuse treatment facility or detox center
     CurrentPregnant:
       x-hmis-dataDictionaryName: CurrentPregnant
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CurrentPregnant
       type: string
       enum:
       - Data not collected
@@ -3411,6 +3547,8 @@ components:
         preflabel: 'Yes'
     CurrentSchoolAttend:
       x-hmis-dataDictionaryName: CurrentSchoolAttend
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CurrentSchoolAttend
       type: string
       enum:
       - Currently enrolled and attending regularly (when school or the course is in session)
@@ -3435,6 +3573,8 @@ components:
         preflabel: Client doesn't know
     CurrentlyFleeing:
       x-hmis-dataDictionaryName: CurrentlyFleeing
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#CurrentlyFleeing
       type: string
       enum:
       - Data not collected
@@ -3456,11 +3596,16 @@ components:
         preflabel: Client doesn't know
     DOB:
       x-hmis-dataDictionaryName: DOB
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#DOB
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 3.03.1
       format: date
     DOBDataQuality:
       x-hmis-dataDictionaryName: DOBDataQuality
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#DOBDataQuality
       type: string
       enum:
       - Data not collected
@@ -3482,26 +3627,40 @@ components:
         preflabel: Approximate or partial DOB reported
     DateOfBCPStatus:
       x-hmis-dataDictionaryName: DateOfBCPStatus
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#DateOfBCPStatus
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: R2.1
       format: date
     DateOfEngagement:
       x-hmis-dataDictionaryName: DateOfEngagement
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#DateOfEngagement
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 4.13.1
       format: date
     DateOfPATHStatus:
       x-hmis-dataDictionaryName: DateOfPATHStatus
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#DateOfPATHStatus
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: P3.1
       format: date
     DateToStreetESSH:
       x-hmis-dataDictionaryName: DateToStreetESSH
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#DateToStreetESSH
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 3.917.3
       format: date
     DentalHealthStatus:
       x-hmis-dataDictionaryName: DentalHealthStatus
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#DentalHealthStatus
       type: string
       enum:
       - Excellent
@@ -3532,6 +3691,8 @@ components:
         preflabel: Good
     DependentUnder6:
       x-hmis-dataDictionaryName: DependentUnder6
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#DependentUnder6
       type: string
       enum:
       - Youngest child is under 1 year old
@@ -3550,6 +3711,8 @@ components:
         preflabel: Youngest child is 1 to 6 years old and/or one or more children (any age) require significant care
     DesertStorm:
       x-hmis-dataDictionaryName: DesertStorm
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#DesertStorm
       type: string
       enum:
       - Data not collected
@@ -3571,6 +3734,8 @@ components:
         preflabel: Client doesn't know
     Destination:
       x-hmis-dataDictionaryName: Destination
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#Destination
       type: string
       enum:
       - Owned by client, with ongoing housing subsidy
@@ -3675,6 +3840,8 @@ components:
         preflabel: Substance abuse treatment facility or detox center
     DestinationSafeClient:
       x-hmis-dataDictionaryName: DestinationSafeClient
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#DestinationSafeClient
       type: string
       enum:
       - Data not collected
@@ -3696,6 +3863,8 @@ components:
         preflabel: Client doesn't know
     DestinationSafeWorker:
       x-hmis-dataDictionaryName: DestinationSafeWorker
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#DestinationSafeWorker
       type: string
       enum:
       - 'No'
@@ -3711,6 +3880,8 @@ components:
         preflabel: Worker does not know
     DestinationSubsidyType:
       x-hmis-dataDictionaryName: DestinationSubsidyType
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#DestinationSubsidyType
       type: string
       enum:
       - Public housing unit
@@ -3750,6 +3921,8 @@ components:
         preflabel: Other permanent housing dedicated for formerly homeless persons
     DirectServices:
       x-hmis-dataDictionaryName: DirectServices
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#DirectServices
       type: string
       enum:
       - 'No'
@@ -3762,6 +3935,8 @@ components:
         preflabel: 'Yes'
     DisabledHoH:
       x-hmis-dataDictionaryName: DisabledHoH
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#DisabledHoH
       type: string
       enum:
       - Data not collected
@@ -3777,6 +3952,8 @@ components:
         preflabel: 'Yes'
     DisablingCondition:
       x-hmis-dataDictionaryName: DisablingCondition
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#DisablingCondition
       type: string
       enum:
       - Data not collected
@@ -3798,6 +3975,8 @@ components:
         preflabel: Client doesn't know
     DischargeStatus:
       x-hmis-dataDictionaryName: DischargeStatus
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#DischargeStatus
       type: string
       enum:
       - Data not collected
@@ -3831,6 +4010,8 @@ components:
         preflabel: Uncharacterized
     DomesticViolenceSurvivor:
       x-hmis-dataDictionaryName: DomesticViolenceSurvivor
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#DomesticViolenceSurvivor
       type: string
       enum:
       - Data not collected
@@ -3852,11 +4033,16 @@ components:
         preflabel: Client doesn't know
     DueDate:
       x-hmis-dataDictionaryName: DueDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#DueDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: R10.A
       format: date
     ESBedType:
       x-hmis-dataDictionaryName: ESBedType
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ESBedType
       type: string
       enum:
       - Facility-based beds
@@ -3872,6 +4058,8 @@ components:
         preflabel: Voucher beds
     EarlyExitReason:
       x-hmis-dataDictionaryName: EarlyExitReason
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#EarlyExitReason
       type: string
       enum:
       - Project terminated
@@ -3896,6 +4084,8 @@ components:
         preflabel: Non-payment of rent/occupancy charge
     Earned:
       x-hmis-dataDictionaryName: Earned
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#Earned
       type: string
       enum:
       - Data not collected
@@ -3911,10 +4101,15 @@ components:
         preflabel: 'Yes'
     EarnedAmount:
       x-hmis-dataDictionaryName: EarnedAmount
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#EarnedAmount
+        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
       type: number
       x-hmis-vocabulary: 4.02.A
     EligibleForRHY:
       x-hmis-dataDictionaryName: EligibleForRHY
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#EligibleForRHY
       type: string
       enum:
       - Data not collected
@@ -3930,6 +4125,8 @@ components:
         preflabel: 'Yes'
     EmailSocialMedia:
       x-hmis-dataDictionaryName: EmailSocialMedia
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#EmailSocialMedia
       type: string
       enum:
       - 'No'
@@ -3942,6 +4139,8 @@ components:
         preflabel: 'Yes'
     Employed:
       x-hmis-dataDictionaryName: Employed
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#Employed
       type: string
       enum:
       - Data not collected
@@ -3963,6 +4162,8 @@ components:
         preflabel: Client doesn't know
     EmployerProvided:
       x-hmis-dataDictionaryName: EmployerProvided
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#EmployerProvided
       type: string
       enum:
       - Data not collected
@@ -3978,6 +4179,8 @@ components:
         preflabel: 'Yes'
     EmploymentType:
       x-hmis-dataDictionaryName: EmploymentType
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#EmploymentType
       type: string
       enum:
       - Part-time
@@ -3996,19 +4199,29 @@ components:
         preflabel: Full-time
     EndDate:
       x-hmis-dataDictionaryName: EndDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#EndDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 2.06.4
       format: date
     EnrollmentCoC:
       x-hmis-dataDictionaryName: EnrollmentCoC
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#EnrollmentCoC
       type: string
       x-hmis-vocabulary: 3.16.1
     EnrollmentID:
       x-hmis-dataDictionaryName: EnrollmentID
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#EnrollmentID
       type: string
       x-hmis-vocabulary: 5.06.1
     EntryDate:
       x-hmis-dataDictionaryName: EntryDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#EntryDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 3.10.1
       format: date
@@ -4074,11 +4287,16 @@ components:
         preflabel: 'Referral to Non-continuum services: Ineligible for continuum services'
     EventDate:
       x-hmis-dataDictionaryName: EventDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#EventDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 4.20.1
       format: date
     EvictionHistory:
       x-hmis-dataDictionaryName: EvictionHistory
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#EvictionHistory
       type: string
       enum:
       - No prior rental evictions
@@ -4097,6 +4315,8 @@ components:
         preflabel: 1 prior rental eviction
     ExchangeForSex:
       x-hmis-dataDictionaryName: ExchangeForSex
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ExchangeForSex
       type: string
       enum:
       - Data not collected
@@ -4118,6 +4338,8 @@ components:
         preflabel: Client doesn't know
     ExchangeForSexPastThreeMonths:
       x-hmis-dataDictionaryName: ExchangeForSexPastThreeMonths
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ExchangeForSexPastThreeMonths
       type: string
       enum:
       - Data not collected
@@ -4139,29 +4361,45 @@ components:
         preflabel: Client doesn't know
     ExitDate:
       x-hmis-dataDictionaryName: ExitDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ExitDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 3.11.1
       format: date
     ExportID:
       x-hmis-dataDictionaryName: ExportID
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ExportID
       type: string
       x-hmis-vocabulary: FW.5
     FAAmount:
       x-hmis-dataDictionaryName: FAAmount
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#FAAmount
+        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
       type: number
       x-hmis-vocabulary: V3.3
     FAEndDate:
       x-hmis-dataDictionaryName: FAEndDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#FAEndDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: V3.5
       format: date
     FAStartDate:
       x-hmis-dataDictionaryName: FAStartDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#FAStartDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: V3.2
       format: date
     FamilyCounseling:
       x-hmis-dataDictionaryName: FamilyCounseling
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#FamilyCounseling
       type: string
       enum:
       - Data not collected
@@ -4177,10 +4415,14 @@ components:
         preflabel: 'Yes'
     FirstName:
       x-hmis-dataDictionaryName: FirstName
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#FirstName
       type: string
       x-hmis-vocabulary: 3.01.1
     FormerWardChildWelfare:
       x-hmis-dataDictionaryName: FormerWardChildWelfare
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#FormerWardChildWelfare
       type: string
       enum:
       - Data not collected
@@ -4202,6 +4444,8 @@ components:
         preflabel: Client doesn't know
     FormerWardJuvenileJustice:
       x-hmis-dataDictionaryName: FormerWardJuvenileJustice
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#FormerWardJuvenileJustice
       type: string
       enum:
       - Data not collected
@@ -4223,6 +4467,8 @@ components:
         preflabel: Client doesn't know
     Funder:
       x-hmis-dataDictionaryName: Funder
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#Funder
       type: string
       enum:
       - 'HUD: CoC – Supportive Services Only'
@@ -4373,6 +4619,8 @@ components:
         preflabel: 'HUD: CoC – Youth Homeless Demonstration Program (YHDP)'
     GA:
       x-hmis-dataDictionaryName: GA
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#GA
       type: string
       enum:
       - Data not collected
@@ -4388,10 +4636,15 @@ components:
         preflabel: 'Yes'
     GAAmount:
       x-hmis-dataDictionaryName: GAAmount
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#GAAmount
+        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
       type: number
       x-hmis-vocabulary: 4.02.J
     GeneralHealthStatus:
       x-hmis-dataDictionaryName: GeneralHealthStatus
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#GeneralHealthStatus
       type: string
       enum:
       - Excellent
@@ -4422,10 +4675,14 @@ components:
         preflabel: Good
     Geocode:
       x-hmis-dataDictionaryName: Geocode
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#Geocode
       type: string
       x-hmis-vocabulary: 2.03.2
     GeographyType:
       x-hmis-dataDictionaryName: GeographyType
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#GeographyType
       type: string
       enum:
       - Suburban
@@ -4444,10 +4701,14 @@ components:
         preflabel: Unknown / data not collected
     GrantID:
       x-hmis-dataDictionaryName: GrantID
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#GrantID
       type: string
       x-hmis-vocabulary: 2.06.2
     GroupCounseling:
       x-hmis-dataDictionaryName: GroupCounseling
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#GroupCounseling
       type: string
       enum:
       - Data not collected
@@ -4463,6 +4724,8 @@ components:
         preflabel: 'Yes'
     HH5Plus:
       x-hmis-dataDictionaryName: HH5Plus
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#HH5Plus
       type: string
       enum:
       - Data not collected
@@ -4478,16 +4741,24 @@ components:
         preflabel: 'Yes'
     HMISParticipationStatusEndDate:
       x-hmis-dataDictionaryName: HMISParticipationStatusEndDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#HMISParticipationStatusEndDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 2.08.3
       format: date
     HMISParticipationStatusStartDate:
       x-hmis-dataDictionaryName: HMISParticipationStatusStartDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#HMISParticipationStatusStartDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 2.08.2
       format: date
     HMISParticipationType:
       x-hmis-dataDictionaryName: HMISParticipationType
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#HMISParticipationType
       type: string
       enum:
       - Not Participating
@@ -4503,6 +4774,8 @@ components:
         preflabel: Comparable Database Participating
     HOHLeaseholder:
       x-hmis-dataDictionaryName: HOHLeaseholder
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#HOHLeaseholder
       type: string
       enum:
       - Data not collected
@@ -4518,6 +4791,8 @@ components:
         preflabel: 'Yes'
     HOPWAMedAssistedLivingFac:
       x-hmis-dataDictionaryName: HOPWAMedAssistedLivingFac
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#HOPWAMedAssistedLivingFac
       type: string
       enum:
       - 'No'
@@ -4533,10 +4808,15 @@ components:
         preflabel: Non-HOPWA Funded Project
     HPScreeningScore:
       x-hmis-dataDictionaryName: HPScreeningScore
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#HPScreeningScore
+        '@type': http://www.w3.org/2001/XMLSchema#integer
       type: integer
       x-hmis-vocabulary: V7.R
     HispanicLatinao:
       x-hmis-dataDictionaryName: HispanicLatinao
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#HispanicLatinao
       type: string
       enum:
       - 'No'
@@ -4549,10 +4829,14 @@ components:
         preflabel: 'Yes'
     HouseholdID:
       x-hmis-dataDictionaryName: HouseholdID
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#HouseholdID
       type: string
       x-hmis-vocabulary: 5.09.1
     HouseholdType:
       x-hmis-dataDictionaryName: HouseholdType
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#HouseholdType
       type: string
       enum:
       - Households with only children
@@ -4568,6 +4852,8 @@ components:
         preflabel: Households without children
     HousingAssessment:
       x-hmis-dataDictionaryName: HousingAssessment
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#HousingAssessment
       type: string
       enum:
       - Able to maintain the housing they had at project entry
@@ -4607,6 +4893,8 @@ components:
         preflabel: Jail/prison
     HousingType:
       x-hmis-dataDictionaryName: HousingType
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#HousingType
       type: string
       enum:
       - Site-based – clustered / multiple sites
@@ -4622,6 +4910,8 @@ components:
         preflabel: Tenant-based – scattered site
     InPersonGroup:
       x-hmis-dataDictionaryName: InPersonGroup
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#InPersonGroup
       type: string
       enum:
       - 'No'
@@ -4634,6 +4924,8 @@ components:
         preflabel: 'Yes'
     InPersonIndividual:
       x-hmis-dataDictionaryName: InPersonIndividual
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#InPersonIndividual
       type: string
       enum:
       - 'No'
@@ -4646,6 +4938,8 @@ components:
         preflabel: 'Yes'
     IncarceratedAdult:
       x-hmis-dataDictionaryName: IncarceratedAdult
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#IncarceratedAdult
       type: string
       enum:
       - Data not collected
@@ -4664,6 +4958,8 @@ components:
         preflabel: Incarcerated two or more times
     IncarceratedParent:
       x-hmis-dataDictionaryName: IncarceratedParent
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#IncarceratedParent
       type: string
       enum:
       - Data not collected
@@ -4685,6 +4981,8 @@ components:
         preflabel: Client doesn't know
     IncomeFromAnySource:
       x-hmis-dataDictionaryName: IncomeFromAnySource
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#IncomeFromAnySource
       type: string
       enum:
       - Data not collected
@@ -4706,6 +5004,8 @@ components:
         preflabel: Client doesn't know
     IndianHealthServices:
       x-hmis-dataDictionaryName: IndianHealthServices
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#IndianHealthServices
       type: string
       enum:
       - Data not collected
@@ -4721,6 +5021,8 @@ components:
         preflabel: 'Yes'
     IndividualCounseling:
       x-hmis-dataDictionaryName: IndividualCounseling
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#IndividualCounseling
       type: string
       enum:
       - Data not collected
@@ -4736,11 +5038,16 @@ components:
         preflabel: 'Yes'
     InformationDate:
       x-hmis-dataDictionaryName: InformationDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#InformationDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: C3.1
       format: date
     InsufficientIncome:
       x-hmis-dataDictionaryName: InsufficientIncome
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#InsufficientIncome
       type: string
       enum:
       - Data not collected
@@ -4762,6 +5069,8 @@ components:
         preflabel: Client doesn't know
     InsuranceFromAnySource:
       x-hmis-dataDictionaryName: InsuranceFromAnySource
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#InsuranceFromAnySource
       type: string
       enum:
       - Data not collected
@@ -4783,16 +5092,24 @@ components:
         preflabel: Client doesn't know
     InventoryEndDate:
       x-hmis-dataDictionaryName: InventoryEndDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#InventoryEndDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 2.07.2
       format: date
     InventoryStartDate:
       x-hmis-dataDictionaryName: InventoryStartDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#InventoryStartDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 2.07.1
       format: date
     IraqOIF:
       x-hmis-dataDictionaryName: IraqOIF
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#IraqOIF
       type: string
       enum:
       - Data not collected
@@ -4814,6 +5131,8 @@ components:
         preflabel: Client doesn't know
     IraqOND:
       x-hmis-dataDictionaryName: IraqOND
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#IraqOND
       type: string
       enum:
       - Data not collected
@@ -4835,10 +5154,15 @@ components:
         preflabel: Client doesn't know
     JuvenileJusticeMonths:
       x-hmis-dataDictionaryName: JuvenileJusticeMonths
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#JuvenileJusticeMonths
+        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#months
       type: integer
       x-hmis-vocabulary: R12.B
     JuvenileJusticeYears:
       x-hmis-dataDictionaryName: JuvenileJusticeYears
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#JuvenileJusticeYears
       type: string
       enum:
       - 1 to 2 years
@@ -4854,6 +5178,8 @@ components:
         preflabel: Less than one year
     KoreanWar:
       x-hmis-dataDictionaryName: KoreanWar
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#KoreanWar
       type: string
       enum:
       - Data not collected
@@ -4875,6 +5201,8 @@ components:
         preflabel: Client doesn't know
     LOSUnderThreshold:
       x-hmis-dataDictionaryName: LOSUnderThreshold
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#LOSUnderThreshold
       type: string
       enum:
       - Data not collected
@@ -4890,6 +5218,8 @@ components:
         preflabel: 'Yes'
     LaborExploitPastThreeMonths:
       x-hmis-dataDictionaryName: LaborExploitPastThreeMonths
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#LaborExploitPastThreeMonths
       type: string
       enum:
       - Data not collected
@@ -4911,6 +5241,8 @@ components:
         preflabel: Client doesn't know
     LastGradeCompleted:
       x-hmis-dataDictionaryName: LastGradeCompleted
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#LastGradeCompleted
       type: string
       enum:
       - Vocational certification
@@ -4962,10 +5294,14 @@ components:
         preflabel: School program does not have grade levels
     LastName:
       x-hmis-dataDictionaryName: LastName
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#LastName
       type: string
       x-hmis-vocabulary: 3.01.3
     LeaseOwn60Day:
       x-hmis-dataDictionaryName: LeaseOwn60Day
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#LeaseOwn60Day
       type: string
       enum:
       - Data not collected
@@ -4987,6 +5323,8 @@ components:
         preflabel: Client doesn't know
     LeaveSituation14Days:
       x-hmis-dataDictionaryName: LeaveSituation14Days
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#LeaveSituation14Days
       type: string
       enum:
       - Data not collected
@@ -5008,6 +5346,8 @@ components:
         preflabel: Client doesn't know
     LengthOfStay:
       x-hmis-dataDictionaryName: LengthOfStay
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#LengthOfStay
       type: string
       enum:
       - Two to six nights
@@ -5041,6 +5381,8 @@ components:
         preflabel: One month or more, but less than 90 days
     LiteralHomelessHistory:
       x-hmis-dataDictionaryName: LiteralHomelessHistory
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#LiteralHomelessHistory
       type: string
       enum:
       - Most recent episode occurred more than one year ago
@@ -5059,6 +5401,8 @@ components:
         preflabel: None
     LivingSituation:
       x-hmis-dataDictionaryName: LivingSituation
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#LivingSituation
       type: string
       enum:
       - Owned by client, with ongoing housing subsidy
@@ -5163,14 +5507,20 @@ components:
         preflabel: Substance abuse treatment facility or detox center
     LocationCrisisOrPHHousing:
       x-hmis-dataDictionaryName: LocationCrisisOrPHHousing
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#LocationCrisisOrPHHousing
       type: string
       x-hmis-vocabulary: 4.20.C
     LocationDetails:
       x-hmis-dataDictionaryName: LocationDetails
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#LocationDetails
       type: string
       x-hmis-vocabulary: 4.12.4
     Medicaid:
       x-hmis-dataDictionaryName: Medicaid
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#Medicaid
       type: string
       enum:
       - Data not collected
@@ -5186,6 +5536,8 @@ components:
         preflabel: 'Yes'
     Medicare:
       x-hmis-dataDictionaryName: Medicare
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#Medicare
       type: string
       enum:
       - Data not collected
@@ -5201,6 +5553,8 @@ components:
         preflabel: 'Yes'
     MentalHealthConsultation:
       x-hmis-dataDictionaryName: MentalHealthConsultation
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#MentalHealthConsultation
       type: string
       enum:
       - Mental health consultation being coordinated/arranged with other provider
@@ -5219,6 +5573,8 @@ components:
         preflabel: Mental health consultation completed
     MentalHealthDisorderFam:
       x-hmis-dataDictionaryName: MentalHealthDisorderFam
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#MentalHealthDisorderFam
       type: string
       enum:
       - Data not collected
@@ -5240,6 +5596,8 @@ components:
         preflabel: Client doesn't know
     MentalHealthStatus:
       x-hmis-dataDictionaryName: MentalHealthStatus
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#MentalHealthStatus
       type: string
       enum:
       - Excellent
@@ -5270,6 +5628,8 @@ components:
         preflabel: Good
     MidEastNAfrican:
       x-hmis-dataDictionaryName: MidEastNAfrican
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#MidEastNAfrican
       type: string
       enum:
       - 'No'
@@ -5282,10 +5642,14 @@ components:
         preflabel: 'Yes'
     MiddleName:
       x-hmis-dataDictionaryName: MiddleName
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#MiddleName
       type: string
       x-hmis-vocabulary: 3.01.2
     MilitaryBranch:
       x-hmis-dataDictionaryName: MilitaryBranch
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#MilitaryBranch
       type: string
       enum:
       - Navy
@@ -5319,6 +5683,8 @@ components:
         preflabel: Army
     MonthsHomelessPastThreeYears:
       x-hmis-dataDictionaryName: MonthsHomelessPastThreeYears
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#MonthsHomelessPastThreeYears
       type: string
       enum:
       - Data not collected
@@ -5373,6 +5739,8 @@ components:
         preflabel: '5'
     MostRecentEdStatus:
       x-hmis-dataDictionaryName: MostRecentEdStatus
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#MostRecentEdStatus
       type: string
       enum:
       - 'K12: Dropped out'
@@ -5412,11 +5780,16 @@ components:
         preflabel: 'Higher education: Dropped out'
     MoveInDate:
       x-hmis-dataDictionaryName: MoveInDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#MoveInDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 3.20.1
       format: date
     MovedTwoOrMore:
       x-hmis-dataDictionaryName: MovedTwoOrMore
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#MovedTwoOrMore
       type: string
       enum:
       - Data not collected
@@ -5438,10 +5811,14 @@ components:
         preflabel: Client doesn't know
     MovingOnOtherType:
       x-hmis-dataDictionaryName: MovingOnOtherType
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#MovingOnOtherType
       type: string
       x-hmis-vocabulary: C2.A
     NameDataQuality:
       x-hmis-dataDictionaryName: NameDataQuality
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#NameDataQuality
       type: string
       enum:
       - Full name reported
@@ -5463,10 +5840,14 @@ components:
         preflabel: Partial, street name, or code name reported
     NameSuffix:
       x-hmis-dataDictionaryName: NameSuffix
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#NameSuffix
       type: string
       x-hmis-vocabulary: 3.01.4
     NativeHIPacific:
       x-hmis-dataDictionaryName: NativeHIPacific
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#NativeHIPacific
       type: string
       enum:
       - 'No'
@@ -5479,6 +5860,8 @@ components:
         preflabel: 'Yes'
     NoADAPReason:
       x-hmis-dataDictionaryName: NoADAPReason
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#NoADAPReason
       type: string
       enum:
       - Data not collected
@@ -5506,6 +5889,8 @@ components:
         preflabel: Applied; client not eligible
     NoCOBRAReason:
       x-hmis-dataDictionaryName: NoCOBRAReason
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#NoCOBRAReason
       type: string
       enum:
       - Data not collected
@@ -5533,6 +5918,8 @@ components:
         preflabel: Applied; client not eligible
     NoEmployerProvidedReason:
       x-hmis-dataDictionaryName: NoEmployerProvidedReason
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#NoEmployerProvidedReason
       type: string
       enum:
       - Data not collected
@@ -5560,6 +5947,8 @@ components:
         preflabel: Applied; client not eligible
     NoIndianHealthServicesReason:
       x-hmis-dataDictionaryName: NoIndianHealthServicesReason
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#NoIndianHealthServicesReason
       type: string
       enum:
       - Data not collected
@@ -5587,6 +5976,8 @@ components:
         preflabel: Applied; client not eligible
     NoMedicaidReason:
       x-hmis-dataDictionaryName: NoMedicaidReason
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#NoMedicaidReason
       type: string
       enum:
       - Data not collected
@@ -5614,6 +6005,8 @@ components:
         preflabel: Applied; client not eligible
     NoMedicareReason:
       x-hmis-dataDictionaryName: NoMedicareReason
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#NoMedicareReason
       type: string
       enum:
       - Data not collected
@@ -5641,6 +6034,8 @@ components:
         preflabel: Applied; client not eligible
     NoPrivatePayReason:
       x-hmis-dataDictionaryName: NoPrivatePayReason
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#NoPrivatePayReason
       type: string
       enum:
       - Data not collected
@@ -5668,6 +6063,8 @@ components:
         preflabel: Applied; client not eligible
     NoRyanWhiteReason:
       x-hmis-dataDictionaryName: NoRyanWhiteReason
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#NoRyanWhiteReason
       type: string
       enum:
       - Data not collected
@@ -5695,6 +6092,8 @@ components:
         preflabel: Applied; client not eligible
     NoSCHIPReason:
       x-hmis-dataDictionaryName: NoSCHIPReason
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#NoSCHIPReason
       type: string
       enum:
       - Data not collected
@@ -5722,6 +6121,8 @@ components:
         preflabel: Applied; client not eligible
     NoStateHealthInsReason:
       x-hmis-dataDictionaryName: NoStateHealthInsReason
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#NoStateHealthInsReason
       type: string
       enum:
       - Data not collected
@@ -5749,6 +6150,8 @@ components:
         preflabel: Applied; client not eligible
     NoVHAReason:
       x-hmis-dataDictionaryName: NoVHAReason
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#NoVHAReason
       type: string
       enum:
       - Data not collected
@@ -5776,6 +6179,8 @@ components:
         preflabel: Applied; client not eligible
     NotEmployedReason:
       x-hmis-dataDictionaryName: NotEmployedReason
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#NotEmployedReason
       type: string
       enum:
       - Data not collected
@@ -5794,28 +6199,43 @@ components:
         preflabel: Not looking for work
     OperatingEndDate:
       x-hmis-dataDictionaryName: OperatingEndDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#OperatingEndDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 2.02.4
       format: date
     OperatingStartDate:
       x-hmis-dataDictionaryName: OperatingStartDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#OperatingStartDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 2.02.3
       format: date
     OrganizationID:
       x-hmis-dataDictionaryName: OrganizationID
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#OrganizationID
       type: string
       x-hmis-vocabulary: 2.01.1
     OrganizationName:
       x-hmis-dataDictionaryName: OrganizationName
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#OrganizationName
       type: string
       x-hmis-vocabulary: 2.01.2
     OtherBedInventory:
       x-hmis-dataDictionaryName: OtherBedInventory
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#OtherBedInventory
+        '@type': http://www.w3.org/2001/XMLSchema#nonNegativeInteger
       type: integer
       x-hmis-vocabulary: 2.07.13
     OtherBenefitsSource:
       x-hmis-dataDictionaryName: OtherBenefitsSource
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#OtherBenefitsSource
       type: string
       enum:
       - Data not collected
@@ -5831,22 +6251,33 @@ components:
         preflabel: 'Yes'
     OtherBenefitsSourceIdentify:
       x-hmis-dataDictionaryName: OtherBenefitsSourceIdentify
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#OtherBenefitsSourceIdentify
       type: string
       x-hmis-vocabulary: 4.03.A
     OtherDestination:
       x-hmis-dataDictionaryName: OtherDestination
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#OtherDestination
       type: string
       x-hmis-vocabulary: 3.12.B
     OtherFunder:
       x-hmis-dataDictionaryName: OtherFunder
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#OtherFunder
       type: string
       x-hmis-vocabulary: 2.06.A
     OtherIncomeAmount:
       x-hmis-dataDictionaryName: OtherIncomeAmount
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#OtherIncomeAmount
+        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
       type: number
       x-hmis-vocabulary: 4.02.O
     OtherIncomeSource:
       x-hmis-dataDictionaryName: OtherIncomeSource
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#OtherIncomeSource
       type: string
       enum:
       - Data not collected
@@ -5862,10 +6293,14 @@ components:
         preflabel: 'Yes'
     OtherIncomeSourceIdentify:
       x-hmis-dataDictionaryName: OtherIncomeSourceIdentify
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#OtherIncomeSourceIdentify
       type: string
       x-hmis-vocabulary: 4.02.P
     OtherInsurance:
       x-hmis-dataDictionaryName: OtherInsurance
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#OtherInsurance
       type: string
       enum:
       - Data not collected
@@ -5881,10 +6316,14 @@ components:
         preflabel: 'Yes'
     OtherInsuranceIdentify:
       x-hmis-dataDictionaryName: OtherInsuranceIdentify
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#OtherInsuranceIdentify
       type: string
       x-hmis-vocabulary: 4.04.12A
     OtherTANF:
       x-hmis-dataDictionaryName: OtherTANF
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#OtherTANF
       type: string
       enum:
       - Data not collected
@@ -5900,6 +6339,8 @@ components:
         preflabel: 'Yes'
     OtherTheater:
       x-hmis-dataDictionaryName: OtherTheater
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#OtherTheater
       type: string
       enum:
       - Data not collected
@@ -5921,10 +6362,14 @@ components:
         preflabel: Client doesn't know
     OtherTypeProvided:
       x-hmis-dataDictionaryName: OtherTypeProvided
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#OtherTypeProvided
       type: string
       x-hmis-vocabulary: V8.A
     Pension:
       x-hmis-dataDictionaryName: Pension
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#Pension
       type: string
       enum:
       - Data not collected
@@ -5940,10 +6385,15 @@ components:
         preflabel: 'Yes'
     PensionAmount:
       x-hmis-dataDictionaryName: PensionAmount
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#PensionAmount
+        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
       type: number
       x-hmis-vocabulary: 4.02.L
     PercentAMI:
       x-hmis-dataDictionaryName: PercentAMI
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#PercentAMI
       type: string
       enum:
       - 81% or greater
@@ -5965,10 +6415,14 @@ components:
         preflabel: 30% or less
     PersonalID:
       x-hmis-dataDictionaryName: PersonalID
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#PersonalID
       type: string
       x-hmis-vocabulary: 5.08.1
     PhysicalDisabilityFam:
       x-hmis-dataDictionaryName: PhysicalDisabilityFam
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#PhysicalDisabilityFam
       type: string
       enum:
       - Data not collected
@@ -5990,6 +6444,8 @@ components:
         preflabel: Client doesn't know
     PosAdultConnections:
       x-hmis-dataDictionaryName: PosAdultConnections
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#PosAdultConnections
       type: string
       enum:
       - 'No'
@@ -6005,6 +6461,8 @@ components:
         preflabel: Worker does not know
     PosCommunityConnections:
       x-hmis-dataDictionaryName: PosCommunityConnections
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#PosCommunityConnections
       type: string
       enum:
       - 'No'
@@ -6020,6 +6478,8 @@ components:
         preflabel: Worker does not know
     PosPeerConnections:
       x-hmis-dataDictionaryName: PosPeerConnections
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#PosPeerConnections
       type: string
       enum:
       - 'No'
@@ -6035,6 +6495,8 @@ components:
         preflabel: Worker does not know
     PostExitCounselingPlan:
       x-hmis-dataDictionaryName: PostExitCounselingPlan
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#PostExitCounselingPlan
       type: string
       enum:
       - 'No'
@@ -6055,6 +6517,8 @@ components:
       x-hmis-vocabulary: C4.B
     PregnancyStatus:
       x-hmis-dataDictionaryName: PregnancyStatus
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#PregnancyStatus
       type: string
       enum:
       - Data not collected
@@ -6076,6 +6540,8 @@ components:
         preflabel: Client doesn't know
     PreventionAssessment:
       x-hmis-dataDictionaryName: PreventionAssessment
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#PreventionAssessment
       type: string
       enum:
       - 'No'
@@ -6088,6 +6554,8 @@ components:
         preflabel: 'Yes'
     PreviousStreetESSH:
       x-hmis-dataDictionaryName: PreviousStreetESSH
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#PreviousStreetESSH
       type: string
       enum:
       - Data not collected
@@ -6103,6 +6571,8 @@ components:
         preflabel: 'Yes'
     PrioritizationStatus:
       x-hmis-dataDictionaryName: PrioritizationStatus
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#PrioritizationStatus
       type: string
       enum:
       - Not placed on prioritization list
@@ -6115,6 +6585,8 @@ components:
         preflabel: Placed on prioritization list
     PrisonDischarge:
       x-hmis-dataDictionaryName: PrisonDischarge
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#PrisonDischarge
       type: string
       enum:
       - Data not collected
@@ -6130,6 +6602,8 @@ components:
         preflabel: 'Yes'
     PrivateDisability:
       x-hmis-dataDictionaryName: PrivateDisability
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#PrivateDisability
       type: string
       enum:
       - Data not collected
@@ -6145,10 +6619,15 @@ components:
         preflabel: 'Yes'
     PrivateDisabilityAmount:
       x-hmis-dataDictionaryName: PrivateDisabilityAmount
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#PrivateDisabilityAmount
+        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
       type: number
       x-hmis-vocabulary: 4.02.G
     PrivatePay:
       x-hmis-dataDictionaryName: PrivatePay
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#PrivatePay
       type: string
       enum:
       - Data not collected
@@ -6164,6 +6643,8 @@ components:
         preflabel: 'Yes'
     ProbSolDivRRResult:
       x-hmis-dataDictionaryName: ProbSolDivRRResult
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ProbSolDivRRResult
       type: string
       enum:
       - Data not collected
@@ -6179,6 +6660,8 @@ components:
         preflabel: 'Yes'
     ProjectCompletionStatus:
       x-hmis-dataDictionaryName: ProjectCompletionStatus
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ProjectCompletionStatus
       type: string
       enum:
       - Completed project
@@ -6194,14 +6677,20 @@ components:
         preflabel: Client was expelled or otherwise involuntarily discharged from project
     ProjectID:
       x-hmis-dataDictionaryName: ProjectID
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ProjectID
       type: string
       x-hmis-vocabulary: 2.02.1
     ProjectName:
       x-hmis-dataDictionaryName: ProjectName
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ProjectName
       type: string
       x-hmis-vocabulary: 2.02.2
     ProjectType:
       x-hmis-dataDictionaryName: ProjectType
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ProjectType
       type: string
       enum:
       - Day Shelter
@@ -6250,6 +6739,8 @@ components:
         preflabel: PH – Permanent Supportive Housing
     RRHSubType:
       x-hmis-dataDictionaryName: RRHSubType
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#RRHSubType
       type: string
       enum:
       - 'RRH: Housing with or without services'
@@ -6262,6 +6753,8 @@ components:
         preflabel: 'RRH: Services Only'
     RaceNone:
       x-hmis-dataDictionaryName: RaceNone
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#RaceNone
       type: string
       enum:
       - Data not collected
@@ -6277,6 +6770,8 @@ components:
         preflabel: Client doesn't know
     ReasonNoServices:
       x-hmis-dataDictionaryName: ReasonNoServices
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ReasonNoServices
       type: string
       enum:
       - Out of age range
@@ -6298,6 +6793,8 @@ components:
         preflabel: Other_ReasonNoServices
     ReasonNotEnrolled:
       x-hmis-dataDictionaryName: ReasonNotEnrolled
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ReasonNotEnrolled
       type: string
       enum:
       - Client was not enrolled for other reason(s)
@@ -6313,6 +6810,8 @@ components:
         preflabel: Client was found ineligible for PATH
     ReceivesReferrals:
       x-hmis-dataDictionaryName: ReceivesReferrals
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ReceivesReferrals
       type: string
       enum:
       - 'No'
@@ -6325,6 +6824,8 @@ components:
         preflabel: 'Yes'
     ReferralCaseManageAfter:
       x-hmis-dataDictionaryName: ReferralCaseManageAfter
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ReferralCaseManageAfter
       type: string
       enum:
       - Data not collected
@@ -6340,6 +6841,8 @@ components:
         preflabel: 'Yes'
     ReferralOutcome:
       x-hmis-dataDictionaryName: ReferralOutcome
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ReferralOutcome
       type: string
       enum:
       - Not attained
@@ -6355,6 +6858,8 @@ components:
         preflabel: Attained
     ReferralResult:
       x-hmis-dataDictionaryName: ReferralResult
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ReferralResult
       type: string
       enum:
       - 'Unsuccessful referral: provider rejected'
@@ -6370,6 +6875,8 @@ components:
         preflabel: 'Unsuccessful referral: client rejected'
     ReferralSource:
       x-hmis-dataDictionaryName: ReferralSource
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ReferralSource
       type: string
       enum:
       - School
@@ -6421,6 +6928,8 @@ components:
         preflabel: Mental Hospital
     RelationshipToHoH:
       x-hmis-dataDictionaryName: RelationshipToHoH
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#RelationshipToHoH
       type: string
       enum:
       - Data not collected
@@ -6445,6 +6954,8 @@ components:
         preflabel: Head of household's other relation member
     RentalSubsidyType:
       x-hmis-dataDictionaryName: RentalSubsidyType
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#RentalSubsidyType
       type: string
       enum:
       - Public housing unit
@@ -6484,10 +6995,14 @@ components:
         preflabel: Other permanent housing dedicated for formerly homeless persons
     ResProjectID:
       x-hmis-dataDictionaryName: ResProjectID
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ResProjectID
       type: string
       x-hmis-vocabulary: 2.02.C
     ResidentialAffiliation:
       x-hmis-dataDictionaryName: ResidentialAffiliation
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ResidentialAffiliation
       type: string
       enum:
       - 'No'
@@ -6500,6 +7015,8 @@ components:
         preflabel: 'Yes'
     ResourcesToObtain:
       x-hmis-dataDictionaryName: ResourcesToObtain
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ResourcesToObtain
       type: string
       enum:
       - Data not collected
@@ -6521,11 +7038,16 @@ components:
         preflabel: Client doesn't know
     ResultDate:
       x-hmis-dataDictionaryName: ResultDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ResultDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 4.20.E
       format: date
     RunawayYouth:
       x-hmis-dataDictionaryName: RunawayYouth
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#RunawayYouth
       type: string
       enum:
       - Data not collected
@@ -6547,6 +7069,8 @@ components:
         preflabel: Client doesn't know
     RyanWhiteMedDent:
       x-hmis-dataDictionaryName: RyanWhiteMedDent
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#RyanWhiteMedDent
       type: string
       enum:
       - Data not collected
@@ -6568,6 +7092,8 @@ components:
         preflabel: Client doesn't know
     SCHIP:
       x-hmis-dataDictionaryName: SCHIP
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#SCHIP
       type: string
       enum:
       - Data not collected
@@ -6583,6 +7109,8 @@ components:
         preflabel: 'Yes'
     SNAP:
       x-hmis-dataDictionaryName: SNAP
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#SNAP
       type: string
       enum:
       - Data not collected
@@ -6598,6 +7126,8 @@ components:
         preflabel: 'Yes'
     SSDI:
       x-hmis-dataDictionaryName: SSDI
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#SSDI
       type: string
       enum:
       - Data not collected
@@ -6613,10 +7143,15 @@ components:
         preflabel: 'Yes'
     SSDIAmount:
       x-hmis-dataDictionaryName: SSDIAmount
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#SSDIAmount
+        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
       type: number
       x-hmis-vocabulary: 4.02.D
     SSI:
       x-hmis-dataDictionaryName: SSI
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#SSI
       type: string
       enum:
       - Data not collected
@@ -6632,14 +7167,21 @@ components:
         preflabel: 'Yes'
     SSIAmount:
       x-hmis-dataDictionaryName: SSIAmount
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#SSIAmount
+        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
       type: number
       x-hmis-vocabulary: 4.02.C
     SSN:
       x-hmis-dataDictionaryName: SSN
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#SSN
       type: string
       x-hmis-vocabulary: 3.02.1
     SSNDataQuality:
       x-hmis-dataDictionaryName: SSNDataQuality
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#SSNDataQuality
       type: string
       enum:
       - Data not collected
@@ -6661,6 +7203,8 @@ components:
         preflabel: Approximate or partial SSN reported
     SchoolStatus:
       x-hmis-dataDictionaryName: SchoolStatus
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#SchoolStatus
       type: string
       enum:
       - Attending school regularly
@@ -6697,14 +7241,22 @@ components:
         preflabel: Obtained GED
     SessionCountAtExit:
       x-hmis-dataDictionaryName: SessionCountAtExit
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#SessionCountAtExit
+        '@type': http://www.w3.org/2001/XMLSchema#positiveInteger
       type: integer
       x-hmis-vocabulary: R18.B
     SessionsInPlan:
       x-hmis-dataDictionaryName: SessionsInPlan
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#SessionsInPlan
+        '@type': http://www.w3.org/2001/XMLSchema#positiveInteger
       type: integer
       x-hmis-vocabulary: R18.2
     Sex:
       x-hmis-dataDictionaryName: Sex
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#Sex
       type: string
       enum:
       - Data not collected
@@ -6726,6 +7278,8 @@ components:
         preflabel: Female
     SexOffender:
       x-hmis-dataDictionaryName: SexOffender
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#SexOffender
       type: string
       enum:
       - Data not collected
@@ -6741,6 +7295,8 @@ components:
         preflabel: 'Yes'
     SingleParent:
       x-hmis-dataDictionaryName: SingleParent
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#SingleParent
       type: string
       enum:
       - Data not collected
@@ -6756,6 +7312,8 @@ components:
         preflabel: 'Yes'
     SocSecRetirement:
       x-hmis-dataDictionaryName: SocSecRetirement
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#SocSecRetirement
       type: string
       enum:
       - Data not collected
@@ -6771,19 +7329,29 @@ components:
         preflabel: 'Yes'
     SocSecRetirementAmount:
       x-hmis-dataDictionaryName: SocSecRetirementAmount
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#SocSecRetirementAmount
+        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
       type: number
       x-hmis-vocabulary: 4.02.K
     StartDate:
       x-hmis-dataDictionaryName: StartDate
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#StartDate
+        '@type': http://www.w3.org/2001/XMLSchema#date
       type: string
       x-hmis-vocabulary: 2.06.3
       format: date
     State:
       x-hmis-dataDictionaryName: State
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#State
       type: string
       x-hmis-vocabulary: 2.03.6
     StateHealthIns:
       x-hmis-dataDictionaryName: StateHealthIns
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#StateHealthIns
       type: string
       enum:
       - Data not collected
@@ -6799,10 +7367,14 @@ components:
         preflabel: 'Yes'
     SubTypeProvided:
       x-hmis-dataDictionaryName: SubTypeProvided
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#SubTypeProvided
       type: integer
       x-hmis-vocabulary: V2.C
     SubsequentResidence:
       x-hmis-dataDictionaryName: SubsequentResidence
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#SubsequentResidence
       type: string
       enum:
       - Data not collected
@@ -6824,6 +7396,8 @@ components:
         preflabel: Client doesn't know
     SubsidyAtRisk:
       x-hmis-dataDictionaryName: SubsidyAtRisk
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#SubsidyAtRisk
       type: string
       enum:
       - Data not collected
@@ -6839,6 +7413,8 @@ components:
         preflabel: 'Yes'
     SubsidyInformation:
       x-hmis-dataDictionaryName: SubsidyInformation
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#SubsidyInformation
       type: string
       enum:
       - Without a subsidy
@@ -6863,6 +7439,8 @@ components:
         preflabel: With on-going subsidy
     TANF:
       x-hmis-dataDictionaryName: TANF
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#TANF
       type: string
       enum:
       - Data not collected
@@ -6878,10 +7456,15 @@ components:
         preflabel: 'Yes'
     TANFAmount:
       x-hmis-dataDictionaryName: TANFAmount
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#TANFAmount
+        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
       type: number
       x-hmis-vocabulary: 4.02.I
     TANFChildCare:
       x-hmis-dataDictionaryName: TANFChildCare
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#TANFChildCare
       type: string
       enum:
       - Data not collected
@@ -6897,6 +7480,8 @@ components:
         preflabel: 'Yes'
     TANFTransportation:
       x-hmis-dataDictionaryName: TANFTransportation
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#TANFTransportation
       type: string
       enum:
       - Data not collected
@@ -6912,10 +7497,15 @@ components:
         preflabel: 'Yes'
     TCellCount:
       x-hmis-dataDictionaryName: TCellCount
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#TCellCount
+        '@type': http://www.w3.org/2001/XMLSchema#integer
       type: integer
       x-hmis-vocabulary: W4.A
     TCellCountAvailable:
       x-hmis-dataDictionaryName: TCellCountAvailable
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#TCellCountAvailable
       type: string
       enum:
       - Data not collected
@@ -6937,6 +7527,8 @@ components:
         preflabel: Client doesn't know
     TCellSource:
       x-hmis-dataDictionaryName: TCellSource
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#TCellSource
       type: string
       enum:
       - Medical Report
@@ -6952,6 +7544,8 @@ components:
         preflabel: Client Report
     TargetPopulation:
       x-hmis-dataDictionaryName: TargetPopulation
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#TargetPopulation
       type: string
       enum:
       - 'DV: Survivor of Domestic Violence'
@@ -6967,6 +7561,8 @@ components:
         preflabel: 'NA: Not applicable'
     TargetScreenReqd:
       x-hmis-dataDictionaryName: TargetScreenReqd
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#TargetScreenReqd
       type: string
       enum:
       - Data not collected
@@ -6982,6 +7578,8 @@ components:
         preflabel: 'Yes'
     Telephone:
       x-hmis-dataDictionaryName: Telephone
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#Telephone
       type: string
       enum:
       - 'No'
@@ -6994,10 +7592,15 @@ components:
         preflabel: 'Yes'
     ThresholdScore:
       x-hmis-dataDictionaryName: ThresholdScore
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ThresholdScore
+        '@type': http://www.w3.org/2001/XMLSchema#positiveInteger
       type: integer
       x-hmis-vocabulary: V7.S
     TimeToHousingLoss:
       x-hmis-dataDictionaryName: TimeToHousingLoss
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#TimeToHousingLoss
       type: string
       enum:
       - Data not collected
@@ -7019,6 +7622,8 @@ components:
         preflabel: 14-21 days
     TimesHomelessPastThreeYears:
       x-hmis-dataDictionaryName: TimesHomelessPastThreeYears
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#TimesHomelessPastThreeYears
       type: string
       enum:
       - Data not collected
@@ -7046,6 +7651,9 @@ components:
         preflabel: Three times
     TotalMonthlyIncome:
       x-hmis-dataDictionaryName: TotalMonthlyIncome
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#TotalMonthlyIncome
+        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
       type: number
       x-hmis-vocabulary: 4.02.18
     TranslationNeeded:
@@ -7071,6 +7679,8 @@ components:
         preflabel: Client doesn't know
     Unemployment:
       x-hmis-dataDictionaryName: Unemployment
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#Unemployment
       type: string
       enum:
       - Data not collected
@@ -7086,10 +7696,15 @@ components:
         preflabel: 'Yes'
     UnemploymentAmount:
       x-hmis-dataDictionaryName: UnemploymentAmount
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#UnemploymentAmount
+        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
       type: number
       x-hmis-vocabulary: 4.02.B
     UnemploymentFam:
       x-hmis-dataDictionaryName: UnemploymentFam
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#UnemploymentFam
       type: string
       enum:
       - Data not collected
@@ -7111,14 +7726,21 @@ components:
         preflabel: Client doesn't know
     UnitInventory:
       x-hmis-dataDictionaryName: UnitInventory
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#UnitInventory
+        '@type': http://www.w3.org/2001/XMLSchema#nonNegativeInteger
       type: integer
       x-hmis-vocabulary: 2.07.15
     UserID:
       x-hmis-dataDictionaryName: UserID
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#UserID
       type: string
       x-hmis-vocabulary: '5.07.01'
     VADisabilityNonService:
       x-hmis-dataDictionaryName: VADisabilityNonService
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#VADisabilityNonService
       type: string
       enum:
       - Data not collected
@@ -7134,10 +7756,15 @@ components:
         preflabel: 'Yes'
     VADisabilityNonServiceAmount:
       x-hmis-dataDictionaryName: VADisabilityNonServiceAmount
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#VADisabilityNonServiceAmount
+        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
       type: number
       x-hmis-vocabulary: 4.02.F
     VADisabilityService:
       x-hmis-dataDictionaryName: VADisabilityService
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#VADisabilityService
       type: string
       enum:
       - Data not collected
@@ -7153,10 +7780,15 @@ components:
         preflabel: 'Yes'
     VADisabilityServiceAmount:
       x-hmis-dataDictionaryName: VADisabilityServiceAmount
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#VADisabilityServiceAmount
+        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
       type: number
       x-hmis-vocabulary: 4.02.E
     VAMCStation:
       x-hmis-dataDictionaryName: VAMCStation
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#VAMCStation
       type: string
       enum:
       - (636A6) Central Iowa, IA
@@ -7592,6 +8224,8 @@ components:
         preflabel: (692) White City, OR
     VHAServices:
       x-hmis-dataDictionaryName: VHAServices
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#VHAServices
       type: string
       enum:
       - Data not collected
@@ -7607,14 +8241,21 @@ components:
         preflabel: 'Yes'
     VerifiedBy:
       x-hmis-dataDictionaryName: VerifiedBy
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#VerifiedBy
       type: string
       x-hmis-vocabulary: 4.12.3
     VetBedInventory:
       x-hmis-dataDictionaryName: VetBedInventory
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#VetBedInventory
+        '@type': http://www.w3.org/2001/XMLSchema#nonNegativeInteger
       type: integer
       x-hmis-vocabulary: 2.07.9
     VeteranStatus:
       x-hmis-dataDictionaryName: VeteranStatus
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#VeteranStatus
       type: string
       enum:
       - Data not collected
@@ -7636,6 +8277,8 @@ components:
         preflabel: Client doesn't know
     VictimServiceProvider:
       x-hmis-dataDictionaryName: VictimServiceProvider
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#VictimServiceProvider
       type: string
       enum:
       - 'No'
@@ -7648,6 +8291,8 @@ components:
         preflabel: 'Yes'
     VietnamWar:
       x-hmis-dataDictionaryName: VietnamWar
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#VietnamWar
       type: string
       enum:
       - Data not collected
@@ -7669,10 +8314,15 @@ components:
         preflabel: Client doesn't know
     ViralLoad:
       x-hmis-dataDictionaryName: ViralLoad
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ViralLoad
+        '@type': http://www.w3.org/2001/XMLSchema#integer
       type: integer
       x-hmis-vocabulary: W4.C
     ViralLoadAvailable:
       x-hmis-dataDictionaryName: ViralLoadAvailable
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ViralLoadAvailable
       type: string
       enum:
       - Available
@@ -7697,6 +8347,8 @@ components:
         preflabel: Undetectable
     ViralLoadSource:
       x-hmis-dataDictionaryName: ViralLoadSource
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ViralLoadSource
       type: string
       enum:
       - Medical Report
@@ -7712,6 +8364,8 @@ components:
         preflabel: Client Report
     WIC:
       x-hmis-dataDictionaryName: WIC
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#WIC
       type: string
       enum:
       - Data not collected
@@ -7727,6 +8381,8 @@ components:
         preflabel: 'Yes'
     WhenOccurred:
       x-hmis-dataDictionaryName: WhenOccurred
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#WhenOccurred
       type: string
       enum:
       - Data not collected
@@ -7754,6 +8410,8 @@ components:
         preflabel: Six months to one year ago (excluding one year exactly)
     White:
       x-hmis-dataDictionaryName: White
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#White
       type: string
       enum:
       - 'No'
@@ -7766,6 +8424,8 @@ components:
         preflabel: 'Yes'
     WorkersComp:
       x-hmis-dataDictionaryName: WorkersComp
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#WorkersComp
       type: string
       enum:
       - Data not collected
@@ -7781,10 +8441,15 @@ components:
         preflabel: 'Yes'
     WorkersCompAmount:
       x-hmis-dataDictionaryName: WorkersCompAmount
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#WorkersCompAmount
+        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
       type: number
       x-hmis-vocabulary: 4.02.H
     WorkplacePromiseDifference:
       x-hmis-dataDictionaryName: WorkplacePromiseDifference
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#WorkplacePromiseDifference
       type: string
       enum:
       - Data not collected
@@ -7806,6 +8471,8 @@ components:
         preflabel: Client doesn't know
     WorkplaceViolenceThreats:
       x-hmis-dataDictionaryName: WorkplaceViolenceThreats
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#WorkplaceViolenceThreats
       type: string
       enum:
       - Data not collected
@@ -7827,6 +8494,8 @@ components:
         preflabel: Client doesn't know
     WorldWarII:
       x-hmis-dataDictionaryName: WorldWarII
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#WorldWarII
       type: string
       enum:
       - Data not collected
@@ -7848,22 +8517,36 @@ components:
         preflabel: Client doesn't know
     YearEnteredService:
       x-hmis-dataDictionaryName: YearEnteredService
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#YearEnteredService
+        '@type': http://www.w3.org/2001/XMLSchema#gYear
       type: integer
       x-hmis-vocabulary: V1.1
     YearSeparated:
       x-hmis-dataDictionaryName: YearSeparated
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#YearSeparated
+        '@type': http://www.w3.org/2001/XMLSchema#gYear
       type: integer
       x-hmis-vocabulary: V1.2
     YouthBedInventory:
       x-hmis-dataDictionaryName: YouthBedInventory
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#YouthBedInventory
+        '@type': http://www.w3.org/2001/XMLSchema#nonNegativeInteger
       type: integer
       x-hmis-vocabulary: 2.07.11
     YouthVetBedInventory:
       x-hmis-dataDictionaryName: YouthVetBedInventory
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#YouthVetBedInventory
+        '@type': http://www.w3.org/2001/XMLSchema#nonNegativeInteger
       type: integer
       x-hmis-vocabulary: 2.07.8
     ZIP:
       x-hmis-dataDictionaryName: ZIP
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#ZIP
       type: string
       x-hmis-vocabulary: 2.03.7
   examples:

@@ -10,6 +10,14 @@
 //   4. if the term has an @type, use one of the property's rdfs:range values;
 //   5. cite in x-hmis-vocabulary, as a string, a data element number the property has as dcterms:identifier.
 //
+// Every field schema (a schema with x-hmis-dataDictionaryName) must:
+//   6. carry its own x-jsonld-context term definition, with "@id" urn:hud:hmis:owl#<name> and the same
+//      "@type" (or none) as the object-level contexts, unless the field is only ever listed in
+//      x-hmis-unmapped-fields, in which case it must carry none.
+//
+// Every x-jsonld-type (the class an object represents) must:
+//   7. be an owl:Class declared in the ontology.
+//
 // Usage: node check-ontology.mjs [path/to/ontology.ttl] [path/to/openapi.yaml]
 // Exits 1 and lists every problem if any check fails.
 import { readFileSync } from "node:fs";
@@ -28,6 +36,9 @@ const specPath = process.argv[3] ?? join(here, "..", "hmis-api.openapi.yaml");
 const RDF_TYPE = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
 const RDFS_RANGE = "http://www.w3.org/2000/01/rdf-schema#range";
 const DCT_IDENTIFIER = "http://purl.org/dc/terms/identifier";
+const OWL_CLASS = "http://www.w3.org/2002/07/owl#Class";
+const XSD = "http://www.w3.org/2001/XMLSchema#";
+const HMIS = "urn:hud:hmis:owl#";
 const PROPERTY_TYPES = new Set([
   "http://www.w3.org/2002/07/owl#DatatypeProperty",
   "http://www.w3.org/2002/07/owl#ObjectProperty",
@@ -37,12 +48,14 @@ const PROPERTY_TYPES = new Set([
 const properties = new Map(); // iri -> { ranges: Set, identifiers: Set }
 const ranges = new Map();
 const identifiers = new Map();
+const classes = new Set();
 const addTo = (map, key, value) => (map.get(key) ?? map.set(key, new Set()).get(key)).add(value);
 
 for (const quad of new N3.Parser().parse(readFileSync(ontologyPath, "utf8"))) {
   const s = quad.subject.value;
   const p = quad.predicate.value;
   if (p === RDF_TYPE && PROPERTY_TYPES.has(quad.object.value)) properties.set(s, true);
+  else if (p === RDF_TYPE && quad.object.value === OWL_CLASS) classes.add(s);
   else if (p === RDFS_RANGE && quad.object.termType === "NamedNode") addTo(ranges, s, quad.object.value);
   else if (p === DCT_IDENTIFIER) addTo(identifiers, s, quad.object.value);
 }
@@ -91,12 +104,14 @@ function terms(context) {
 // --- checks ----------------------------------------------------------------------
 const errors = [];
 const seen = new Map(); // term -> "iri @type" from the first schema that defined it
+const mappedTerms = new Map(); // field -> { iri, type } where an object maps it to the ontology
+const unmappedFields = new Set();
 let schemaCount = 0;
 const checkedFields = new Set();
 
 for (const [name, schema] of Object.entries(schemas)) {
   const context = schema["x-jsonld-context"];
-  if (!context) continue;
+  if (!context || "x-hmis-dataDictionaryName" in schema) continue; // field schemas are checked below
   schemaCount++;
   const props = schema.properties ?? {};
   const unmapped = new Set(schema["x-hmis-unmapped-fields"] ?? []);
@@ -123,6 +138,7 @@ for (const [name, schema] of Object.entries(schemas)) {
     }
 
     if (unmapped.has(field)) {
+      unmappedFields.add(field);
       if (properties.has(term.iri)) {
         errors.push(`${name}.${field}: listed in x-hmis-unmapped-fields, but the ontology declares ${term.iri}; remove it from the list`);
       }
@@ -133,6 +149,7 @@ for (const [name, schema] of Object.entries(schemas)) {
       continue;
     }
     checkedFields.add(field);
+    if (!mappedTerms.has(field)) mappedTerms.set(field, term);
 
     const range = ranges.get(term.iri) ?? new Set();
     if (term.type && !range.has(term.type)) {
@@ -157,6 +174,51 @@ for (const [name, schema] of Object.entries(schemas)) {
 
 if (schemaCount === 0) errors.push("No schema carries x-jsonld-context, so nothing was checked");
 
+// --- field schemas: their own term definition ----------------------------------
+let fieldContexts = 0;
+for (const [name, schema] of Object.entries(schemas)) {
+  if (!("x-hmis-dataDictionaryName" in schema)) continue;
+  const own = schema["x-jsonld-context"];
+  const objectTerm = mappedTerms.get(name);
+  if (!objectTerm) {
+    if (own !== undefined && unmappedFields.has(name)) {
+      errors.push(`${name}: listed in x-hmis-unmapped-fields, so its field schema must not carry x-jsonld-context`);
+    }
+    if (own === undefined || unmappedFields.has(name)) continue;
+  }
+  if (own === undefined) {
+    errors.push(`${name}: field schema has no x-jsonld-context (expected "@id": ${HMIS}${name})`);
+    continue;
+  }
+  if (!own || typeof own !== "object" || Array.isArray(own) || typeof own["@id"] !== "string") {
+    errors.push(`${name}: field schema x-jsonld-context must be a term definition with an "@id"`);
+    continue;
+  }
+  fieldContexts++;
+  const iri = own["@id"];
+  const type = typeof own["@type"] === "string" ? own["@type"].replace(/^xsd:/, XSD) : null;
+  if (iri !== HMIS + name) errors.push(`${name}: field schema x-jsonld-context "@id" is ${iri}, expected ${HMIS}${name}`);
+  if (!properties.has(iri)) errors.push(`${name}: field schema x-jsonld-context "@id" ${iri} is not a property in the ontology`);
+  if (objectTerm && (objectTerm.type ?? null) !== type) {
+    errors.push(`${name}: field schema "@type" is ${type ?? "(none)"}, but the object-level contexts use ${objectTerm.type ?? "(none)"}`);
+  }
+  const range = ranges.get(iri) ?? new Set();
+  if (type && !range.has(type)) {
+    errors.push(`${name}: field schema "@type" ${type} is not an rdfs:range of ${iri} (ontology: ${range.size ? [...range].join(", ") : "none declared"})`);
+  }
+}
+
+// --- object types ----------------------------------------------------------------
+let objectTypes = 0;
+for (const [name, schema] of Object.entries(schemas)) {
+  if (!("x-jsonld-type" in schema)) continue;
+  objectTypes++;
+  const cls = schema["x-jsonld-type"];
+  if (typeof cls !== "string" || !classes.has(cls)) {
+    errors.push(`${name}: x-jsonld-type ${cls} is not an owl:Class in the ontology`);
+  }
+}
+
 const unique = [...new Set(errors)];
 if (unique.length) {
   console.error(`API/ontology check failed: ${unique.length} problem(s)`);
@@ -165,5 +227,6 @@ if (unique.length) {
 }
 console.log(
   `API/ontology check passed: ${schemaCount} schemas, ${checkedFields.size} fields matched to ontology properties ` +
-    `(${properties.size} declared), datatypes and data element numbers agree.`,
+    `(${properties.size} declared), ${fieldContexts} field-schema contexts and ${objectTypes} x-jsonld-type ` +
+    `class links verified; datatypes and data element numbers agree.`,
 );

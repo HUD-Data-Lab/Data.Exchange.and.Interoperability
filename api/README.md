@@ -30,6 +30,11 @@ Every request and response object carries an `x-jsonld-context`. It maps each JS
 
 A client turns a payload into linked data by sending or adding that object as `@context`. The ontology stays API-free, and the API stays ontology-aware.
 
+The types are linked too, using the keywords of the IETF draft [REST API Linked Data Keywords](https://datatracker.ietf.org/doc/draft-polli-restapi-ld-keywords/):
+
+- **Field schemas.** Each field schema under `components/schemas` (`ADAP`, `EntryDate`, ...) carries its own `x-jsonld-context` term definition: the ontology property as `"@id"` and, where the object contexts give one, the same datatype as `"@type"` (written as a full IRI, since a lone term definition has no `xsd:` prefix in scope). Code-list and plain-string fields have no `"@type"`.
+- **Object schemas.** Request and response objects that represent an entity carry `x-jsonld-type`, the ontology class they describe: `Client` for the client scenarios (including the composite Client Full HMIS Record response, which is rooted at a client), `Enrollment` for enrollment results, and `Project` for project results. A JSON-LD consumer adds it as `"@type"` when converting a payload. Request objects of search operations are filter criteria, not entities, so they have none.
+
 Four fields have no matching property in the FY2026 Logic Model, and each schema lists its affected fields under `x-hmis-unmapped-fields`: `Event`, `PreferredLanguage`, `PreferredLanguageDifferent`, `TranslationNeeded`. `Event` exists in the ontology only as a class. The other three are the C4 Translation Assistance Needed fields, which the FY2026 standards removed, so the Client Full HMIS Record scenario should drop them.
 
 ## Workflows
@@ -57,6 +62,6 @@ $env:HMIS_API_BASE_URL = "https://hmis.example.org/hmis/v1"; npm test   # agains
 
 `npm test` runs `run-tests.mjs`, which lints the OpenAPI and Arazzo files and runs `check-ontology.mjs`, then uses Portman to build a Postman collection from the OpenAPI description, with a contract test for each operation: 2xx status, JSON content type, JSON body, and response schema. Newman then runs that collection. JUnit results are written to `build/newman-results.xml`. CI runs the same script on Linux, macOS and Windows from `.github/workflows/api-tests.yml`.
 
-`check-ontology.mjs` (also `npm run check-ontology`) keeps the API and `FY26_HMIS_Logic_Model.ttl` from drifting apart. It fails if a field's JSON-LD term is not a property the ontology declares (unless the field is listed in `x-hmis-unmapped-fields`), if a listed field has since been added to the ontology, if a term's `@type` is not one of the property's `rdfs:range` values, or if the field's `x-hmis-vocabulary` data element number is not among the property's `dcterms:identifier` values. CI also runs the tests when the ontology file changes.
+`check-ontology.mjs` (also `npm run check-ontology`) keeps the API and `FY26_HMIS_Logic_Model.ttl` from drifting apart. It fails if a field schema's own `x-jsonld-context` is missing or disagrees with the object contexts, if an `x-jsonld-type` is not an ontology class, if a field's JSON-LD term is not a property the ontology declares (unless the field is listed in `x-hmis-unmapped-fields`), if a listed field has since been added to the ontology, if a term's `@type` is not one of the property's `rdfs:range` values, or if the field's `x-hmis-vocabulary` data element number is not among the property's `dcterms:identifier` values. CI also runs the tests when the ontology file changes.
 
 Not yet covered: security schemes and 4xx responses, which the stricter Redocly `recommended` ruleset flags.

@@ -72,7 +72,8 @@ function exportJsonLd(doc) {
   let n = 0;
   for (const [name, schema] of Object.entries(doc.components?.schemas ?? {})) {
     const ctx = schema["x-jsonld-context"];
-    if (!ctx) continue;
+    // Field schemas carry a single term definition, which the object contexts already include.
+    if (!ctx || "x-hmis-dataDictionaryName" in schema) continue;
     writeFileSync(join(out, `${name}.context.jsonld`), JSON.stringify({ "@context": ctx }, null, 2) + "\n");
     for (const [k, v] of Object.entries(ctx)) {
       if (k in merged && JSON.stringify(merged[k]) !== JSON.stringify(v)) {
