@@ -178,8 +178,6 @@ skos:note a owl:AnnotationProperty .
     rdfs:range xsd:date ;
     rdfs:subPropertyOf owl:topDataProperty .
 
-<https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#raceNone> a rdfs:Datatype .
-
 : a owl:Ontology ;
     dc:creator "HUD Data Lab"@en ;
     dc:language "en-US"@en ;
@@ -203,20 +201,20 @@ skos:note a owl:AnnotationProperty .
     dcterms:description "Additional Race and Ethnicity Detail" ;
     dcterms:identifier "3.04.2" ;
     rdfs:domain :Client ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string100> ;
+    rdfs:range :string100 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :Address1 a owl:DatatypeProperty ;
     dcterms:description "Project street address 1" ;
     dcterms:identifier "2.03.3" ;
     rdfs:domain :ProjectCoC ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string100> .
+    rdfs:range :string100 .
 
 :Address2 a owl:DatatypeProperty ;
     dcterms:description "Project street address 2" ;
     dcterms:identifier "2.03.4" ;
     rdfs:domain :ProjectCoC ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string100> .
+    rdfs:range :string100 .
 
 :AfghanistanOEF a owl:ObjectProperty ;
     dcterms:description "Theatre of Operations: Afghanistan (Operation Enduring Freedom)" ;
@@ -231,7 +229,7 @@ skos:note a owl:AnnotationProperty .
     dcterms:description "Monthly Amount" ;
     dcterms:identifier "4.02.N" ;
     rdfs:domain :IncomeAndSources ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money> .
+    rdfs:range xsd:decimal .
 
 :AmIndAKNative a owl:ObjectProperty ;
     dcterms:description "American Indian, Alaska Native, or Indigenous" ;
@@ -287,7 +285,7 @@ skos:note a owl:AnnotationProperty .
     dcterms:description "Assessment answers - Local determination – responses to questions defined by community" ;
     dcterms:identifier "4.19.A" ;
     rdfs:domain :AssessmentQuestionClass ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string500> ;
+    rdfs:range :string500 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :AssessmentDate a owl:DatatypeProperty ;
@@ -310,20 +308,20 @@ skos:note a owl:AnnotationProperty .
     dcterms:description "Assessment location" ;
     dcterms:identifier "4.19.2" ;
     rdfs:domain :Assessment ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string250> ;
+    rdfs:range :string250 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :AssessmentQuestion a owl:DatatypeProperty ;
     dcterms:description "Assessment questions – Local determination - as defined by the community" ;
     dcterms:identifier "4.19.5" ;
     rdfs:domain :AssessmentQuestionClass ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string250> ;
+    rdfs:range :string250 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :AssessmentQuestionGroup a owl:DatatypeProperty ;
     dcterms:description "Locally determined" ;
     rdfs:domain :AssessmentQuestionClass ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string250> ;
+    rdfs:range :string250 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :AssessmentQuestionOrder a owl:DatatypeProperty ;
@@ -336,14 +334,14 @@ skos:note a owl:AnnotationProperty .
     dcterms:description "Assessment Result" ;
     dcterms:identifier "4.19.B" ;
     rdfs:domain :AssessmentResultClass ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string250> ;
+    rdfs:range :string250 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :AssessmentResultType a owl:DatatypeProperty ;
     dcterms:description "Assessment Result Type – Local determination - as defined by the community" ;
     dcterms:identifier "4.19.6" ;
     rdfs:domain :AssessmentResultClass ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string250> ;
+    rdfs:range :string250 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :AssessmentType a owl:ObjectProperty ;
@@ -429,20 +427,20 @@ skos:note a owl:AnnotationProperty .
 :CSVVersion a owl:DatatypeProperty ;
     rdfs:label "CSVVersion" ;
     rdfs:domain :Export ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> ;
+    rdfs:range :string50 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :ChildSupportAmount a owl:DatatypeProperty ;
     dcterms:description "Monthly Amount" ;
     dcterms:identifier "4.02.M" ;
     rdfs:domain :IncomeAndSources ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money> .
+    rdfs:range xsd:decimal .
 
 :City a owl:DatatypeProperty ;
     dcterms:description "Project city" ;
     dcterms:identifier "2.03.5" ;
     rdfs:domain :ProjectCoC ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> .
+    rdfs:range :string50 .
 
 :ClientLeaseholder a owl:ObjectProperty ;
     dcterms:description "Head of Household is not a current leaseholder/renter of unit" ;
@@ -674,7 +672,7 @@ care;99=Data not collected""" .
     dcterms:description "Monthly Amount" ;
     dcterms:identifier "4.02.A" ;
     rdfs:domain :IncomeAndSources ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money> .
+    rdfs:range xsd:decimal .
 
 :EmailSocialMedia a owl:ObjectProperty ;
     dcterms:description "Via email/social media" ;
@@ -777,7 +775,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
     dcterms:identifier "V3.3",
         "W2" ;
     rdfs:domain :ServiceFAReferral ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money> .
+    rdfs:range xsd:decimal .
 
 :FAEndDate a owl:DatatypeProperty ;
     rdfs:label "FAEndDate" ;
@@ -808,7 +806,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
     dcterms:description "First Name" ;
     dcterms:identifier "3.01.1" ;
     rdfs:domain :Client ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> ;
+    rdfs:range :string50 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :GA a owl:ObjectProperty ;
@@ -823,7 +821,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
     dcterms:description "Monthly Amount" ;
     dcterms:identifier "4.02.J" ;
     rdfs:domain :IncomeAndSources ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money> .
+    rdfs:range xsd:decimal .
 
 :GeneralHealthStatus a owl:ObjectProperty ;
     dcterms:description "General Health Status" ;
@@ -1075,7 +1073,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
     dcterms:description "Last" ;
     dcterms:identifier "3.01.3" ;
     rdfs:domain :Client ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> ;
+    rdfs:range :string50 ;
     rdfs:subPropertyOf owl:topDataProperty ;
     :hashingOption "Yes" .
 
@@ -1124,13 +1122,13 @@ Necessary for projects that operate across multiple CoCs for data export purpose
     dcterms:description "Location of Crisis Housing or Permanent Housing Referral [Project name/HMIS ID]" ;
     dcterms:identifier "4.20.C" ;
     rdfs:domain :Event ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string250> .
+    rdfs:range :string250 .
 
 :LocationDetails a owl:DatatypeProperty ;
     dcterms:description "Location details" ;
     dcterms:identifier "4.12.4" ;
     rdfs:domain :CurrentLivingSituationClass ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string250> .
+    rdfs:range :string250 .
 
 :Medicaid a owl:ObjectProperty ;
     dcterms:description "MEDICAID" ;
@@ -1170,7 +1168,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
     dcterms:description "Middle" ;
     dcterms:identifier "3.01.2" ;
     rdfs:domain :Client ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> ;
+    rdfs:range :string50 ;
     rdfs:subPropertyOf owl:topDataProperty ;
     :hashingOption "Yes" .
 
@@ -1211,7 +1209,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
     dcterms:description "Other (please specify)" ;
     dcterms:identifier "C2.A" ;
     rdfs:domain :ServiceFAReferral ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> .
+    rdfs:range :string50 .
 
 :NameDataQuality a owl:ObjectProperty ;
     dcterms:description "Name Data Quality" ;
@@ -1226,7 +1224,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
     dcterms:description "Suffix" ;
     dcterms:identifier "3.01.4" ;
     rdfs:domain :Client ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> ;
+    rdfs:range :string50 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :NativeHIPacific a owl:ObjectProperty ;
@@ -1345,7 +1343,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
 
 :OrganizationCommonName a owl:DatatypeProperty ;
     rdfs:domain :Organization ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> .
+    rdfs:range :string50 .
 
 :OtherBedInventory a owl:DatatypeProperty ;
     dcterms:description "Non-dedicated beds" ;
@@ -1365,31 +1363,31 @@ Necessary for projects that operate across multiple CoCs for data export purpose
     dcterms:description "Specify Source" ;
     dcterms:identifier "4.03.A" ;
     rdfs:domain :NonCashBenefits ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> .
+    rdfs:range :string50 .
 
 :OtherDestination a owl:DatatypeProperty ;
     dcterms:description "If Other for “Type of Residence”, Specify Where" ;
     dcterms:identifier "3.12.B" ;
     rdfs:domain :Exit ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> .
+    rdfs:range :string50 .
 
 :OtherFunder a owl:DatatypeProperty ;
     dcterms:description "If other specify" ;
     dcterms:identifier "2.06.A" ;
     rdfs:domain :FunderClass ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> .
+    rdfs:range :string50 .
 
 :OtherIncomeAmount a owl:DatatypeProperty ;
     dcterms:description "Monthly Amount" ;
     dcterms:identifier "4.02.O" ;
     rdfs:domain :IncomeAndSources ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money> .
+    rdfs:range xsd:decimal .
 
 :OtherIncomeSourceIdentify a owl:DatatypeProperty ;
     dcterms:description "Specify Source" ;
     dcterms:identifier "4.02.P" ;
     rdfs:domain :IncomeAndSources ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> .
+    rdfs:range :string50 .
 
 :OtherInsurance a owl:ObjectProperty ;
     dcterms:description "Other" ;
@@ -1403,7 +1401,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
     dcterms:description "No Other Insurance Reason" ;
     dcterms:identifier "4.04.12A" ;
     rdfs:domain :HealthInsurance ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> .
+    rdfs:range :string50 .
 
 :OtherTANF a owl:ObjectProperty ;
     dcterms:description "Other TANF-funded services" ;
@@ -1426,7 +1424,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
     dcterms:identifier "V2.D",
         "V8.A" ;
     rdfs:domain :ServiceFAReferral ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> .
+    rdfs:range :string50 .
 
 :PITCount a owl:DatatypeProperty ;
     dcterms:description "Not in the FY2022 HMIS Data Dictionary v1.1.  Used for the HIC; a count of active clients on the date of the PIT Count." ;
@@ -1437,7 +1435,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
     dcterms:description "Monthly Amount" ;
     dcterms:identifier "4.02.L" ;
     rdfs:domain :IncomeAndSources ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money> .
+    rdfs:range xsd:decimal .
 
 :PercentAMI a owl:ObjectProperty ;
     dcterms:description "Household Income as a Percentage of AMI" ;
@@ -1526,7 +1524,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
     dcterms:description "Monthly Amount" ;
     dcterms:identifier "4.02.G" ;
     rdfs:domain :IncomeAndSources ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money> .
+    rdfs:range xsd:decimal .
 
 :PrivatePay a owl:ObjectProperty ;
     dcterms:description "Private Pay Health Insurance" ;
@@ -1547,7 +1545,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
 :ProjectCommonName a owl:DatatypeProperty ;
     dcterms:description "A local or commonly used name for a project.  This is not referenced in the FY2022 HMIS Data Dictionary, and is optional per the FY2022 Data Standard." ;
     rdfs:domain :Project ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> .
+    rdfs:range :string50 .
 
 :ProjectCompletionStatus a owl:ObjectProperty ;
     dcterms:description "Project Completion Status" ;
@@ -1657,7 +1655,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
 project""" ;
     dcterms:identifier "2.02.C" ;
     rdfs:domain :Affiliation ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :ResidentialAffiliation a owl:ObjectProperty ;
@@ -1718,13 +1716,13 @@ project""" ;
     dcterms:description "Monthly Amount" ;
     dcterms:identifier "4.02.D" ;
     rdfs:domain :IncomeAndSources ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money> .
+    rdfs:range xsd:decimal .
 
 :SSIAmount a owl:DatatypeProperty ;
     dcterms:description "Monthly Amount" ;
     dcterms:identifier "4.02.C" ;
     rdfs:domain :IncomeAndSources ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money> .
+    rdfs:range xsd:decimal .
 
 :SSN a owl:DatatypeProperty ;
     dcterms:description """Social Security Number. The letter x is the only permissible non-numeric character and should be used to
@@ -1792,42 +1790,42 @@ indicate the position of omitted digits
     dcterms:description "Monthly Amount" ;
     dcterms:identifier "4.02.K" ;
     rdfs:domain :IncomeAndSources ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money> .
+    rdfs:range xsd:decimal .
 
 :SoftwareName a owl:DatatypeProperty ;
     rdfs:label "SoftwareName" ;
     rdfs:domain :Export ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> ;
+    rdfs:range :string50 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :SoftwareVersion a owl:DatatypeProperty ;
     rdfs:label "SoftwareVersion" ;
     rdfs:domain :Export ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> ;
+    rdfs:range :string50 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :SourceContactEmail a owl:DatatypeProperty ;
     rdfs:label "SourceContactEmail" ;
     rdfs:domain :Export ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string320> ;
+    rdfs:range :string320 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :SourceContactExtension a owl:DatatypeProperty ;
     rdfs:label "SourceContactExtension" ;
     rdfs:domain :Export ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string5> ;
+    rdfs:range :string5 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :SourceContactFirst a owl:DatatypeProperty ;
     rdfs:label "SourceContactFirst" ;
     rdfs:domain :Export ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> ;
+    rdfs:range :string50 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :SourceContactLast a owl:DatatypeProperty ;
     rdfs:label "SourceContactLast" ;
     rdfs:domain :Export ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> ;
+    rdfs:range :string50 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :SourceContactPhone a owl:DatatypeProperty ;
@@ -1839,13 +1837,13 @@ indicate the position of omitted digits
 :SourceID a owl:DatatypeProperty ;
     rdfs:label "SourceID" ;
     rdfs:domain :Export ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :SourceName a owl:DatatypeProperty ;
     rdfs:label "SourceName" ;
     rdfs:domain :Export ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> ;
+    rdfs:range :string50 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :SourceType a owl:ObjectProperty ;
@@ -1859,7 +1857,7 @@ indicate the position of omitted digits
     dcterms:description "Project state" ;
     dcterms:identifier "2.03.6" ;
     rdfs:domain :ProjectCoC ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#state> .
+    rdfs:range :stateCodeString .
 
 :StateHealthIns a owl:ObjectProperty ;
     dcterms:description "State Health Insurance for Adults (or use local name)" ;
@@ -1907,7 +1905,7 @@ indicate the position of omitted digits
     dcterms:description "Monthly Amount" ;
     dcterms:identifier "4.02.I" ;
     rdfs:domain :IncomeAndSources ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money> .
+    rdfs:range xsd:decimal .
 
 :TANFChildCare a owl:ObjectProperty ;
     dcterms:description "TANF Child Care services" ;
@@ -1998,44 +1996,44 @@ indicate the position of omitted digits
     dcterms:description "Monthly Amount" ;
     dcterms:identifier "4.02.B" ;
     rdfs:domain :IncomeAndSources ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money> .
+    rdfs:range xsd:decimal .
 
 :UserEmail a owl:DatatypeProperty ;
     dcterms:description "The email address of the user, if available.  Valid email addresses only" ;
     rdfs:domain :User ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string320> .
+    rdfs:range :string320 .
 
 :UserExtension a owl:DatatypeProperty ;
     dcterms:description "The phone extension of the user, if available. Limited to 5 digits / no punctuation.  [0-9]{1,5}" ;
     rdfs:domain :User ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string5> .
+    rdfs:range :string5 .
 
 :UserFirstName a owl:DatatypeProperty ;
     dcterms:description "The first name of the user if available" ;
     rdfs:domain :User ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> .
+    rdfs:range :string50 .
 
 :UserLastName a owl:DatatypeProperty ;
     dcterms:description "The last name of the user if available" ;
     rdfs:domain :User ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> .
+    rdfs:range :string50 .
 
 :UserPhone a owl:DatatypeProperty ;
     dcterms:description "The phone number of the user if available. Limited to 10 digits / no punctuation.  [2-9][0-9]{2}[2-9][0-9]{2}[0-9]{4}" ;
     rdfs:domain :User ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> .
+    rdfs:range :string50 .
 
 :VADisabilityNonServiceAmount a owl:DatatypeProperty ;
     dcterms:description "Monthly Amount" ;
     dcterms:identifier "4.02.F" ;
     rdfs:domain :IncomeAndSources ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money> .
+    rdfs:range xsd:decimal .
 
 :VADisabilityServiceAmount a owl:DatatypeProperty ;
     dcterms:description "Monthly Amount" ;
     dcterms:identifier "4.02.E" ;
     rdfs:domain :IncomeAndSources ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money> .
+    rdfs:range xsd:decimal .
 
 :VAMCStation a owl:ObjectProperty ;
     dcterms:description "VAMC Station Number" ;
@@ -2059,7 +2057,7 @@ indicate the position of omitted digits
     dcterms:description "Living situation verified by [list of Continuum projects]" ;
     dcterms:identifier "4.12.3" ;
     rdfs:domain :CurrentLivingSituationClass ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> .
+    rdfs:range :string50 .
 
 :VetBedInventory a owl:DatatypeProperty ;
     dcterms:description "Beds dedicated to any other veteran" ;
@@ -2136,7 +2134,7 @@ indicate the position of omitted digits
     dcterms:description "Monthly Amount" ;
     dcterms:identifier "4.02.H" ;
     rdfs:domain :IncomeAndSources ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money> .
+    rdfs:range xsd:decimal .
 
 :WorkplacePromiseDifference a owl:ObjectProperty ;
     dcterms:description "Ever promised work where work or payment was different than you expected" ;
@@ -2193,7 +2191,7 @@ indicate the position of omitted digits
     dcterms:description "Project ZIP code" ;
     dcterms:identifier "2.03.7" ;
     rdfs:domain :ProjectCoC ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#zipCode> .
+    rdfs:range :zipCodeString .
 
 :hasAffiliation a owl:ObjectProperty ;
     rdfs:domain :Project ;
@@ -2374,12 +2372,6 @@ indicate the position of omitted digits
     rdfs:range xsd:date ;
     rdfs:subPropertyOf owl:topDataProperty .
 
-<https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#state> a rdfs:Datatype .
-
-<https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string500> a rdfs:Datatype .
-
-<https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#zipCode> a rdfs:Datatype .
-
 :ADAP a owl:ObjectProperty ;
     dcterms:description "Receiving AIDS Drug Assistance Program (ADAP)" ;
     dcterms:identifier "W3.3" ;
@@ -2391,7 +2383,7 @@ indicate the position of omitted digits
 :AffiliationID a owl:DatatypeProperty ;
     rdfs:label "AffiliationID" ;
     rdfs:domain :Affiliation ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :AftercareDate a owl:DatatypeProperty ;
@@ -2427,7 +2419,7 @@ indicate the position of omitted digits
 :AssessmentResultID a owl:DatatypeProperty ;
     rdfs:label "AssessmentResultID" ;
     rdfs:domain :AssessmentResultClass ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string250> ;
+    rdfs:range :string250 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :BedInventory a owl:DatatypeProperty ;
@@ -2447,7 +2439,7 @@ indicate the position of omitted digits
 :CEParticipationID a owl:DatatypeProperty ;
     rdfs:label "CEParticipationID" ;
     rdfs:domain :CEParticipation ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :CMExitReason a owl:ObjectProperty ;
@@ -2470,7 +2462,7 @@ indicate the position of omitted digits
     dcterms:description "Number of Months" ;
     dcterms:identifier "R11.B" ;
     rdfs:domain :EntryRHY ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#months> .
+    rdfs:range xsd:integer .
 
 :ChildWelfareYears a owl:ObjectProperty ;
     dcterms:description "Number of Years" ;
@@ -2499,7 +2491,7 @@ indicate the position of omitted digits
 :CurrentLivingSitID a owl:DatatypeProperty ;
     rdfs:label "CurrentLivingSitID" ;
     rdfs:domain :CurrentLivingSituationClass ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :CurrentLivingSituation a owl:ObjectProperty ;
@@ -2543,7 +2535,7 @@ indicate the position of omitted digits
 
 :DisabilitiesID a owl:DatatypeProperty ;
     rdfs:domain :Disabilities ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :DisabilityType a owl:ObjectProperty ;
@@ -2600,7 +2592,7 @@ indicate the position of omitted digits
 :EventID a owl:DatatypeProperty ;
     dcterms:description "unique identifier for the Event.csv file of the HMIS CSV export format." ;
     rdfs:domain :Metadata ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> .
+    rdfs:range :string32 .
 
 :ExitDate a owl:DatatypeProperty ;
     dcterms:description "Project Exit Date" ;
@@ -2646,20 +2638,20 @@ indicate the position of omitted digits
     rdfs:label "FunderID" ;
     dcterms:description "unique identifier for records in the Funder.csv table of the HMIS CSV export format." ;
     rdfs:domain :FunderClass ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :GrantID a owl:DatatypeProperty ;
     dcterms:description "Grant Identifier" ;
     dcterms:identifier "2.06.2" ;
     rdfs:domain :FunderClass ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> .
+    rdfs:range :string32 .
 
 :HMISParticipationID a owl:DatatypeProperty ;
     rdfs:label "HMISParticipationID" ;
     dcterms:description "unique identifier for records in the HMISParticipation.csv file of the HMIS CSV export format." ;
     rdfs:domain :HMISParticipation ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :HouseholdType a owl:ObjectProperty ;
@@ -2698,7 +2690,7 @@ indicate the position of omitted digits
     rdfs:label "InventoryID" ;
     dcterms:description "unique identifier for the Project.csv file of the HMIS CSV format." ;
     rdfs:domain :Inventory ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :InventoryStartDate a owl:DatatypeProperty ;
@@ -2711,7 +2703,7 @@ indicate the position of omitted digits
     dcterms:description "Number of Months" ;
     dcterms:identifier "R12.B" ;
     rdfs:domain :EntryRHY ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#months> .
+    rdfs:range xsd:integer .
 
 :JuvenileJusticeYears a owl:ObjectProperty ;
     dcterms:description "Number of Years" ;
@@ -2738,7 +2730,7 @@ indicate the position of omitted digits
 :OrganizationName a owl:DatatypeProperty ;
     dcterms:identifier "2.01.2" ;
     rdfs:domain :Organization ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> .
+    rdfs:range :string50 .
 
 :OtherIncomeSource a owl:ObjectProperty ;
     dcterms:description "Other source" ;
@@ -2776,14 +2768,14 @@ indicate the position of omitted digits
     rdfs:label "ProjectCoCID" ;
     dcterms:description "unique identifier for the ProjectCoC.csv file of the HMIS CSV export format." ;
     rdfs:domain :ProjectCoC ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :ProjectName a owl:DatatypeProperty ;
     dcterms:description "Project Name" ;
     dcterms:identifier "2.02.2" ;
     rdfs:domain :Project ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string100> .
+    rdfs:range :string100 .
 
 :RecordType a owl:ObjectProperty ;
     rdfs:domain :ServiceFAReferral ;
@@ -2835,7 +2827,7 @@ indicate the position of omitted digits
     dcterms:description "Total Monthly Income" ;
     dcterms:identifier "4.02.18" ;
     rdfs:domain :IncomeAndSources ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money> .
+    rdfs:range xsd:decimal .
 
 :Unemployment a owl:ObjectProperty ;
     dcterms:description "Unemployment Insurance" ;
@@ -2894,7 +2886,7 @@ indicate the position of omitted digits
     rdfs:label "YouthEducationStatusID" ;
     dcterms:description "unique identifier for the YouthEducationStatus.csv file of the HMIS CSV export format." ;
     rdfs:domain :YouthEducationStatus ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :hasExit a owl:ObjectProperty ;
@@ -2914,16 +2906,87 @@ indicate the position of omitted digits
 :string9 a rdfs:Datatype ;
     rdfs:label "string9" .
 
+# ---------------------------------------------------------------------------------------------
+# String datatypes with the field rules of the HUD FY 2026 HMIS CSV Specifications.
+# xsd:pattern values are XSD regular expressions, implicitly anchored to the whole string.
+# ---------------------------------------------------------------------------------------------
+
+:cocCodeString a rdfs:Datatype ;
+    rdfs:label "CoC code string"@en ;
+    rdfs:comment "A Continuum of Care code: two letters, a dash, and three digits (for example XX-500). HUD FY 2026 HMIS CSV Specifications: CoCCode is S6, two letters, a dash, and 3 numbers (2.03.1, 2.07.3)."@en ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:onDatatype xsd:string ;
+            owl:withRestrictions ( [ xsd:pattern "[a-zA-Z]{2}-[0-9]{3}" ] [ xsd:maxLength 6 ] ) ] .
+
+:zipCodeString a rdfs:Datatype ;
+    rdfs:label "ZIP code string"@en ;
+    rdfs:comment "A five-digit US ZIP code. HUD FY 2026 HMIS CSV Specifications: 2.03.7 ZIP is S5."@en ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:onDatatype xsd:string ;
+            owl:withRestrictions ( [ xsd:pattern "[0-9]{5}" ] ) ] .
+
+:stateCodeString a rdfs:Datatype ;
+    rdfs:label "state code string"@en ;
+    rdfs:comment "A two-letter USPS state abbreviation. HUD FY 2026 HMIS CSV Specifications: 2.03.6 State is S2."@en ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:onDatatype xsd:string ;
+            owl:withRestrictions ( [ xsd:pattern "[a-zA-Z]{2}" ] ) ] .
+
+:string5 a rdfs:Datatype ;
+    rdfs:label "string5"@en ;
+    rdfs:comment "A string of at most 5 characters, the S5 field type of the HUD FY 2026 HMIS CSV Specifications."@en ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:onDatatype xsd:string ;
+            owl:withRestrictions ( [ xsd:maxLength 5 ] ) ] .
+
+:string32 a rdfs:Datatype ;
+    rdfs:label "string32"@en ;
+    rdfs:comment "A string of at most 32 characters, the S32 field type of the HUD FY 2026 HMIS CSV Specifications."@en ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:onDatatype xsd:string ;
+            owl:withRestrictions ( [ xsd:maxLength 32 ] ) ] .
+
+:string50 a rdfs:Datatype ;
+    rdfs:label "string50"@en ;
+    rdfs:comment "A string of at most 50 characters, the S50 field type of the HUD FY 2026 HMIS CSV Specifications."@en ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:onDatatype xsd:string ;
+            owl:withRestrictions ( [ xsd:maxLength 50 ] ) ] .
+
+:string100 a rdfs:Datatype ;
+    rdfs:label "string100"@en ;
+    rdfs:comment "A string of at most 100 characters, the S100 field type of the HUD FY 2026 HMIS CSV Specifications."@en ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:onDatatype xsd:string ;
+            owl:withRestrictions ( [ xsd:maxLength 100 ] ) ] .
+
+:string250 a rdfs:Datatype ;
+    rdfs:label "string250"@en ;
+    rdfs:comment "A string of at most 250 characters, the S250 field type of the HUD FY 2026 HMIS CSV Specifications."@en ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:onDatatype xsd:string ;
+            owl:withRestrictions ( [ xsd:maxLength 250 ] ) ] .
+
+:string320 a rdfs:Datatype ;
+    rdfs:label "string320"@en ;
+    rdfs:comment "A string of at most 320 characters, the S320 field type of the HUD FY 2026 HMIS CSV Specifications."@en ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:onDatatype xsd:string ;
+            owl:withRestrictions ( [ xsd:maxLength 320 ] ) ] .
+
+:string500 a rdfs:Datatype ;
+    rdfs:label "string500"@en ;
+    rdfs:comment "A string of at most 500 characters, the S500 field type of the HUD FY 2026 HMIS CSV Specifications."@en ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:onDatatype xsd:string ;
+            owl:withRestrictions ( [ xsd:maxLength 500 ] ) ] .
+
 xsd:gYear a rdfs:Datatype .
-
-<https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string320> a rdfs:Datatype .
-
-<https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string5> a rdfs:Datatype .
 
 :AssessmentQuestionID a owl:DatatypeProperty ;
     rdfs:label "AssessmentQuestionID" ;
     rdfs:domain :AssessmentQuestionClass ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :CoCCode a owl:DatatypeProperty ;
@@ -2931,7 +2994,7 @@ xsd:gYear a rdfs:Datatype .
     dcterms:identifier "2.03.1",
         "2.07.3" ;
     rdfs:domain :ProjectCoC ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#cocCode> ;
+    rdfs:range :cocCodeString ;
     :responseNotes """Two letters, a dash, and 3 numbers
 ^[a-zA-Z]{2}-[0-9]{3}$""" .
 
@@ -2939,10 +3002,10 @@ xsd:gYear a rdfs:Datatype .
     dcterms:identifier 4.13 ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ProjectID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ],
@@ -2951,16 +3014,16 @@ xsd:gYear a rdfs:Datatype .
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :HouseholdID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onDataRange xsd:date ;
             owl:onProperty :DateOfEngagement ;
@@ -2979,13 +3042,13 @@ xsd:gYear a rdfs:Datatype .
     rdfs:label "EmploymentEducationID" ;
     rdfs:domain :Education,
         :Employment ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> .
+    rdfs:range :string32 .
 
 :HealthAndDVID a owl:DatatypeProperty ;
     rdfs:label "HealthAndDVID" ;
     rdfs:domain :DomesticViolence,
         :HealthStatus ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :Household a owl:Class ;
@@ -2993,25 +3056,25 @@ xsd:gYear a rdfs:Datatype .
     dcterms:identifier 5.09 ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :ProjectID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :HouseholdID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "Enrollment" .
 
 :MoveInDate a owl:Class,
@@ -3021,7 +3084,7 @@ xsd:gYear a rdfs:Datatype .
     rdfs:domain :MoveInDate ;
     rdfs:range xsd:date ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onDataRange <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+            owl:onDataRange :string32 ;
             owl:onProperty :UserID ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
@@ -3041,11 +3104,8 @@ xsd:gYear a rdfs:Datatype .
     dcterms:identifier "2.01.1" ;
     rdfs:label "OrganizationID" ;
     rdfs:domain :Organization ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
-
-<https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#cocCode> a rdfs:Datatype ;
-    owl:equivalentClass xsd:string .
 
 :Affiliation a owl:Class ;
     dcterms:description "Affiliation represents the association between projects with a project type of 6 (Services Only) or project type 13 subtype 1 (RRH Services Only) and lodging projects." ;
@@ -3058,29 +3118,29 @@ xsd:gYear a rdfs:Datatype .
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
-            owl:onDataRange <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+            owl:onDataRange :string32 ;
             owl:onProperty :AffiliationID ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ProjectID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "Affiliation" .
 
 :AssessmentID a owl:DatatypeProperty ;
     rdfs:label "AssessmentID" ;
     rdfs:domain :Assessment ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :ExitHousingAssessmentClass a owl:Class ;
@@ -3088,7 +3148,7 @@ xsd:gYear a rdfs:Datatype .
     dcterms:identifier "W5" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
@@ -3097,7 +3157,7 @@ xsd:gYear a rdfs:Datatype .
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ],
@@ -3107,13 +3167,13 @@ xsd:gYear a rdfs:Datatype .
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ExitID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "Exit" .
 
 :VASHExitReason a owl:Class ;
@@ -3126,29 +3186,27 @@ xsd:gYear a rdfs:Datatype .
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ExitID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onClass skos:Concept ;
             owl:onProperty :CMExitReason ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "Exit" .
-
-<https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#months> a rdfs:Datatype .
 
 :AssessmentResultClass a owl:Class ;
     dcterms:description "Locally defined; Results structured as defined by the community" ;
@@ -3157,28 +3215,28 @@ xsd:gYear a rdfs:Datatype .
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :AssessmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :AssessmentResultID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "AssessmentResults" .
 
 :ConnectionWithSOAR a owl:Class,
@@ -3190,7 +3248,7 @@ xsd:gYear a rdfs:Datatype .
     :linkedVocabulary :list_NoYesReasonsForMissing ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ],
@@ -3202,24 +3260,24 @@ xsd:gYear a rdfs:Datatype .
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onClass skos:Concept ;
             owl:onProperty :DataCollectionStage ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :IncomeBenefitsID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onDataRange xsd:date ;
             owl:onProperty :InformationDate ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onClass skos:Concept ;
             owl:onProperty :ConnectionWithSOAR ;
@@ -3239,19 +3297,19 @@ xsd:gYear a rdfs:Datatype .
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :EmploymentEducationID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onClass skos:Concept ;
             owl:onProperty :DataCollectionStage ;
@@ -3270,13 +3328,13 @@ xsd:gYear a rdfs:Datatype .
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onClass skos:Concept ;
             owl:onProperty :ClientEnrolledInPATH ;
@@ -3289,13 +3347,11 @@ xsd:gYear a rdfs:Datatype .
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ] ;
     :CSVTableReference "Enrollment" .
-
-<https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string100> a rdfs:Datatype .
 
 :DomesticViolence a owl:Class ;
     dcterms:description """To identify if a person is a survivor of or fleeing from domestic violence. Ascertaining whether a person is a survivor of or fleeing from domestic violence is 
@@ -3312,26 +3368,26 @@ necessary to provide the person with the appropriate services to prevent further
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :HealthAndDVID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onClass skos:Concept ;
             owl:onProperty :DataCollectionStage ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "HealthAndDV" .
 
 :Employment a owl:Class ;
@@ -3350,32 +3406,32 @@ necessary to provide the person with the appropriate services to prevent further
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :EmploymentEducationID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "EmploymentEducation" .
 
 :ExitID a owl:DatatypeProperty ;
     rdfs:label "ExitID" ;
     dcterms:description "unique identifier for the Exit.csv file of the HMIS CSV export format." ;
     rdfs:domain :Exit ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :HMISParticipation a owl:Class ;
@@ -3383,22 +3439,22 @@ necessary to provide the person with the appropriate services to prevent further
     dcterms:identifier 2.08 ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :HMISParticipationID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ProjectID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ] ;
@@ -3418,7 +3474,7 @@ necessary to provide the person with the appropriate services to prevent further
         :IncomeAndSources,
         :MedicalAssistance,
         :NonCashBenefits ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :Organization a owl:Class ;
@@ -3426,13 +3482,13 @@ necessary to provide the person with the appropriate services to prevent further
     dcterms:identifier 2.01 ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :OrganizationID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
@@ -3447,7 +3503,7 @@ necessary to provide the person with the appropriate services to prevent further
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
-            owl:onDataRange <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> ;
+            owl:onDataRange :string50 ;
             owl:onProperty :OrganizationName ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ;
     :CSVTableReference "Organization" .
@@ -3472,36 +3528,36 @@ C. Identifies the number of runaway youth.""" ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onDataRange xsd:date ;
             owl:onProperty :DateOfBCPStatus ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :ProjectID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "Enrollment" .
 
 :User a owl:Class ;
     dcterms:description "The unique identifier for User.csv is 5.07.1 UserID; the UserID in this file is used to associate data in other CSV files with a specific user, whether active or inactive at the time of the export. User.csv must include user information for all users included in other tables in the same CSV files. Additional export protocols may be established locally. This file includes fields that are not defined in the HMIS Data Dictionary: UserFirstName, UserLastNameUserPhone, UserExtension, UserEmail." ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
@@ -3525,16 +3581,16 @@ C. Identifies the number of runaway youth.""" ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ],
@@ -3543,39 +3599,39 @@ C. Identifies the number of runaway youth.""" ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :YouthEducationStatusID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "YouthEducationStatus" .
 
 :AssessmentQuestionClass a owl:Class ;
     dcterms:description "Locally defined; Assessment Questions and Assessment Answers are a list of key-value (question and response) pairs for every question in the assessment." ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onDataRange <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+            owl:onDataRange :string32 ;
             owl:onProperty :AssessmentQuestionID ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :AssessmentQuestionID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :AssessmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
@@ -3593,19 +3649,19 @@ C. Identifies the number of runaway youth.""" ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :IncomeBenefitsID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ],
@@ -3618,7 +3674,7 @@ C. Identifies the number of runaway youth.""" ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "IncomeBenefits" .
 
 :Metadata a owl:Class ;
@@ -3632,7 +3688,7 @@ C. Identifies the number of runaway youth.""" ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ProjectID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
@@ -3642,9 +3698,9 @@ C. Identifies the number of runaway youth.""" ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :FunderID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
-            owl:onDataRange <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+            owl:onDataRange :string32 ;
             owl:onProperty :GrantID ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
@@ -3656,26 +3712,26 @@ C. Identifies the number of runaway youth.""" ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "Funder" .
 
 :HealthStatus a owl:Class ;
     dcterms:description "To indicate the health status (general health, dental health, and mental health) per client." ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :HealthAndDVID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onClass skos:Concept ;
             owl:onProperty :DataCollectionStage ;
@@ -3685,7 +3741,7 @@ C. Identifies the number of runaway youth.""" ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
@@ -3707,29 +3763,29 @@ project.""" ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onDataRange xsd:date ;
             owl:onProperty :AftercareDate ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ExitID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :InformationDate ;
             owl:someValuesFrom xsd:date ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
@@ -3738,34 +3794,32 @@ project.""" ;
             owl:someValuesFrom xsd:dateTime ] ;
     :CSVTableReference "Exit" .
 
-<https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string250> a rdfs:Datatype .
-
 :Event a owl:Class ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :EventID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onDataRange xsd:date ;
             owl:onProperty :EventDate ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ] ;
@@ -3781,25 +3835,25 @@ each row in Assessment.csv""" ;
     dcterms:identifier 4.19 ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :AssessmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ] ;
@@ -3823,16 +3877,16 @@ each row in Assessment.csv""" ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ProjectID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :CEParticipationID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
@@ -3846,16 +3900,16 @@ each row in Assessment.csv""" ;
     dcterms:identifier 4.03 ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :IncomeBenefitsID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
@@ -3869,7 +3923,7 @@ each row in Assessment.csv""" ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
@@ -3888,26 +3942,26 @@ ContinuumProject is equal to 1 (Yes).""" ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
-            owl:onDataRange <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#cocCode> ;
+            owl:onDataRange :cocCodeString ;
             owl:onProperty :CoCCode ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ProjectCoCID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ProjectID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "ProjectCoC" .
 
 :TypeProvided a owl:ObjectProperty ;
@@ -3952,16 +4006,16 @@ reported as contact events in Services.csv. This element now contains additional
     dcterms:identifier 4.12 ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ],
@@ -3971,7 +4025,7 @@ reported as contact events in Services.csv. This element now contains additional
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :CurrentLivingSitID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onDataRange xsd:date ;
             owl:onProperty :InformationDate ;
@@ -3981,7 +4035,7 @@ reported as contact events in Services.csv. This element now contains additional
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "CurrentLivingSituation" .
 
 :DataCollectionStage a owl:ObjectProperty ;
@@ -3996,19 +4050,19 @@ reported as contact events in Services.csv. This element now contains additional
     dcterms:description "Includes enrollment information pertaining exclusively to the project exit data collection stage. Separated from Enrollment table to preserve metadata pertaining to the exit data collection stage." ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ExitID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onDataRange xsd:date ;
             owl:onProperty :ExitDate ;
@@ -4018,7 +4072,7 @@ reported as contact events in Services.csv. This element now contains additional
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
@@ -4073,17 +4127,17 @@ reported as contact events in Services.csv. This element now contains additional
             owl:someValuesFrom xsd:date ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onClass skos:Concept ;
             owl:onProperty :RecordType ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
@@ -4092,7 +4146,7 @@ reported as contact events in Services.csv. This element now contains additional
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "Services" .
 
 :Disabilities a owl:Class ;
@@ -4102,13 +4156,13 @@ reported as contact events in Services.csv. This element now contains additional
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :DisabilitiesID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Class ;
             owl:unionOf ( [ a owl:Restriction ;
                         owl:onClass skos:Concept ;
@@ -4119,7 +4173,7 @@ reported as contact events in Services.csv. This element now contains additional
                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :InformationDate ;
             owl:someValuesFrom xsd:date ],
@@ -4133,10 +4187,10 @@ reported as contact events in Services.csv. This element now contains additional
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ] ;
@@ -4148,7 +4202,7 @@ reported as contact events in Services.csv. This element now contains additional
     dcterms:identifier "2.02.1",
         "5.05.1" ;
     rdfs:domain :Project ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :ClientVeteranInfo a owl:Class ;
@@ -4156,16 +4210,16 @@ reported as contact events in Services.csv. This element now contains additional
     dcterms:identifier "V1" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ],
@@ -4181,10 +4235,10 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
 :EntryRHY a owl:Class ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :JuvenileJusticeMonths ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#months> ],
+            owl:someValuesFrom xsd:integer ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
@@ -4201,20 +4255,20 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :HouseholdID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onClass skos:Concept ;
             owl:onProperty :InsufficientIncome ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :ChildWelfareMonths ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#months> ],
+            owl:someValuesFrom xsd:integer ],
         [ a owl:Restriction ;
             owl:onClass skos:Concept ;
             owl:onProperty :MentalHealthDisorderFam ;
@@ -4224,7 +4278,7 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :JuvenileJusticeYears ;
             owl:someValuesFrom skos:Concept ],
@@ -4251,7 +4305,7 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
     dcterms:identifier 2.07 ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onDataRange xsd:date ;
             owl:onProperty :InventoryStartDate ;
@@ -4261,13 +4315,13 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ProjectID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :CoCCode ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#cocCode> ],
+            owl:someValuesFrom :cocCodeString ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onClass skos:Concept ;
             owl:onProperty :HouseholdType ;
@@ -4284,19 +4338,17 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :InventoryID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onDataRange xsd:nonNegativeInteger ;
             owl:onProperty :UnitInventory ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ;
     :CSVTableReference "Inventory" .
 
-<https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money> a rdfs:Datatype .
-
 :Export a owl:Class ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "Export" .
 
 :Project a owl:Class ;
@@ -4310,31 +4362,31 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
-            owl:onDataRange <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string100> ;
+            owl:onDataRange :string100 ;
             owl:onProperty :ProjectName ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onClass skos:Concept ;
             owl:onProperty :ContinuumProject ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :ProjectID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onDataRange xsd:date ;
             owl:onProperty :OperatingStartDate ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :OrganizationID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "Project" .
 
 :Client a owl:Class ;
@@ -4347,16 +4399,16 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "Client" .
 
 :HealthInsurance a owl:Class ;
@@ -4364,14 +4416,14 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
     dcterms:identifier 4.04 ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onClass skos:Concept ;
             owl:onProperty :DataCollectionStage ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :IncomeBenefitsID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :InformationDate ;
             owl:someValuesFrom xsd:date ],
@@ -4383,38 +4435,38 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "IncomeBenefits" .
 
 :EntrySSVF a owl:Class ;
     dcterms:identifier "V7" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :ProjectID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :HouseholdID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
@@ -4423,44 +4475,42 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "Enrollment" .
 
 :ExitRHY a owl:Class ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateUpdated ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateDeleted ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :ExitID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :DateCreated ;
             owl:someValuesFrom xsd:dateTime ] ;
     :CSVTableReference "Exit" .
-
-<https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string50> a rdfs:Datatype .
 
 :PersonalID a owl:DatatypeProperty ;
     dcterms:description "Personal ID [HMIS Generated]" ;
     dcterms:identifier "5.08",
         "5.08.1" ;
     rdfs:domain :Client ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :EnrollmentID a owl:DatatypeProperty ;
@@ -4468,7 +4518,7 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
     dcterms:description "A unique project start identifier used to associate data with a particular period of service." ;
     dcterms:identifier "5.06.1" ;
     rdfs:domain :Enrollment ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :IncomeAndSources a owl:Class ;
@@ -4490,7 +4540,7 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onClass skos:Concept ;
             owl:onProperty :OtherIncomeSource ;
@@ -4501,9 +4551,9 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
-            owl:onDataRange <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money> ;
+            owl:onDataRange xsd:decimal ;
             owl:onProperty :TotalMonthlyIncome ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
@@ -4520,14 +4570,14 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onClass skos:Concept ;
             owl:onProperty :Earned ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :IncomeBenefitsID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onClass skos:Concept ;
             owl:onProperty :WorkersComp ;
@@ -4538,7 +4588,7 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onClass skos:Concept ;
             owl:onProperty :VADisabilityService ;
@@ -4572,7 +4622,7 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
     dcterms:description "Includes data elements associated with HMIS metadata element 5.06 EnrollmentID that have one and only one value per enrollment record and that are collected prior to project exit." ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty :EnrollmentID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onDataRange xsd:date ;
             owl:onProperty :EntryDate ;
@@ -4585,7 +4635,7 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :PersonalID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onClass skos:Concept ;
             owl:onProperty :DisablingCondition ;
@@ -4595,7 +4645,7 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty :UserID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
             owl:onClass :Exit ;
@@ -4606,13 +4656,13 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         [ a owl:Restriction ;
             owl:onProperty :ProjectID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :ExportID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ],
+            owl:someValuesFrom :string32 ],
         [ a owl:Restriction ;
             owl:onProperty :HouseholdID ;
-            owl:someValuesFrom <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ] ;
+            owl:someValuesFrom :string32 ] ;
     :CSVTableReference "Enrollment" .
 
 :DateCreated a owl:DatatypeProperty ;
@@ -4636,7 +4686,7 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
     dcterms:identifier "FW.5" ;
     rdfs:label "ExportID" ;
     rdfs:domain :Export ;
-    rdfs:range <https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> ;
+    rdfs:range :string32 ;
     rdfs:subPropertyOf owl:topDataProperty .
 
 :UserID a owl:DatatypeProperty ;
@@ -4647,8 +4697,6 @@ dc: dcterms:modified "2012-06-14"^^xsd:date ;
 xsd:date a rdfs:Datatype .
 
 xsd:dateTime a rdfs:Datatype .
-
-<https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#string32> a rdfs:Datatype .
 
 
 #################################################################

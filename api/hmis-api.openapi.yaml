@@ -984,7 +984,7 @@ components:
             "Yes": urn:hud:hmis:owl#list_NoYesMissing_1
         AlimonyAmount:
           '@id': urn:hud:hmis:owl#AlimonyAmount
-          '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+          '@type': http://www.w3.org/2001/XMLSchema#decimal
         AmIndAKNative:
           '@id': urn:hud:hmis:owl#AmIndAKNative
           '@type': '@vocab'
@@ -1147,10 +1147,10 @@ components:
             "Yes": urn:hud:hmis:owl#list_NoYesMissing_1
         ChildSupportAmount:
           '@id': urn:hud:hmis:owl#ChildSupportAmount
-          '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+          '@type': http://www.w3.org/2001/XMLSchema#decimal
         ChildWelfareMonths:
           '@id': urn:hud:hmis:owl#ChildWelfareMonths
-          '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#months
+          '@type': http://www.w3.org/2001/XMLSchema#integer
         ChildWelfareYears:
           '@id': urn:hud:hmis:owl#ChildWelfareYears
           '@type': '@vocab'
@@ -1507,7 +1507,7 @@ components:
             "Yes": urn:hud:hmis:owl#list_NoYesMissing_1
         EarnedAmount:
           '@id': urn:hud:hmis:owl#EarnedAmount
-          '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+          '@type': http://www.w3.org/2001/XMLSchema#decimal
         EligibleForRHY:
           '@id': urn:hud:hmis:owl#EligibleForRHY
           '@type': '@vocab'
@@ -1608,7 +1608,7 @@ components:
           '@id': urn:hud:hmis:owl#ExportID
         FAAmount:
           '@id': urn:hud:hmis:owl#FAAmount
-          '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+          '@type': http://www.w3.org/2001/XMLSchema#decimal
         FAEndDate:
           '@id': urn:hud:hmis:owl#FAEndDate
           '@type': xsd:date
@@ -1703,7 +1703,7 @@ components:
             "Yes": urn:hud:hmis:owl#list_NoYesMissing_1
         GAAmount:
           '@id': urn:hud:hmis:owl#GAAmount
-          '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+          '@type': http://www.w3.org/2001/XMLSchema#decimal
         GeneralHealthStatus:
           '@id': urn:hud:hmis:owl#GeneralHealthStatus
           '@type': '@vocab'
@@ -1899,7 +1899,7 @@ components:
             "Client doesn't know": urn:hud:hmis:owl#list_NoYesReasonsForMissing_8
         JuvenileJusticeMonths:
           '@id': urn:hud:hmis:owl#JuvenileJusticeMonths
-          '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#months
+          '@type': http://www.w3.org/2001/XMLSchema#integer
         JuvenileJusticeYears:
           '@id': urn:hud:hmis:owl#JuvenileJusticeYears
           '@type': '@vocab'
@@ -2319,7 +2319,7 @@ components:
           '@id': urn:hud:hmis:owl#OtherFunder
         OtherIncomeAmount:
           '@id': urn:hud:hmis:owl#OtherIncomeAmount
-          '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+          '@type': http://www.w3.org/2001/XMLSchema#decimal
         OtherIncomeSource:
           '@id': urn:hud:hmis:owl#OtherIncomeSource
           '@type': '@vocab'
@@ -2365,7 +2365,7 @@ components:
             "Yes": urn:hud:hmis:owl#list_NoYesMissing_1
         PensionAmount:
           '@id': urn:hud:hmis:owl#PensionAmount
-          '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+          '@type': http://www.w3.org/2001/XMLSchema#decimal
         PercentAMI:
           '@id': urn:hud:hmis:owl#PercentAMI
           '@type': '@vocab'
@@ -2462,7 +2462,7 @@ components:
             "Yes": urn:hud:hmis:owl#list_NoYesMissing_1
         PrivateDisabilityAmount:
           '@id': urn:hud:hmis:owl#PrivateDisabilityAmount
-          '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+          '@type': http://www.w3.org/2001/XMLSchema#decimal
         PrivatePay:
           '@id': urn:hud:hmis:owl#PrivatePay
           '@type': '@vocab'
@@ -2667,7 +2667,7 @@ components:
             "Yes": urn:hud:hmis:owl#list_NoYesMissing_1
         SSDIAmount:
           '@id': urn:hud:hmis:owl#SSDIAmount
-          '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+          '@type': http://www.w3.org/2001/XMLSchema#decimal
         SSI:
           '@id': urn:hud:hmis:owl#SSI
           '@type': '@vocab'
@@ -2677,7 +2677,7 @@ components:
             "Yes": urn:hud:hmis:owl#list_NoYesMissing_1
         SSIAmount:
           '@id': urn:hud:hmis:owl#SSIAmount
-          '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+          '@type': http://www.w3.org/2001/XMLSchema#decimal
         SSN:
           '@id': urn:hud:hmis:owl#SSN
         SSNDataQuality:
@@ -2741,7 +2741,7 @@ components:
             "Yes": urn:hud:hmis:owl#list_NoYesMissing_1
         SocSecRetirementAmount:
           '@id': urn:hud:hmis:owl#SocSecRetirementAmount
-          '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+          '@type': http://www.w3.org/2001/XMLSchema#decimal
         StartDate:
           '@id': urn:hud:hmis:owl#StartDate
           '@type': xsd:date
@@ -2791,7 +2791,7 @@ components:
             "Yes": urn:hud:hmis:owl#list_NoYesMissing_1
         TANFAmount:
           '@id': urn:hud:hmis:owl#TANFAmount
-          '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+          '@type': http://www.w3.org/2001/XMLSchema#decimal
         TANFChildCare:
           '@id': urn:hud:hmis:owl#TANFChildCare
           '@type': '@vocab'
@@ -2870,7 +2870,7 @@ components:
             "Three times": urn:hud:hmis:owl#list_TimesHomelessPastThreeYears_3
         TotalMonthlyIncome:
           '@id': urn:hud:hmis:owl#TotalMonthlyIncome
-          '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+          '@type': http://www.w3.org/2001/XMLSchema#decimal
         TranslationNeeded:
           '@id': urn:hud:hmis:owl#TranslationNeeded
         Unemployment:
@@ -2882,7 +2882,7 @@ components:
             "Yes": urn:hud:hmis:owl#list_NoYesMissing_1
         UnemploymentAmount:
           '@id': urn:hud:hmis:owl#UnemploymentAmount
-          '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+          '@type': http://www.w3.org/2001/XMLSchema#decimal
         UnemploymentFam:
           '@id': urn:hud:hmis:owl#UnemploymentFam
           '@type': '@vocab'
@@ -2906,7 +2906,7 @@ components:
             "Yes": urn:hud:hmis:owl#list_NoYesMissing_1
         VADisabilityNonServiceAmount:
           '@id': urn:hud:hmis:owl#VADisabilityNonServiceAmount
-          '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+          '@type': http://www.w3.org/2001/XMLSchema#decimal
         VADisabilityService:
           '@id': urn:hud:hmis:owl#VADisabilityService
           '@type': '@vocab'
@@ -2916,7 +2916,7 @@ components:
             "Yes": urn:hud:hmis:owl#list_NoYesMissing_1
         VADisabilityServiceAmount:
           '@id': urn:hud:hmis:owl#VADisabilityServiceAmount
-          '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+          '@type': http://www.w3.org/2001/XMLSchema#decimal
         VAMCStation:
           '@id': urn:hud:hmis:owl#VAMCStation
           '@type': '@vocab'
@@ -3153,7 +3153,7 @@ components:
             "Yes": urn:hud:hmis:owl#list_NoYesMissing_1
         WorkersCompAmount:
           '@id': urn:hud:hmis:owl#WorkersCompAmount
-          '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+          '@type': http://www.w3.org/2001/XMLSchema#decimal
         WorkplacePromiseDifference:
           '@id': urn:hud:hmis:owl#WorkplacePromiseDifference
           '@type': '@vocab'
@@ -5249,7 +5249,7 @@ components:
       x-hmis-dataDictionaryName: AlimonyAmount
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#AlimonyAmount
-        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+        '@type': http://www.w3.org/2001/XMLSchema#decimal
       type: number
       x-hmis-vocabulary: 4.02.N
     AmIndAKNative:
@@ -5764,14 +5764,14 @@ components:
       x-hmis-dataDictionaryName: ChildSupportAmount
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#ChildSupportAmount
-        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+        '@type': http://www.w3.org/2001/XMLSchema#decimal
       type: number
       x-hmis-vocabulary: 4.02.M
     ChildWelfareMonths:
       x-hmis-dataDictionaryName: ChildWelfareMonths
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#ChildWelfareMonths
-        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#months
+        '@type': http://www.w3.org/2001/XMLSchema#integer
       type: integer
       x-hmis-vocabulary: R11.B
     ChildWelfareYears:
@@ -6973,7 +6973,7 @@ components:
       x-hmis-dataDictionaryName: EarnedAmount
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#EarnedAmount
-        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+        '@type': http://www.w3.org/2001/XMLSchema#decimal
       type: number
       x-hmis-vocabulary: 4.02.A
     EligibleForRHY:
@@ -7348,7 +7348,7 @@ components:
       x-hmis-dataDictionaryName: FAAmount
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#FAAmount
-        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+        '@type': http://www.w3.org/2001/XMLSchema#decimal
       type: number
       x-hmis-vocabulary: V3.3
     FAEndDate:
@@ -7683,7 +7683,7 @@ components:
       x-hmis-dataDictionaryName: GAAmount
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#GAAmount
-        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+        '@type': http://www.w3.org/2001/XMLSchema#decimal
       type: number
       x-hmis-vocabulary: 4.02.J
     GeneralHealthStatus:
@@ -8299,7 +8299,7 @@ components:
       x-hmis-dataDictionaryName: JuvenileJusticeMonths
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#JuvenileJusticeMonths
-        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#months
+        '@type': http://www.w3.org/2001/XMLSchema#integer
       type: integer
       x-hmis-vocabulary: R12.B
     JuvenileJusticeYears:
@@ -9727,7 +9727,7 @@ components:
       x-hmis-dataDictionaryName: OtherIncomeAmount
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#OtherIncomeAmount
-        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+        '@type': http://www.w3.org/2001/XMLSchema#decimal
       type: number
       x-hmis-vocabulary: 4.02.O
     OtherIncomeSource:
@@ -9870,7 +9870,7 @@ components:
       x-hmis-dataDictionaryName: PensionAmount
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#PensionAmount
-        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+        '@type': http://www.w3.org/2001/XMLSchema#decimal
       type: number
       x-hmis-vocabulary: 4.02.L
     PercentAMI:
@@ -10167,7 +10167,7 @@ components:
       x-hmis-dataDictionaryName: PrivateDisabilityAmount
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#PrivateDisabilityAmount
-        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+        '@type': http://www.w3.org/2001/XMLSchema#decimal
       type: number
       x-hmis-vocabulary: 4.02.G
     PrivatePay:
@@ -10840,7 +10840,7 @@ components:
       x-hmis-dataDictionaryName: SSDIAmount
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#SSDIAmount
-        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+        '@type': http://www.w3.org/2001/XMLSchema#decimal
       type: number
       x-hmis-vocabulary: 4.02.D
     SSI:
@@ -10869,7 +10869,7 @@ components:
       x-hmis-dataDictionaryName: SSIAmount
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#SSIAmount
-        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+        '@type': http://www.w3.org/2001/XMLSchema#decimal
       type: number
       x-hmis-vocabulary: 4.02.C
     SSN:
@@ -11072,7 +11072,7 @@ components:
       x-hmis-dataDictionaryName: SocSecRetirementAmount
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#SocSecRetirementAmount
-        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+        '@type': http://www.w3.org/2001/XMLSchema#decimal
       type: number
       x-hmis-vocabulary: 4.02.K
     StartDate:
@@ -11229,7 +11229,7 @@ components:
       x-hmis-dataDictionaryName: TANFAmount
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#TANFAmount
-        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+        '@type': http://www.w3.org/2001/XMLSchema#decimal
       type: number
       x-hmis-vocabulary: 4.02.I
     TANFChildCare:
@@ -11476,7 +11476,7 @@ components:
       x-hmis-dataDictionaryName: TotalMonthlyIncome
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#TotalMonthlyIncome
-        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+        '@type': http://www.w3.org/2001/XMLSchema#decimal
       type: number
       x-hmis-vocabulary: 4.02.18
     TranslationNeeded:
@@ -11526,7 +11526,7 @@ components:
       x-hmis-dataDictionaryName: UnemploymentAmount
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#UnemploymentAmount
-        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+        '@type': http://www.w3.org/2001/XMLSchema#decimal
       type: number
       x-hmis-vocabulary: 4.02.B
     UnemploymentFam:
@@ -11598,7 +11598,7 @@ components:
       x-hmis-dataDictionaryName: VADisabilityNonServiceAmount
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#VADisabilityNonServiceAmount
-        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+        '@type': http://www.w3.org/2001/XMLSchema#decimal
       type: number
       x-hmis-vocabulary: 4.02.F
     VADisabilityService:
@@ -11627,7 +11627,7 @@ components:
       x-hmis-dataDictionaryName: VADisabilityServiceAmount
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#VADisabilityServiceAmount
-        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+        '@type': http://www.w3.org/2001/XMLSchema#decimal
       type: number
       x-hmis-vocabulary: 4.02.E
     VAMCStation:
@@ -12492,7 +12492,7 @@ components:
       x-hmis-dataDictionaryName: WorkersCompAmount
       x-jsonld-context:
         '@id': urn:hud:hmis:owl#WorkersCompAmount
-        '@type': https://raw.githubusercontent.com/hmis-interop/xml/FY2022-latest/src/HUD_HMIS.xsd#money
+        '@type': http://www.w3.org/2001/XMLSchema#decimal
       type: number
       x-hmis-vocabulary: 4.02.H
     WorkplacePromiseDifference:
