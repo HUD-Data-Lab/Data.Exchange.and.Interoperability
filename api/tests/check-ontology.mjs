@@ -18,6 +18,15 @@
 // Every x-jsonld-type (the class an object represents) must:
 //   7. be an owl:Class declared in the ontology.
 //
+// Code-list fields (the property is an owl:ObjectProperty whose :linkedVocabulary names SKOS concept
+// schemes) must:
+//   8. use "@type": "@vocab" with a scoped "@context" that maps exactly the field's enum labels, each
+//      to a skos:Concept in one of the property's linked schemes (all in the same scheme), whose
+//      skos:notation is the field's x-hmis-values notation and whose skos:prefLabel is the label
+//      (ignoring apostrophe style and spacing). The enclosing context must declare "@version": 1.1.
+//      Every other field must not use "@vocab" or a scoped context. CODE_LIST_EXCEPTIONS lists the
+//      fields that cannot be mapped, with the reason.
+//
 // Usage: node check-ontology.mjs [path/to/ontology.ttl] [path/to/openapi.yaml]
 // Exits 1 and lists every problem if any check fails.
 import { readFileSync } from "node:fs";
@@ -39,6 +48,12 @@ const DCT_IDENTIFIER = "http://purl.org/dc/terms/identifier";
 const OWL_CLASS = "http://www.w3.org/2002/07/owl#Class";
 const XSD = "http://www.w3.org/2001/XMLSchema#";
 const HMIS = "urn:hud:hmis:owl#";
+const OWL_OBJECT_PROPERTY = "http://www.w3.org/2002/07/owl#ObjectProperty";
+const SKOS = "http://www.w3.org/2004/02/skos/core#";
+const LINKED_VOCABULARY = `urn:hud:hmis:owl#linkedVocabulary`;
+const CODE_LIST_EXCEPTIONS = {
+  SubTypeProvided: "an integer whose list (V2.A, V2.B or V2.C) depends on TypeProvided, so no single label map applies",
+};
 const PROPERTY_TYPES = new Set([
   "http://www.w3.org/2002/07/owl#DatatypeProperty",
   "http://www.w3.org/2002/07/owl#ObjectProperty",
@@ -49,12 +64,22 @@ const properties = new Map(); // iri -> { ranges: Set, identifiers: Set }
 const ranges = new Map();
 const identifiers = new Map();
 const classes = new Set();
+const objectProperties = new Set();
+const linked = new Map(); // property -> Set of concept schemes
+const conceptScheme = new Map(); // concept -> Set of schemes
+const conceptNotation = new Map();
+const conceptLabel = new Map();
 const addTo = (map, key, value) => (map.get(key) ?? map.set(key, new Set()).get(key)).add(value);
 
 for (const quad of new N3.Parser().parse(readFileSync(ontologyPath, "utf8"))) {
   const s = quad.subject.value;
   const p = quad.predicate.value;
   if (p === RDF_TYPE && PROPERTY_TYPES.has(quad.object.value)) properties.set(s, true);
+  if (p === RDF_TYPE && quad.object.value === OWL_OBJECT_PROPERTY) objectProperties.add(s);
+  if (p === LINKED_VOCABULARY) addTo(linked, s, quad.object.value);
+  else if (p === SKOS + "inScheme") addTo(conceptScheme, s, quad.object.value);
+  else if (p === SKOS + "notation") conceptNotation.set(s, quad.object.value);
+  else if (p === SKOS + "prefLabel") conceptLabel.set(s, quad.object.value);
   else if (p === RDF_TYPE && quad.object.value === OWL_CLASS) classes.add(s);
   else if (p === RDFS_RANGE && quad.object.termType === "NamedNode") addTo(ranges, s, quad.object.value);
   else if (p === DCT_IDENTIFIER) addTo(identifiers, s, quad.object.value);
@@ -94,7 +119,8 @@ function terms(context) {
     else if (value && typeof value === "object") {
       result.set(key, {
         iri: expand(value["@id"] ?? key, prefixes, vocab),
-        type: value["@type"] ? expand(value["@type"], prefixes, vocab) : null,
+        type: value["@type"] === "@vocab" ? "@vocab" : value["@type"] ? expand(value["@type"], prefixes, vocab) : null,
+        scoped: value["@context"] ?? null,
       });
     }
   }
@@ -103,6 +129,42 @@ function terms(context) {
 
 // --- checks ----------------------------------------------------------------------
 const errors = [];
+let codeListTerms = 0;
+const normLabel = (s) => String(s).replace(/[‘’]/g, "'").replace(/[–—]/g, "-").replace(/\s*,\s*/g, ",").replace(/\s+/g, " ").trim().toLowerCase();
+
+function checkCodeList(where, term, schemes, fieldSchema, version) {
+  codeListTerms++;
+  if (!objectProperties.has(term.iri)) errors.push(`${where}: ${term.iri} links a concept scheme but is not an owl:ObjectProperty`);
+  if (term.type !== "@vocab" || !term.scoped || typeof term.scoped !== "object") {
+    errors.push(`${where}: code-list field needs "@type": "@vocab" and a scoped "@context" mapping its labels to concepts of ${[...schemes].join(", ")}`);
+    return;
+  }
+  if (version !== 1.1) errors.push(`${where}: the enclosing x-jsonld-context needs "@version": 1.1 for its scoped contexts`);
+  const enumLabels = (fieldSchema.enum ?? []).map(String);
+  const notations = new Map((fieldSchema["x-hmis-values"] ?? []).map((v) => [String(v.preflabel), String(v.notation)]));
+  const keys = Object.keys(term.scoped);
+  const missing = enumLabels.filter((l) => !keys.includes(l));
+  const extra = keys.filter((k) => !enumLabels.includes(k));
+  if (missing.length) errors.push(`${where}: scoped @context has no concept for ${missing.map((l) => `"${l}"`).join(", ")}`);
+  if (extra.length) errors.push(`${where}: scoped @context maps ${extra.map((l) => `"${l}"`).join(", ")}, which is not in the field's enum`);
+  const used = new Set();
+  for (const [label, concept] of Object.entries(term.scoped)) {
+    const inSchemes = conceptScheme.get(concept);
+    if (!inSchemes) { errors.push(`${where}: "${label}" maps to ${concept}, which is not a skos:Concept in the ontology`); continue; }
+    const scheme = [...inSchemes].find((s) => schemes.has(s));
+    if (!scheme) { errors.push(`${where}: "${label}" maps to ${concept}, which is not in ${[...schemes].join(", ")}`); continue; }
+    used.add(scheme);
+    const expected = notations.get(label);
+    if (expected !== undefined && conceptNotation.get(concept) !== expected) {
+      errors.push(`${where}: "${label}" maps to ${concept} with notation ${conceptNotation.get(concept)}, but x-hmis-values gives ${expected}`);
+    }
+    if (normLabel(conceptLabel.get(concept)) !== normLabel(label)) {
+      errors.push(`${where}: "${label}" maps to ${concept}, whose skos:prefLabel is "${conceptLabel.get(concept)}"`);
+    }
+  }
+  if (used.size > 1) errors.push(`${where}: labels map into more than one scheme (${[...used].join(", ")})`);
+}
+
 const seen = new Map(); // term -> "iri @type" from the first schema that defined it
 const mappedTerms = new Map(); // field -> { iri, type } where an object maps it to the ontology
 const unmappedFields = new Set();
@@ -129,7 +191,7 @@ for (const [name, schema] of Object.entries(schemas)) {
       errors.push(`${name}: x-jsonld-context defines ${field}, which is not a property`);
       continue;
     }
-    const signature = `${term.iri} ${term.type ?? "(no @type)"}`;
+    const signature = `${term.iri} ${term.type ?? "(no @type)"} ${term.scoped ? JSON.stringify(term.scoped) : ""}`;
     const first = seen.get(field);
     if (first && first.signature !== signature) {
       errors.push(`${field}: ${first.schema} maps it to ${first.signature}, ${name} to ${signature}`);
@@ -151,14 +213,22 @@ for (const [name, schema] of Object.entries(schemas)) {
     checkedFields.add(field);
     if (!mappedTerms.has(field)) mappedTerms.set(field, term);
 
-    const range = ranges.get(term.iri) ?? new Set();
-    if (term.type && !range.has(term.type)) {
-      const allowed = range.size ? [...range].join(", ") : "none declared";
-      errors.push(`${name}.${field}: @type ${term.type} is not an rdfs:range of ${term.iri} (ontology: ${allowed})`);
-    }
-
     let fieldSchema = resolve(props[field]);
     if (fieldSchema.type === "array" && fieldSchema.items) fieldSchema = resolve(fieldSchema.items);
+
+    const schemes = linked.get(term.iri);
+    if (schemes && !(field in CODE_LIST_EXCEPTIONS)) {
+      checkCodeList(`${name}.${field}`, term, schemes, fieldSchema, context["@version"]);
+    } else if (term.type === "@vocab" || term.scoped) {
+      errors.push(`${name}.${field}: uses "@vocab"/a scoped @context, but ${term.iri} is not a code-list property` +
+        (field in CODE_LIST_EXCEPTIONS ? ` (listed in CODE_LIST_EXCEPTIONS: ${CODE_LIST_EXCEPTIONS[field]})` : ""));
+    } else {
+      const range = ranges.get(term.iri) ?? new Set();
+      if (term.type && !range.has(term.type)) {
+        const allowed = range.size ? [...range].join(", ") : "none declared";
+        errors.push(`${name}.${field}: @type ${term.type} is not an rdfs:range of ${term.iri} (ontology: ${allowed})`);
+      }
+    }
     const element = fieldSchema["x-hmis-vocabulary"];
     if (element !== undefined && typeof element !== "string") {
       errors.push(`${name}.${field}: x-hmis-vocabulary ${element} must be a string (quote it in the YAML)`);
@@ -196,14 +266,17 @@ for (const [name, schema] of Object.entries(schemas)) {
   }
   fieldContexts++;
   const iri = own["@id"];
-  const type = typeof own["@type"] === "string" ? own["@type"].replace(/^xsd:/, XSD) : null;
+  const type = own["@type"] === "@vocab" ? "@vocab" : typeof own["@type"] === "string" ? own["@type"].replace(/^xsd:/, XSD) : null;
   if (iri !== HMIS + name) errors.push(`${name}: field schema x-jsonld-context "@id" is ${iri}, expected ${HMIS}${name}`);
   if (!properties.has(iri)) errors.push(`${name}: field schema x-jsonld-context "@id" ${iri} is not a property in the ontology`);
   if (objectTerm && (objectTerm.type ?? null) !== type) {
     errors.push(`${name}: field schema "@type" is ${type ?? "(none)"}, but the object-level contexts use ${objectTerm.type ?? "(none)"}`);
   }
+  if (objectTerm && JSON.stringify(objectTerm.scoped ?? null) !== JSON.stringify(own["@context"] ?? null)) {
+    errors.push(`${name}: field schema scoped "@context" differs from the object-level contexts`);
+  }
   const range = ranges.get(iri) ?? new Set();
-  if (type && !range.has(type)) {
+  if (type && type !== "@vocab" && !range.has(type)) {
     errors.push(`${name}: field schema "@type" ${type} is not an rdfs:range of ${iri} (ontology: ${range.size ? [...range].join(", ") : "none declared"})`);
   }
 }
@@ -227,6 +300,7 @@ if (unique.length) {
 }
 console.log(
   `API/ontology check passed: ${schemaCount} schemas, ${checkedFields.size} fields matched to ontology properties ` +
-    `(${properties.size} declared), ${fieldContexts} field-schema contexts and ${objectTypes} x-jsonld-type ` +
+    `(${properties.size} declared), ${codeListTerms} code-list terms mapped to SKOS concepts, ` +
+    `${fieldContexts} field-schema contexts and ${objectTypes} x-jsonld-type ` +
     `class links verified; datatypes and data element numbers agree.`,
 );
