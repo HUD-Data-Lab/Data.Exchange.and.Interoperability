@@ -26,7 +26,7 @@ workflows:
     steps:
       - stepId: listProjectClients
         description: Scenario 4. Clients enrolled in the project.
-        operationId: $sourceDescriptions.hmisApi.ClientsinaProject
+        operationId: $sourceDescriptions.hmisApi.ClientsInAProject
         requestBody:
           contentType: application/json
           payload:

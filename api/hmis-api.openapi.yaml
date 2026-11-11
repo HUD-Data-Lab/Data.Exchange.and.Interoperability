@@ -48,7 +48,7 @@ tags:
 paths:
   /clients/search:
     post:
-      operationId: SearchforClient
+      operationId: SearchForClient
       summary: Search for a client record by identifying information or PersonalID
       tags:
       - Scenario 1
@@ -60,20 +60,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SearchforClientRequest'
+              $ref: '#/components/schemas/SearchForClientRequest'
             examples:
               default:
-                $ref: '#/components/examples/SearchforClientRequestExample'
+                $ref: '#/components/examples/SearchForClientRequestExample'
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchforClientResponse'
+                $ref: '#/components/schemas/SearchForClientResponse'
               examples:
                 default:
-                  $ref: '#/components/examples/SearchforClientResponseExample'
+                  $ref: '#/components/examples/SearchForClientResponseExample'
   /clients:
     post:
       operationId: CreateClient
@@ -138,7 +138,7 @@ paths:
                   $ref: '#/components/examples/UpdateClientResponseExample'
   /projects/enrollments/search:
     post:
-      operationId: ClientsinaProject
+      operationId: ClientsInAProject
       summary: Generate a list of enrollments related to a single project
       tags:
       - Scenario 4
@@ -150,20 +150,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ClientsinaProjectRequest'
+              $ref: '#/components/schemas/ClientsInAProjectRequest'
             examples:
               default:
-                $ref: '#/components/examples/ClientsinaProjectRequestExample'
+                $ref: '#/components/examples/ClientsInAProjectRequestExample'
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClientsinaProjectResponse'
+                $ref: '#/components/schemas/ClientsInAProjectResponse'
               examples:
                 default:
-                  $ref: '#/components/examples/ClientsinaProjectResponseExample'
+                  $ref: '#/components/examples/ClientsInAProjectResponseExample'
   /clients/enrollments/search:
     post:
       operationId: RetrieveClientEnrollments
@@ -222,7 +222,7 @@ paths:
                   $ref: '#/components/examples/SearchProjectsResponseExample'
   /clients/search-by-project:
     post:
-      operationId: SearchClientsbyProjectTypeorFunderType
+      operationId: SearchClientsByProjectTypeOrFunderType
       summary: Generate a list of clients filtered by funder and project type
       tags:
       - Scenario 7
@@ -234,20 +234,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SearchClientsbyProjectTypeorFunderTypeRequest'
+              $ref: '#/components/schemas/SearchClientsByProjectTypeOrFunderTypeRequest'
             examples:
               default:
-                $ref: '#/components/examples/SearchClientsbyProjectTypeorFunderTypeRequestExample'
+                $ref: '#/components/examples/SearchClientsByProjectTypeOrFunderTypeRequestExample'
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchClientsbyProjectTypeorFunderTypeResponse'
+                $ref: '#/components/schemas/SearchClientsByProjectTypeOrFunderTypeResponse'
               examples:
                 default:
-                  $ref: '#/components/examples/SearchClientsbyProjectTypeorFunderTypeResponseExample'
+                  $ref: '#/components/examples/SearchClientsByProjectTypeOrFunderTypeResponseExample'
   /clients/full-record:
     post:
       operationId: ClientFullHMISRecord
@@ -1610,7 +1610,7 @@ components:
       - PreferredLanguage
       - PreferredLanguageDifferent
       - TranslationNeeded
-    ClientsinaProjectRequest:
+    ClientsInAProjectRequest:
       type: object
       properties:
         EntryDate:
@@ -1630,7 +1630,7 @@ components:
           '@type': xsd:date
         ProjectID:
           '@id': urn:hud:hmis:owl#ProjectID
-    ClientsinaProjectResponse:
+    ClientsInAProjectResponse:
       type: object
       properties:
         AdditionalRaceEthnicity:
@@ -2137,7 +2137,7 @@ components:
           '@id': urn:hud:hmis:owl#ProjectName
         RelationshipToHoH:
           '@id': urn:hud:hmis:owl#RelationshipToHoH
-    SearchClientsbyProjectTypeorFunderTypeRequest:
+    SearchClientsByProjectTypeOrFunderTypeRequest:
       type: object
       properties:
         EntryDate:
@@ -2161,7 +2161,7 @@ components:
           '@id': urn:hud:hmis:owl#Funder
         ProjectType:
           '@id': urn:hud:hmis:owl#ProjectType
-    SearchClientsbyProjectTypeorFunderTypeResponse:
+    SearchClientsByProjectTypeOrFunderTypeResponse:
       type: object
       properties:
         DOB:
@@ -2207,7 +2207,7 @@ components:
           '@id': urn:hud:hmis:owl#ProjectID
         ProjectName:
           '@id': urn:hud:hmis:owl#ProjectName
-    SearchforClientRequest:
+    SearchForClientRequest:
       type: object
       properties:
         Earned:
@@ -2233,7 +2233,7 @@ components:
           '@id': urn:hud:hmis:owl#Unemployment
         VADisabilityNonService:
           '@id': urn:hud:hmis:owl#VADisabilityNonService
-    SearchforClientResponse:
+    SearchForClientResponse:
       type: object
       properties:
         AccessPoint:
@@ -8868,13 +8868,13 @@ components:
         YouthBedInventory: 1
         YouthVetBedInventory: 1
         ZIP: example-ZIP
-    ClientsinaProjectRequestExample:
+    ClientsInAProjectRequestExample:
       summary: Illustrative request for scenario 4
       value:
         EntryDate: '2025-10-01'
         ExitDate: '2026-03-31'
         ProjectID: p1r2o3j4e5c6t7i8d9
-    ClientsinaProjectResponseExample:
+    ClientsInAProjectResponseExample:
       summary: Illustrative response for scenario 4
       value:
         AdditionalRaceEthnicity: example-AdditionalRaceEthnicity
@@ -9004,14 +9004,14 @@ components:
         ProjectID: p1r2o3j4e5c6t7i8d9
         ProjectName: Example Street Outreach
         RelationshipToHoH: Self (Head of Household)
-    SearchClientsbyProjectTypeorFunderTypeRequestExample:
+    SearchClientsByProjectTypeOrFunderTypeRequestExample:
       summary: Illustrative request for scenario 7
       value:
         EntryDate: '2025-10-01'
         ExitDate: '2026-03-31'
         Funder: 'HUD: CoC – Supportive Services Only'
         ProjectType: Day Shelter
-    SearchClientsbyProjectTypeorFunderTypeResponseExample:
+    SearchClientsByProjectTypeOrFunderTypeResponseExample:
       summary: Illustrative response for scenario 7
       value:
         DOB: '2025-10-01'
@@ -9023,7 +9023,7 @@ components:
         PersonalID: a1b2c3d4e5f60718293a4b5c6d7e8f90
         ProjectID: p1r2o3j4e5c6t7i8d9
         ProjectName: Example Street Outreach
-    SearchforClientRequestExample:
+    SearchForClientRequestExample:
       summary: Illustrative request for scenario 1
       value:
         Earned: 'No'
@@ -9031,7 +9031,7 @@ components:
         SSDI: 'No'
         Unemployment: 'No'
         VADisabilityNonService: 'No'
-    SearchforClientResponseExample:
+    SearchForClientResponseExample:
       summary: Illustrative response for scenario 1
       value:
         AccessPoint: 'No'

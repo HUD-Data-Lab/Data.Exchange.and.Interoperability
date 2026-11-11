@@ -6,7 +6,8 @@
     "test": "node run-tests.mjs",
     "lint": "node run-tests.mjs --lint-only",
     "mock": "prism mock ../hmis-api.openapi.yaml --port 4010 --errors",
-    "check-ontology": "node check-ontology.mjs"
+    "check-ontology": "node check-ontology.mjs",
+    "check-names": "node check-names.mjs"
   },
   "devDependencies": {
     "@apideck/portman": "1.35.2",

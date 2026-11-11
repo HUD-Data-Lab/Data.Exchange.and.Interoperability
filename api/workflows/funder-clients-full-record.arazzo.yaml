@@ -30,7 +30,7 @@ workflows:
     steps:
       - stepId: searchClientsByFunder
         description: Scenario 7. Clients filtered by funder and project type.
-        operationId: $sourceDescriptions.hmisApi.SearchClientsbyProjectTypeorFunderType
+        operationId: $sourceDescriptions.hmisApi.SearchClientsByProjectTypeOrFunderType
         requestBody:
           contentType: application/json
           payload:

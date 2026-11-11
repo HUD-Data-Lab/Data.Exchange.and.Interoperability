@@ -38,7 +38,7 @@ workflows:
           projectId: $response.body#/ProjectID
       - stepId: listProjectEnrollments
         description: Scenario 4. List enrollments in the project found in step 1.
-        operationId: $sourceDescriptions.hmisApi.ClientsinaProject
+        operationId: $sourceDescriptions.hmisApi.ClientsInAProject
         requestBody:
           contentType: application/json
           payload:

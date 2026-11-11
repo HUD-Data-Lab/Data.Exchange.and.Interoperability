@@ -41,7 +41,7 @@ Four fields have no matching property in the FY2026 Logic Model, and each schema
 
 | File | Steps | Runs against the FY2026 schemas? |
 | --- | --- | --- |
-| `search-client-then-enrollments.arazzo.yaml` | Scenario 1, then 5 | Not yet. The SearchforClient response has no `PersonalID` to chain on. |
+| `search-client-then-enrollments.arazzo.yaml` | Scenario 1, then 5 | Not yet. The SearchForClient response has no `PersonalID` to chain on. |
 | `find-project-then-enrollments.arazzo.yaml` | Scenario 6, then 4 | Yes |
 | `funder-clients-full-record.arazzo.yaml` | Scenario 7, then 5, then 8 | Yes |
 | `project-client-update.arazzo.yaml` | Scenario 4, then 3 | Yes. UpdateClient has no request fields yet, so the changes come from the inputs. |
@@ -63,5 +63,7 @@ $env:HMIS_API_BASE_URL = "https://hmis.example.org/hmis/v1"; npm test   # agains
 `npm test` runs `run-tests.mjs`, which lints the OpenAPI and Arazzo files and runs `check-ontology.mjs`, then uses Portman to build a Postman collection from the OpenAPI description, with a contract test for each operation: 2xx status, JSON content type, JSON body, and response schema. Newman then runs that collection. JUnit results are written to `build/newman-results.xml`. CI runs the same script on Linux, macOS and Windows from `.github/workflows/api-tests.yml`.
 
 `check-ontology.mjs` (also `npm run check-ontology`) keeps the API and `FY26_HMIS_Logic_Model.ttl` from drifting apart. It fails if a field schema's own `x-jsonld-context` is missing or disagrees with the object contexts, if an `x-jsonld-type` is not an ontology class, if a field's JSON-LD term is not a property the ontology declares (unless the field is listed in `x-hmis-unmapped-fields`), if a listed field has since been added to the ontology, if a term's `@type` is not one of the property's `rdfs:range` values, or if the field's `x-hmis-vocabulary` data element number is not among the property's `dcterms:identifier` values. CI also runs the tests when the ontology file changes.
+
+Names the API defines are checked too. Redocly (`redocly.yaml`) requires PascalCase operationIds, schema names and example names. `check-names.mjs` (also `npm run check-names`) catches what PascalCase cannot, run-together words such as `ClientsinaProject`: every word of an operationId must be in its word list, every request/response schema and example name must be derived from its operationId (`XRequest`, `XResponseExample`, ...), and every operationId a workflow calls must exist.
 
 Not yet covered: security schemes and 4xx responses, which the stricter Redocly `recommended` ruleset flags.

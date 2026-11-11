@@ -4,3 +4,31 @@
 # "recommended" ruleset reports them; see api/README.md.
 extends:
   - spec
+
+# Names the API itself defines must be PascalCase. HUD field names (components/schemas
+# entries such as ADAP or HOPWAMedAssistedLivingFac) already are. PascalCase cannot tell
+# "ClientsInAProject" from the run-together "ClientsinaProject"; api/tests/check-names.mjs
+# catches that.
+rules:
+  rule/operation-id-pascal-case:
+    subject:
+      type: Operation
+      property: operationId
+    assertions:
+      casing: PascalCase
+    message: operationId must be PascalCase
+    severity: error
+  rule/schema-names-pascal-case:
+    subject:
+      type: NamedSchemas
+    assertions:
+      casing: PascalCase
+    message: Schema names under components/schemas must be PascalCase
+    severity: error
+  rule/example-names-pascal-case:
+    subject:
+      type: NamedExamples
+    assertions:
+      casing: PascalCase
+    message: Example names under components/examples must be PascalCase
+    severity: error

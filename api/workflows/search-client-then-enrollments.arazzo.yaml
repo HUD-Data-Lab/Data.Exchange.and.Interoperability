@@ -6,10 +6,10 @@ info:
   description: >
     Finds a client, then lists that client's enrollments.
     NOTE: this workflow cannot run against the FY2026 scenario schemas yet. The
-    SearchforClient response has no PersonalID, and its request has income fields
+    SearchForClient response has no PersonalID, and its request has income fields
     rather than identifying information, so there is nothing to chain on. It is
     included as the target for fixing Scenario 1: add PersonalID (and name, DOB, SSN
-    search fields) to SearchforClient, and this workflow will run unchanged.
+    search fields) to SearchForClient, and this workflow will run unchanged.
 sourceDescriptions:
   - name: hmisApi
     url: ../hmis-api.openapi.yaml
@@ -22,7 +22,7 @@ workflows:
       properties:
         searchCriteria:
           type: object
-          description: Fields accepted by the SearchforClient request.
+          description: Fields accepted by the SearchForClient request.
         entryDate:
           type: string
           format: date
@@ -32,7 +32,7 @@ workflows:
     steps:
       - stepId: searchClient
         description: Scenario 1. Search for the client.
-        operationId: $sourceDescriptions.hmisApi.SearchforClient
+        operationId: $sourceDescriptions.hmisApi.SearchForClient
         requestBody:
           contentType: application/json
           payload: $inputs.searchCriteria
