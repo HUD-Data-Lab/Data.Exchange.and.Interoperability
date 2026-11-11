@@ -717,10 +717,6 @@ components:
           $ref: '#/components/schemas/PosPeerConnections'
         PostExitCounselingPlan:
           $ref: '#/components/schemas/PostExitCounselingPlan'
-        PreferredLanguage:
-          $ref: '#/components/schemas/PreferredLanguage'
-        PreferredLanguageDifferent:
-          $ref: '#/components/schemas/PreferredLanguageDifferent'
         PregnancyStatus:
           $ref: '#/components/schemas/PregnancyStatus'
         PreventionAssessment:
@@ -855,8 +851,6 @@ components:
           $ref: '#/components/schemas/TimesHomelessPastThreeYears'
         TotalMonthlyIncome:
           $ref: '#/components/schemas/TotalMonthlyIncome'
-        TranslationNeeded:
-          $ref: '#/components/schemas/TranslationNeeded'
         Unemployment:
           $ref: '#/components/schemas/Unemployment'
         UnemploymentAmount:
@@ -1556,7 +1550,27 @@ components:
           '@id': urn:hud:hmis:owl#EntryDate
           '@type': xsd:date
         Event:
-          '@id': urn:hud:hmis:owl#Event
+          '@id': urn:hud:hmis:owl#EventType
+          '@type': '@vocab'
+          '@context':
+            "Referral to Post-placement/ follow-up case management": urn:hud:hmis:owl#list_Event_5
+            "Referral to Non-continuum services: No availability in continuum services": urn:hud:hmis:owl#list_Event_9
+            "Referral to Emergency Shelter bed opening": urn:hud:hmis:owl#list_Event_10
+            "Referral to RRH project resource opening": urn:hud:hmis:owl#list_Event_13
+            "Referral to Other PH project/unit/resource opening": urn:hud:hmis:owl#list_Event_15
+            "Referral to Transitional Housing bed/unit opening": urn:hud:hmis:owl#list_Event_11
+            "Referral to scheduled Coordinated Entry Housing Needs Assessment": urn:hud:hmis:owl#list_Event_4
+            "Referral to Street Outreach project or services": urn:hud:hmis:owl#list_Event_6
+            "Referral to scheduled Coordinated Entry Crisis Needs Assessment": urn:hud:hmis:owl#list_Event_3
+            "Referral to Prevention Assistance project": urn:hud:hmis:owl#list_Event_1
+            "Referral to Joint TH-RRH project/unit/resource opening": urn:hud:hmis:owl#list_Event_12
+            "Problem Solving/Diversion/Rapid Resolution intervention or service": urn:hud:hmis:owl#list_Event_2
+            "Referral to a Housing Stability Voucher": urn:hud:hmis:owl#list_Event_18
+            "Referral to Housing Navigation project or services": urn:hud:hmis:owl#list_Event_7
+            "Referral to PSH project resource opening": urn:hud:hmis:owl#list_Event_14
+            "Referral to Emergency Housing Voucher (EHV)": urn:hud:hmis:owl#list_Event_17
+            "Referral to emergency assistance/flex fund/furniture assistance": urn:hud:hmis:owl#list_Event_16
+            "Referral to Non-continuum services: Ineligible for continuum services": urn:hud:hmis:owl#list_Event_8
         EventDate:
           '@id': urn:hud:hmis:owl#EventDate
           '@type': xsd:date
@@ -2413,11 +2427,6 @@ components:
           '@context':
             "No": urn:hud:hmis:owl#list_NoYes_0
             "Yes": urn:hud:hmis:owl#list_NoYes_1
-        PreferredLanguage:
-          '@id': urn:hud:hmis:owl#PreferredLanguage
-          '@type': xsd:integer
-        PreferredLanguageDifferent:
-          '@id': urn:hud:hmis:owl#PreferredLanguageDifferent
         PregnancyStatus:
           '@id': urn:hud:hmis:owl#PregnancyStatus
           '@type': '@vocab'
@@ -2871,8 +2880,6 @@ components:
         TotalMonthlyIncome:
           '@id': urn:hud:hmis:owl#TotalMonthlyIncome
           '@type': http://www.w3.org/2001/XMLSchema#decimal
-        TranslationNeeded:
-          '@id': urn:hud:hmis:owl#TranslationNeeded
         Unemployment:
           '@id': urn:hud:hmis:owl#Unemployment
           '@type': '@vocab'
@@ -3195,11 +3202,6 @@ components:
           '@type': xsd:nonNegativeInteger
         ZIP:
           '@id': urn:hud:hmis:owl#ZIP
-      x-hmis-unmapped-fields:
-      - Event
-      - PreferredLanguage
-      - PreferredLanguageDifferent
-      - TranslationNeeded
     ClientsInAProjectRequest:
       type: object
       properties:
@@ -7124,6 +7126,28 @@ components:
       format: date
     Event:
       x-hmis-dataDictionaryName: Event
+      x-jsonld-context:
+        '@id': urn:hud:hmis:owl#EventType
+        '@type': '@vocab'
+        '@context':
+          "Referral to Post-placement/ follow-up case management": urn:hud:hmis:owl#list_Event_5
+          "Referral to Non-continuum services: No availability in continuum services": urn:hud:hmis:owl#list_Event_9
+          "Referral to Emergency Shelter bed opening": urn:hud:hmis:owl#list_Event_10
+          "Referral to RRH project resource opening": urn:hud:hmis:owl#list_Event_13
+          "Referral to Other PH project/unit/resource opening": urn:hud:hmis:owl#list_Event_15
+          "Referral to Transitional Housing bed/unit opening": urn:hud:hmis:owl#list_Event_11
+          "Referral to scheduled Coordinated Entry Housing Needs Assessment": urn:hud:hmis:owl#list_Event_4
+          "Referral to Street Outreach project or services": urn:hud:hmis:owl#list_Event_6
+          "Referral to scheduled Coordinated Entry Crisis Needs Assessment": urn:hud:hmis:owl#list_Event_3
+          "Referral to Prevention Assistance project": urn:hud:hmis:owl#list_Event_1
+          "Referral to Joint TH-RRH project/unit/resource opening": urn:hud:hmis:owl#list_Event_12
+          "Problem Solving/Diversion/Rapid Resolution intervention or service": urn:hud:hmis:owl#list_Event_2
+          "Referral to a Housing Stability Voucher": urn:hud:hmis:owl#list_Event_18
+          "Referral to Housing Navigation project or services": urn:hud:hmis:owl#list_Event_7
+          "Referral to PSH project resource opening": urn:hud:hmis:owl#list_Event_14
+          "Referral to Emergency Housing Voucher (EHV)": urn:hud:hmis:owl#list_Event_17
+          "Referral to emergency assistance/flex fund/furniture assistance": urn:hud:hmis:owl#list_Event_16
+          "Referral to Non-continuum services: Ineligible for continuum services": urn:hud:hmis:owl#list_Event_8
       type: string
       enum:
       - Referral to Post-placement/ follow-up case management
@@ -10023,14 +10047,6 @@ components:
         preflabel: 'No'
       - notation: '1'
         preflabel: 'Yes'
-    PreferredLanguage:
-      x-hmis-dataDictionaryName: PreferredLanguage
-      type: integer
-      x-hmis-vocabulary: C4.A
-    PreferredLanguageDifferent:
-      x-hmis-dataDictionaryName: PreferredLanguageDifferent
-      type: string
-      x-hmis-vocabulary: C4.B
     PregnancyStatus:
       x-hmis-dataDictionaryName: PregnancyStatus
       x-jsonld-context:
@@ -11479,27 +11495,6 @@ components:
         '@type': http://www.w3.org/2001/XMLSchema#decimal
       type: number
       x-hmis-vocabulary: 4.02.18
-    TranslationNeeded:
-      x-hmis-dataDictionaryName: TranslationNeeded
-      type: string
-      enum:
-      - Data not collected
-      - 'No'
-      - Client prefers not to answer
-      - 'Yes'
-      - Client doesn't know
-      x-hmis-vocabulary: C4.1
-      x-hmis-values:
-      - notation: '99'
-        preflabel: Data not collected
-      - notation: '0'
-        preflabel: 'No'
-      - notation: '9'
-        preflabel: Client prefers not to answer
-      - notation: '1'
-        preflabel: 'Yes'
-      - notation: '8'
-        preflabel: Client doesn't know
     Unemployment:
       x-hmis-dataDictionaryName: Unemployment
       x-jsonld-context:
@@ -12837,8 +12832,6 @@ components:
         PosCommunityConnections: 'No'
         PosPeerConnections: 'No'
         PostExitCounselingPlan: 'No'
-        PreferredLanguage: 1
-        PreferredLanguageDifferent: example-PreferredLanguageDifferent
         PregnancyStatus: 'No'
         PreventionAssessment: 'No'
         PreviousStreetESSH: 'No'
@@ -12906,7 +12899,6 @@ components:
         TimeToHousingLoss: 1-6 days
         TimesHomelessPastThreeYears: One time
         TotalMonthlyIncome: 1
-        TranslationNeeded: 'No'
         Unemployment: 'No'
         UnemploymentAmount: 1
         UnemploymentFam: 'No'

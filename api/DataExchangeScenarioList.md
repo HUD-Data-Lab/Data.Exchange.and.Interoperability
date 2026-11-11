@@ -5,8 +5,11 @@ each one uses in its request and its response. The OpenAPI description in
 [hmis-api.openapi.yaml](hmis-api.openapi.yaml) defines the same scenarios.
 
 This file replaces `DataExchangeScenarioList.xlsx`. Its two sections are that
-workbook's two sheets, `Scenario` and `ScenarioMapping`, with the same rows and
-columns in the same order.
+workbook's two sheets, `Scenario` and `ScenarioMapping`, with the same columns
+in the same order. Since the conversion, the three C4 Translation Assistance
+Needed rows, which the FY2026 standards removed, have been deleted, and three
+names in **dataExchangeOntologyName** have been updated to match the FY26
+ontology.
 
 ## Scenarios
 
@@ -32,7 +35,7 @@ One row per HMIS data element field:
 - **CSVTable** is the HMIS CSV export file it comes from.
 - **DE#** is the data element and field number, made of **DataElement** and **FieldNumber**.
 - **Name** is the field's name.
-- **dataExchangeOntologyName** is the name the data exchange ontology used. In the workbook it was a formula that copied **Name**, so the two columns are always the same.
+- **dataExchangeOntologyName** is the field's property in the FY26 HMIS Logic Model (`FY26_HMIS_Logic_Model.ttl`). It is the same as **Name** except for `StartDate`, `EndDate` and `Event`, whose properties are `GrantStartDate`, `GrantEndDate` and `EventType`. (In the workbook this column was a formula that copied **Name**.)
 - Each remaining column is one scenario's request or response. An `x` means the scenario uses the field there. `UpdateClientRequst` is spelled as it was in the workbook.
 
 | Class | CSVTable | DE# | DataElement | FieldNumber | Name | dataExchangeOntologyName | ClientSearchRequest | ClientSearchResponse | NewClientRequest | NewClientResponse | UpdateClientRequst | UpdateClientResponse | ClientSearchProjectRequest | ClientSearchProjectResponse | ClientEnrollmentsRequest | ClientEnrollmentsResponse | ProjectSearchTypeFunderRequest | ProjectSearchTypeFunderResponse | ClientSearchProjectTypeFunderRequest | ClientSearchProjectTypeFunderResponse | ClientAllDataRequest | ClientAllDataResponse |
@@ -50,7 +53,7 @@ One row per HMIS data element field:
 | CEAssessment | Assessment | 4.19.7 | 4.19 | 7 | PrioritizationStatus | PrioritizationStatus |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
 | CEAssessment | Assessment | 4.19.1 | 4.19 | 1 | AssessmentDate | AssessmentDate |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
 | CEAssessment | Assessment | 4.19.2 | 4.19 | 2 | AssessmentLocation | AssessmentLocation |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
-| CEEvent | Event | 4.20.2 | 4.20 | 2 | Event | Event |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
+| CEEvent | Event | 4.20.2 | 4.20 | 2 | Event | EventType |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
 | CEEvent | Event | 4.20.A | 4.20 | A | ProbSolDivRRResult | ProbSolDivRRResult |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
 | CEEvent | Event | 4.20.B | 4.20 | B | ReferralCaseManageAfter | ReferralCaseManageAfter |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
 | CEEvent | Event | 4.20.D | 4.20 | D | ReferralResult | ReferralResult |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
@@ -217,7 +220,6 @@ One row per HMIS data element field:
 | Enrollment | Enrollment | V7.P | V7 | P | HH5Plus | HH5Plus |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
 | Enrollment | Enrollment | V7.Q | V7 | Q | CoCPrioritized | CoCPrioritized |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
 | Enrollment | Enrollment | V10 | V10 |  | MentalHealthConsultation | MentalHealthConsultation |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
-| Enrollment | Enrollment | C4.1 | C4 | 1 | TranslationNeeded | TranslationNeeded |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
 | Enrollment | Enrollment | 5.06.1 | 5.06 | 1 | EnrollmentID | EnrollmentID |  |  |  |  |  |  |  |  |  | x |  |  |  | x |  | x |
 | Enrollment | Enrollment | 5.08.1 | 5.08 | 1 | PersonalID | PersonalID |  |  |  |  |  |  |  |  |  |  |  |  |  | x | x | x |
 | Enrollment | Enrollment | 2.02.1 | 2.02 | 1 | ProjectID | ProjectID |  |  |  |  |  |  |  |  | x | x |  | x |  | x |  | x |
@@ -228,13 +230,11 @@ One row per HMIS data element field:
 | Enrollment | Enrollment | R12.B | R12 | B | JuvenileJusticeMonths | JuvenileJusticeMonths |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
 | Enrollment | Enrollment | V7.R | V7 | R | HPScreeningScore | HPScreeningScore |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
 | Enrollment | Enrollment | V7.S | V7 | S | ThresholdScore | ThresholdScore |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
-| Enrollment | Enrollment | C4.A | C4 | A | PreferredLanguage | PreferredLanguage |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
-| Enrollment | Enrollment | C4.B | C4 | B | PreferredLanguageDifferent | PreferredLanguageDifferent |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
 | FundSource | Funder | 2.06.1 | 2.06 | 1 | Funder | Funder |  |  |  |  |  |  |  |  |  |  | x |  | x |  |  | x |
 | FundSource | Funder | 2.06.A | 2.06 | A | OtherFunder | OtherFunder |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
 | FundSource | Funder | 2.06.2 | 2.06 | 2 | GrantID | GrantID |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
-| FundSource | Funder | 2.06.3 | 2.06 | 3 | StartDate | StartDate |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
-| FundSource | Funder | 2.06.4 | 2.06 | 4 | EndDate | EndDate |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
+| FundSource | Funder | 2.06.3 | 2.06 | 3 | StartDate | GrantStartDate |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
+| FundSource | Funder | 2.06.4 | 2.06 | 4 | EndDate | GrantEndDate |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
 | Geography | ProjectCoC | 2.03.8 | 2.03 | 8 | GeographyType | GeographyType |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
 | Geography | ProjectCoC | 2.03.1 | 2.03 | 1 | CoCCode | CoCCode |  |  |  |  |  |  |  |  |  |  | x |  |  |  |  | x |
 | Geography | ProjectCoC | 2.03.2 | 2.03 | 2 | Geocode | Geocode |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |

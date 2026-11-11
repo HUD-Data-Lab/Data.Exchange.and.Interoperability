@@ -690,6 +690,7 @@ Necessary for projects that operate across multiple CoCs for data export purpose
 
 :EventType a owl:ObjectProperty ;
     dcterms:description "Event" ;
+    dcterms:identifier "4.20.2" ;
     rdfs:domain :Event ;
     rdfs:range skos:Concept ;
     :linkedVocabulary :list_Event ;

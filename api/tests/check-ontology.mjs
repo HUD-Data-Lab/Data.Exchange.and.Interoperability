@@ -59,6 +59,7 @@ const CODE_LIST_EXCEPTIONS = {
 const FIELD_PROPERTY_EXCEPTIONS = {
   StartDate: "GrantStartDate", // Funder.csv 2.06.3
   EndDate: "GrantEndDate", // Funder.csv 2.06.4
+  Event: "EventType", // Event.csv 4.20.2
 };
 const PROPERTY_TYPES = new Set([
   "http://www.w3.org/2002/07/owl#DatatypeProperty",
