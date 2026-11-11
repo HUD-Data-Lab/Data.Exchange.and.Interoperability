@@ -144,12 +144,6 @@ dcterms:publisher a owl:AnnotationProperty .
 
 dcterms:title a owl:AnnotationProperty .
 
-<http://webprotege.stanford.edu/RDFb6idbQSbeN9XWT5FvRg5> rdfs:label "AccessPoint" ;
-    dcterms:description "Project is a Coordinated Entry Access Point" ;
-    dcterms:identifier "2.09.1" .
-
-<http://webprotege.stanford.edu/RZIjH0LLPPCevNNIFbKCV9> rdfs:label "Export" .
-
 ontmalizer:hasValue a owl:AnnotationProperty .
 
 xsd:decimal a rdfs:Datatype .
@@ -193,6 +187,7 @@ skos:note a owl:AnnotationProperty .
     owl:versionInfo "FY2026v1.2.0"@en .
 
 :AccessPoint a owl:ObjectProperty ;
+    rdfs:label "AccessPoint" ;
     dcterms:description "Project is a Coordinated Entry Access Point" ;
     dcterms:identifier "2.09.1" ;
     rdfs:domain :CEParticipation ;
