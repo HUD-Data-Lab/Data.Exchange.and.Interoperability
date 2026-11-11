@@ -8,6 +8,8 @@
 # hmis:responseValue, hmis:responseValueSecondary and hmis:responseNotes renamed to :responseValue,
 # :responseValueSecondary and :responseNotes; the upstream IRIs had "hmis:" inside the local name
 # (urn:hud:hmis:owl#hmis:responseValue).
+# The unused datatype urn:hud:hmis:owl#xs:positiveInteger (a conversion artifact; properties use
+# xsd:positiveInteger) is removed.
 
 @prefix : <urn:hud:hmis:owl#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
@@ -2204,8 +2206,6 @@ indicate the position of omitted digits
 
 :preferredLanguage a rdfs:Datatype ;
     rdfs:label "preferredLanguage" .
-
-<urn:hud:hmis:owl#xs:positiveInteger> a rdfs:Datatype .
 
 <wptmp:entity#AffiliationID> dcterms:description "Unique identifier" .
 
