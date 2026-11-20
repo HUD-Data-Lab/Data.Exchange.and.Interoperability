@@ -1,0 +1,40 @@
+name: API contract tests
+
+on:
+  push:
+    paths:
+      - "api/**"
+      - "FY26_HMIS_Logic_Model.ttl"
+      - ".github/workflows/api-tests.yml"
+  pull_request:
+    paths:
+      - "api/**"
+      - "FY26_HMIS_Logic_Model.ttl"
+      - ".github/workflows/api-tests.yml"
+  workflow_dispatch:
+
+jobs:
+  newman:
+    strategy:
+      fail-fast: false
+      matrix:
+        # macOS hosted runners are often unavailable, and a job that never gets a
+        # runner fails the run even with continue-on-error. Run macOS only on a
+        # manual dispatch; Ubuntu and Windows run on every push and PR.
+        os: ${{ github.event_name == 'workflow_dispatch' && fromJSON('["ubuntu-latest","macos-latest","windows-latest"]') || fromJSON('["ubuntu-latest","windows-latest"]') }}
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: api/tests
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+      - run: npm ci --no-audit --no-fund
+      - run: npm test
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: api-test-results-${{ matrix.os }}
+          path: api/tests/build/

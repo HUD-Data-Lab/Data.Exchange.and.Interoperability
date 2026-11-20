@@ -1,0 +1,54 @@
+arazzo: 1.0.1
+info:
+  title: Find a project, then list its enrollments
+  version: 0.1.0-proposed
+  summary: Scenario 6 followed by Scenario 4.
+  description: >
+    Searches projects by funder and project type, then lists the enrollments in the
+    first project returned. Runs against the FY2026 scenario schemas as they are.
+sourceDescriptions:
+  - name: hmisApi
+    url: ../hmis-api.openapi.yaml
+    type: openapi
+workflows:
+  - workflowId: findProjectThenEnrollments
+    summary: Search projects, then list the enrollments in the project found.
+    inputs:
+      type: object
+      properties:
+        projectSearch:
+          type: object
+          description: Fields accepted by the SearchProjects request (Funder, ProjectType, CoCCode, operating dates).
+        entryDate:
+          type: string
+          format: date
+        exitDate:
+          type: string
+          format: date
+    steps:
+      - stepId: searchProjects
+        description: Scenario 6. Search for projects.
+        operationId: $sourceDescriptions.hmisApi.SearchProjects
+        requestBody:
+          contentType: application/json
+          payload: $inputs.projectSearch
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          projectId: $response.body#/ProjectID
+      - stepId: listProjectEnrollments
+        description: Scenario 4. List enrollments in the project found in step 1.
+        operationId: $sourceDescriptions.hmisApi.ClientsInAProject
+        requestBody:
+          contentType: application/json
+          payload:
+            ProjectID: $steps.searchProjects.outputs.projectId
+            EntryDate: $inputs.entryDate
+            ExitDate: $inputs.exitDate
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          personalId: $response.body#/PersonalID
+    outputs:
+      projectId: $steps.searchProjects.outputs.projectId
+      personalId: $steps.listProjectEnrollments.outputs.personalId

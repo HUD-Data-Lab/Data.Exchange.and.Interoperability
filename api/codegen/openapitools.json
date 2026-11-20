@@ -1,0 +1,31 @@
+{
+  "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "spaces": 2,
+  "generator-cli": {
+    "version": "7.26.0",
+    "generators": {
+      "typescript-client": {
+        "generatorName": "typescript-fetch",
+        "inputSpec": "#{cwd}/build/openapi.codegen.yaml",
+        "output": "#{cwd}/build/clients/typescript",
+        "additionalProperties": {
+          "npmName": "@hud-hmis/data-exchange-client",
+          "npmVersion": "0.1.0-proposed",
+          "supportsES6": true,
+          "modelPropertyNaming": "original",
+          "paramNaming": "original"
+        }
+      },
+      "python-client": {
+        "generatorName": "python",
+        "inputSpec": "#{cwd}/build/openapi.codegen.yaml",
+        "output": "#{cwd}/build/clients/python",
+        "additionalProperties": {
+          "packageName": "hmis_data_exchange_client",
+          "projectName": "hmis-data-exchange-client",
+          "packageVersion": "0.1.0"
+        }
+      }
+    }
+  }
+}

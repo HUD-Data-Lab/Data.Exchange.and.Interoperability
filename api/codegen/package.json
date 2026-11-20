@@ -1,0 +1,17 @@
+{
+  "name": "hmis-api-codegen",
+  "private": true,
+  "description": "Generates client SDKs, JSON-LD contexts and HTML docs from the HMIS Data Exchange OpenAPI description.",
+  "type": "module",
+  "scripts": {
+    "generate": "node generate.mjs",
+    "verify": "node generate.mjs --verify-only",
+    "clean": "node generate.mjs --clean"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "2.41.0",
+    "@redocly/cli": "2.77.0",
+    "typescript": "5.9.3",
+    "yaml": "2.9.1"
+  }
+}
